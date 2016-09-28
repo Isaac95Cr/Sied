@@ -1,6 +1,16 @@
 <?php
 
+ /**
+  * @author Isaac Corrales Cruz <isakucorrales@gmail.com>
+  * @author Marco Vinicio Cambronero Fonseca <marcovcambronero@gmail.com>
+  */
+
 require 'database.php';
+
+
+/**
+ *  Descripción de la clase...
+ */
 
 class Usuario {
 
