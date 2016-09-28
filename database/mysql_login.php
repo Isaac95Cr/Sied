@@ -1,5 +1,35 @@
+
 <?php
-define("HOSTNAME", "localhost");// Nombre del host
-define("DATABASE", "sied"); // Nombre de la base de datos
-define("USERNAME", "root"); // Nombre del usuario
-define("PASSWORD", ""); // Nombre de la constraseña
+
+ /**
+  * @author Isaac Corrales Cruz <isakucorrales@gmail.com>
+  * @author Marco Vinicio Cambronero Fonseca <marcovcambronero@gmail.com>
+  */
+
+/**
+ * Se definen las constantes que forman parte de la base de datos.
+ */
+
+
+/**
+ * Nombre del host
+ */
+define("HOSTNAME", "localhost");  
+
+
+/**
+ * Nombre de la base de datos
+ */
+define("DATABASE", "sied");
+
+
+/**
+ * Usuario de la base de datos
+ */
+define("USERNAME", "root"); 
+
+
+/**
+ * Contraseña de la base de datos
+ */
+define("PASSWORD", ""); 
