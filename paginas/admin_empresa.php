@@ -1,0 +1,155 @@
+<!-- Content Header (Page header) -->
+
+<section class="content-header">
+    <h1>Administracion de Empresas y Departamentos
+        <small>Blank example to the fixed layout</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#/"><i class="fa  fa-building-o"></i> Índice</a></li>
+        <li><a href="#/admin_empresa">Empresa</a></li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="col-md-6" ng-controller="controlEmpresa" ng-init="init()">
+        <div class="box box-primary">
+            <div class="box-header with-border ">
+                <h3 class="box-title">Empresas</h3>
+
+                <div class="box-tools pull-right">
+
+                </div>
+            </div>
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+
+                    <tr ng-repeat="empresa in empresas" ng-click="selectEmpresa(empresa)">
+                        <td> {{empresa.nombre}} </td>
+                        <td style="text-align:center"><a ng-click="eliminar(empresa.id)" class=""><i class="fa fa-close"></i>  </a> </td>
+                    </tr>
+                </table>
+
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer" >    
+                <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalEmpresa">Agregar</a>
+            </div>
+        </div>
+        <!-- /.box-footer-->
+        <!-- /.modal -->
+        <div class="modal" id="modalEmpresa">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Agregar Empresa </h4>
+                    </div>
+                    <form name="empresaForm" class="form-horizontal" ng-submit="agregar()" novalidate> 
+                        <div class="modal-body">
+
+                            <div class="form-group" ng-class="{ 'has-error' : empresaForm.empresaNombre.$invalid && !empresaForm.empresaNombre.$pristine }">
+                                <label for="empresa" class="col-sm-2 control-label">Empresa</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="Nombre" id="empresa" ng-model="empresaNombre" name="empresaNombre" required>
+                                    <p ng-show="empresaForm.empresaNombre.$invalid && !empresaForm.empresaNombre.$pristine" class="help-block">Nombre de empresa requerido.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="cancelar">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" ng-disabled="empresaForm.$invalid" id="add-empresa">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+    <div class="col-md-6" ng-controller="controlDepartamento" ng-init="init()">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Departamentos de Empresa: {{empresa.nombre}}</h3>
+
+                <div class="box-tools pull-right">
+
+                </div>
+            </div>
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tr ng-repeat="departamento in departamentosfiltrados">
+                        <td> {{departamento.nombre}}</td>
+                        <td style="text-align:center"><a ng-click="eliminar(departamento.id)"><i class="fa fa-close"></i>  </a> </td>
+                    </tr>
+                </table>
+
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer" >    
+                <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalDepartamento">Agregar </a>
+            </div>
+        </div>
+        <!-- /.box-footer-->
+        <!-- /.modal -->
+        <div class="modal" id="modalDepartamento">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Agregar Departamento</h4>
+                    </div>
+                    <form name="departamentoForm" class="form-horizontal" ng-submit="agregar()" novalidate> 
+                        <div class="modal-body">
+
+                            <div class="form-group" ng-class="{ 'has-error' : departamentoForm.departamentoNombre.$invalid && !departamentoForm.departamentoNombre.$pristine }">
+                                <label for="departamento" class="col-sm-2 control-label">Departamento</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" placeholder="Nombre" id="departamento" name="departamentoNombre" ng-model="departamentoNombre" required>
+                                    <p ng-show="departamentoForm.departamentoNombre.$invalid && !departamentoForm.departamentoNombre.$pristine" class="help-block">Nombre del departamento.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="cancelar">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" ng-disabled="departamentoForm.$invalid"  id="add-departamento">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</section>
+<!-- /.content -->
+
+
+
+
+
+
+
+<!-- /.modal -->
+
+<script type="text/javascript">
+            $("tr").click(function () {
+                $(this).addClass("active").siblings().removeClass("active");
+            });
+            $('#add-empresa').click(function () {
+                $('#modalEmpresa').modal('toggle');
+                return true;
+            });
+            $('#add-departamento').click(function () {
+                $('#modalDepartamento').modal('toggle');
+                return true;
+            });
+</script>
+
