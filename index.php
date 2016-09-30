@@ -222,6 +222,7 @@
         <!-- controles -->
         <script src="angular/controller/controlDepartamento.js" type="text/javascript"></script>
         <script src="angular/controller/controlEmpresa.js" type="text/javascript"></script>
+        <script src="angular/controller/controlPerfilComptencia.js" type="text/javascript"></script>
         <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
         <script src="angular/service/modalService.js" type="text/javascript"></script>
     </body>
