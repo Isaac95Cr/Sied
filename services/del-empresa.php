@@ -7,18 +7,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Insertar meta
     $retorno = Empresa::delete($body['id']);
 
-    if ($retorno) {
+    if ($retorno instanceof Mensaje) {
         // Código de éxito
-        print json_encode(
-                        array(
-                            'estado' => '1',
-                            'mensaje' => 'Eliminar exitoso'));
+        print $retorno->json();
     } else {
         // Código de falla
         print json_encode(
                         array(
-                            'estado' => '2',
-                            'mensaje' => 'Eliminar fallido')
+                            'titulo' => 'Error',
+                            'mensaje' => "Error de conexión")
         );
     }
 }

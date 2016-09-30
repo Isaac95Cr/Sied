@@ -6,7 +6,7 @@
   */
 
 require 'database.php';
-
+require 'mensaje';
 
 /**
  *  Descripción de la clase...
@@ -37,7 +37,12 @@ class Usuario {
                 " VALUES( ?,?,?,?,?,? )";
 
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
-        return $sentencia->execute(array($id, $nombre, $apellido1, $apellido2, $correo, $contrasena));
+        try {
+            $sentencia->execute(array($id, $nombre, $apellido1, $apellido2, $correo, $contrasena));
+            return new Mensaje("Exito", "<p>Se agregó el usuario con exito :D</p>");
+        } catch (PDOException $pdoExcetion) {
+            return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
+        }
     }
 
 }

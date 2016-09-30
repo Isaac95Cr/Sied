@@ -1,11 +1,11 @@
 <?php
 
 require 'database.php';
+require 'mensaje.php';
 
-class Departamento{
-    
-    
-    public static function getAll(){
+class Departamento {
+
+    public static function getAll() {
         $consulta = "SELECT * FROM departamento;";
         try {
             $comando = Database::getInstance()->getDb()->prepare($consulta);
@@ -13,18 +13,31 @@ class Departamento{
             return $comando->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return false;
-        }   
+        }
     }
-    
-     public static function insert($nombre, $empresa){
+
+    public static function insert($nombre, $empresa) {
         $comando = "INSERT INTO departamento (nombre, empresa) VALUES (?,?);";
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
-        return $sentencia->execute(array($nombre,$empresa));
+        try {
+            $sentencia->execute(array($nombre, $empresa));
+            return new Mensaje("Exito", "<p>Se agregó el departamento con exito :D</p>");
+        } catch (PDOException $pdoExcetion) {
+            return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
+        }
     }
-    
-    public static function delete($id){
+
+    public static function delete($id) {
         $comando = "DELETE FROM departamento WHERE id = ?;";
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
-        return $sentencia->execute(array($id));
+        try {
+            $sentencia->execute(array($id));
+            return new Mensaje("Exito", "<p>Se eliminó el departamento con exito :D</p>");
+        } catch (PDOException $pdoExcetion) {
+            return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
+        }
     }
-};
+
+}
+
+;

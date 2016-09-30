@@ -26,18 +26,7 @@ angular.module("index")
             $scope.eliminar = function (id) {
                 factoryEmpresa.eliminarEmpresa(id)
                         .success(function (data, status, headers, config) {
-                            modalService.modal('titulo', '<p>contenido</p>', "<button class='btn' ng-click='vm.hola()'>Delete</button>", {x: 0},
-                        function ($uibModalInstance, titulo, contenido, footer, variable) {
-                            var vm = this;
-                            vm.titulo = titulo;
-                            vm.contenido = contenido;
-                            vm.variable = variable;
-                            vm.footer = footer;
-                            vm.hola = function () {
-                                vm.titulo = vm.variable.x;
-                                //$uibModalInstance.close();
-                            };
-                        });
+                            modalService.modalOk(data.titulo,"<p>"+data.msj+"</p>");
                             $scope.cargar();
                         })
                         .error(function (data, status, headers, config) {
@@ -48,6 +37,7 @@ angular.module("index")
                 var nombre = $scope.empresaNombre;
                 factoryEmpresa.agregarEmpresa(nombre)
                         .success(function (data, status, headers, config) {
+                            modalService.modalOk(data.titulo,"<p>"+data.msj+"</p>");
                             $scope.empresaNombre = "";
                             $scope.cargar();
                         })

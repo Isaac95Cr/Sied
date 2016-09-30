@@ -8,18 +8,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Insertar meta
     $retorno = Departamento::insert($body['nombre'],$body['empresa']);
 
-    if ($retorno) {
+   if ($retorno instanceof Mensaje) {
         // Código de éxito
-        print json_encode(
-                        array(
-                            'estado' => '1',
-                            'mensaje' => 'Creación exitosa'));
+        print $retorno->json();
     } else {
         // Código de falla
         print json_encode(
                         array(
-                            'estado' => '2',
-                            'mensaje' => 'Creación fallida')
+                            'titulo' => 'Error',
+                            'mensaje' => "Error de conexión")
         );
     }
 }
