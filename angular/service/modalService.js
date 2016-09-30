@@ -55,7 +55,6 @@ angular.module("index")
                     vm.ok = function () {
                         $uibModalInstance.close('si');
                     };
-
                     vm.cancel = function () {
                         $uibModalInstance.dismiss('cancel');
                     };
