@@ -6,7 +6,7 @@ angular.module("index")
                 $scope.perfilNombre = "";
 
                 $scope.selectPerfil = function (msg) {
-                   
+
                 };
 
                 $scope.init = function () {
@@ -17,16 +17,24 @@ angular.module("index")
                     factoryperfilCompetencia.cargarPerfilCompetencia()
                             .success(function (data, status, headers, config) {
                                 $scope.perfiles = data.perfil;
-                               
+
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
                             });
                 };
+                $scope.confirmar = function (id) {
+                    modalService.modalYesNo("Confirmacion", "<p>" + "¿Esta seguro de realizar la accion?" + "</p>")
+                            .result.then(function (selectedItem) {
+                                if (selectedItem === "si")
+                                    $scope.eliminar(id);
+                            });
+                };
                 $scope.eliminar = function (id) {
+
                     factoryperfilCompetencia.eliminarPerfilCompetencia(id)
                             .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
+                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>")
                                 $scope.cargar();
                             })
                             .error(function (data, status, headers, config) {

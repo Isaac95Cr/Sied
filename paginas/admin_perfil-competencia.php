@@ -25,7 +25,7 @@
                 <table class="table table-hover"> 
                     <tr ng-repeat="perfil in perfiles">
                         <td> {{perfil.nombre}} </td>
-                        <td style="text-align:center"><a ng-click="eliminar(perfil.id)"><i class="fa fa-close"></i>  </a> </td>
+                        <td style="text-align:center"><a ng-click="confirmar(perfil.id)"><i class="fa fa-close"></i>  </a> </td>
                     </tr>
                 </table>
 
