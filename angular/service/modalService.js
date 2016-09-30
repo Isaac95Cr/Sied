@@ -1,8 +1,8 @@
-angular.module('ui.bootstrap.demo', ['ui.bootstrap'])
-        .service('ModalDemo', ['$uibModal', function ($modal) {
+angular.module("index")
+        .service('modalService', ['$uibModal', function ($modal) {
                 var vm = this;
                 vm.variable = {};
-                vm.Modal = function Modal(titulo, contenido, footer, variable, funcion) {
+                vm.modal = function modal(titulo, contenido, footer, variable, funcion) {
                     $modal.open({
                         size: "sm",
                         templateUrl: 'myModalContent.html',

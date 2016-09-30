@@ -1,5 +1,6 @@
 angular.module("index")
-        .controller("controlDepartamento", function ($scope, factoryDepartamento, ShareDataService) {
+        .controller("controlDepartamento",['$scope', 'factoryDepartamento','ShareDataService','modalService',function ($scope, factoryDepartamento, ShareDataService,modalService) {
+
             $scope.departamentos = [];
             $scope.departamentosfiltrados = [];
             $scope.empresa = {};
@@ -55,7 +56,7 @@ angular.module("index")
 
 
 
-        })
+        }])
         .factory("factoryDepartamento", function ($http) {
             var departamentos = {};
 

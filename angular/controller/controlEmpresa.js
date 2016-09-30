@@ -1,5 +1,5 @@
 angular.module("index")
-        .controller("controlEmpresa", function ($scope, factoryEmpresa, ShareDataService) {
+        .controller("controlEmpresa",['$scope', 'factoryEmpresa','ShareDataService','modalService',function ($scope, factoryEmpresa, ShareDataService, modalService) {
 
             $scope.empresas = [];
             $scope.empresa = 0;
@@ -26,6 +26,18 @@ angular.module("index")
             $scope.eliminar = function (id) {
                 factoryEmpresa.eliminarEmpresa(id)
                         .success(function (data, status, headers, config) {
+                            modalService.modal('titulo', '<p>contenido</p>', "<button class='btn' ng-click='vm.hola()'>Delete</button>", {x: 0},
+                        function ($uibModalInstance, titulo, contenido, footer, variable) {
+                            var vm = this;
+                            vm.titulo = titulo;
+                            vm.contenido = contenido;
+                            vm.variable = variable;
+                            vm.footer = footer;
+                            vm.hola = function () {
+                                vm.titulo = vm.variable.x;
+                                //$uibModalInstance.close();
+                            };
+                        });
                             $scope.cargar();
                         })
                         .error(function (data, status, headers, config) {
@@ -43,7 +55,7 @@ angular.module("index")
                             alert("failure message: " + JSON.stringify(data));
                         });
             };
-        })
+        }])
         .factory("factoryEmpresa", function ($http) {
             var empresa = {};
 

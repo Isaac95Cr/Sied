@@ -1,4 +1,4 @@
-angular.module("index", ["ngRoute"])
+angular.module("index", ["ngRoute",'ui.bootstrap'])
         .config(function ($routeProvider) {
             $routeProvider
                     .when("/", {

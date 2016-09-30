@@ -197,6 +197,7 @@
         <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
         <!-- Bootstrap 3.3.6 -->
         <script src="bootstrap/js/bootstrap.min.js"></script>
+
         <!-- SlimScroll -->
         <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
         <!-- FastClick -->
@@ -208,6 +209,7 @@
         <!-- angular -->
         <script src="angular/angular.min.js" type="text/javascript"></script>
         <script src="angular/angular-route.min.js" type="text/javascript"></script>
+        <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
         <!-- rutas -->
         <script src="rutas/rutas.js" type="text/javascript"></script>
         <!-- icheck -->
@@ -218,9 +220,26 @@
         <!-- Select2 -->
         <script src = "plugins/select2/select2.full.min.js" ></script>
         <!-- controles -->
-        <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
         <script src="angular/controller/controlDepartamento.js" type="text/javascript"></script>
         <script src="angular/controller/controlEmpresa.js" type="text/javascript"></script>
+        <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
+        <script src="angular/service/modalService.js" type="text/javascript"></script>
     </body>
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+        <button type="button" class="close" ng-click="$close()" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title">{{ vm.titulo }} </h3>
+        </div>
+        <div class="modal-body">
+        <div compile-data template="{{vm.contenido}}">
 
+        </div>
+        </div>
+        <div class="modal-footer">
+        <div compile-data template="{{vm.footer}}">
+
+        </div>
+        </div>
+    </script> 
 </html>
