@@ -1,15 +1,25 @@
 <?php
-require 'database.php';
-require 'mensaje.php';
+
+require 'competencia.php';
+
 
 class perfilCompetencia {
 
     public static function getAll() {
         $consulta = "SELECT * FROM perfil_competencia;";
         try {
+            $json_response = array();
             $comando = Database::getInstance()->getDb()->prepare($consulta);
             $comando->execute();
-            return $comando->fetchAll(PDO::FETCH_ASSOC);
+            $perfiles = $comando->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($perfiles as $row){
+                $newrow = array();
+                $newrow['id'] = $row['id'];
+                $newrow['nombre'] = $row['nombre'];
+                $newrow['competencias'] = Competencia::getFrom($row['id']);
+                array_push($json_response, $newrow);
+            }
+            return $json_response;
         } catch (PDOException $e) {
             return false;
         }
@@ -38,7 +48,3 @@ class perfilCompetencia {
     }
 
 }
-
-;
-
-

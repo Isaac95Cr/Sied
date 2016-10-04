@@ -1,4 +1,4 @@
-angular.module("index", ["ngRoute",'ui.bootstrap'])
+angular.module("index", ["ngRoute", 'ui.bootstrap'])
         .config(function ($routeProvider) {
             $routeProvider
                     .when("/", {
@@ -20,13 +20,14 @@ angular.module("index", ["ngRoute",'ui.bootstrap'])
                         templateUrl: "paginas/admin_colaboradores_competencias.php"
                     })
                     .when("/admin_empresa", {
-                        templateUrl: "paginas/admin_empresa.php", 
+                        templateUrl: "paginas/admin_empresa.php",
                     })
                     .when("/admin_perfil-competencia", {
                         templateUrl: "paginas/admin_perfil-competencia.php"
                     })
-                    .when("/editar_perfil-competencia", {
-                        templateUrl: "paginas/editar_perfil-competencia.php"
+                    .when("/editar_perfil-competencia/:message", {
+                        templateUrl: "paginas/editar_perfil-competencia.php",
+                        controller: "AppCtrl"
                     })
                     .when("/aprobar_metas", {
                         templateUrl: "paginas/aprobar_metas.php"
@@ -43,4 +44,6 @@ angular.module("index", ["ngRoute",'ui.bootstrap'])
                     .when("/auto-evaluar_competencias", {
                         templateUrl: "paginas/auto-evaluar_competencias.php"
                     });
-        });
+        }).controller('AppCtrl', function ($routeParams, $scope) {
+    $scope.message = $routeParams.message;
+});
