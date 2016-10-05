@@ -25,9 +25,8 @@ angular.module("index", ["ngRoute", 'ui.bootstrap'])
                     .when("/admin_perfil-competencia", {
                         templateUrl: "paginas/admin_perfil-competencia.php"
                     })
-                    .when("/editar_perfil-competencia/:message", {
+                    .when("/editar_perfil-competencia/:perfil", {
                         templateUrl: "paginas/editar_perfil-competencia.php",
-                        controller: "AppCtrl"
                     })
                     .when("/aprobar_metas", {
                         templateUrl: "paginas/aprobar_metas.php"
@@ -44,6 +43,4 @@ angular.module("index", ["ngRoute", 'ui.bootstrap'])
                     .when("/auto-evaluar_competencias", {
                         templateUrl: "paginas/auto-evaluar_competencias.php"
                     });
-        }).controller('AppCtrl', function ($routeParams, $scope) {
-    $scope.message = $routeParams.message;
-});
+        });

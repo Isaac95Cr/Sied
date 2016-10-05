@@ -225,6 +225,7 @@
         <script src="angular/controller/controlPerfilComptencia.js" type="text/javascript"></script>
         <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
         <script src="angular/service/modalService.js" type="text/javascript"></script>
+        <script src="angular/controller/controlEditPerfil.js" type="text/javascript"></script>
     </body>
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">

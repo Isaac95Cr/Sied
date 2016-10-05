@@ -96,7 +96,6 @@
                                         <th>Detalles de la competencia</th>
                                         </thead>
                                         <tbody>
-
                                             <tr ng-repeat="detalle in competencia.detalles">
                                                 <td>{{detalle.descripcion}}</td>
                                             </tr> 
@@ -111,13 +110,13 @@
 
             </div>
             <!-- /.box-body -->
-
+            <div class="box-footer" >    
+                <a class="btn btn-primary btn-lg pull-right" href="#/editar_perfil-competencia/{{perfil.id}}">Editar </a>
+            </div>
         </div>
 
     </div> 
-    <div class="box-footer" >    
-        <a class="btn btn-primary btn-lg pull-right" href="#/editar_perfil-competencia/{{perfil.id}}">Editar </a>
-    </div>
+
     <!-- /.box-footer-->
 </section>
 <!-- /.content -->

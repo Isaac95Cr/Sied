@@ -51,27 +51,5 @@ angular.module("index")
                                 alert("failure message: " + JSON.stringify(data));
                             });
                 };
-            }])
-        .factory("factoryDetalleCompetencia", function ($http) {
-            var competencia = {};
-
-            competencia.cargarDetalle = function () {
-                return $http.get('/Sied/services/get-competencia.php');
-            };
-
-            competencia.agregarDetalle = function (descripcion,competencia) {
-                var obj = {
-                    descripcion: descripcion,
-                    competencia:competencia
-                };
-                return $http.post('/Sied/services/add-competencia.php', obj);
-            };
-
-            competencia.eliminarDetalle = function (id) {
-                var obj = {
-                    id: id
-                };
-                return $http.post('/Sied/services/del-competencia.php', obj);
-            };
-            return competencia;
-        });
+            }]);
+        
