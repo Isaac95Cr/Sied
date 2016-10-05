@@ -5,8 +5,8 @@ angular.module("index")
                 $scope.perfil = 0;
                 $scope.perfilNombre = "";
 
-                $scope.selectPerfil = function (msg) {
-
+                $scope.selectPerfil = function (perfil) {
+                    $scope.perfil = perfil;
                 };
 
                 $scope.init = function () {
@@ -14,10 +14,10 @@ angular.module("index")
                 };
 
                 $scope.cargar = function () {
-                    factoryperfilCompetencia.cargarPerfilCompetencia()
+                    factoryperfilCompetencia.cargarPerfilesCompetencia()
                             .success(function (data, status, headers, config) {
-                                $scope.perfiles = data.perfil;
-
+                                $scope.perfiles = data.perfiles;
+                                $scope.perfil = data.perfiles[0];
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
@@ -57,8 +57,15 @@ angular.module("index")
         .factory("factoryperfilCompetencia", function ($http) {
             var empresa = {};
 
-            empresa.cargarPerfilCompetencia = function () {
+            empresa.cargarPerfilesCompetencia = function () {
                 return $http.get('/Sied/services/get-perfilCompetencia.php');
+            };
+            
+            empresa.cargarPerfilCompetencia = function (id) {
+                var obj = {
+                    id:id
+                };
+                return $http.post('/Sied/services/get-perfilCompetencia.php');
             };
 
             empresa.agregarPerfilCompetencia = function (nombre) {

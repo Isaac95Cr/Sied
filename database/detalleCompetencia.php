@@ -15,7 +15,7 @@ class DetalleCompetencia {
         }
     }
     
-    public static function getFrom($competencia) {
+    public static function getAllFrom($competencia) {
         $consulta = "SELECT * FROM detalle_competencia where competencia = ?;";
         try {
             $comando = Database::getInstance()->getDb()->prepare($consulta);

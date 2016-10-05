@@ -16,7 +16,26 @@ class perfilCompetencia {
                 $newrow = array();
                 $newrow['id'] = $row['id'];
                 $newrow['nombre'] = $row['nombre'];
-                $newrow['competencias'] = Competencia::getFrom($row['id']);
+                $newrow['competencias'] = Competencia::getAllFrom($row['id']);
+                array_push($json_response, $newrow);
+            }
+            return $json_response;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    public static function getAllFrom($id) {
+        $consulta = "SELECT * FROM perfil_competencia where id = ?";
+        try {
+            $json_response = array();
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando->execute(array($id));
+            $perfiles = $comando->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($perfiles as $row){
+                $newrow = array();
+                $newrow['id'] = $row['id'];
+                $newrow['nombre'] = $row['nombre'];
+                $newrow['competencias'] = Competencia::getAllFrom($row['id']);
                 array_push($json_response, $newrow);
             }
             return $json_response;

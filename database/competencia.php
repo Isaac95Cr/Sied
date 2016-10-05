@@ -1,6 +1,5 @@
 <?php
-require 'database.php';
-require 'mensaje.php';
+require 'detalleCompetencia.php';
 
 class Competencia {
 
@@ -14,11 +13,23 @@ class Competencia {
             return false;
         }
     }
-    public static function getFrom($perfil) {
+    public static function getAllFrom($perfil) {
         $consulta = "SELECT * FROM competencia where perfil = ?;";
         try {
+            $json_response = array();
             $comando = Database::getInstance()->getDb()->prepare($consulta);
             $comando->execute(array($perfil));
+            $competencias = $comando->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($competencias as $row){
+                $newrow = array();
+                $newrow['id'] = $row['id'];
+                $newrow['titulo'] = $row['titulo'];
+                $newrow['descripcion'] = $row['descripcion'];
+                $newrow['peso'] = $row['peso'];
+                $newrow['detalles'] = DetalleCompetencia::getAllFrom($row['id']);
+                array_push($json_response, $newrow);
+            }
+            return $json_response;
             return $comando->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return false;
