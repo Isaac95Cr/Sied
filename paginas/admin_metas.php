@@ -89,7 +89,7 @@
             <!-- /.box-body -->
             <div class="box-footer" >    
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary btn-lg pull-left" data-toggle="modal" data-target="#modalAdd">Agregar Meta</button>
+                    <button type="button" class="btn btn-primary btn-lg pull-left" data-toggle="modal" data-target="#modalMeta">Agregar Meta</button>
                     <a type="button" class="btn btn-primary btn-lg pull-right" href="#/auto-evaluar_metas">Auto-Evaluar</a>
                     <button type="button" class="btn btn-primary btn-lg pull-right">Guardar cambios</button>
 
@@ -103,7 +103,7 @@
 
 <!-- /modal -->
 <div ng-controller="controlMeta" ng-init="init()">
-<div class="modal" id="modalAdd">
+<div class="modal" id="modalMeta">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             
@@ -112,21 +112,23 @@
                     <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Agregar una Meta</h4>
             </div>
-            <form ng-submit="agregar()"  class="form-horizontal">
+            <form name="metaForm" ng-submit="agregar()"  class="form-horizontal" novalidate>
             <div class="modal-body">
                 
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{ 'has-error' : metaForm.meta_titulo.$invalid && !metaForm.meta_titulo.$pristine }">
                         <label for="titulo" class="col-sm-2 control-label">Título</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="Titulo" id="titulo" ng-model="meta_titulo"> 
+                            <input type="text" class="form-control" placeholder="Título" id="titulo" ng-model="meta_titulo" name="meta_titulo" required>
+                            <p ng-show="metaForm.meta_titulo.$invalid && !metaForm.meta_titulo.$pristine" class="help-block">Título de meta requerido.</p>
                         </div>
                     </div>
                     
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{ 'has-error' : metaForm.meta_descripcion.$invalid && !metaForm.meta_descripcion.$pristine }">
                         <label for="descripcion" class="col-sm-2 control-label">Descripción</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" rows="3" placeholder="Descripción de la meta" id="descripcion" ng-model="meta_descripcion">
+                            <textarea class="form-control" rows="3" placeholder="Descripción de la meta" id="descripcion" ng-model="meta_descripcion" name="meta_descripcion" required>
                             </textarea>
+                            <p ng-show="metaForm.meta_descripcion.$invalid && !metaForm.meta_descripcion.$pristine" class="help-block">Descripción de meta requerida.</p>
                         </div>
                     </div>
                     
@@ -148,7 +150,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary">Agregar</button>
+                <button type="submit" ng-disabled="metaForm.$invalid" id="add-meta"  class="btn btn-primary">Agregar</button>
             </div>
 </form>
         </div>
@@ -219,4 +221,9 @@
     });
     
     $('input').iCheck('check');
+    
+     $('#add-meta').click(function () {
+           $('#modalMeta').modal('toggle');
+                return true;
+      });
 </script>

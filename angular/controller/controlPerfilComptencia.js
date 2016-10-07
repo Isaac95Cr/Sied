@@ -55,31 +55,31 @@ angular.module("index")
                 };
             }])
         .factory("factoryperfilCompetencia", function ($http) {
-            var empresa = {};
+            var perfil = {};
 
-            empresa.cargarPerfilesCompetencia = function () {
+            perfil.cargarPerfilesCompetencia = function () {
                 return $http.get('/Sied/services/get-perfilCompetencia.php');
             };
             
-            empresa.cargarPerfilCompetencia = function (id) {
+            perfil.cargarPerfilCompetencia = function (id) {
                 var obj = {
                     id:id
                 };
-                return $http.post('/Sied/services/get-perfilCompetencia.php');
+                return $http.post('/Sied/services/get-perfilCompetencia.php',obj);
             };
 
-            empresa.agregarPerfilCompetencia = function (nombre) {
+            perfil.agregarPerfilCompetencia = function (nombre) {
                 var obj = {
                     nombre: nombre
                 };
                 return $http.post('/Sied/services/add-perfilCompetencia.php', obj);
             };
 
-            empresa.eliminarPerfilCompetencia = function (id) {
+            perfil.eliminarPerfilCompetencia = function (id) {
                 var obj = {
                     id: id
                 };
                 return $http.post('/Sied/services/del-perfilCompetencia.php', obj);
             };
-            return empresa;
+            return perfil;
         })

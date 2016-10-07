@@ -28,7 +28,7 @@ angular.module("index")
                             alert("failure message: " + JSON.stringify(headers));
                         });*/
             };
-            
+
             $('input').on('ifUnchecked', function() {
                        $scope.meta_isEvaluable = 0;
              });
@@ -63,7 +63,7 @@ angular.module("index")
                 factoryMeta.agregarMeta(metaObj)
                         .success(function (data, status, headers, config) {
                             modalService.modalOk(data.titulo,"<p>"+data.msj+"</p>");
-                            $scope.meta_isEvaluable = true;
+                            $scope.meta_isEvaluable = 1;
                             $scope.meta_peso = 0;
                             $scope.meta_titulo = "";
                             $scope.meta_descripcion = "";
