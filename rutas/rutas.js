@@ -22,6 +22,9 @@ angular.module("index", ["ngRoute", 'ui.bootstrap'])
                     .when("/admin_empresa", {
                         templateUrl: "paginas/admin_empresa.php",
                     })
+                    .when("/admin_periodo", {
+                        templateUrl: "paginas/admin_periodo.php",
+                    })
                     .when("/admin_perfil-competencia", {
                         templateUrl: "paginas/admin_perfil-competencia.php"
                     })

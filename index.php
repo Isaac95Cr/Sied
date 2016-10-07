@@ -153,7 +153,8 @@
                             <ul class="treeview-menu">
                                 <li><a href="#/admin_usuarios"><i class="fa fa-users"></i>Administrar Usuarios</a></li>
                                 <li><a href="#/admin_empresa"><i class="fa fa-building-o"></i>Empresas y Departamentos</a></li>
-                                <li><a href="#/admin_perfil-competencia"><i class="fa  fa-bar-chart-o"></i>Competencias</a></li>
+                                <li><a href="#/admin_perfil-competencia"><i class="fa fa-bar-chart-o"></i>Competencias</a></li>
+                                <li><a href="#/admin_periodo"><i class="fa fa-calendar-plus-o"></i>Periodos</a></li>
                             </ul>
                         </li>
                         <li class="treeview">
@@ -234,6 +235,7 @@
         <span aria-hidden="true">&times;</span></button>
         <h3 class="modal-title">{{ vm.titulo }} </h3>
         </div>
+        <form name="form" class="form-horizontal" novalidate>
         <div class="modal-body">
         <div compile-data template="{{vm.contenido}}">
 
@@ -244,5 +246,6 @@
 
         </div>
         </div>
+        </form>
     </script> 
 </html>
