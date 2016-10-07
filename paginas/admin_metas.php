@@ -8,6 +8,7 @@
         <li><a href="#/"><i class="fa  fa-building-o"></i> Índice</a></li>
         <li><a href="#/admin_metas">Metas</a></li>
     </ol>
+    
 </section>
 
 <!-- Main content -->
@@ -101,49 +102,59 @@
 <!-- /.content -->
 
 <!-- /modal -->
+<div ng-controller="controlMeta" ng-init="init()">
 <div class="modal" id="modalAdd">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
+            
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Agregar una Meta</h4>
             </div>
+            <form ng-submit="agregar()"  class="form-horizontal">
             <div class="modal-body">
-                <form action="#/admin_metas" method="post" class="form-horizontal">
+                
                     <div class="form-group">
-                        <label for="titulo" class="col-sm-2 control-label">Titulo</label>
+                        <label for="titulo" class="col-sm-2 control-label">Título</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="Titulo" id="titulo"> 
+                            <input type="text" class="form-control" placeholder="Titulo" id="titulo" ng-model="meta_titulo"> 
                         </div>
                     </div>
+                    
                     <div class="form-group">
                         <label for="descripcion" class="col-sm-2 control-label">Descripción</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" rows="3" placeholder="Descripción de la meta" id="descripcion"></textarea>
+                            <textarea class="form-control" rows="3" placeholder="Descripción de la meta" id="descripcion" ng-model="meta_descripcion">
+                            </textarea>
                         </div>
                     </div>
+                    
                     <div class="form-group">
                         <label for="evaluable" class="col-sm-2 control-label" >Evaluable</label>
                         <div class="col-sm-10">
-                            <input type="checkbox" class="flat-blue" id="evaluable" checked>
+                            <input type="checkbox" class="flat-blue"  id="evaluable" name="evaluable">
                         </div>
                     </div>
+                    
                     <div class="form-group">
                         <label for="peso" class="col-sm-2 control-label">Peso</label>
                         <div class="col-sm-2">
-                            <input type="number" class="form-control" placeholder="0" id="peso"> 
+                            <input type="number" class="form-control" placeholder="0" id="peso" ng-model="meta_peso"> 
                         </div>
                     </div>
-                </form>
+                    
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Agregar</button>
+                <button type="submit" class="btn btn-primary">Agregar</button>
             </div>
+</form>
         </div>
     </div>
     <!-- /.modal-content -->
+</div>
 </div>
 <!-- /.modal-dialog -->
 
@@ -196,6 +207,8 @@
 
 <!-- /.modal -->
 
+
+
 <script>
     $('input[type="checkbox"].flat-blue').iCheck({
         checkboxClass: 'icheckbox_flat-blue',
@@ -204,4 +217,6 @@
         $('[data-toggle="popover"]').popover({
         });
     });
+    
+    $('input').iCheck('check');
 </script>
