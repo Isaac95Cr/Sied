@@ -2,10 +2,10 @@ angular.module("index")
         .service('modalService', ['$uibModal', function ($modal) {
                 var vm = this;
                 vm.variable = {};
-                vm.modal = function modal(titulo, contenido, footer, variable, funcion) {
+                vm.modal = function modal(url, titulo, contenido, footer, variable, funcion) {
                     return $modal.open({
                         size: "sm",
-                        templateUrl: 'myModalContent.html',
+                        templateUrl: url,
                         controller: ['$uibModalInstance', 'titulo', 'contenido', 'footer', 'variable', funcion],
                         controllerAs: 'vm',
                         resolve: {
@@ -59,7 +59,7 @@ angular.module("index")
                         $uibModalInstance.dismiss('cancel');
                     };
                 };
-                vm.modalYesNo = function modalYesNo(titulo, contenido, variable, funcion) {
+                vm.modalYesNo = function modalYesNo(titulo, contenido, variable) {
                     return $modal.open({
                         size: "sm",
                         templateUrl: 'myModalContent.html',
@@ -82,8 +82,31 @@ angular.module("index")
                         }
                     });
                 };
-
-
+                vm.modalEdit = function modalEdit(titulo, contenido, fotter, variable) {
+                    return $modal.open({
+                        size: "md",
+                        templateUrl: 'myModalContent.html',
+                        controller: ['$uibModalInstance', 'titulo', 'contenido', 'footer', 'variable', modalOkcontroller],
+                        controllerAs: 'vm',
+                        resolve: {
+                            titulo: function () {
+                                return titulo;
+                            },
+                            contenido: function () {
+                                return contenido;
+                            },
+                            footer: function () {
+                                return fotter;
+                            },
+                            variable: function () {
+                                return variable;
+                            }
+                        }
+                    });
+                };
+                vm.open = function (elementId) {
+                   return $(elementId).modal('show');
+                };
             }
 
         ])

@@ -25,21 +25,21 @@
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
 
-                    <tr ng-repeat="empresa in empresas" ng-click="selectEmpresa(empresa)">
+                    <tr ng-repeat="empresa in empresas" sglclick="selectEmpresa({{empresa}})" dblclick="modalModificar({{empresa}});">
                         <td> {{empresa.nombre}} </td>
-                        <td style="text-align:center"><a ng-click="eliminar(empresa.id)" class=""><i class="fa fa-close"></i>  </a> </td>
+                        <td style="text-align:center"><a ng-click="confirmar(empresa.id)" class=""><i class="fa fa-close"></i>  </a> </td>
                     </tr>
                 </table>
 
             </div>
             <!-- /.box-body -->
             <div class="box-footer" >    
-                <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalEmpresa">Agregar</a>
+                <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalEmpresaAdd">Agregar</a>
             </div>
         </div>
         <!-- /.box-footer-->
-        <!-- /.modal -->
-        <div class="modal" id="modalEmpresa">
+        <!-- /.modalAgregar -->
+        <div class="modal" id="modalEmpresaAdd">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -47,21 +47,21 @@
                             <span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Agregar Empresa </h4>
                     </div>
-                    <form name="empresaForm" class="form-horizontal" ng-submit="agregar()" novalidate> 
+                    <form name="empresaAddForm" class="form-horizontal" ng-submit="agregar()" novalidate> 
                         <div class="modal-body">
 
-                            <div class="form-group" ng-class="{ 'has-error' : empresaForm.empresaNombre.$invalid && !empresaForm.empresaNombre.$pristine }">
+                            <div class="form-group" ng-class="{ 'has-error' : empresaAddForm.empresaAdd.$invalid && !empresaAddForm.empresaAdd.$pristine}">
                                 <label for="empresa" class="col-sm-2 control-label">Empresa</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="Nombre" id="empresa" ng-model="empresaNombre" name="empresaNombre" required>
-                                    <p ng-show="empresaForm.empresaNombre.$invalid && !empresaForm.empresaNombre.$pristine" class="help-block">Nombre de empresa requerido.</p>
+                                    <input type="text" class="form-control" placeholder="Nombre" id="empresa" ng-model="empresaAdd" name="empresaAdd" required>
+                                    <p ng-show="empresaAddForm.empresaAdd.$invalid && !empresaAddForm.empresaAdd.$pristine" class="help-block">Nombre de empresa requerido.</p>
                                 </div>
                             </div>
 
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="cancelar">Cancelar</button>
-                            <button type="submit" class="btn btn-primary" ng-disabled="empresaForm.$invalid" id="add-empresa">Agregar</button>
+                            <button type="submit" class="btn btn-primary" ng-disabled="empresaAddForm.$invalid" closemodal="modalEmpresaAdd">Agregar</button>
                         </div>
                     </form>
                 </div>
@@ -69,6 +69,38 @@
             <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
+        <!-- /.modalEditar -->
+        <div class="modal" id="modalEmpresaEdit">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Editar Empresa {{empresa.nombre}} </h4>
+                    </div>
+                    <form name="empresaEditForm" class="form-horizontal" ng-submit="modificar()" novalidate> 
+                        <div class="modal-body">
+
+                            <div class="form-group" ng-class="{ 'has-error' : empresaEditForm.empresaEdit.$invalid && !empresaEditForm.empresaEdit.$pristine}">
+                                <label for="empresa" class="col-sm-2 control-label">Empresa</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="Nombre" id="empresa" ng-model="empresaEdit" name="empresaEdit" required>
+                                    <p ng-show="empresaEditForm.empresaEdit.$invalid && !empresaEditForm.empresaEdit.$pristine" class="help-block">Nombre de empresa requerido.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="cancelar">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" ng-disabled="empresaEditForm.$invalid" closemodal="modalEmpresaEdit">Editar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+
     </div>
 
 
@@ -96,7 +128,7 @@
             </div>
         </div>
         <!-- /.box-footer-->
-        <!-- /.modal -->
+        <!-- /.modalAgregar -->
         <div class="modal" id="modalDepartamento">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -119,7 +151,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="cancelar">Cancelar</button>
-                            <button type="submit" class="btn btn-primary" ng-disabled="departamentoForm.$invalid"  id="add-departamento">Agregar</button>
+                            <button type="submit" class="btn btn-primary" ng-disabled="departamentoForm.$invalid"  closemodal="modalDepartamento">Agregar</button>
                         </div>
                     </form>
                 </div>
@@ -140,16 +172,9 @@
 <!-- /.modal -->
 
 <script type="text/javascript">
-            $("tr").click(function () {
-                $(this).addClass("active").siblings().removeClass("active");
-            });
-            $('#add-empresa').click(function () {
-                $('#modalEmpresa').modal('toggle');
-                return true;
-            });
-            $('#add-departamento').click(function () {
-                $('#modalDepartamento').modal('toggle');
-                return true;
-            });
+    $("tr").click(function () {
+        $(this).addClass("active").siblings().removeClass("active");
+    });
+
 </script>
 
