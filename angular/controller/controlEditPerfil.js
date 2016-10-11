@@ -2,22 +2,31 @@ angular.module("index")
         .controller("controlEditPerfil", ['$scope', '$routeParams', 'factoryCompetencia', 'factoryperfilCompetencia', 'factoryDetalleCompetencia', 'modalService', function ($scope, $routeParams, factoryCompetencia, factoryperfilCompetencia, factoryDetalleCompetencia, modalService) {
                 $scope.perfil = {};
                 $scope.competencia = {};
+                $scope.competenciaeditar = {};
+                $scope.detalle = {};
                 $scope.bandera = true;
                 $scope.descripcionDetalle = "";
+                $scope.descripcionDetalleEdit = "";
+                
                 $scope.descripcionCompetencia = "";
                 $scope.tituloCompetencia = "";
                 $scope.pesoCompetencia = "";
+                
+                $scope.descripcionCompetenciaEdit = "";
+                $scope.tituloCompetenciaEdit = "";
+                $scope.pesoCompetenciaEdit = "";
 
-                $scope.selectCompetencia = function (id, titulo) {
+                $scope.selectCompetencia = function (id, titulo, descripcion) {
 
                     if ($scope.competencia.id === id) {
                         id = null;
                         titulo = null;
+                        descripcion = null;
                         $scope.bandera = true;
                     } else {
                         $scope.bandera = false;
                     }
-                    $scope.competencia = {id: id, titulo: titulo};
+                    $scope.competencia = {id: id, titulo: titulo, descripcion:descripcion};
                 };
 
                 $scope.init = function () {
@@ -32,6 +41,30 @@ angular.module("index")
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
+                            });
+                };
+                $scope.modalModificarDetalle = function (detalle) { 
+                    $scope.descripcionDetalleEdit = detalle.descripcion;
+                    $scope.detalle = detalle;
+                    modalService.open("#modalDetalleEdit");
+                };
+                $scope.modalModificarCompetencia = function () { 
+                    
+                    $scope.tituloCompetenciaEdit = $scope.competencia.titulo;
+                    $scope.descripcionCompetenciaEdit = $scope.competencia.descripcion;
+                    modalService.open("#modalCompetenciaEdit");
+                };
+                $scope.modificarDetalle = function () {
+                    var descripcion = $scope.descripcionDetalleEdit;
+                    var id = $scope.detalle.id;
+                    factoryDetalleCompetencia.modificarDetalle(descripcion, id)
+                            .success(function (data, status, headers, config) {
+                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
+                                $scope.descripcionDetalleEdit = "";
+                                $scope.cargar();
+                            })
+                            .error(function (data, status, headers, config) {
+                                alert("failure message: " + JSON.stringify(data));
                             });
                 };
 
@@ -106,6 +139,14 @@ angular.module("index")
                     competencia: competencia
                 };
                 return $http.post('/Sied/services/add-detalleCompetencia.php', obj);
+            };
+            
+            detalle.modificarDetalle = function (descripcion, id) {
+                var obj = {
+                    descripcion: descripcion,
+                    id: id
+                };
+                return $http.post('/Sied/services/set-detalleCompetencia.php', obj);
             };
 
             detalle.eliminarDetalle = function (id) {

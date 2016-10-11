@@ -1,4 +1,5 @@
 <?php
+
 require 'database.php';
 require 'mensaje.php';
 
@@ -14,7 +15,7 @@ class DetalleCompetencia {
             return false;
         }
     }
-    
+
     public static function getAllFrom($competencia) {
         $consulta = "SELECT * FROM detalle_competencia where competencia = ?;";
         try {
@@ -25,25 +26,23 @@ class DetalleCompetencia {
             return false;
         }
     }
-    
-    
 
-    public static function insert($descripcion,$competencia) {
+    public static function insert($descripcion, $competencia) {
         $comando = "INSERT INTO detalle_competencia (descripcion, competencia) VALUES (?,?);";
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
-            $sentencia->execute(array($descripcion,$competencia));
+            $sentencia->execute(array($descripcion, $competencia));
             return new Mensaje("Exito", "<p>Se agregó el detalle con exito :D</p>");
         } catch (PDOException $pdoExcetion) {
             return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
         }
     }
-    
-    public static function update($descripcion,$id) {
-        $comando = "UPDATE detalle_competencia SET descripcion = $descripcion WHERE id = $id";
+
+    public static function update($descripcion, $id) {
+        $comando = "UPDATE detalle_competencia SET descripcion = ? WHERE id = ?";
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
-            $sentencia->execute();
+            $sentencia->execute(array($descripcion,$id));
             return new Mensaje("Exito", "<p>Se modificó el detalle con exito :D</p>");
         } catch (PDOException $pdoExcetion) {
             return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
@@ -60,6 +59,5 @@ class DetalleCompetencia {
             return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
         }
     }
+
 }
-
-

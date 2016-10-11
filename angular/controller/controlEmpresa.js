@@ -42,7 +42,7 @@ angular.module("index")
                 };
                 $scope.modalModificar = function (empresa) {
                     $scope.selectEmpresa(empresa);
-                    $scope.empresaEdit = "";
+                    $scope.empresaEdit = empresa.nombre;
                     modalService.open("#modalEmpresaEdit");
                 };
                 $scope.modificar = function () {
@@ -115,45 +115,7 @@ angular.module("index")
             };
 
             return sharedService;
-        })
-        .directive('sglclick', ['$parse', function ($parse) {
-                return {
-                    restrict: 'A',
-                    link: function (scope, element, attr) {
-                        var fn = $parse(attr['sglclick']);
-                        var fn2 = $parse(attr['dblclick'])
-                        var delay = 300, clicks = 0, timer = null;
-                        element.on('click', function (event) {
-                            clicks++; //count clicks
-                            if (clicks === 1) {
-                                timer = setTimeout(function () {
-                                    scope.$apply(function () {
-                                        fn(scope, {$event: event});
-                                    });
-                                    clicks = 0; //after action performed, reset counter
-                                }, delay);
-                            } else {
-                                scope.$apply(function () {
-                                    fn2(scope, {$event: event});
-                                });
-                                clearTimeout(timer); //prevent single-click action
-                                clicks = 0; //after action performed, reset counter
-                            }
-
-                        });
-                    }
-                };
-            }])
-        .directive('closemodal', function () {
-            return {
-                restrict: 'A',
-                link: function (scope, elem, attr, ctrl) {
-                    var dialogId = '#' + attr.closemodal;
-                    elem.bind('click', function (e) {
-                        $(dialogId).modal('toggle');
-                    });
-                }
-            };
         });
+        
 
 

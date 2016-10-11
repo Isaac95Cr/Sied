@@ -3,8 +3,9 @@ angular.module("index")
 
                 $scope.perfiles = [];
                 $scope.perfil = 0;
-                $scope.perfilNombre = "";
-
+                $scope.perfilAdd = "";
+                $scope.perfilEdit = "";
+                
                 $scope.selectPerfil = function (perfil) {
                     $scope.perfil = perfil;
                 };
@@ -41,6 +42,24 @@ angular.module("index")
                                 alert("failure message: " + JSON.stringify(data));
                             });
                 };
+                $scope.modalModificar = function (perfil) {
+                    $scope.selectPerfil(perfil);
+                    $scope.perfilEdit = perfil.nombre;
+                    modalService.open("#modalPerfilEdit");
+                };
+                $scope.modificar = function () {
+                    var nombre = $scope.perfilEdit;
+                    var id = $scope.perfil.id;
+                    factoryperfilCompetencia.modificarPerfilCompetencia(nombre, id)
+                            .success(function (data, status, headers, config) {
+                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
+                                $scope.perfilEdit = "";
+                                $scope.cargar();
+                            })
+                            .error(function (data, status, headers, config) {
+                                alert("failure message: " + JSON.stringify(data));
+                            });
+                };
                 $scope.agregar = function () {
                     var nombre = $scope.perfilNombre;
                     factoryperfilCompetencia.agregarPerfilCompetencia(nombre)
@@ -66,6 +85,13 @@ angular.module("index")
                     id:id
                 };
                 return $http.post('/Sied/services/get-perfilCompetencia.php',obj);
+            };
+            perfil.modificarPerfilCompetencia = function (nombre,id) {
+                var obj = {
+                    nombre:nombre,
+                    id:id
+                };
+                return $http.post('/Sied/services/set-perfilCompetencia.php',obj);
             };
 
             perfil.agregarPerfilCompetencia = function (nombre) {

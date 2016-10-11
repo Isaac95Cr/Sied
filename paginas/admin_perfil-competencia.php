@@ -23,7 +23,7 @@
             </div>
             <div class="box-body table-responsive no-padding" >
                 <table class="table table-hover"> 
-                    <tr ng-repeat="perfil in perfiles" ng-click="selectPerfil(perfil)">
+                    <tr ng-repeat="perfil in perfiles" sglclick="selectPerfil({{perfil}})" dblclick="modalModificar({{perfil}});">
                         <td> {{perfil.nombre}} </td>
                         <td style="text-align:center"><a ng-click="confirmar(perfil.id)"><i class="fa fa-close"></i>  </a> </td>
                     </tr>
@@ -32,12 +32,12 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer" >    
-                <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalPerfil">Agregar </a>
+                <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalPerfilAdd">Agregar </a>
             </div>
         </div>
         <!-- /.box-footer-->
         <!-- /.modal -->
-        <div class="modal" id="modalPerfil">
+        <div class="modal" id="modalPerfilAdd">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -45,21 +45,52 @@
                             <span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Agregar Perfil de Competencia</h4>
                     </div>
-                    <form name="perfilForm" class="form-horizontal" ng-submit="agregar()" novalidate> 
+                    <form name="perfilFormAdd" class="form-horizontal" ng-submit="agregar()" novalidate> 
                         <div class="modal-body">
 
-                            <div class="form-group" ng-class="{ 'has-error' : perfilForm.perfilNombre.$invalid && !perfilForm.perfilNombre.$pristine }">
+                            <div class="form-group" ng-class="{ 'has-error' : perfilFormAdd.perfilAdd.$invalid && !perfilFormAdd.perfilAdd.$pristine }">
                                 <label for="perfil" class="col-sm-2 control-label">Perfil</label>
                                 <div class="col-sm-10">
-                                    <input class="form-control" placeholder="Nombre" id="perfil" name="perfilNombre" ng-model="perfilNombre" required>
-                                    <p ng-show="perfilForm.perfilNombre.$invalid && !perfilForm.perfilNombre.$pristine" class="help-block">Nombre del perfil</p>
+                                    <input class="form-control" placeholder="Nombre" id="perfil" name="perfilAdd" ng-model="perfilAdd" required>
+                                    <p ng-show="perfilFormAdd.perfilAdd.$invalid && !perfilFormAdd.perfilAdd.$pristine" class="help-block">Nombre del perfil</p>
                                 </div>
                             </div>
 
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="cancelar">Cancelar</button>
-                            <button type="submit" class="btn btn-primary" ng-disabled="perfilForm.$invalid"  id="add-perfil">Agregar</button>
+                            <button type="submit" class="btn btn-primary" ng-disabled="perfilFormAdd.$invalid" closemodal="modalPerfilAdd">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+        <!-- /.modalEditar -->
+        <div class="modal" id="modalPerfilEdit">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Editar Perfil de Competencia {{perfil.nombre}}</h4>
+                    </div>
+                    <form name="perfilFormEdit" class="form-horizontal" ng-submit="modificar()" novalidate> 
+                        <div class="modal-body">
+
+                            <div class="form-group" ng-class="{ 'has-error' : perfilFormEdit.perfilEdit.$invalid && !perfilFormEdit.perfilEdit.$pristine }">
+                                <label for="perfil" class="col-sm-2 control-label">Perfil</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" placeholder="Nombre" id="perfil" name="perfilEdit" ng-model="perfilEdit" required>
+                                    <p ng-show="perfilFormEdit.perfilEdit.$invalid && !perfilFormEdit.perfilEdit.$pristine" class="help-block">Nombre del perfil</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="cancelar">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" ng-disabled="perfilFormEdit.$invalid" closemodal="modalPerfilEdit">Agregar</button>
                         </div>
                     </form>
                 </div>
@@ -118,14 +149,11 @@
     </div> 
 
     <!-- /.box-footer-->
+    
 </section>
 <!-- /.content -->
 <script type="text/javascript">
     $("tr").click(function () {
         $(this).addClass("active").siblings().removeClass("active");
-    });
-    $('#add-perfil').click(function () {
-        $('#modalPerfil').modal('toggle');
-        return true;
     });
 </script>

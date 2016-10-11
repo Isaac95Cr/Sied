@@ -127,4 +127,15 @@ angular.module("index")
                     });
                 }
             };
+        })
+        .directive('closemodal', function () {
+            return {
+                restrict: 'A',
+                link: function (scope, elem, attr, ctrl) {
+                    var dialogId = '#' + attr.closemodal;
+                    elem.bind('click', function (e) {
+                        $(dialogId).modal('toggle');
+                    });
+                }
+            };
         });

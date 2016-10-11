@@ -115,21 +115,21 @@
             </div>
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
-                    <tr ng-repeat="departamento in departamentosfiltrados">
+                    <tr ng-repeat="departamento in departamentosfiltrados" sglclick="" dblclick="modalModificar({{departamento}});">
                         <td> {{departamento.nombre}}</td>
-                        <td style="text-align:center"><a ng-click="eliminar(departamento.id)"><i class="fa fa-close"></i>  </a> </td>
+                        <td style="text-align:center"><a ng-click="confirmar(departamento.id)"><i class="fa fa-close"></i>  </a> </td>
                     </tr>
                 </table>
 
             </div>
             <!-- /.box-body -->
             <div class="box-footer" >    
-                <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalDepartamento">Agregar </a>
+                <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalDepartamentoAdd">Agregar </a>
             </div>
         </div>
         <!-- /.box-footer-->
         <!-- /.modalAgregar -->
-        <div class="modal" id="modalDepartamento">
+        <div class="modal" id="modalDepartamentoAdd">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -137,21 +137,52 @@
                             <span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Agregar Departamento</h4>
                     </div>
-                    <form name="departamentoForm" class="form-horizontal" ng-submit="agregar()" novalidate> 
+                    <form name="departamentoFormAdd" class="form-horizontal" ng-submit="agregar()" novalidate> 
                         <div class="modal-body">
 
-                            <div class="form-group" ng-class="{ 'has-error' : departamentoForm.departamentoNombre.$invalid && !departamentoForm.departamentoNombre.$pristine }">
+                            <div class="form-group" ng-class="{ 'has-error' : departamentoFormAdd.departamentoAdd.$invalid && !departamentoFormAdd.departamentoAdd.$pristine }">
                                 <label for="departamento" class="col-sm-2 control-label">Departamento</label>
                                 <div class="col-sm-10">
-                                    <input class="form-control" placeholder="Nombre" id="departamento" name="departamentoNombre" ng-model="departamentoNombre" required>
-                                    <p ng-show="departamentoForm.departamentoNombre.$invalid && !departamentoForm.departamentoNombre.$pristine" class="help-block">Nombre del departamento.</p>
+                                    <input class="form-control" placeholder="Nombre" id="departamento" name="departamentoAdd" ng-model="departamentoAdd" required>
+                                    <p ng-show="departamentoFormAdd.departamentoAdd.$invalid && !departamentoFormAdd.departamentoAdd.$pristine" class="help-block">Nombre del departamento.</p>
                                 </div>
                             </div>
 
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="cancelar">Cancelar</button>
-                            <button type="submit" class="btn btn-primary" ng-disabled="departamentoForm.$invalid"  closemodal="modalDepartamento">Agregar</button>
+                            <button type="submit" class="btn btn-primary" ng-disabled="departamentoFormAdd.$invalid"  closemodal="modalDepartamentoAdd">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+        <!-- /.modalEditar -->
+        <div class="modal" id="modalDepartamentoEdit">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Editar Departamento {{departamento.nombre}}</h4>
+                    </div>
+                    <form name="departamentoFormEdit" class="form-horizontal" ng-submit="modificar()" novalidate> 
+                        <div class="modal-body">
+
+                            <div class="form-group" ng-class="{ 'has-error' : departamentoFormEdit.departamentoEdit.$invalid && !departamentoFormEdit.departamentoEdit.$pristine }">
+                                <label for="departamento" class="col-sm-2 control-label">Departamento</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" placeholder="Nombre" id="departamento" name="departamentoEdit" ng-model="departamentoEdit" required>
+                                    <p ng-show="departamentoFormEdit.departamentoEdit.$invalid && !departamentoFormEdit.departamentoEdit.$pristine" class="help-block">Nombre del departamento.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="cancelar">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" ng-disabled="departamentoFormEdit.$invalid"  closemodal="modalDepartamentoEdit">Editar</button>
                         </div>
                     </form>
                 </div>

@@ -50,6 +50,17 @@ class perfilCompetencia {
         }
     }
 
+    public static function update($nombre, $id) {
+        $comando = "UPDATE perfil_competencia set nombre = ? where id = ?;";
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($nombre, $id));
+            return new Mensaje("Exito", "<p>Se modificó el perfil de competencia con exito :D</p>");
+        } catch (PDOException $pdoExcetion) {
+            return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
+        }
+    }
+
     public static function delete($id) {
         $comando = "DELETE FROM perfil_competencia WHERE id = ?;";
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
