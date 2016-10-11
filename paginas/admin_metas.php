@@ -1,14 +1,12 @@
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
-    <h1>Administracion de Metas
-        <small>Blank example to the fixed layout</small>
+    <h1>Administración de Metas     
     </h1>
     <ol class="breadcrumb">
         <li><a href="#/"><i class="fa  fa-building-o"></i> Índice</a></li>
         <li><a href="#/admin_metas">Metas</a></li>
     </ol>
-    
 </section>
 
 <!-- Main content -->
@@ -38,10 +36,10 @@
                                 <table class="table table-bordered">
                                     <tbody>
                                         <tr>
-                                            <td>Descripción</td>
-                                            <td>Peso</td>
-                                            <td>AutoEvaluable</td>
-                                            <td>Detalle</td>
+                                            <td style="text-align: center; font-weight: bold;">Descripción</td>
+                                            <td style="text-align: center; font-weight: bold;">Peso</td>
+                                            <td style="text-align: center; font-weight: bold;">Autoevaluable</td>
+                                            <td style="text-align: center; font-weight: bold;">Detalle</td>
                                             <td>
                                                 <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalEdit">Editar</button>
                                             </td>
