@@ -111,14 +111,13 @@
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
-                    <div class="user-panel" style="height: 45px;">
+<!--                    <div class="user-panel" style="height: 45px;">
                         <div class="pull-left info">
                             <p>Alexander Pierce</p>
                         </div>
-                    </div>
+                    </div>-->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        <li class="header">NAVEGACIÓN</li>
                         <li class="treeview">
                             <a href="">
                                 <i class="fa fa-flag"></i> <span>Metas</span>
