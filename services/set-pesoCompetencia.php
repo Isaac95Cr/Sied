@@ -5,10 +5,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Decodificando formato Json
     $body = json_decode(file_get_contents("php://input"), true);
-    // Insertar competencia
-    $retorno = Competencia::insert($body['titulo'],$body['descripcion'],$body['perfil']);
-
-   if ($retorno instanceof Mensaje) {
+    foreach ($body as $competencia) {
+        $retorno = Competencia::updatePeso($competencia['peso'], $competencia['id']);
+    }
+    if ($retorno instanceof Mensaje) {
         // Código de éxito
         print $retorno->json();
     } else {

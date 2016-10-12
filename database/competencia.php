@@ -36,12 +36,32 @@ class Competencia {
         }
     }
 
-    public static function insert($titulo,$descripcion,$peso,$perfil) {
-        $comando = "INSERT INTO competencia (titulo,descripcion,peso,perfil) VALUES (?,?,?,?);";
+    public static function insert($titulo,$descripcion,$perfil) {
+        $comando = "INSERT INTO competencia (titulo,descripcion,perfil) VALUES (?,?,?);";
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
-            $sentencia->execute(array($titulo,$descripcion,$peso,$perfil));
+            $sentencia->execute(array($titulo,$descripcion,$perfil));
             return new Mensaje("Exito", "<p>Se agregó la competencia con exito :D</p>");
+        } catch (PDOException $pdoExcetion) {
+            return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
+        }
+    }
+    public static function update($titulo,$descripcion,$id) {
+        $comando = "UPDATE competencia set titulo = ?, descripcion = ? where id = ? ;";
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($titulo,$descripcion,$id));
+            return new Mensaje("Exito", "<p>Se modificó la competencia con exito :D</p>");
+        } catch (PDOException $pdoExcetion) {
+            return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
+        }
+    }
+    public static function updatePeso($peso,$id) {
+        $comando = "UPDATE  competencia set peso = ? where id = ? ;";
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($peso,$id));
+            return new Mensaje("Exito", "<p>Se modificaron los pesos de las competencias con exito :D</p>");
         } catch (PDOException $pdoExcetion) {
             return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
         }

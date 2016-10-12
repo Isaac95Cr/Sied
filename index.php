@@ -111,11 +111,11 @@
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
-<!--                    <div class="user-panel" style="height: 45px;">
-                        <div class="pull-left info">
-                            <p>Alexander Pierce</p>
-                        </div>
-                    </div>-->
+                    <!--                    <div class="user-panel" style="height: 45px;">
+                                            <div class="pull-left info">
+                                                <p>Alexander Pierce</p>
+                                            </div>
+                                        </div>-->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
                         <li class="treeview">
@@ -225,8 +225,9 @@
         <script src="angular/controller/controlPerfilComptencia.js" type="text/javascript"></script>
         <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
         <script src="angular/service/modalService.js" type="text/javascript"></script>
-         <script src="angular/controller/controlMeta.js" type="text/javascript"></script>
+        <script src="angular/controller/controlMeta.js" type="text/javascript"></script>
         <script src="angular/controller/controlEditPerfil.js" type="text/javascript"></script>
+        <script src="angular/controller/controlPesos.js" type="text/javascript"></script>
     </body>
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">

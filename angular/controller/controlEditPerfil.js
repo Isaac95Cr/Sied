@@ -1,5 +1,5 @@
 angular.module("index")
-        .controller("controlEditPerfil", ['$scope', '$routeParams', 'factoryCompetencia', 'factoryperfilCompetencia', 'factoryDetalleCompetencia', 'modalService', function ($scope, $routeParams, factoryCompetencia, factoryperfilCompetencia, factoryDetalleCompetencia, modalService) {
+        .controller("controlEditPerfil", ['$scope', '$routeParams', '$location', 'factoryCompetencia', 'factoryperfilCompetencia', 'factoryDetalleCompetencia', 'modalService', 'ShareDataService', function ($scope, $routeParams, $location, factoryCompetencia, factoryperfilCompetencia, factoryDetalleCompetencia, modalService, ShareDataService) {
                 $scope.perfil = {};
                 $scope.competencia = {};
                 $scope.competenciaeditar = {};
@@ -7,14 +7,50 @@ angular.module("index")
                 $scope.bandera = true;
                 $scope.descripcionDetalle = "";
                 $scope.descripcionDetalleEdit = "";
-                
+
                 $scope.descripcionCompetencia = "";
                 $scope.tituloCompetencia = "";
-                $scope.pesoCompetencia = "";
-                
+
                 $scope.descripcionCompetenciaEdit = "";
                 $scope.tituloCompetenciaEdit = "";
-                $scope.pesoCompetenciaEdit = "";
+
+                /*$scope.$on('$locationChangeStart', function (event) {
+                 /* var answer = confirm("Are you sure you want to leave this page?")
+                 if (!answer) {
+                 event.preventDefault();
+                 }*/
+                /*$timeout(function () {
+                 isLeaving = true;
+                 $location.path(nextUrl.substring($location.absUrl().length - $location.url().length));
+                 $scope.$apply();
+                 }, 1000, false);
+                 ev.preventDefault();
+                 //event.preventDefault();
+                 
+                 modalService.modalYesNo("Confirmacion", "<p>" + "¿Se aseguro de cambiar los pesos de las competencias?" + "</p>")
+                 .result.then(function (selectedItem) {
+                 if (selectedItem !== "si") {
+                 setTimeout(function () {
+                 event.preventDefault();
+                 }, 1000, false);
+                 }
+                 });
+                 
+                 
+                 });*/
+
+                /* $scope.$on("$routeChangeStart", function (event, nextUrl, current) {
+                 modalService.modalYesNo("Confirmacion", "<p>" + "¿Se aseguro de cambiar los pesos de las competencias?" + "</p>")
+                 .result.then(function (selectedItem) {
+                 if (selectedItem !== "si") {
+                 setTimeout(function () {
+                 event.preventDefault();
+                 }, 1000, false);
+                 }
+                 });
+                 // If I remove this line, the modal is working but the browser location changes.
+                 event.preventDefault();
+                 });*/
 
                 $scope.selectCompetencia = function (id, titulo, descripcion) {
 
@@ -26,7 +62,7 @@ angular.module("index")
                     } else {
                         $scope.bandera = false;
                     }
-                    $scope.competencia = {id: id, titulo: titulo, descripcion:descripcion};
+                    $scope.competencia = {id: id, titulo: titulo, descripcion: descripcion};
                 };
 
                 $scope.init = function () {
@@ -37,19 +73,27 @@ angular.module("index")
                     factoryperfilCompetencia.cargarPerfilCompetencia($routeParams.perfil)
                             .success(function (data, status, headers, config) {
                                 $scope.perfil = data.perfil;
-                                $scope.selectCompetencia(data.perfil.competencias[0].id, data.perfil.competencias[0].titulo);
+                                $scope.selectCompetencia(data.perfil.competencias[0].id, data.perfil.competencias[0].titulo, data.perfil.competencias[0].descripcion);
+                                ShareDataService.prepForBroadcast(pesos());
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
                             });
                 };
-                $scope.modalModificarDetalle = function (detalle) { 
+
+                pesos = function () {
+                    var x = [];
+                    $scope.perfil.competencias.forEach(function (competencia) {
+                        x.push({id: competencia.id, titulo: competencia.titulo, peso: competencia.peso});
+                    });
+                    return {competencias: x};
+                };
+                $scope.modalModificarDetalle = function (detalle) {
                     $scope.descripcionDetalleEdit = detalle.descripcion;
                     $scope.detalle = detalle;
                     modalService.open("#modalDetalleEdit");
                 };
-                $scope.modalModificarCompetencia = function () { 
-                    
+                $scope.modalModificarCompetencia = function () {
                     $scope.tituloCompetenciaEdit = $scope.competencia.titulo;
                     $scope.descripcionCompetenciaEdit = $scope.competencia.descripcion;
                     modalService.open("#modalCompetenciaEdit");
@@ -61,6 +105,20 @@ angular.module("index")
                             .success(function (data, status, headers, config) {
                                 modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
                                 $scope.descripcionDetalleEdit = "";
+                                $scope.cargar();
+                            })
+                            .error(function (data, status, headers, config) {
+                                alert("failure message: " + JSON.stringify(data));
+                            });
+                };
+                $scope.modificarCompetencia = function () {
+                    var titulo = $scope.competencia.titulo;
+                    var descripcion = $scope.descripcionCompetenciaEdit;
+                    var id = $scope.competencia.id;
+                    factoryCompetencia.modificarCompetencia(titulo, descripcion, id)
+                            .success(function (data, status, headers, config) {
+                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
+                                $scope.selectCompetencia(id,titulo,descripcion);
                                 $scope.cargar();
                             })
                             .error(function (data, status, headers, config) {
@@ -85,21 +143,18 @@ angular.module("index")
                 $scope.agregarCompetencia = function () {
                     var descripcion = $scope.descripcionCompetencia;
                     var perfil = $scope.perfil.id;
-                    var peso = $scope.pesoCompetencia;
                     var titulo = $scope.tituloCompetencia;
-                    factoryCompetencia.agregarCompetencia(titulo, descripcion, peso, perfil)
+                    factoryCompetencia.agregarCompetencia(titulo, descripcion, perfil)
                             .success(function (data, status, headers, config) {
                                 modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
                                 $scope.descripcionCompetencia = "";
                                 $scope.tituloCompetencia = "";
-                                $scope.pesoCompetencia = "";
                                 $scope.cargar();
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
                             });
                 };
-
             }])
         .factory("factoryCompetencia", function ($http) {
             var competencia = {};
@@ -108,14 +163,25 @@ angular.module("index")
                 return $http.get('/Sied/services/get-competencia.php');
             };
 
-            competencia.agregarCompetencia = function (titulo, descripcion, peso, perfil) {
+            competencia.agregarCompetencia = function (titulo, descripcion, perfil) {
                 var obj = {
                     titulo: titulo,
                     descripcion: descripcion,
-                    peso: peso,
                     perfil: perfil
                 };
                 return $http.post('/Sied/services/add-competencia.php', obj);
+            };
+
+            competencia.modificarCompetencia = function (titulo, descripcion, id) {
+                var obj = {
+                    titulo: titulo,
+                    descripcion: descripcion,
+                    id: id
+                };
+                return $http.post('/Sied/services/set-competencia.php', obj);
+            };
+            competencia.modificarPeso = function (obj) {
+                return $http.post('/Sied/services/set-pesoCompetencia.php', obj);
             };
 
             competencia.eliminarCompetencia = function (id) {
@@ -140,7 +206,7 @@ angular.module("index")
                 };
                 return $http.post('/Sied/services/add-detalleCompetencia.php', obj);
             };
-            
+
             detalle.modificarDetalle = function (descripcion, id) {
                 var obj = {
                     descripcion: descripcion,

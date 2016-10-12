@@ -25,7 +25,7 @@
                     <div class="panel box box-primary"  ng-repeat="competencia in perfil.competencias">
                         <div class="box-header with-border">
                             <h4 class="box-title">
-                                <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{$index}}" ng-click="selectCompetencia(competencia.id,competencia.titulo,competencia.descripcion);">
+                                <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{$index}}" ng-click="selectCompetencia(competencia.id, competencia.titulo, competencia.descripcion);">
                                     #{{$index + 1}} {{competencia.titulo}}
                                 </a>
                             </h4>
@@ -67,6 +67,8 @@
             <div class="box-footer" >    
                 <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalCompetencia" ng-hide="!bandera">Agregar Competencia </a>
                 <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalDetalle" ng-hide="bandera">Agregar Detalle </a>
+                <a class="btn btn-warning btn-lg pull-left" data-toggle="modal" data-target="#modalPeso">Asignar pesos</a>
+
             </div>
             <!-- /.box-footer-->
         </div>
@@ -99,14 +101,6 @@
                                 <p ng-show="detalleForm.descripcionDetalle.$invalid && !detalleForm.descripcionDetalle.$pristine" class="help-block">Descripcion de la competencia requerido.</p>
                             </div>
                         </div>
-                        <div class="form-group" ng-class="{'has-error':competenciaForm.pesoCompetencia.$invalid && !competenciaForm.pesoCompetencia.$pristine }">
-                            <label for="peso" class="col-sm-2 control-label">Peso</label>
-                            <div class="col-sm-2">
-                                <input type="number" class="form-control" placeholder="0" step=0.01 id="peso" name="pesoCompetencia"  ng-model="pesoCompetencia" required>
-                                <p ng-show="detalleForm.descripcionDetalle.$invalid && !detalleForm.descripcionDetalle.$pristine" class="help-block">Peso de la competencia requerido.</p>
-                            </div>
-                        </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
@@ -128,7 +122,7 @@
                         <span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Agregar una Competencia</h4>
                 </div>
-                <form name="competenciaFormEdit" method="post" class="form-horizontal" ng-submit="" vnovalidate>
+                <form name="competenciaFormEdit" method="post" class="form-horizontal" ng-submit="modificarCompetencia()" vnovalidate>
                     <div class="modal-body">
 
                         <div class="form-group" ng-class="{'has-error':competenciaFormEdit.tituloCompetenciaEdit.$invalid && !competenciaFormEdit.tituloCompetenciaEdit.$pristine }">
@@ -145,14 +139,6 @@
                                 <p ng-show="competenciaFormEdit.descripcionCompetenciaEdit.$invalid && !competenciaFormEdit.descripcionCompetenciaEdit.$pristine" class="help-block">Descripcion de la competencia requerido.</p>
                             </div>
                         </div>
-                        <div class="form-group" ng-class="{'has-error':competenciaFormEdit.pesoCompetenciaEdit.$invalid && !competenciaFormEdit.pesoCompetenciaEdit.$pristine }">
-                            <label for="peso" class="col-sm-2 control-label">Peso</label>
-                            <div class="col-sm-2">
-                                <input type="number" class="form-control" placeholder="0" step=0.01 id="peso" name="pesoCompetencia"  ng-model="pesoCompetenciaEdit" required>
-                                <p ng-show="competenciaFormEdit.pesoCompetenciaEdit.$invalid && !competenciaFormEdit.pesoCompetenciaEdit.$pristine" class="help-block">Peso de la competencia requerido.</p>
-                            </div>
-                        </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
@@ -164,7 +150,6 @@
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
-
 
     <!-- /.modalAgregarDetalle -->
     <div class="modal" id="modalDetalle">
@@ -227,6 +212,47 @@
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
+
+    <!-- /.modalPesos -->
+    <div class="modal" id="modalPeso" ng-controller="controlPesos">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Editar los Pesos de las competencias</h4>
+                </div> 
+                <form name="pesoForm" method="post" class="form-horizontal" ng-submit="modificarPeso()" novalidate>
+                    <div class="modal-body">
+                        <div ng-repeat="competencia in competencias">
+                            <div class="form-group" ng-class="{'has-error':pesoForm.peso{{$index}}.$invalid && !pesoForm.peso{{$index}}.$pristine }">
+                                <label for="peso" class="col-sm-8 control-label">Peso de competencia {{competencia.titulo}} </label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" string-to-number step=0.01 min="0" max="100" id="peso" name="peso{{$index}}"  ng-model="competencia.peso" ng-change="getTotal()" required>
+                                    <p ng-show="pesoForm.peso{{$index}}.$invalid && !pesoForm.peso{{$index}}.$pristine" class="help-block">Peso de la competencia requerido.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error':pesoForm.pesoTotal.$invalid}">
+                            <label for="peso" class="col-sm-8 control-label">Total</label>
+                            <div class="col-sm-4">
+                                <input type="number" class="form-control" placeholder="0" step=0.01 id="peso" name="pesoTotal" min="100" max="100" ng-model="sum" required >
+                                <p ng-show="pesoForm.pesoTotal.$invalid" class="help-block">La suma de los pesos debe ser 100</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" ng-disabled="pesoForm.$invalid" closemodal="modalPesos">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+
+
 </section>
 <!-- /.content -->
 

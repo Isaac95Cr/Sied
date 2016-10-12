@@ -52,7 +52,7 @@ angular.module("index", ["ngRoute", 'ui.bootstrap'])
                     restrict: 'A',
                     link: function (scope, element, attr) {
                         var fn = $parse(attr['sglclick']);
-                        var fn2 = $parse(attr['dblclick'])
+                        var fn2 = $parse(attr['dblclick']);
                         var delay = 300, clicks = 0, timer = null;
                         element.on('click', function (event) {
                             clicks++; //count clicks
@@ -74,4 +74,18 @@ angular.module("index", ["ngRoute", 'ui.bootstrap'])
                         });
                     }
                 };
-            }]);
+            }])
+        .directive('stringToNumber', function () {
+            return {
+                require: 'ngModel',
+                link: function (scope, element, attrs, ngModel) {
+                    ngModel.$parsers.push(function (value) {
+                        return '' + value;
+                    });
+                    ngModel.$formatters.push(function (value) {
+                        return parseFloat(value);
+                    });
+                }
+            };
+        });
+
