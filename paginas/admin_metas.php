@@ -52,7 +52,7 @@
                                                 <button type="button" id={{meta.id}} name={{meta.id}} value={{meta.id}} ng-click="updateActual(meta)"   class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalEdit"><i class="fa fa-clipboard"></i></button>
                                             </td>
                                             <td>
-                                                <button type="button" id={{meta.id}} name={{meta.id}} value={{meta.id}} ng-click="eliminar(meta.id)"  class="btn btn-primary btn-block"><i class="fa fa-remove"></i></button>
+                                                <button type="button" id={{meta.id}} name={{meta.id}} value={{meta.id}} ng-click="confirmarEliminacion(meta.id)"  class="btn btn-primary btn-block"><i class="fa fa-remove"></i></button>
                                             </td>
                                         </tr>
 

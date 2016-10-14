@@ -64,9 +64,19 @@ angular.module("index")
                     $scope.meta_isEvaluable = 1;
                     $scope.is_Check = true;
                 });
-
-
-
+                
+                
+                
+                $scope.confirmarEliminacion = function (id) {
+                       modalService.modalYesNo("Confirmación", "<p>" + "¿Está seguro de realizar la acción?" + "</p>")
+                               .result.then(function (selectedItem) {
+                                   if (selectedItem === "si")
+                                       $scope.eliminar(id);
+                               });
+                   };
+                
+                
+                
 
                 $scope.eliminar = function (idParam) {
 
