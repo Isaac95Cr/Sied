@@ -122,7 +122,7 @@
                             <div class="form-group">
                                 <label for="peso" class="col-sm-2 control-label">Peso</label>
                                 <div class="col-sm-2">
-                                    <input type="number" class="form-control" placeholder="0" id="peso"> 
+                                    <input type="number" class="form-control" placeholder="0" id="peso" ng-model="meta_peso"> 
                                 </div>
                             </div>
 
@@ -180,7 +180,7 @@
                             <div class="form-group">
                                 <label for="peso" class="col-sm-2 control-label">Peso</label>
                                 <div class="col-sm-2">
-                                    <input type="number" class="form-control" placeholder="0" id="peso" string-to-number ng-model="meta_peso">
+                                  <input type="number" class="form-control" placeholder="0" id="peso" ng-model="meta_peso">
                                 </div>
                             </div>
 
