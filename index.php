@@ -229,6 +229,7 @@
         <script src="angular/index/controlMeta.js" type="text/javascript"></script>
         <script src="angular/index/controlEditPerfil.js" type="text/javascript"></script>
         <script src="angular/index/controlPesos.js" type="text/javascript"></script>
+        <script src="angular/index/controlAutoEvMetas.js" type="text/javascript"></script> 
 
     </body>
     <script type="text/ng-template" id="myModalContent.html">

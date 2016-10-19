@@ -13,7 +13,7 @@ angular.module("index")
 
                 $scope.actual = "0";  // se utiliza para saber cuál es la meta a la que se está haciendo referencia.
                 
-                $scope.auto_Evaluacion = "0";
+                $scope.auto_Evaluacion = 0;
 
                 $scope.selectMeta = function (msg) {
                     ShareDataService.prepForBroadcast(msg);
@@ -129,7 +129,7 @@ angular.module("index")
                     ($scope.meta_isEvaluable === "1")? 
                         ($scope.is_Check = true)  :   ($scope.is_Check = false )
                         
-                    $scope.meta_peso = meta.peso;
+                    $scope.meta_peso = parseInt(meta.peso);
                     $scope.meta_titulo = meta.titulo;
                     $scope.meta_descripcion = meta.descripcion;
                 };
@@ -140,7 +140,7 @@ angular.module("index")
                 $scope.modificar = function () {
                     var metaObj = {
                         is_Evaluable: $scope.meta_isEvaluable,
-                        peso: $scope.meta_peso,
+                        peso: parseInt($scope.meta_peso),
                         titulo: $scope.meta_titulo,
                         descripcion: $scope.meta_descripcion,
                         id: $scope.actual
@@ -163,10 +163,6 @@ angular.module("index")
                 };
                 
                 
-                
-                  $scope.guardar_AutoEvaluaciones = function (){
-                                
-                  };
 
             }])
         .factory("factoryMeta", function ($http) {
@@ -189,6 +185,12 @@ angular.module("index")
             meta.eliminarMeta = function (metaObj) {
                 return $http.post('/Sied/services/meta/del-meta.php', metaObj);
             };
+            
+            
+            meta.updateAutoEvaluaciones = function (metaObj) {
+                return $http.post('/Sied/services/meta/set-autoevMetas.php', metaObj);
+            };
+            
             return meta;
         })
         .factory('ShareDataService', function ($rootScope) {
@@ -207,20 +209,7 @@ angular.module("index")
 
             return sharedService;
         })
-        .directive('stringToNumber', function () {
-            return {
-                require: 'ngModel',
-                link: function (scope, element, attrs, ngModel) {
-                    ngModel.$parsers.push(function (value) {
-                        return '' + value;
-                    });
-                    ngModel.$formatters.push(function (value) {
-                        return parseFloat(value);
-                    });
-                }
-            };
-        }).
-        directive('iCheck', ['$timeout', '$parse', function ($timeout, $parse) {
+        .directive('iCheck', ['$timeout', '$parse', function ($timeout, $parse) {
                 return {
                     require: 'ngModel',
                     link: function ($scope, element, $attrs, ngModel) {
