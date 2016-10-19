@@ -17,14 +17,14 @@
     <body class="hold-transition login-page">
         <div class="login-box">
             <div class="login-logo">
-                <h1><b>Sistema de Evaluación del Desempeño</b></h1>
+                <h4><b>Sistema de Evaluación del Desempeño</b></h4>
             </div>
             <!-- /.login-logo -->
             <div class="login-box-body">
                 <p class="login-box-msg"><b>Inicio de Sesion</b></p>
-                <form action="index.php" method="post">
+                <form action="" method="post">
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control" placeholder="Usuario">
+                        <input type="text" class="form-control" placeholder="Cédula">
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">

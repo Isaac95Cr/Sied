@@ -210,6 +210,8 @@
         <script src="angular/angular.min.js" type="text/javascript"></script>
         <script src="angular/angular-route.min.js" type="text/javascript"></script>
         <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
+        <script src="angular/app.js" type="text/javascript"></script>
+        <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
         <!-- rutas -->
         <script src="rutas/rutas.js" type="text/javascript"></script>
         <!-- icheck -->
@@ -220,14 +222,14 @@
         <!-- Select2 -->
         <script src = "plugins/select2/select2.full.min.js" ></script>
         <!-- controles -->
-        <script src="angular/controller/controlDepartamento.js" type="text/javascript"></script>
-        <script src="angular/controller/controlEmpresa.js" type="text/javascript"></script>
-        <script src="angular/controller/controlPerfilComptencia.js" type="text/javascript"></script>
-        <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
-        <script src="angular/service/modalService.js" type="text/javascript"></script>
-        <script src="angular/controller/controlMeta.js" type="text/javascript"></script>
-        <script src="angular/controller/controlEditPerfil.js" type="text/javascript"></script>
-        <script src="angular/controller/controlPesos.js" type="text/javascript"></script>
+        <script src="angular/modal/modalService.js" type="text/javascript"></script>
+        <script src="angular/index/controlDepartamento.js" type="text/javascript"></script>
+        <script src="angular/index/controlEmpresa.js" type="text/javascript"></script>
+        <script src="angular/index/controlPerfilComptencia.js" type="text/javascript"></script>
+        <script src="angular/index/controlMeta.js" type="text/javascript"></script>
+        <script src="angular/index/controlEditPerfil.js" type="text/javascript"></script>
+        <script src="angular/index/controlPesos.js" type="text/javascript"></script>
+
     </body>
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
