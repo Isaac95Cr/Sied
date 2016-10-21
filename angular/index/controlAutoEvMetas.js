@@ -16,11 +16,6 @@ angular.module("index")
                 };
                 
                 
-//                $scope.initAutoEv = function (id) {
-//                    $scope.auto_Evaluacion = parseInt(id);
-//                };
-
-
                 $scope.cargar = function () {
                     factoryMeta.cargarMetas()
                             .success(function (data, status, headers, config) {
@@ -35,11 +30,12 @@ angular.module("index")
 
 
                 $scope.autoEvaluar = function () {
+                    $scope.objAutoEv = new Array();
                     $scope.inputs = angular.element(document).find('input');  // Obtiene todos los inputs de la página;
 
                     // Se recorren los inputs...
                     angular.forEach($scope.inputs, function (elemento, key) {
-
+                        
                         var obj = {id: elemento.id, valor: parseInt(elemento.value)};
                         $scope.objAutoEv.push(obj);
                     });

@@ -231,6 +231,8 @@
         <script src="angular/index/controlEditPerfil.js" type="text/javascript"></script>
         <script src="angular/index/controlPesos.js" type="text/javascript"></script>
         <script src="angular/index/controlAutoEvMetas.js" type="text/javascript"></script> 
+        <script src="angular/index/cntrlCompetenciasColaborador.js" type="text/javascript"></script>
+        <script src="angular/index/controlAutoEvCompetencias.js" type="text/javascript"></script>
 
     </body>
     <script type="text/ng-template" id="myModalContent.html">

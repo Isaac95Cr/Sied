@@ -1,6 +1,6 @@
 <?php
 
-require '../database/meta.php';
+require '../../database/meta.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Decodificando formato Json

@@ -34,6 +34,7 @@
                                     </a>
                                 </h4>
                             </div>
+                            
                             <div id="collapse{{$index}}" class="panel-collapse collapse">
                                 <div class="box-body table-responsive">
                                     <table class="table table-bordered">
