@@ -53,12 +53,12 @@ angular.module("app")
             }])
         .run(function ($window,$rootScope, autentificacionService, sessionService) {
             $rootScope.$on('$locationChangeStart', function (event, next) {
-                alert(sessionService.userId);
+               /* alert(sessionService.userId);
                 if (sessionService.userId == null) {
                     alert("lala");
                     //$location.href("Sied/login.php");
-                    $window.location.href = 'login.php';
-                }
+                  //  $window.location.href = 'login.php';
+                }*/
             });
         })
         .directive('sglclick', ['$parse', function ($parse) {
