@@ -5,7 +5,6 @@ angular.module('registro')
                 $scope.bandera = true;
                 
                 $scope.agregarUsuario = function () {
-                    $scope.user.contrasena = sha1();
                     userService.insert($scope.user)
                             .success(function (data, status, headers, config) {
                                 modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");

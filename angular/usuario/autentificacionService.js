@@ -1,11 +1,14 @@
 angular.module('usuario')
-        .service('autentificacionService', ['$http', 'sessionService', function ($http, sessionService) {
+        .service('autentificacionService', ['$http', 'sessionService', '$window', function ($http, sessionService, $window) {
                 var autentificacion = {};
                 autentificacion.login = function (obj) {
                     $http.post('/Sied/services/usuario/login.php', obj)
                             .success(function (data, status, headers, config) {
                                 sessionService.create(data.id, data.user.id,
-                                        data.user.name, data.user.role);
+                                        data.user.nombre, data.user.perfil);
+                                
+                                //$window.location.href = 'index.php';
+                                alert("create " + sessionService.userId + " " + sessionService.userName + " " + sessionService.userRole);
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(data));
@@ -14,10 +17,10 @@ angular.module('usuario')
                 autentificacion.logout = function (obj) {
 
                     sessionService.destroy();
-                    autentificacion.login = function (obj) {
+                    autentificacion.logout = function (obj) {
                         $http.post('/Sied/services/usuario/logout.php', obj)
                                 .success(function (data, status, headers, config) {
-                                    
+
                                 })
                                 .error(function (data, status, headers, config) {
                                     alert("failure message: " + JSON.stringify(data));
@@ -36,8 +39,11 @@ angular.module('usuario')
                             });
                     return false;
                 };
+                
                 autentificacion.getperfil = function () {
-                    return sessionService.userRole;
+                    //return "lola";
+                    alert("create " + sessionService.userId + " " + sessionService.userName + " " + sessionService.userRole);
+                    return sessionService.userId;
                 };
 
                 return autentificacion;

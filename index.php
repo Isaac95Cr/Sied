@@ -27,7 +27,7 @@
 
     </head>
 
-    <body class="hold-transition skin-blue fixed sidebar-mini" ng-app="index">
+    <body class="hold-transition skin-blue fixed sidebar-mini" ng-app="app">
         <!-- Site wrapper -->
         <div class="wrapper">
             <!-- header -->
@@ -211,9 +211,8 @@
         <script src="angular/angular-route.min.js" type="text/javascript"></script>
         <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
         <script src="angular/app.js" type="text/javascript"></script>
-        <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
         <!-- rutas -->
-        <script src="rutas/rutas.js" type="text/javascript"></script>
+        <script src="angular/rutas.js" type="text/javascript"></script>
         <!-- icheck -->
         <script src="plugins/iCheck/icheck.min.js" type="text/javascript"></script>
         <!-- DataTables -->
@@ -223,6 +222,8 @@
         <script src = "plugins/select2/select2.full.min.js" ></script>
         <!-- controles -->
         <script src="angular/modal/modalService.js" type="text/javascript"></script>
+        <script src="angular/usuario/autentificacionService.js" type="text/javascript"></script>
+        <script src="angular/usuario/sessionService.js" type="text/javascript"></script>
         <script src="angular/index/controlDepartamento.js" type="text/javascript"></script>
         <script src="angular/index/controlEmpresa.js" type="text/javascript"></script>
         <script src="angular/index/controlPerfilComptencia.js" type="text/javascript"></script>
