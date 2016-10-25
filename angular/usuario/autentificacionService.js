@@ -4,29 +4,26 @@ angular.module('usuario')
                 autentificacion.login = function (obj) {
                     $http.post('/Sied/services/usuario/login.php', obj)
                             .success(function (data, status, headers, config) {
-                                sessionService.create(data.id, data.user.id,
-                                        data.user.nombre, data.user.perfil);
-                                
-                                //$window.location.href = 'index.php';
-                                alert("create " + sessionService.userId + " " + sessionService.userName + " " + sessionService.userRole);
+                                //sessionService.create(data.id, data.user.id,
+                               //         data.user.nombre, data.user.perfil);
+                                $window.location.href = '/Sied/';
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(data));
                             });
                 };
+
                 autentificacion.logout = function (obj) {
-
-                    sessionService.destroy();
-                    autentificacion.logout = function (obj) {
-                        $http.post('/Sied/services/usuario/logout.php', obj)
-                                .success(function (data, status, headers, config) {
-
-                                })
-                                .error(function (data, status, headers, config) {
-                                    alert("failure message: " + JSON.stringify(data));
-                                });
-                    };
+                    $http.post('/Sied/services/usuario/logout.php', obj)
+                            .success(function (data, status, headers, config) {
+                               // sessionService.destroy();
+                               // $window.location.href = '/Sied/';
+                            })
+                            .error(function (data, status, headers, config) {
+                                alert("failure message: " + JSON.stringify(data));
+                            });
                 };
+
                 autentificacion.isAutorizado = function (obj) {
                     $http.post('/Sied/services/usuario/session.php', obj)
                             .success(function (data, status, headers, config) {
@@ -39,7 +36,7 @@ angular.module('usuario')
                             });
                     return false;
                 };
-                
+
                 autentificacion.getperfil = function () {
                     //return "lola";
                     alert("create " + sessionService.userId + " " + sessionService.userName + " " + sessionService.userRole);

@@ -21,7 +21,7 @@
             </div>
             <!-- /.login-logo -->
             <div class="login-box-body">
-                <p class="login-box-msg"><b>Inicio de Sesion {{session}} </b></p>
+                <p class="login-box-msg"><b>Inicio de Sesion </b></p>
                 <form name="form" ng-submit="login()" method="post" novalidate>
                     <div class="form-group has-feedback" ng-class="{ 'has-error' : form.id.$invalid && !form.id.$pristine }">
                         <input type="text" class="form-control" placeholder="Cédula" name="id" ng-model="user.id" required>
@@ -55,6 +55,7 @@
         <script src="angular/angular.min.js" type="text/javascript"></script>
         <script src="angular/angular-resource.min.js" type="text/javascript"></script>       
         <script src="angular/angular-route.min.js" type="text/javascript"></script>
+        <script src="angular/ngStorage.min.js" type="text/javascript"></script>
         <script src="angular/app.js" type="text/javascript"></script>
         <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
         <script src="angular/registro/controlLogin.js" type="text/javascript"></script>

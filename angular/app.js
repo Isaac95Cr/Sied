@@ -1,4 +1,4 @@
-angular.module('usuario',[]);
+angular.module('usuario',['ngStorage']);
 
 angular.module('modal',['ui.bootstrap']);
 

@@ -72,7 +72,7 @@
                                 </ul>
                             </li>
                             <!-- User Account: style can be found in dropdown.less -->
-                            <li class="dropdown user user-menu">
+                            <li class="dropdown user user-menu" ng-controller="controlLogin">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-user"></i>
                                 </a>
@@ -80,7 +80,7 @@
                                     <!-- User image -->
                                     <li class="user-header">
                                         <p>
-                                            Alexander Pierce - Web Developer
+                                            {{user.userName}}
                                             <small>Member since Nov. 2012</small>
                                         </p>
                                     </li>
@@ -92,8 +92,8 @@
                                         <div class="pull-left">
                                             <a href="#" class="btn btn-default btn-flat">Perfil</a>
                                         </div>
-                                        <div class="pull-right">
-                                            <a href="#" class="btn btn-default btn-flat">Cerrar Sesion</a>
+                                        <div class="pull-right" >
+                                            <a ng-click="logout()" class="btn btn-default btn-flat">Cerrar Sesion</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -211,6 +211,7 @@
         <script src="angular/angular-route.min.js" type="text/javascript"></script>
         <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
         <script src="angular/app.js" type="text/javascript"></script>
+        <script src="angular/ngStorage.min.js" type="text/javascript"></script>
         <!-- rutas -->
         <script src="angular/rutas.js" type="text/javascript"></script>
         <!-- icheck -->
@@ -224,6 +225,7 @@
         <script src="angular/modal/modalService.js" type="text/javascript"></script>
         <script src="angular/usuario/autentificacionService.js" type="text/javascript"></script>
         <script src="angular/usuario/sessionService.js" type="text/javascript"></script>
+        <script src="angular/registro/controlLogin.js" type="text/javascript"></script>
         <script src="angular/index/controlDepartamento.js" type="text/javascript"></script>
         <script src="angular/index/controlEmpresa.js" type="text/javascript"></script>
         <script src="angular/index/controlPerfilComptencia.js" type="text/javascript"></script>
@@ -233,7 +235,7 @@
         <script src="angular/index/controlAutoEvMetas.js" type="text/javascript"></script> 
         <script src="angular/index/cntrlCompetenciasColaborador.js" type="text/javascript"></script>
         <script src="angular/index/controlAutoEvCompetencias.js" type="text/javascript"></script>
-
+        
     </body>
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
