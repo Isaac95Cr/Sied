@@ -32,11 +32,14 @@ angular.module("index")
                 $scope.autoEvaluar = function () {
                     $scope.objAutoEv = new Array();
                     $scope.inputs = angular.element(document).find('input');  // Obtiene todos los inputs de la página;
-
+                    var obj;
                     // Se recorren los inputs...
                     angular.forEach($scope.inputs, function (elemento, key) {
-                        
-                        var obj = {id: elemento.id, valor: parseInt(elemento.value)};
+                       (elemento.value === "") ?
+                            obj = {id: elemento.id, valor: "0"}
+                            :
+                            obj = {id: elemento.id, valor: parseInt(elemento.value)};
+                    
                         $scope.objAutoEv.push(obj);
                     });
 

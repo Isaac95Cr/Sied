@@ -52,8 +52,7 @@ class Meta{
             $sentencia->execute(array($is_Evaluable, $peso, $titulo, 
                                                            $descripcion, NULL, NULL,
                                                             NULL, NULL, NULL, NULL,
-                                                            1, 402270956));
-            
+                                                            1, 402270956));         
             return new Mensaje("Éxito", "<p>Se agregó la meta con éxito</p>");
         } catch (PDOException $pdoExcetion) {
             return new Mensaje("Error", "<p>Error:" . $pdoExcetion->getMessage(). "</p>");
@@ -104,21 +103,21 @@ class Meta{
     
     
     public static function update_AutoEvaluaciones($arreglo) {        
-        
-        for($i = 0; $i < count($arreglo); $i++){
-            try{
+               
+        try{
+          for($i = 0; $i < count($arreglo); $i++){
                 $comando = "UPDATE meta set auto_evaluacion = ? where id = ?";
                 $sentencia = Database::getInstance()->getDb()->prepare($comando);
                 $valor_Array = $arreglo[$i][valor];
                 $id_Array = $arreglo[$i][id];
                 $sentencia->execute(array($valor_Array, $id_Array));
             }
+            return new Mensaje("Éxito", "<p>Se ingresaron las autoevaluaciones</p>");
+        }
             catch (PDOException $pdoExcetion) {
                 return new Mensaje("Error", "<p>Error:" . $pdoExcetion->getMessage(). "</p>");
             }
-        }
-            return new Mensaje("Éxito", "<p>Se ingresaron las autoevaluaciones</p>");
-        }
+ }
         
         
         

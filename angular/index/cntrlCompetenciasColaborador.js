@@ -34,6 +34,11 @@ angular.module("index")
                 };
                 return $http.post('/Sied/services/competencia/get-competencia.php',obj);
             };
+            
+            competencia.updateAutoEvaluacionesCompe = function (metaObj) {
+                
+                return $http.post('/Sied/services/competencia/set-evalCompetencias.php', metaObj);
+            };
 
             return competencia;
         });
