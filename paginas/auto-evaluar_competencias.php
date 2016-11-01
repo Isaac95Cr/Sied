@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="box-body">
-                <form name="formAutoEv" ng-submit="guardarAutoEvComp()" class="form-horizontal">
+                <form name="formAutoEv" ng-submit="confirmarAutoEvCompe()" class="form-horizontal">
                     <div class="box-group" id="accordion">
                         <div class="panel box box-primary" ng-repeat="competencia in competencias">
                             <div class="box-header with-border">
@@ -44,7 +44,7 @@
                                                 <div class="form-group">
                                                     <label for="auto1" class="col-sm-3 control-label">Autoevaluación</label>
                                                     <div class="col-sm-3">
-                                                        <input type="number" min="0" max="100" class="form-control" id={{detalle.id}} name={{competencia.id}} placeholder="0" id="auto1"> 
+                                                        <input type="number" min="0" max="100" class="form-control" id={{detalle.id}} name={{competencia.id}} placeholder="0"> 
                                                     </div>
                                                 </div>
                                             </td>

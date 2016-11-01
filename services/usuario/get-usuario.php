@@ -1,5 +1,6 @@
 <?php
 require '../../database/usuario.php';
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $usuarios = Usuario::getAll();
     $datos["estado"] = 1;

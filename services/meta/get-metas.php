@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $body = json_decode(file_get_contents("php://input"), true);
-    $meta = Meta::getAllFrom($body['id']);
+    $meta = Meta::getMetas_User($body['id']);
     $datos["estado"] = 1;
     $datos["metas"] = $meta;
     print json_encode($datos);

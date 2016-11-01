@@ -76,6 +76,8 @@ angular.module("app")
                                     }]
                             }
                         })
+                        .when("/aprobar_metas/:id", {
+                            templateUrl: "paginas/aprobar_metas.php"
                         .when("/aprobar_metas", {
                             templateUrl: "paginas/aprobar_metas.php",
                             resolve: {
@@ -115,6 +117,9 @@ angular.module("app")
                                         return sessionService.perfil("colaborador");
                                     }]
                             }
+                        })
+                        .when("/detalleMetasJefe/:id", {
+                            templateUrl: "paginas/detalleMetasJefe.php"
                         })
                         .otherwise({redirectTo: '/'});
             }])

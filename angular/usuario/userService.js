@@ -11,6 +11,7 @@ angular.module('usuario')
                 };*/
                 return $http.post('/Sied/services/usuario/get-usuario.php',obj);
             };
+            
             usuario.insert = function(obj){
                 return $http.post('/Sied/services/usuario/add-usuario.php',obj);
             };
