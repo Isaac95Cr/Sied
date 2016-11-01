@@ -77,8 +77,8 @@ angular.module("app")
                             }
                         })
                         .when("/aprobar_metas/:id", {
-                            templateUrl: "paginas/aprobar_metas.php"
-                        .when("/aprobar_metas", {
+//                            templateUrl: "paginas/aprobar_metas.php"
+//                        .when("/aprobar_metas", {
                             templateUrl: "paginas/aprobar_metas.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {
