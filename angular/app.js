@@ -2,7 +2,7 @@ angular.module('usuario',['ngStorage']);
 
 angular.module('modal',['ui.bootstrap']);
 
-angular.module('index', ['ngRoute','modal']);
+angular.module('index', ['ngRoute','modal','usuario']);
 
 angular.module('registro',['index','usuario','modal']);
 

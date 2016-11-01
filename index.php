@@ -29,7 +29,7 @@
 
     <body class="hold-transition skin-blue fixed sidebar-mini" ng-app="app">
         <!-- Site wrapper -->
-        <div class="wrapper">
+        <div class="wrapper" ng-controller="controlLogin" ng-init="init()">
             <!-- header -->
             <header class="main-header">
                 <!-- Logo -->
@@ -72,7 +72,7 @@
                                 </ul>
                             </li>
                             <!-- User Account: style can be found in dropdown.less -->
-                            <li class="dropdown user user-menu" ng-controller="controlLogin">
+                            <li class="dropdown user user-menu" >
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-user"></i>
                                 </a>
@@ -80,8 +80,8 @@
                                     <!-- User image -->
                                     <li class="user-header">
                                         <p>
-                                            {{user.userName}}
-                                            <small>Member since Nov. 2012</small>
+                                            {{usuario.nombre}}
+                                            <small></small>
                                         </p>
                                     </li>
                                     <!-- Menu Body -->
@@ -90,7 +90,7 @@
                                     <!-- Menu Footer-->
                                     <li class="user-footer">
                                         <div class="pull-left">
-                                            <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                                            <a href="" class="btn btn-default btn-flat">Perfil</a>
                                         </div>
                                         <div class="pull-right" >
                                             <a ng-click="logout()" class="btn btn-default btn-flat">Cerrar Sesion</a>
@@ -107,18 +107,18 @@
             <!-- =============================================== -->
 
             <!-- Left side column. contains the sidebar -->
-            <aside class="main-sidebar">
+            <aside class="main-sidebar" >
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
-                    <!--                    <div class="user-panel" style="height: 45px;">
-                                            <div class="pull-left info">
-                                                <p>Alexander Pierce</p>
-                                            </div>
-                                        </div>-->
+                    <div class="user-panel" style="height: 45px;">
+                        <div class="pull-left info">
+                            <p>{{usuario.nombre}}</p>
+                        </div>
+                    </div>
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        <li class="treeview">
+                        <li class="treeview" ng-if="usuario.perfil.colaborador == 1 || usuario.perfil.jefe == 1">
                             <a href="">
                                 <i class="fa fa-flag"></i> <span>Metas</span>
                                 <span class="pull-right-container">
@@ -126,11 +126,11 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="#/admin_metas"><i class="fa fa-flag-o"></i>Administrar Metas</a></li>
-                                <li><a href="#/admin_colaboradores_metas"><i class="fa fa-users"></i>Colaboradores</a></li>
+                                <li ng-if="usuario.perfil.colaborador == 1"><a href="#/admin_metas"><i class="fa fa-flag-o"></i>Administrar Metas</a></li>
+                                <li ng-if="usuario.perfil.jefe == 1"><a href="#/admin_colaboradores_metas"><i class="fa fa-users"></i>Colaboradores</a></li>
                             </ul>
                         </li>
-                        <li class="treeview">
+                        <li class="treeview"  ng-if="usuario.perfil.colaborador == 1 || usuario.perfil.jefe == 1">
                             <a href="">
                                 <i class="fa fa-line-chart"></i> <span>Competencias</span>
                                 <span class="pull-right-container">
@@ -138,11 +138,11 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="#/admin_competencias"><i class="fa  fa-bar-chart-o"></i>Administrar Competencias</a></li>
-                                <li><a href="#/admin_colaboradores_competencias"><i class="fa fa-users"></i>Colaboradores</a></li>
+                                <li ng-if="usuario.perfil.colaborador == 1"><a href="#/admin_competencias"><i class="fa  fa-bar-chart-o"></i>Administrar Competencias</a></li>
+                                <li ng-if="usuario.perfil.jefe == 1"><a href="#/admin_colaboradores_competencias"><i class="fa fa-users"></i>Colaboradores</a></li>
                             </ul>
                         </li>
-                        <li class="treeview">
+                        <li class="treeview" ng-if="usuario.perfil.RH == 1">
                             <a href="">
                                 <i class="fa fa-gears"></i> <span>Administración</span>
                                 <span class="pull-right-container">
@@ -156,7 +156,7 @@
                                 <li><a href="#/admin_periodo"><i class="fa fa-calendar-plus-o"></i>Periodos</a></li>
                             </ul>
                         </li>
-                        <li class="treeview">
+                        <li class="treeview" ng-if="usuario.perfil.RH == 1">
                             <a href="#">
                                 <i class="fa fa-clipboard"></i> <span>Reportes</span>
                                 <span class="pull-right-container">
@@ -225,6 +225,7 @@
         <script src="angular/modal/modalService.js" type="text/javascript"></script>
         <script src="angular/usuario/autentificacionService.js" type="text/javascript"></script>
         <script src="angular/usuario/sessionService.js" type="text/javascript"></script>
+        <script src="angular/usuario/userService.js" type="text/javascript"></script>
         <script src="angular/registro/controlLogin.js" type="text/javascript"></script>
         <script src="angular/index/controlDepartamento.js" type="text/javascript"></script>
         <script src="angular/index/controlEmpresa.js" type="text/javascript"></script>
@@ -235,7 +236,7 @@
         <script src="angular/index/controlAutoEvMetas.js" type="text/javascript"></script> 
         <script src="angular/index/cntrlCompetenciasColaborador.js" type="text/javascript"></script>
         <script src="angular/index/controlAutoEvCompetencias.js" type="text/javascript"></script>
-        
+        <script src="angular/index/controlUsuario.js" type="text/javascript"></script>
     </body>
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">

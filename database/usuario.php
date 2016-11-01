@@ -17,7 +17,11 @@ class Usuario {
     }
 
     public static function getAll() {
-        $consulta = "SELECT * FROM usuario";
+        $consulta = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,departamento, (empresa.nombre) as empresa,
+perfil.colaborador, perfil.jefe,perfil.RH from usuario, perfil,empresa,departamento where 
+usuario.departamento = departamento.id 
+and departamento.empresa = empresa.id 
+and usuario.perfil = perfil.id;";
         try {
             $comando = Database::getInstance()->getDb()->prepare($consulta);
             $comando->execute();
@@ -66,18 +70,79 @@ class Usuario {
             $user = $sentencia->fetch(PDO::FETCH_ASSOC);
             if ($user) {
                 $response['id'] = $user['id'];
-                $response['user']['id'] = $user['id'];
-                $response['user']['nombre'] = $user['nombre'] . " " . $user['apellido1'] . " " . $user['apellido2'];
-                $response['user']['correp'] = $user['correo'];
-                $response['user']['perfil']['colaborador'] = $user['colaborador'];
-                $response['user']['perfil']['jefe'] = $user['jefe'];
-                $response['user']['perfil']['RH'] = $user['RH'];
+                $response['nombre'] = $user['nombre'] . " " . $user['apellido1'] . " " . $user['apellido2'];
+                $response['correo'] = $user['correo'];
+                $response['perfil']['colaborador'] = $user['colaborador'];
+                $response['perfil']['jefe'] = $user['jefe'];
+                $response['perfil']['RH'] = $user['RH'];
                 return $response;
             }
             return false;
         } catch (PDOException $pdoExcetion) {
             return false;
         }
+    }
+
+    public static function token($user) {
+        $key = "userSied";
+        $token = array(
+            "kid" => "1",
+            "user" => $user
+        );
+        $jwt = JWT::encode($token, $key);
+        try {
+            $sign = JWT::getSign($jwt);
+        } catch (Exception $e) {
+            return null;
+        }
+        $comando = "UPDATE usuario SET token = ? WHERE id = ?;";
+
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($sign, $user['id']));
+        } catch (PDOException $pdoExcetion) {
+            return new Mensaje("Error", "<p>Error:" . $pdoExcetion->getMessage() . "</p>");
+        }
+        return $jwt;
+    }
+
+    public static function logout($jwt) {
+        $key = "userSied";
+        try {
+            $decoded = JWT::decode($jwt, $key, array('HS256'));
+        } catch (Exception $e) {
+            return null;
+        }
+        $comando = "UPDATE usuario SET token = null WHERE id = ?;";
+
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($decoded->user->id));
+        } catch (PDOException $pdoExcetion) {
+            return new Mensaje("Error", "<p>Error:" . $pdoExcetion->getMessage() . "</p>");
+        }
+    }
+
+    public static function validarToken($jwt) {
+        $key = "userSied";
+        try {
+            $decoded = JWT::decode($jwt, $key, array('HS256'));
+            $sign = JWT::getSign($jwt);
+        } catch (Exception $e) {
+            return false;
+        }
+        $comando = "select 1 from sied.usuario where token = ? ;";
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($sign));
+            $result = $sentencia->fetch(PDO::FETCH_ASSOC);
+            if (result) {
+                return false;
+            }
+        } catch (PDOException $pdoExcetion) {
+            return false;
+        }
+        return true;
     }
 
 }

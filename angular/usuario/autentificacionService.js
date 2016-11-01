@@ -4,8 +4,7 @@ angular.module('usuario')
                 autentificacion.login = function (obj) {
                     $http.post('/Sied/services/usuario/login.php', obj)
                             .success(function (data, status, headers, config) {
-                                //sessionService.create(data.id, data.user.id,
-                               //         data.user.nombre, data.user.perfil);
+                                sessionService.guardar(data);
                                 $window.location.href = '/Sied/';
                             })
                             .error(function (data, status, headers, config) {
@@ -16,8 +15,8 @@ angular.module('usuario')
                 autentificacion.logout = function (obj) {
                     $http.post('/Sied/services/usuario/logout.php', obj)
                             .success(function (data, status, headers, config) {
-                               // sessionService.destroy();
-                               // $window.location.href = '/Sied/';
+                                sessionService.destroy();
+                                $window.location.href = '/Sied/';
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(data));

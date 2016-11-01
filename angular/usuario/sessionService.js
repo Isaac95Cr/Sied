@@ -1,33 +1,82 @@
 angular.module('usuario')
-        .service('sessionService', ['$sessionStorage', function ($sessionStorage) {
-                var session = {};
-
-                session.create = function (sessionId, userId, userName, userRole) {
-                    session.id = sessionId;
-                    session.userId = userId;
-                    session.userName = userName;
-                    session.userRole = userRole;
-                    //alert("create " +this.userId+ " " + this.userName + " " +this.userRole);
-                    $sessionStorage.session = session;
+        .service('sessionService', ['$sessionStorage',"$q", function ($sessionStorage,$q) {
+                var session = {
+                    carga: false,
+                    usuario: "undefined"
                 };
 
-                session.load = function () {
-                    var x = $sessionStorage.session;
-                    if (x != null) {
-                        session.id = x.id;
-                        session.userId = x.userId;
-                        session.userName = x.userName;
-                        session.userRole = x.userRole;
+                session.guardar = function (token) {
+                    token = token.replace(/^\s+|\s+$/g, '');
+                    $sessionStorage.session = (token);
+                };
+
+                session.cargar = function () {
+                    var token = $sessionStorage.session;
+                    var user;
+                    if (token != null) {
+                        user = this.getUserFromToken(token);
+                        this.usuario = user.user;
+                        this.carga = true;
+                    } else {
+                        this.usuario = "undefined";
                     }
-                    return x;
+                    return user;
+                };
+
+                session.token = function () {
+                    if (!session.carga)
+                        session.cargar();
+                    return {token: $sessionStorage.session};
+
                 };
 
                 session.destroy = function () {
-                    session.id = null;
-                    session.userId = null;
-                    session.userName = null;
-                    session.userRole = null;
                     delete $sessionStorage.session;
                 };
+
+                session.getUsuario = function () {
+                    if (!session.carga)
+                        session.cargar();
+                    return this.usuario;
+                };
+
+                session.permisos = function () {
+                    if (!session.carga)
+                        session.cargar();
+                    return this.usuario.perfil;
+                };
+                
+                session.perfil = function(permiso){
+                    var user = session.permisos();
+                    if(user[permiso] === "0")
+                      return  $q.reject("noAutorizado");    
+                };
+
+                function urlBase64Decode(str) {
+                    var output = str.replace('-', '+').replace('_', '/');
+                    switch (output.length % 4) {
+                        case 0:
+                            break;
+                        case 2:
+                            output += '==';
+                            break;
+                        case 3:
+                            output += '=';
+                            break;
+                        default:
+                            throw 'Illegal base64url string!';
+                    }
+                    return window.atob(output);
+                }
+
+                session.getUserFromToken = function (token) {
+                    var user = {};
+                    if (typeof token !== 'undefined') {
+                        var encoded = token.split('.')[1];
+                        user = JSON.parse(urlBase64Decode(encoded));
+                    }
+                    return user;
+                };
+
                 return session;
             }]);
