@@ -73,6 +73,18 @@ class Meta{
             }
     }
     
+    
+      public static function getMetas_User($id) {
+            $consulta = "SELECT * FROM meta WHERE usuario = ?;";
+            try {
+                $comando = Database::getInstance()->getDb()->prepare($consulta);
+                $comando->execute(array($id));
+                return $comando->fetchAll(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                return false;
+            }
+    }
+    
    
    public static function delete_Meta($id) {
         $comando = "DELETE FROM meta WHERE id = ?;";
@@ -113,6 +125,26 @@ class Meta{
                 $sentencia->execute(array($valor_Array, $id_Array));
             }
             return new Mensaje("Éxito", "<p>Se ingresaron las autoevaluaciones</p>");
+        }
+            catch (PDOException $pdoExcetion) {
+                return new Mensaje("Error", "<p>Error:" . $pdoExcetion->getMessage(). "</p>");
+            }
+ }
+ 
+ 
+ 
+ 
+public static function update_Evaluacion($arreglo) {        
+               
+        try{
+          for($i = 0; $i < count($arreglo); $i++){
+                $comando = "UPDATE meta set evaluacion = ? where id = ?";
+                $sentencia = Database::getInstance()->getDb()->prepare($comando);
+                $valor_Array = $arreglo[$i][valor];
+                $id_Array = $arreglo[$i][id];
+                $sentencia->execute(array($valor_Array, $id_Array));
+            }
+            return new Mensaje("Éxito", "<p>Se ingresaron las evaluaciones</p>");
         }
             catch (PDOException $pdoExcetion) {
                 return new Mensaje("Error", "<p>Error:" . $pdoExcetion->getMessage(). "</p>");

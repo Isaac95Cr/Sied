@@ -225,6 +225,10 @@
         <script src="angular/modal/modalService.js" type="text/javascript"></script>
         <script src="angular/usuario/autentificacionService.js" type="text/javascript"></script>
         <script src="angular/usuario/sessionService.js" type="text/javascript"></script>
+        <script src="angular/usuario/userService.js" type="text/javascript"></script>
+        <script src="angular/usuario/usersColaboradoresMetas.js" type="text/javascript"></script>
+        
+        
         <script src="angular/registro/controlLogin.js" type="text/javascript"></script>
         <script src="angular/index/controlDepartamento.js" type="text/javascript"></script>
         <script src="angular/index/controlEmpresa.js" type="text/javascript"></script>
@@ -235,6 +239,9 @@
         <script src="angular/index/controlAutoEvMetas.js" type="text/javascript"></script> 
         <script src="angular/index/cntrlCompetenciasColaborador.js" type="text/javascript"></script>
         <script src="angular/index/controlAutoEvCompetencias.js" type="text/javascript"></script>
+        <script src="angular/index/controlEvaluarMetas.js" type="text/javascript"></script>
+        <script src="angular/index/controlAprobarMetas.js" type="text/javascript"></script>
+        <script src="angular/index/controlDetalleMetasJefe.js" type="text/javascript"></script>
         
     </body>
     <script type="text/ng-template" id="myModalContent.html">

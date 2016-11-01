@@ -171,6 +171,11 @@ angular.module("index")
             meta.cargarMetas = function () {
                 return $http.get('/Sied/services/meta/get-metas.php');
             };
+            
+            
+           meta.cargarMetasUser = function (obj) {
+                return $http.post('/Sied/services/meta/get-metas.php', obj);
+            };
 
 
             meta.agregarMeta = function (metaObj) {
@@ -189,6 +194,11 @@ angular.module("index")
             
             meta.updateAutoEvaluaciones = function (metaObj) {
                 return $http.post('/Sied/services/meta/set-autoevMetas.php', metaObj);
+            };
+           
+            
+           meta.updateEvaluaciones = function (metaObj) {
+                return $http.post('/Sied/services/meta/set-EvalMetas.php', metaObj);
             };
             
             return meta;

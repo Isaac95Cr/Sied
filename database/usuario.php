@@ -17,7 +17,7 @@ class Usuario {
     }
 
     public static function getAll() {
-        $consulta = "SELECT * FROM usuario";
+        $consulta = "SELECT * FROM usuario ORDER BY apellido1";
         try {
             $comando = Database::getInstance()->getDb()->prepare($consulta);
             $comando->execute();

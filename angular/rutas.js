@@ -31,10 +31,10 @@ angular.module("app")
                         .when("/editar_perfil-competencia/:perfil", {
                             templateUrl: "paginas/editar_perfil-competencia.php",
                         })
-                        .when("/aprobar_metas", {
+                        .when("/aprobar_metas/:id", {
                             templateUrl: "paginas/aprobar_metas.php"
                         })
-                        .when("/evaluar_metas", {
+                        .when("/evaluar_metas/:id", {
                             templateUrl: "paginas/evaluar_metas.php"
                         })
                         .when("/evaluar_competencias", {
@@ -48,6 +48,9 @@ angular.module("app")
                         })
                         .when("/auto-evaluar_competencias", {
                             templateUrl: "paginas/auto-evaluar_competencias.php"
+                        })
+                        .when("/detalleMetasJefe/:id", {
+                            templateUrl: "paginas/detalleMetasJefe.php"
                         })
                         .otherwise({redirectTo: '/'});
             }])
