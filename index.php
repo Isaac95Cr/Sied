@@ -12,9 +12,12 @@
         <!-- Ionicons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <!-- Select2 -->
-        <link rel="stylesheet" href="plugins/select2/select2.min.css">
+        <link href="plugins/select/select.min.css" rel="stylesheet" type="text/css"/>
+        <link href="plugins/select2/select2.min.css" rel="stylesheet" type="text/css"/>
         <!-- tabla-->
-        <link href="plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+        <link href="plugins/datatables/angular-datatables.min.css" rel="stylesheet" type="text/css"/>
+        <link href="plugins/datatables/datatables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <!-- iCheck --> 
         <link href="plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css"/>
         <link href="plugins/iCheck/flat/green.css" rel="stylesheet" type="text/css"/>
@@ -22,9 +25,6 @@
         <!-- Theme style -->
         <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
         <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-
-
-
     </head>
 
     <body class="hold-transition skin-blue fixed sidebar-mini" ng-app="app">
@@ -209,6 +209,7 @@
         <!-- angular -->
         <script src="angular/angular.min.js" type="text/javascript"></script>
         <script src="angular/angular-route.min.js" type="text/javascript"></script>
+        <script src="angular/angular-sanitize.min.js" type="text/javascript"></script>
         <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
         <script src="angular/app.js" type="text/javascript"></script>
         <script src="angular/ngStorage.min.js" type="text/javascript"></script>
@@ -217,18 +218,20 @@
         <!-- icheck -->
         <script src="plugins/iCheck/icheck.min.js" type="text/javascript"></script>
         <!-- DataTables -->
-        <script src="plugins/datatables/jquery.dataTables.min.js"></script>
-        <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+        <script src="plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+        <script src="plugins/datatables/angular-datatables.min.js" type="text/javascript"></script>
+        <script src="plugins/datatables/angular-datatables.bootstrap.min.js" type="text/javascript"></script>
         <!-- Select2 -->
-        <script src = "plugins/select2/select2.full.min.js" ></script>
+        <script src="plugins/select/select.min.js" type="text/javascript"></script>
+        <script src="plugins/select2/select2.min.js" type="text/javascript"></script>
         <!-- controles -->
         <script src="angular/modal/modalService.js" type="text/javascript"></script>
         <script src="angular/usuario/autentificacionService.js" type="text/javascript"></script>
         <script src="angular/usuario/sessionService.js" type="text/javascript"></script>
         <script src="angular/usuario/userService.js" type="text/javascript"></script>
         <script src="angular/usuario/usersColaboradoresMetas.js" type="text/javascript"></script>
-        
-        
+
+
         <script src="angular/registro/controlLogin.js" type="text/javascript"></script>
         <script src="angular/index/controlDepartamento.js" type="text/javascript"></script>
         <script src="angular/index/controlEmpresa.js" type="text/javascript"></script>
@@ -242,7 +245,8 @@
         <script src="angular/index/controlEvaluarMetas.js" type="text/javascript"></script>
         <script src="angular/index/controlAprobarMetas.js" type="text/javascript"></script>
         <script src="angular/index/controlDetalleMetasJefe.js" type="text/javascript"></script>
-        
+        <script src="angular/index/controlUsuario.js" type="text/javascript"></script>
+
     </body>
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
@@ -263,4 +267,5 @@
         </div>
         </form>
     </script> 
+
 </html>

@@ -1,62 +1,69 @@
 angular.module("index")
         .controller("controlAprobarMetas", ['$scope', 'factoryMeta', '$routeParams', 'modalService', function ($scope, factoryMeta, $routeParams, modalService) {
-                
-        $scope.metasUser = [];
-        $scope.tiene_Metas = false;
 
-        $scope.init = function () {
+                $scope.metasUser = [];
+                $scope.tiene_Metas = false;
+
+                $scope.init = function () {
                     $scope.cargar();
-         };
+                };
 
 
-        $scope.cargar = function () {
-            var obj = {id:$routeParams.id}
+                $scope.cargar = function () {
+                    var obj = {id: $routeParams.id}
                     factoryMeta.cargarMetasUser(obj)
                             .success(function (data, status, headers, config) {
                                 $scope.metasUser = data.metas;
                                 if ($scope.metasUser.length !== 0)
-                                            $scope.tiene_Metas = true;
+                                    $scope.tiene_Metas = true;
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
                             });
-          };
-          
-          
-          
-                        
-}])
-.directive('iCheck', ['$timeout', '$parse', function ($timeout, $parse) {
+                };
+
+
+
+
+            }])
+        .directive('iCheck', ['$timeout', '$parse', function ($timeout, $parse) {
                 return {
                     require: 'ngModel',
                     link: function ($scope, element, $attrs, ngModel) {
                         return $timeout(function () {
-                            var value = $attrs.value;
-                            var $element = $(element);
-
-                            // Instantiate the iCheck control.                            
-                            $element.iCheck({
-                                checkboxClass: 'icheckbox_flat-blue',
+                            var value = $attrs['value'];
+                            var color = $attrs['color'];
+                            if(!color){
+                                color = "blue";
+                            }
+                            $scope.$watch($attrs['ngModel'], function (newValue) {
+                                $(element).iCheck('update');
                             });
 
-                            // If the model changes, update the iCheck control.
-                            $scope.$watch($attrs.ngModel, function (newValue) {
-                                $element.iCheck('update');
+                            $scope.$watch($attrs['ngDisabled'], function (newValue) {
+                                $(element).iCheck(newValue ? 'disable' : 'enable');
+                                $(element).iCheck('update');
                             });
 
-                            // If the iCheck control changes, update the model.
-                            $element.on('ifChanged', function (event) {
-                                if ($element.attr('type') === 'checkbox' && $attrs.ngModel) {
+                            return $(element).iCheck({
+                                checkboxClass: 'icheckbox_flat-'+color,
+                                radioClass: 'iradio_minimal'
+                            }).on('ifToggled', function (event) {
+                                if ($(element).attr('type') === 'checkbox' && $attrs['ngModel']) {
                                     $scope.$apply(function () {
-                                        ngModel.$setViewValue(value);
+                                        return ngModel.$setViewValue(event.target.checked);
+                                    });
+                                }
+                                if ($(element).attr('type') === 'radio' && $attrs['ngModel']) {
+                                    return $scope.$apply(function () {
+                                        return ngModel.$setViewValue(value);
                                     });
                                 }
                             });
-
-                        });
+                        }, 300);
                     }
                 };
-            }]);                
+            }]);
 
 
 
@@ -78,7 +85,7 @@ angular.module("index")
 //                })
 //
 //                return $(element).iCheck({
-//                    checkboxClass: 'icheckbox_square-blue',
+//                    checkboxClass: 'icheckbox_flat-blue',
 //                    radioClass: 'iradio_square-blue'
 //
 //                }).on('ifChanged', function (event) {

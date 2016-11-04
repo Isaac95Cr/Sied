@@ -13,6 +13,10 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <!-- Theme style -->
         <link href="dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
+        <!-- tabla-->
+        <link href="plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+        <link href="plugins/datatables/angular-datatables.min.css" rel="stylesheet" type="text/css"/>
+        <link href="plugins/datatables/datatables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
     </head>
     <body class="hold-transition login-page" ng-app="registro" ng-controller="controlLogin">
         <div class="login-box">
@@ -23,11 +27,14 @@
             <div class="login-box-body">
                 <p class="login-box-msg"><b>Inicio de Sesion </b></p>
                 <form name="form" ng-submit="login()" method="post" novalidate>
-                    <div class="form-group has-feedback" ng-class="{ 'has-error' : form.id.$invalid && !form.id.$pristine }">
+                    <div class="form-group has-feedback" ng-class="{
+                            'has-error'
+                            : form.id.$invalid && !form.id.$pristine }">
                         <input type="text" class="form-control" placeholder="Cédula" name="id" ng-model="user.id" required>
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
-                    <div class="form-group has-feedback" ng-class="{ 'has-error' : form.contrasena.$invalid && !form.contrasena.$pristine }">
+                    <div class="form-group has-feedback" ng-class="{
+                            'has-error' : form.contrasena.$invalid && !form.contrasena.$pristine }">
                         <input type="password" class="form-control" placeholder="Contraseña" name="contrasena" ng-model="user.contrasena" required>
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
@@ -53,7 +60,6 @@
         <!-- Bootstrap 3.3.6 -->
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <script src="angular/angular.min.js" type="text/javascript"></script>
-        <script src="angular/angular-resource.min.js" type="text/javascript"></script>       
         <script src="angular/angular-route.min.js" type="text/javascript"></script>
         <script src="angular/ngStorage.min.js" type="text/javascript"></script>
         <script src="angular/app.js" type="text/javascript"></script>
@@ -62,5 +68,7 @@
         <script src="angular/modal/modalService.js" type="text/javascript"></script>
         <script src="angular/usuario/autentificacionService.js" type="text/javascript"></script>
         <script src="angular/usuario/sessionService.js" type="text/javascript"></script>
+        <script src="angular/ngStorage.min.js" type="text/javascript"></script>
+
     </body>
 </html>

@@ -17,15 +17,41 @@ class Usuario {
     }
 
     public static function getAll() {
-        $consulta = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,departamento, (empresa.nombre) as empresa,
-perfil.colaborador, perfil.jefe,perfil.RH from usuario, perfil,empresa,departamento where 
-usuario.departamento = departamento.id 
-and departamento.empresa = empresa.id 
-and usuario.perfil = perfil.id;";
+        $consulta = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,usuario.estado,"
+                . "(departamento.nombre) as departamento, (empresa.nombre) as empresa,"
+                . "perfil.colaborador, perfil.jefe,perfil.RH from usuario, perfil,empresa,departamento where "
+                . "usuario.departamento = departamento.id "
+                . "and departamento.empresa = empresa.id "
+                . "and usuario.perfil = perfil.id;";
         try {
+            
+            $json_response = array();
+            $perfiles = ['colaborador','jefe','RH'];
             $comando = Database::getInstance()->getDb()->prepare($consulta);
             $comando->execute();
-            return $comando->fetchAll(PDO::FETCH_ASSOC);
+            $users = $comando->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($users as $user) {
+                $response['id'] = $user['id'];
+                $response['nombre'] = $user['nombre'];
+                $response['apellido1'] = $user['apellido1'];
+                $response['apellido2'] = $user['apellido2'];
+                $response['correo'] = $user['correo'];
+                $response['estado'] = $user['estado'];
+                $response['departamento'] = $user['departamento'];
+                $response['empresa'] = $user['empresa'];
+                $response['perfil'] = array();
+                $response['perfil']['colaborador'] = $user['colaborador'];
+                $response['perfil']['jefe'] = $user['jefe'];
+                $response['perfil']['RH'] = $user['RH'];
+                /*foreach ($perfiles as $perfil){
+                    if($user[$perfil]==1){
+                        array_push($response['perfil'],$perfil);
+                    }
+                }*/
+                array_push($json_response, $response);
+            }
+            return $json_response;
+            //return $users;
         } catch (PDOException $e) {
             return false;
         }
