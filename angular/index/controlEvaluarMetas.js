@@ -1,11 +1,13 @@
 angular.module("index")
-        .controller("controlEvaluarMetas", ['$scope', 'factoryMeta', '$routeParams', 'modalService', function ($scope, factoryMeta, $routeParams, modalService) {
+        .controller("controlEvaluarMetas", ['$scope', 'factoryMeta', 'userService', '$routeParams', 'modalService', function ($scope, factoryMeta, userService, $routeParams, modalService) {
                 
         $scope.metasUser = [];
         $scope.tiene_Metas = false;
+        $scope.colaborador = "";
 
         $scope.init = function () {
                     $scope.cargar();
+                    $scope.cargarColaborador();
          };
 
 
@@ -22,6 +24,29 @@ angular.module("index")
                             });
           };
           
+          
+          
+          
+           $scope.cargarColaborador = function () {
+                    var colab = {id: $routeParams.id}
+                    userService.cargarUsuario(colab)
+                            .success(function (data, status, headers, config) {
+                                $scope.colaborador = data.usuarios[0].nombre + " " + data.usuarios[0].apellido1 + " " + data.usuarios[0].apellido2;
+                            })
+                            .error(function (data, status, headers, config) {
+                                alert("failure message: " + JSON.stringify(headers));
+                            });
+            };
+          
+          
+          
+             $scope.confirmarEvaluacion = function (id) {
+                       modalService.modalYesNo("Confirmación", "<p>" + "¿Está seguro de realizar la acción?" + "</p>")
+                               .result.then(function (selectedItem) {
+                                   if (selectedItem === "si")
+                                       $scope.evaluar();
+                        });
+             };
           
           
               $scope.evaluar = function () {

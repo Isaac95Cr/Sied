@@ -17,7 +17,7 @@
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Metas de {{colaborador.nombre}}</h3>
+                    <h3 class="box-title"><b>Colaborador: </b> {{colaborador}}</h3>
 
                     <div class="box-tools pull-right">
 

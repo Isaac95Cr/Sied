@@ -16,7 +16,7 @@
         <div class="col-md-12">
             <div class="box box-primary ">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Metas</h3>
+                    <h3 class="box-title"><b>Colaborador: </b> {{colaborador}}</h3>
 
                     <div class="box-tools pull-right">
 
@@ -44,12 +44,12 @@
                                                 <td style="font-weight: bold;">Comentario</td>
                                             </tr>
 
-                                            <tr>
+                                            <tr style="text-align: center;">
                                                 <td> {{meta.descripcion}} </td>
                                                 <td> {{meta.peso}} </td>                                       
                                                 <td class="text-center">
                                                     <div class="form-group">
-                                                        <div class="col-sm-3">
+                                                        <div class="col-sm-3" style="text-align: center;">
                                                             <input type="checkbox" class="flat-green" id="evaluable{{$index}}" name="meta{{$index}}" checked>
                                                         </div>
                                                         <div class="col-sm-3">

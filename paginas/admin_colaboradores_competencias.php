@@ -1,7 +1,6 @@
-<!-- Content Header (Page header) -->
+
 <section class="content-header">
-    <h1>Administracion de Colaboradores-competencias
-        <small>Blank example to the fixed layout</small>
+    <h1>Administración de Competencias
     </h1>
     <ol class="breadcrumb">
         <li><a href="#/"><i class="fa  fa-building-o"></i> Índice</a></li>
@@ -9,69 +8,55 @@
     </ol>
 </section>
 
+
 <!-- Main content -->
-<section class="content">
-    <!-- Default box -->
-    <div class="box box-primary">
-        <div class="box-header with-border">
-            <h3 class="box-title">Colaboradores-competencias</h3>
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fa fa-minus"></i>
-                </button>
+<div ng-controller="usersColaboradoresCompetencias" ng-init="init()">
+    <section class="content">
+        <!-- Default box -->
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Colaboradores</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
             </div>
-        </div>
-        <div class="box-body">
-            <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Detalles</th>
-                        <th>Evaluar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td> Juan </td>
-                        <td><a class="btn btn-primary btn-block" href="#/admin_competencias">Detalle</a></td>
-                        <td><a class="btn btn-primary btn-block" href="#/evaluar_competencias">Evaluar</a></td>
-                    </tr>
-                    <tr>
-                        <td> Jose </td>
-                        <td><a class="btn btn-primary btn-block" href="#/admin_competencias">Detalle</a></td>
-                        <td><a class="btn btn-primary btn-block" href="#/evaluar_competencias">Evaluar</a></td>
-                    </tr>
-                    <tr>
-                        <td> Max </td>
-                        <td><a class="btn btn-primary btn-block" href="#/admin_competencias">Detalle</a></td>
-                        <td><a class="btn btn-primary btn-block" href="#/evaluar_competencias">Evaluar</a></td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Detalles</th>
-                        <th>Evaluar</th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-        </div>
-        <!-- /.box-footer-->
-    </div>
-    <!-- /.box -->
+            <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Detalles</th>
+                            <th>Evaluar</th>
+                        </tr>
+                    </thead>
 
-</section>
-<!-- /.content -->
+                   <tr ng-repeat="user in listaUsuarios">
+                        <td><p data-toggle="popover" data-trigger="hover" data-html="true" data-content="<b>Jefe: <span class='label label-success'>Aprobado</span> <br> RRHH: <span class='label label-warning'>Pendiente</span></b>" > {{user.nombre + " " + user.apellido1 + " " + " " + user.apellido2}} </p></td>
+                        <td><a class="btn btn-primary btn-block" href="#/detalleCompetenciasJefe/{{user.id}}">Detalle</a></td>
+                        <td><a class="btn btn-primary btn-block" href="#/evaluar_competencias/{{user.id}}">Evaluar</a></td>
+                    </tr>
+                    
+                    
+                </table>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+            </div>
+            <!-- /.box-footer-->
+        </div>
+        <!-- /.box -->
 
-<script>
-    //Initialize Select2 Elements
-    $("#example1").DataTable();
+    </section>
+    <!-- /.content -->
+</div>
 
-    $(document).ready(function () {
+    <script>
+                //Initialize Select2 Elements
+                $("#example1").DataTable();
+                $(document).ready(function () {
         $('[data-toggle="popover"]').popover({
         });
-    });
-</script>
+        });
+    </script>

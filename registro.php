@@ -117,7 +117,6 @@
         <script src="plugins/select2/select2.full.min.js"></script>
         <!-- Angular-->
         <script src="angular/angular.min.js" type="text/javascript"></script>
-        <script src="angular/angular-resource.min.js" type="text/javascript"></script>       
         <script src="angular/angular-route.min.js" type="text/javascript"></script>
         <script src="angular/app.js" type="text/javascript"></script>
         <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
@@ -126,6 +125,7 @@
         <script src="angular/index/controlDepartamento.js" type="text/javascript"></script>
         <script src="angular/modal/modalService.js" type="text/javascript"></script>
         <script src="angular/usuario/userService.js" type="text/javascript"></script>
+        <script src="angular/ngStorage.min.js" type="text/javascript"></script>
         <script>
                                 //Initialize Select2 Elements
                                 $(".select2").select2();
