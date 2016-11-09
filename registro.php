@@ -15,7 +15,10 @@
         <link rel="stylesheet" href="plugins/select2/select2.min.css">
         <!-- Theme style -->
         <link href="dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
-
+        <!-- tabla-->
+        <link href="plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+        <link href="plugins/datatables/angular-datatables.min.css" rel="stylesheet" type="text/css"/>
+        <link href="plugins/datatables/datatables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
     </head>
     <body class="hold-transition register-page" ng-app="registro" >
@@ -105,7 +108,7 @@
             </div>
             </form>
         </script> 
-
+        
         <!-- Angular -->
 
 
@@ -115,20 +118,24 @@
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <!-- Select2 -->
         <script src="plugins/select2/select2.full.min.js"></script>
-        <!-- Angular-->
+       <!-- Angular-->
         <script src="angular/angular.min.js" type="text/javascript"></script>
         <script src="angular/angular-route.min.js" type="text/javascript"></script>
         <script src="angular/app.js" type="text/javascript"></script>
         <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
         <script src="angular/registro/controlRegistro.js" type="text/javascript"></script>
-        <script src="angular/index/controlEmpresa.js" type="text/javascript"></script>
-        <script src="angular/index/controlDepartamento.js" type="text/javascript"></script>
+        <script src="angular/registro/controlDepartamento.js" type="text/javascript"></script>
+        <script src="angular/registro/controlEmpresa.js" type="text/javascript"></script>
         <script src="angular/modal/modalService.js" type="text/javascript"></script>
         <script src="angular/usuario/userService.js" type="text/javascript"></script>
         <script src="angular/ngStorage.min.js" type="text/javascript"></script>
+<<<<<<< HEAD
         <script>
                                 //Initialize Select2 Elements
                                 $(".select2").select2();
         </script>
+=======
+        
+>>>>>>> origin/master
     </body>
 </html>
