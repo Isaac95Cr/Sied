@@ -11,7 +11,7 @@
 </section>
 
 <!-- Main content -->
-<section class="content" ng-controller="controlUsuario" ng-init="init()">
+<section class="content" ng-controller="controlUsuario as cu" ng-init="init()">
     <!-- Default box -->
     <div class="box box-primary">
         <div class="box-header with-border">
@@ -74,83 +74,92 @@
                         <span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Agregar un Usuario</h4>
                 </div>
+                 <form name="formAdd"  method="post" class="form-horizontal">
                 <div class="modal-body">
-                    <form action="#/admin_metas" method="post" class="form-horizontal">
-                        <div class="form-group" ng-class="{ 'has-error' : form.nombre.$invalid && !form.nombre.$pristine }">
+                   
+                        <div class="form-group" ng-class="{ 'has-error' : formAdd.nombre.$invalid && !formAdd.nombre.$pristine }">
                             <label for="nombre" class="col-sm-4 control-label">Nombre</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" placeholder="Nombre" name="nombre" ng-model="userAdd.nombre" required> 
                             </div>
                         </div>
-                        <div class="form-group" ng-class="{ 'has-error' : form.apellido1.$invalid && !form.apellido1.$pristine }">
+                        <div class="form-group" ng-class="{ 'has-error' : formAdd.apellido1.$invalid && !formAdd.apellido1.$pristine }">
                             <label for="apellido1" class="col-sm-4 control-label">Primer Apellido</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" placeholder="Primer Apellido" name="apellido1" ng-model="userAdd.apellido1" required>
                             </div>
                         </div>
-                        <div class="form-group" ng-class="{ 'has-error' : form.apellido2.$invalid && !form.apellido2.$pristine }">
+                        <div class="form-group" ng-class="{ 'has-error' : formAdd.apellido2.$invalid && !formAdd.apellido2.$pristine }">
                             <label for="apellido2" class="col-sm-4 control-label">Segundo Apellido</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" placeholder="Segundo Apellido" name="apellido2" ng-model="userAdd.apellido2" required>
                             </div>
                         </div>
-                        <div class="form-group" ng-class="{ 'has-error' : form.cedula.$invalid && !form.cedula.$pristine }">
+                        <div class="form-group" ng-class="{ 'has-error' : formAdd.cedula.$invalid && !formAdd.cedula.$pristine }">
                             <label for="cedula" class="col-sm-4 control-label">Cedula</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" placeholder="Cédula" name="cedula" ng-model="userAdd.cedula" required>
                             </div>
                         </div>
-                        <div class="form-group" ng-class="{ 'has-error' : form.correo.$invalid && !form.correo.$pristine }">
+                        <div class="form-group" ng-class="{ 'has-error' : formAdd.correo.$invalid && !formAdd.correo.$pristine }">
                             <label for="correo" class="col-sm-4 control-label">Correo</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" placeholder="Correo" name="correo" ng-model="userAdd.correo" required>
                             </div>
                         </div>
-                        <div  name="empresa" class="form-group" ng-controller="controlEmpresa" ng-init="cargarSimple()" ng-class="{ 'has-error' : form.empresa.$invalid && !form.empresa.$pristine }">
+                        <div  name="empresa" class="form-group"  ng-class="{ 'has-error' : formAdd.empresa.$invalid && !formAdd.empresa.$pristine }">
                             <label for="empresa" class="col-sm-4 control-label">Empresa</label>
-                            <div class="col-sm-8">
-                                <select ng-change="update()" ng-model="empresa" class="form-control select2"  
-                                        ng-options="option.nombre for option in empresas track by option.id"
-                                        style="width: 100%" required>
-                                    <option value="" disabled="disabled">Empresa</option>
-                                </select>
+                            <div class="col-sm-8" ng-controller="controlEmpresa" ng-init="cargarSimple()">
+                                <ui-select theme="bootstrap" ng-model="empresa" on-select="selectEmpresa($item)" class="form-control select2" title="Empresa" required>
+                                    <ui-select-match placeholder="">{{$select.selected.nombre}}</ui-select-match>
+                                    <ui-select-choices repeat="empresa in empresas | filter: $select.search" >
+                                        <div ng-bind-html="empresa.nombre | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
                             </div>
                         </div>
-                        <div class="form-group" ng-controller="controlDepartamento" ng-init="init()" ng-class="{ 'has-error' : form.departamento.$invalid && form.departamento.$dirty }">
-                            <label for="empresa" class="col-sm-4 control-label">Departamento</label>
-                            <div class="col-sm-8">
-                                <select name="departamento" class="form-control select2"  ng-change="update()" 
-                                        ng-options="option.nombre for option in departamentosfiltrados track by option.id"
-                                        ng-model="departamento" style="width: 100%" required >
-                                    <option value="" disabled="disabled">Departamento</option>
-                                </select>
+                        <div class="form-group"  ng-class="{ 'has-error' : formAdd.departamento.$invalid && formAdd.departamento.$dirty }">
+                            <label for="departamento" class="col-sm-4 control-label">Departamento</label>                     
+                            <div class="col-sm-8" ng-controller="controlDepartamento" ng-init="init()">
+                                <ui-select theme="bootstrap"  ng-model="departamento.selected" on-select="update()" class="form-control select2" title="Departamento" required>
+                                    <ui-select-match placeholder="">{{$select.selected.nombre}}</ui-select-match>
+                                    <ui-select-choices allow-clear ="true" repeat="departamento in departamentos | filter: $select.search | filter: filtro">
+                                        <div ng-bind-html="departamento.nombre | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
                             </div>
                         </div>
-                        <div class="form-group" >
+                        <div class="form-group" ng-class="{ 'has-error' : formAdd.empresa.$invalid && !formAdd.empresa.$pristine }">
                             <label for="perfil" class="col-sm-4 control-label">Perfil</label>
                             <div class="col-sm-8">
-                                <select class="form-control select2"  multiple="multiple"style="width: 100%" id="perfil" ng-model="userAdd.perfil" style="width: 100%" required>
-                                    <option>Colaborador</option>
-                                    <option>Jefe</option>
-                                    <option>Recursos Humanos</option>
-                                </select>
+                                <ui-select  multiple  class="form-control select2" ng-model="userAdd.perfil" close-on-select="false" style="width: 100%;" title="Asigna el perfil" required>
+                                    <ui-select-match placeholder="Seleccione los perfiles">{{$item}}</ui-select-match>
+                                    <ui-select-choices repeat="a in opciones  |  filter: $select.search">
+                                        {{a}}
+                                    </ui-select-choices>
+                                </ui-select>
                             </div> 
                         </div>
                         <div class="form-group">
                             <label for="estado" class="col-sm-4 control-label">Estado</label>
-                            <div class="col-sm-4">
-                                <button type="button" class="btn btn-block btn-success margin">Activar?</button>
-                            </div> 
-                            <div class="col-sm-4">
-                                <button type="button" class="btn btn-block btn-danger margin">Desactivar?</button>
-                            </div> 
+                            <div class="col-sm-3">
+                                <input type="checkbox" id="" name="" ng-model="userAdd.estado" color="green"  i-check 
+                                       ng-checked="userAdd.estado == 1" ng-true-value="'1'" ng-false-value="'0'">
+                                <label for="" class="control-label">Activo</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="checkbox" id="" name="" ng-model="userAdd.estado" color="red"  i-check 
+                                       ng-checked="userAdd.estado != 1" ng-true-value="'0'" ng-false-value="'1'">
+                                <label for="" class="control-label">Inactivo</label>
+                            </div>
                         </div>
-                    </form>
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Guardar Cambios</button>
+                    <button type="submit" ng-click="agregar()" class="btn btn-primary" ng-disabled="formAdd.$invalid" closemodal="modalUserAdd">Agregar</button>
                 </div>
+                     </form>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -167,7 +176,7 @@
                     <h4 class="modal-title">Editar un Usuario</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="#/admin_metas" method="post" class="form-horizontal">
+                    <form action="" method="post" class="form-horizontal">
                         <div class="form-group" ng-class="{ 'has-error' : form.nombre.$invalid && !form.nombre.$pristine }">
                             <label for="nombre" class="col-sm-4 control-label">Nombre</label>
                             <div class="col-sm-8">
@@ -198,24 +207,29 @@
                                 <input type="text" class="form-control" placeholder="Correo" name="correo" ng-model="userEdit.correo" required>
                             </div>
                         </div>
-                        <div  name="empresa" class="form-group" ng-controller="controlEmpresa" ng-init="cargarSimple()" ng-class="{ 'has-error' : form.empresa.$invalid && !form.empresa.$pristine }">
-                            <label for="empresa" class="col-sm-4 control-label">Empresa</label>
-                            <div class="col-sm-8">
-                                <select ng-change="update()" ng-model="empresa" class="form-control select2"  
-                                        ng-options="option.nombre for option in empresas track by option.id"
-                                        style="width: 100%" required>
-                                    <option value="" disabled="disabled">Empresa</option>
-                                </select>
+                        <div  name="empresa" class="form-group"  ng-class="{ 'has-error' : form.empresa.$invalid && !form.empresa.$pristine }">
+                            <label for="empresa" class="col-sm-4 control-label">Empresa: {{userEdit.empresa}}</label>
+                            <div class="col-sm-8" ng-controller="controlEmpresa" ng-init="cargarSimple()">
+                                <ui-select theme="bootstrap" ng-model="empresa" on-select="selectEmpresa($item)" class="form-control select2" title="Choose a person">
+                                    <ui-select-match placeholder="">{{$select.selected.nombre}}</ui-select-match>
+                                    <ui-select-choices repeat="empresa in empresas | filter: $select.search" >
+                                        <div ng-bind-html="empresa.nombre | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
                             </div>
+
                         </div>
-                        <div class="form-group" ng-controller="controlDepartamento" ng-init="init()" ng-class="{ 'has-error' : form.departamento.$invalid && form.departamento.$dirty }">
-                            <label for="empresa" class="col-sm-4 control-label">Departamento</label>
-                            <div class="col-sm-8">
-                                <select name="departamento" class="form-control select2"  ng-change="update()" 
-                                        ng-options="option.nombre for option in departamentosfiltrados track by option.id"
-                                        ng-model="departamento" style="width: 100%" required >
-                                    <option value="" disabled="disabled">Departamento</option>
-                                </select>
+
+
+                        <div class="form-group"  ng-class="{ 'has-error' : form.departamento.$invalid && form.departamento.$dirty }">
+                            <label for="departamento" class="col-sm-4 control-label">Departamento: {{userEdit.departamento}}</label>                     
+                            <div class="col-sm-8" ng-controller="controlDepartamento" ng-init="init()">
+                                <ui-select theme="bootstrap"  ng-model="departamento.selected" on-select="update()" class="form-control select2" title="Choose a person">
+                                    <ui-select-match placeholder="">{{$select.selected.nombre}}</ui-select-match>
+                                    <ui-select-choices allow-clear ="true" repeat="departamento in departamentos | filter: $select.search | filter: filtro">
+                                        <div ng-bind-html="departamento.nombre | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
                             </div>
                         </div>
 
@@ -223,7 +237,7 @@
                         <div class="form-group" >
                             <label for="perfil" class="col-sm-4 control-label">Perfil</label>
                             <div class="col-sm-8">
-                                <ui-select multiple  class="form-control select2" ng-model="userEdit.perfil" close-on-select="false" style="width: 100%;" title="Choose a color" required>
+                                <ui-select  multiple  class="form-control select2" ng-model="userEdit.perfil" close-on-select="false" style="width: 100%;" title="Choose a color" required>
                                     <ui-select-match placeholder="Seleccione los perfiles">{{$item}}</ui-select-match>
                                     <ui-select-choices repeat="a in opciones  |  filter: $select.search">
                                         {{a}}
@@ -244,7 +258,6 @@
                                 <label for="" class="control-label">Inactivo</label>
                             </div>
                         </div>
-                        {{userEdit.estado}}
                     </form>
                 </div>
                 <div class="modal-footer">

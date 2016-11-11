@@ -24,9 +24,9 @@ class Usuario {
                 . "and departamento.empresa = empresa.id "
                 . "and usuario.perfil = perfil.id;";
         try {
-            
+
             $json_response = array();
-            $perfiles = ['colaborador','jefe','RH'];
+            $perfiles = ['colaborador', 'jefe', 'RH'];
             $comando = Database::getInstance()->getDb()->prepare($consulta);
             $comando->execute();
             $users = $comando->fetchAll(PDO::FETCH_ASSOC);
@@ -43,11 +43,11 @@ class Usuario {
                 $response['perfil']['colaborador'] = $user['colaborador'];
                 $response['perfil']['jefe'] = $user['jefe'];
                 $response['perfil']['RH'] = $user['RH'];
-                /*foreach ($perfiles as $perfil){
-                    if($user[$perfil]==1){
-                        array_push($response['perfil'],$perfil);
-                    }
-                }*/
+                /* foreach ($perfiles as $perfil){
+                  if($user[$perfil]==1){
+                  array_push($response['perfil'],$perfil);
+                  }
+                  } */
                 array_push($json_response, $response);
             }
             return $json_response;
@@ -68,16 +68,16 @@ class Usuario {
         }
     }
 
-    public static function insert($id, $nombre, $apellido1, $apellido2, $correo, $contrasena, $departamento) {
+    public static function insert($id, $nombre, $apellido1, $apellido2, $correo, $estado, $contrasena, $departamento, $perfil = "0") {
         $comando = "INSERT INTO usuario ( " .
                 "id, nombre," .
                 " apellido1, apellido2," .
-                " correo, contrasena,departamento)" .
-                " VALUES( ?,?,?,?,?,?,? )";
+                " correo,estado, contrasena,departamento,perfil)" .
+                " VALUES( ?,?,?,?,?,b?,?,?,? )";
 
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
-            $sentencia->execute(array($id, $nombre, $apellido1, $apellido2, $correo, $contrasena, $departamento));
+            $sentencia->execute(array($id, $nombre, $apellido1, $apellido2, $correo, $estado, $contrasena, $departamento, $perfil));
             return new Mensaje("Exito", "<p>Se registró el usuario con exito :D</p>");
         } catch (PDOException $pdoExcetion) {
             return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
@@ -169,6 +169,29 @@ class Usuario {
             return false;
         }
         return true;
+    }
+
+    public static function getPerfil($perfiles) {
+        $perf = ["Colaborador"=>0, "Jefe"=>1, "RH"=>2];
+        $x = [0,0,0];
+        foreach ($perfiles as $perfil) {
+            if ($perf[$perfil] !== null) {
+                $x[$perf[$perfil]]=1;
+            } else {
+                $x[$perf[$perfil]]=0;
+            }
+        }
+        $comando = "select id from perfil where perfil.colaborador = ? and perfil.jefe = ? and perfil.RH = ?;";
+
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute($x);
+            $result = $sentencia->fetch(PDO::FETCH_ASSOC);
+            return $result['id'];
+            
+        } catch (PDOException $pdoExcetion) {
+            return 0;
+        }
     }
 
 }

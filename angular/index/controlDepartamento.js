@@ -1,30 +1,35 @@
 angular.module("index")
-        .controller("controlDepartamento", ['$scope', 'factoryDepartamento', 'ShareDataService', 'modalService', function ($scope, factoryDepartamento, ShareDataService, modalService) {
+        .controller("controlDepartamento", ['$scope', 'empdep', 'ShareDataService', 'modalService', function ($scope, empdep, ShareDataService, modalService) {
 
                 $scope.departamentos = [];
-                $scope.departamentosfiltrados = [];
-                $scope.empresa = {};
-                $scope.departamentoAdd = "";
-                $scope.departamentoEdit = "";
-                $scope.departamento = {};
-
-                filtro = function (departamento) {
-                    return departamento.empresa == $scope.empresa.id;
-                };
-                filtrarDepartamentos = function () {
-                    $scope.departamentosfiltrados = $scope.departamentos.filter(filtro);
+                $scope.departamentoEdit = {
+                    id: undefined,
+                    nombre: undefined,
+                    empresa: undefined
                 };
                 $scope.init = function () {
                     $scope.cargar();
                 };
+                $scope.filtro = function (departamento) {
+                    return departamento.empresa == empdep.getEmpresa().id;
+                };
                 $scope.cargar = function () {
-                    factoryDepartamento.cargarDepartamentos()
+                    empdep.cargarDep().then(function () {
+                        $scope.departamentos = empdep.getDepartamentos();
+                    });
+                };
+                $scope.agregar = function () {
+                    var obj = {
+                        nombre: $scope.departamentoAdd,
+                        empresa: empdep.getEmpresa()
+                    };
+                    empdep.getDepService().agregar(obj)
                             .success(function (data, status, headers, config) {
-                                $scope.departamentos = data.departamento;
-                                filtrarDepartamentos();
+                                $scope.departamentoAdd = "";
+                                $scope.cargar();
                             })
                             .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
+                                alert("failure message: " + JSON.stringify(data));
                             });
                 };
                 $scope.confirmar = function (id) {
@@ -34,10 +39,9 @@ angular.module("index")
                                     $scope.eliminar(id);
                             });
                 };
-                $scope.eliminar = function (id) {
-                    factoryDepartamento.eliminarDepartamento(id)
+                $scope.eliminar = function (obj) { // id
+                    empdep.getDepService().eliminar({id: obj})
                             .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
                                 $scope.cargar();
                             })
                             .error(function (data, status, headers, config) {
@@ -45,44 +49,21 @@ angular.module("index")
                             });
                 };
                 $scope.modalModificar = function (departamento) {
-                    $scope.departamento = departamento;
-                    $scope.departamentoEdit = departamento.nombre;
+                    $scope.departamentoEdit = departamento;
                     modalService.open("#modalDepartamentoEdit");
                 };
                 $scope.modificar = function () {
-                    var nombre = $scope.departamentoEdit;
-                    var id = $scope.departamento.id;
-                    factoryDepartamento.modificarDepartamento(nombre, id)
+                    empdep.getDepService().modificar($scope.departamentoEdit)
                             .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.departamentoEdit = "";
+                                $scope.departamentoEdit.id = undefined;
+                                $scope.departamentoEdit.nombre = undefined;
+                                $scope.departamentoEdit.empresa = undefined;
                                 $scope.cargar();
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(data));
                             });
                 };
-                $scope.agregar = function () {
-                    var nombre = $scope.departamentoNombre;
-                    var empresa = $scope.empresa.id;
-                    factoryDepartamento.agregarDepartamento(nombre, empresa)
-                            .success(function (data, status, headers, config) {
-                                $scope.departamentoNombre = "";
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
-
-                };
-                $scope.update = function () {
-                    ShareDataService.setDepartamento($scope.departamento);
-                };
-                $scope.$on('handleBroadcast', function () {
-                    $scope.empresa = ShareDataService.msg;
-                    filtrarDepartamentos();
-                });
 
             }])
         .factory("factoryDepartamento", function ($http) {
@@ -91,25 +72,13 @@ angular.module("index")
             departamentos.cargarDepartamentos = function () {
                 return $http.get('/Sied/services/departamento/get-departamento.php');
             };
-            departamentos.agregarDepartamento = function (nombre, empresa) {
-                var obj = {
-                    nombre: nombre,
-                    empresa: empresa
-                };
+            departamentos.agregarDepartamento = function (obj) {
                 return $http.post('/Sied/services/departamento/add-departamento.php', obj);
             };
-            departamentos.modificarDepartamento = function (nombre, id) {
-                var obj = {
-                    id: id,
-                    nombre: nombre
-                };
+            departamentos.modificarDepartamento = function (obj) {
                 return $http.post('/Sied/services/departamento/set-departamento.php', obj);
             };
-
-            departamentos.eliminarDepartamento = function (id) {
-                var obj = {
-                    id: id
-                };
+            departamentos.eliminarDepartamento = function (obj) {
                 return $http.post('/Sied/services/departamento/del-departamento.php', obj);
             };
 

@@ -1,38 +1,35 @@
 angular.module("index")
-        .controller("controlEmpresa", ['$scope', 'factoryEmpresa', 'ShareDataService', 'modalService', function ($scope, factoryEmpresa, ShareDataService, modalService) {
+        .controller("controlEmpresa", ['$scope', 'empdep', 'ShareDataService', 'modalService', function ($scope, empdep, ShareDataService, modalService) {
 
                 $scope.empresas = [];
-                $scope.empresa = 0;
-                $scope.empresaAdd = "";
-                $scope.empresaEdit = "";
-
-                $scope.selectEmpresa = function (msg) {
-                    $scope.empresa = msg;
-                    $scope.update();
+                $scope.empresaEdit = {
+                    id: undefined,
+                    nombre: undefined
                 };
-                $scope.update = function () {
-                    ShareDataService.prepForBroadcast($scope.empresa);
+                $scope.prueba = function (){
+                    $scope.empresas = empdep.getEmpresas();
                 };
+                
                 $scope.init = function () {
                     $scope.cargar();
                 };
-                $scope.cargar = function () {
-                    factoryEmpresa.cargarEmpresas()
-                            .success(function (data, status, headers, config) {
-                                $scope.empresas = data.empresa;
-                                $scope.selectEmpresa(data.empresa[0]);
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
+                $scope.selectEmpresa = function (empresa) {
+                    empdep.setEmpresa(empresa);
+                    
                 };
-                $scope.cargarSimple = function () {
-                    factoryEmpresa.cargarEmpresas()
+                $scope.cargar = function () {
+                    empdep.cargarEmp().then(function () {
+                        $scope.empresas = empdep.getEmpresas();
+                    });
+                };
+                $scope.agregar = function () {    
+                    empdep.getEmpService().agregar($scope.empresaAdd)
                             .success(function (data, status, headers, config) {
-                                $scope.empresas = data.empresa;
+                                $scope.cargar();
+                                $scope.empresaAdd = "";
                             })
                             .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
+                                alert("failure message: " + JSON.stringify(data));
                             });
                 };
                 $scope.confirmar = function (id) {
@@ -42,10 +39,9 @@ angular.module("index")
                                     $scope.eliminar(id);
                             });
                 };
-                $scope.eliminar = function (id) {
-                    factoryEmpresa.eliminarEmpresa(id)
+                $scope.eliminar = function (obj) { // id
+                    empdep.getEmpService().eliminar(obj)
                             .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
                                 $scope.cargar();
                             })
                             .error(function (data, status, headers, config) {
@@ -54,34 +50,21 @@ angular.module("index")
                 };
                 $scope.modalModificar = function (empresa) {
                     $scope.selectEmpresa(empresa);
-                    $scope.empresaEdit = empresa.nombre;
+                    $scope.empresaEdit = empresa;
                     modalService.open("#modalEmpresaEdit");
                 };
                 $scope.modificar = function () {
-                    var nombre = $scope.empresaEdit;
-                    var id = $scope.empresa.id;
-                    factoryEmpresa.modificarEmpresa(nombre, id)
+                    empdep.getEmpService().modificar($scope.empresaEdit)
                             .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.empresaEdit = "";
+                                $scope.empresaEdit.id = undefined;
+                                $scope.empresaEdit.nombre = undefined;
                                 $scope.cargar();
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(data));
                             });
                 };
-                $scope.agregar = function () {
-                    var nombre = $scope.empresaAdd;
-                    factoryEmpresa.agregarEmpresa(nombre)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.empresaAdd = "";
-                                $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
-                };
+
             }])
         .factory("factoryEmpresa", function ($http) {
             var empresa = {};
@@ -96,11 +79,7 @@ angular.module("index")
                 };
                 return $http.post('/Sied/services/empresa/add-empresa.php', obj);
             };
-            empresa.modificarEmpresa = function (nombre, id) {
-                var obj = {
-                    id: id,
-                    nombre: nombre
-                };
+            empresa.modificarEmpresa = function (obj) {
                 return $http.post('/Sied/services/empresa/set-empresa.php', obj);
             };
 
@@ -112,30 +91,33 @@ angular.module("index")
             };
             return empresa;
         })
+
         .factory('ShareDataService', function ($rootScope) {
             var sharedService = {};
 
             sharedService.msg = {};
             sharedService.departamento = {};
-            
-            sharedService.prepForBroadcast = function (msg) {
-                this.msg = msg;
-                this.broadcastItem();
+            sharedService.empresa = {};
+
+            sharedService.setEmpresa = function (msg) {
+                this.empresa = msg;
+                this.broadcastEmpresa();
             };
+
             sharedService.setDepartamento = function (msg) {
                 this.departamento = msg;
                 this.broadcastDepartamento();
             };
 
-            sharedService.broadcastItem = function () {
-                $rootScope.$broadcast('handleBroadcast');
-            };
             sharedService.broadcastDepartamento = function () {
                 $rootScope.$broadcast('departamento');
+            };
+            sharedService.broadcastEmpresa = function () {
+                $rootScope.$broadcast('empresa');
             };
 
             return sharedService;
         });
-        
+
 
 

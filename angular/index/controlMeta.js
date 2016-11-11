@@ -203,22 +203,6 @@ angular.module("index")
             
             return meta;
         })
-        .factory('ShareDataService', function ($rootScope) {
-            var sharedService = {};
-
-            sharedService.msg = {};
-
-            sharedService.prepForBroadcast = function (msg) {
-                this.msg = msg;
-                this.broadcastItem();
-            };
-
-            sharedService.broadcastItem = function () {
-                $rootScope.$broadcast('handleBroadcast');
-            };
-
-            return sharedService;
-        })
         .directive('iCheck', ['$timeout', '$parse', function ($timeout, $parse) {
                 return {
                     require: 'ngModel',

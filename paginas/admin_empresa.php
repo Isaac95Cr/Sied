@@ -35,6 +35,7 @@
             <!-- /.box-body -->
             <div class="box-footer" >    
                 <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalEmpresaAdd">Agregar</a>
+                <a class="btn btn-primary btn-lg pull-right" ng-click="prueba()">cargar</a>
             </div>
         </div>
         <!-- /.box-footer-->
@@ -84,7 +85,7 @@
                             <div class="form-group" ng-class="{ 'has-error' : empresaEditForm.empresaEdit.$invalid && !empresaEditForm.empresaEdit.$pristine}">
                                 <label for="empresa" class="col-sm-2 control-label">Empresa</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="Nombre" id="empresa" ng-model="empresaEdit" name="empresaEdit" required>
+                                    <input type="text" class="form-control" placeholder="Nombre" id="empresa" ng-model="empresaEdit.nombre" name="empresaEdit" required>
                                     <p ng-show="empresaEditForm.empresaEdit.$invalid && !empresaEditForm.empresaEdit.$pristine" class="help-block">Nombre de empresa requerido.</p>
                                 </div>
                             </div>
@@ -115,7 +116,7 @@
             </div>
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
-                    <tr ng-repeat="departamento in departamentosfiltrados" sglclick="" dblclick="modalModificar({{departamento}});">
+                    <tr ng-repeat="departamento in departamentos | filter: filtro" sglclick="" dblclick="modalModificar({{departamento}});">
                         <td> {{departamento.nombre}}</td>
                         <td style="text-align:center"><a ng-click="confirmar(departamento.id)"><i class="fa fa-close"></i>  </a> </td>
                     </tr>
@@ -174,7 +175,7 @@
                             <div class="form-group" ng-class="{ 'has-error' : departamentoFormEdit.departamentoEdit.$invalid && !departamentoFormEdit.departamentoEdit.$pristine }">
                                 <label for="departamento" class="col-sm-2 control-label">Departamento</label>
                                 <div class="col-sm-10">
-                                    <input class="form-control" placeholder="Nombre" id="departamento" name="departamentoEdit" ng-model="departamentoEdit" required>
+                                    <input class="form-control" placeholder="Nombre" id="departamento" name="departamentoEdit" ng-model="departamentoEdit.nombre" required>
                                     <p ng-show="departamentoFormEdit.departamentoEdit.$invalid && !departamentoFormEdit.departamentoEdit.$pristine" class="help-block">Nombre del departamento.</p>
                                 </div>
                             </div>

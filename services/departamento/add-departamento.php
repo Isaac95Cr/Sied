@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Decodificando formato Json
     $body = json_decode(file_get_contents("php://input"), true);
     // Insertar meta
-    $retorno = Departamento::insert($body['nombre'],$body['empresa']);
+    $retorno = Departamento::insert($body['nombre'],$body['empresa']['id']);
 
    if ($retorno instanceof Mensaje) {
         // Código de éxito
