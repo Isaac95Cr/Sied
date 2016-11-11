@@ -24,7 +24,7 @@
                 </div>
                 <div class="box-body">
                     <div class="box-group" id="accordion">
-                        <div class="panel box box-primary" ng-repeat="competencia in competencias">
+                        <div class="panel box box-primary" ng-repeat="competencia in competencias" ng-re>
                             <div class="box-header with-border">
                                 <h4 class="box-title">
                                     <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{$index}}">
@@ -42,9 +42,9 @@
                                         <th>Evaluación</th>
 
 
-                                        <tr ng-repeat="detalle in competencia.detalles">
-                                            <td>{{detalle.descripcion}}</td>
-                                            <td></td>
+                                        <tr ng-repeat="elemento in autoEvaluaciones[$index]">
+                                            <td>{{elemento.descrip}}</td>
+                                            <td>{{elemento.valor}}</td>
                                             <td>
                                                 <div class="form-group">
                                                     <div class="col-sm-3">
