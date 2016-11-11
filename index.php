@@ -230,18 +230,8 @@
         <script src="angular/usuario/sessionService.js" type="text/javascript"></script>
         <script src="angular/usuario/userService.js" type="text/javascript"></script>
         <script src="angular/usuario/usersColaboradoresMetas.js" type="text/javascript"></script>
-<<<<<<< HEAD
-        <script src="angular/usuario/usersColaboradoresCompetencias.js" type="text/javascript"></script>
-        
-=======
-<<<<<<< HEAD
-        <script src="angular/usuario/usersColaboradoresCompetencias.js" type="text/javascript"></script>
-        
-=======
 
 
->>>>>>> origin/master
->>>>>>> origin/master
         <script src="angular/registro/controlLogin.js" type="text/javascript"></script>
         <script src="angular/index/controlDepartamento.js" type="text/javascript"></script>
         <script src="angular/index/controlEmpresa.js" type="text/javascript"></script>
@@ -255,50 +245,27 @@
         <script src="angular/index/controlEvaluarMetas.js" type="text/javascript"></script>
         <script src="angular/index/controlAprobarMetas.js" type="text/javascript"></script>
         <script src="angular/index/controlDetalleMetasJefe.js" type="text/javascript"></script>
-<<<<<<< HEAD
-        <script src="angular/index/controlDetalleCompetJefe.js" type="text/javascript"></script>
-        <script src="angular/index/controlEvaluarCompet.js" type="text/javascript"></script>
-        
-        <script src="angular/index/controlDetalleCompetJefe.js" type="text/javascript"></script>
-        <script src="angular/index/controlEvaluarCompet.js" type="text/javascript"></script>
-        
+        <script src="angular/index/controlUsuario.js" type="text/javascript"></script>
+        <script src="angular/empresas/EmpresaService.js" type="text/javascript"></script>
+        <script type="text/ng-template" id="myModalContent.html">
+            <div class="modal-header">
+            <button type="button" class="close" ng-click="$close()" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+            <h3 class="modal-title">{{ vm.titulo }} </h3>
+            </div>
+            <form name="form" class="form-horizontal" novalidate>
+            <div class="modal-body">
+            <div compile-data template="{{vm.contenido}}">
+
             </div>
             </div>
             <div class="modal-footer">
             <div compile-data template="{{vm.footer}}">
-=======
-<<<<<<< HEAD
-        <script src="angular/index/controlDetalleCompetJefe.js" type="text/javascript"></script>
-        <script src="angular/index/controlEvaluarCompet.js" type="text/javascript"></script>
-        
-=======
-        <script src="angular/index/controlUsuario.js" type="text/javascript"></script>
 
->>>>>>> origin/master
->>>>>>> origin/master
-    </body>
-    <script type="text/ng-template" id="myModalContent.html">
-        <div class="modal-header">
-        <button type="button" class="close" ng-click="$close()" aria-label="Close">
-        <span aria-hidden="true">&times;</span></button>
-        <h3 class="modal-title">{{ vm.titulo }} </h3>
-        </div>
-        <form name="form" class="form-horizontal" novalidate>
-        <div class="modal-body">
-        <div compile-data template="{{vm.contenido}}">
-<<<<<<< HEAD
-=======
+            </div>
+            </div>
+            </form>
 
-        </div>
-        </div>
-        <div class="modal-footer">
-        <div compile-data template="{{vm.footer}}">
-
-        </div>
-        </div>
-        </form>
-    </script> 
+        </script> 
 
 </html>
- 
->>>>>>> origin/master
