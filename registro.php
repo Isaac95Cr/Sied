@@ -129,6 +129,13 @@
         <script src="angular/modal/modalService.js" type="text/javascript"></script>
         <script src="angular/usuario/userService.js" type="text/javascript"></script>
         <script src="angular/ngStorage.min.js" type="text/javascript"></script>
+<<<<<<< HEAD
+        <script>
+                                //Initialize Select2 Elements
+                                $(".select2").select2();
+        </script>
+=======
         
+>>>>>>> origin/master
     </body>
 </html>

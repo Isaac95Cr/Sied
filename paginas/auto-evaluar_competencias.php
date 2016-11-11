@@ -38,11 +38,14 @@
                                 <div class="box-body table-responsive">
                                     <!-- detalles-->
                                     <table class="table table-bordered">
+                                        
+                                        <th>Detalle de Competencia</th>
+                                        <th>Autoevaluación</th>
+                                        
                                         <tr ng-repeat="detalle in competencia.detalles">
                                             <td>{{detalle.descripcion}}</td>
                                             <td>
                                                 <div class="form-group">
-                                                    <label for="auto1" class="col-sm-3 control-label">Autoevaluación</label>
                                                     <div class="col-sm-3">
                                                         <input type="number" min="0" max="100" class="form-control" id={{detalle.id}} name={{competencia.id}} placeholder="0"> 
                                                     </div>

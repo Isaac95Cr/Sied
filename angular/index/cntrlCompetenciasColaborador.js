@@ -39,6 +39,22 @@ angular.module("index")
                 
                 return $http.post('/Sied/services/competencia/set-evalCompetencias.php', metaObj);
             };
+            
+            
+           competencia.cargarCompetenciasUser = function (id) {
+                var obj = {
+                    id:id
+                };
+                return $http.post('/Sied/services/competencia/get-competencia.php',obj);
+            };
+
+
+
+            /*Le carga al jefe las competencias y detalles de un colaborador en específico*/
+           competencia.cargarDetalleCompetenciasJefe = function (obj) {
+
+                return $http.post('/Sied/services/competencia/get-CompetenciasUser.php',obj);
+            };
 
             return competencia;
         });

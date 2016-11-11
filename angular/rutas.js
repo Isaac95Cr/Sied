@@ -12,7 +12,7 @@ angular.module("app")
                                     }]
                             }
                         })
-                        .when("/admin_competencias", {
+                        .when("/admin_competencias/", {
                             templateUrl: "paginas/admin_competencias.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {
@@ -86,7 +86,7 @@ angular.module("app")
                                     }]
                             }
                         })
-                        .when("/evaluar_metas", {
+                        .when("/evaluar_metas/:id", {
                             templateUrl: "paginas/evaluar_metas.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {
@@ -94,7 +94,7 @@ angular.module("app")
                                     }]
                             }
                         })
-                        .when("/evaluar_competencias", {
+                        .when("/evaluar_competencias/:id", {
                             templateUrl: "paginas/evaluar_competencias.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {
@@ -119,7 +119,20 @@ angular.module("app")
                             }
                         })
                         .when("/detalleMetasJefe/:id", {
-                            templateUrl: "paginas/detalleMetasJefe.php"
+                            templateUrl: "paginas/detalleMetasJefe.php",
+                            resolve: {
+                                access: ["sessionService", function (sessionService) {
+                                        return sessionService.perfil("jefe");
+                                    }]
+                            }
+                        })
+                        .when("/detalleCompetenciasJefe/:id", {
+                            templateUrl: "paginas/detalleCompetenciasJefe.php",
+                            resolve: {
+                                access: ["sessionService", function (sessionService) {
+                                        return sessionService.perfil("jefe");
+                                    }]
+                            }
                         })
                         .otherwise({redirectTo: '/'});
             }])

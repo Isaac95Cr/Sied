@@ -1,12 +1,17 @@
 angular.module("index")
-        .controller("controlAprobarMetas", ['$scope', 'factoryMeta', '$routeParams', 'modalService', function ($scope, factoryMeta, $routeParams, modalService) {
+        .controller("controlAprobarMetas", ['$scope', 'factoryMeta', 'userService', '$routeParams', 'modalService', function ($scope, factoryMeta, userService, $routeParams, modalService) {
+                
+        $scope.metasUser = [];
+        $scope.tiene_Metas = false;
+        $scope.colaborador = "";
 
                 $scope.metasUser = [];
                 $scope.tiene_Metas = false;
 
                 $scope.init = function () {
                     $scope.cargar();
-                };
+                    $scope.cargarColaborador();
+         };
 
 
                 $scope.cargar = function () {
@@ -20,13 +25,25 @@ angular.module("index")
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
                             });
+          };
+          
+          
+               $scope.cargarColaborador = function () {
+                    var colab = {id: $routeParams.id}
+                    userService.cargarUsuario(colab)
+                            .success(function (data, status, headers, config) {
+                                $scope.colaborador = data.usuarios[0].nombre + " " + data.usuarios[0].apellido1 + " " + data.usuarios[0].apellido2;
+                            })
+                            .error(function (data, status, headers, config) {
+                                alert("failure message: " + JSON.stringify(headers));
+                            });
                 };
-
-
-
-
-            }])
-        .directive('iCheck', ['$timeout', '$parse', function ($timeout, $parse) {
+          
+          
+          
+                        
+}])
+.directive('iCheck', ['$timeout', '$parse', function ($timeout, $parse) {
                 return {
                     require: 'ngModel',
                     link: function ($scope, element, $attrs, ngModel) {
