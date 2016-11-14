@@ -10,7 +10,7 @@ angular.module('index')
                     return factoryEmpresa.cargarEmpresas()
                             .success(function (data, status, headers, config) {
                                 service.empresas = data.empresa;
-                                
+
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
@@ -33,12 +33,16 @@ angular.module('index')
                 this.setEmpresa = function (empresa) {
                     service.empresa = empresa;
                 };
-                
+
                 this.getEmpresa = function () {
                     return service.empresa;
                 };
 
-
+                this.buscarEmpresa = function (nombre) {
+                    return service.empresas.find(function (empresa) {
+                        return empresa.nombre === nombre;
+                    });
+                };
             }])
         .service('departamentoService', ['factoryDepartamento', function (factoryDepartamento) {
                 var service = {
@@ -73,6 +77,11 @@ angular.module('index')
                 this.setDepartamento = function (departamento) {
                     service.departamento = departamento;
                 };
+                this.buscarDepartamento = function (nombre) {
+                    return service.departamentos.find(function (dep) {
+                        return dep.nombre === nombre;
+                    });
+                };
             }])
         .service('empdep', ['departamentoService', 'empresaService', function (departamentoService, empresaService) {
 
@@ -96,11 +105,11 @@ angular.module('index')
                 this.setEmpresa = function (empresa) {
                     empresaService.setEmpresa(empresa);
                 };
-                
+
                 this.getEmpresa = function () {
-                   return empresaService.getEmpresa();
+                    return empresaService.getEmpresa();
                 };
-                
+
                 this.getDepartamentos = function () {
                     return departamentoService.getDepartamentos();
                 };
@@ -108,9 +117,15 @@ angular.module('index')
                 this.setDepartamento = function (departamento) {
                     departamentoService.setDepartamento(departamento);
                 };
-                
+
                 this.getDepartamento = function () {
                     return departamentoService.getDepartamento();
+                };
+                this.buscarEmpresa = function (nombre) {
+                    return empresaService.buscarEmpresa(nombre);
+                };
+                this.buscarDepartamento = function (nombre) {
+                    return departamentoService.buscarDepartamento(nombre);
                 };
             }]);
 

@@ -2,7 +2,7 @@ angular.module('usuario')
         .service('autentificacionService', ['$http', 'sessionService', '$window', function ($http, sessionService, $window) {
                 var autentificacion = {};
                 autentificacion.login = function (obj) {
-                    $http.post('/Sied/services/usuario/login.php', obj)
+                    return $http.post('/Sied/services/usuario/login.php', obj)
                             .success(function (data, status, headers, config) {
                                 sessionService.guardar(data);
                                 $window.location.href = '/Sied/';
@@ -13,7 +13,7 @@ angular.module('usuario')
                 };
 
                 autentificacion.logout = function (obj) {
-                    $http.post('/Sied/services/usuario/logout.php', obj)
+                    return $http.post('/Sied/services/usuario/logout.php', obj)
                             .success(function (data, status, headers, config) {
                                 sessionService.destroy();
                                 $window.location.href = '/Sied/';
@@ -23,17 +23,8 @@ angular.module('usuario')
                             });
                 };
 
-                autentificacion.isAutorizado = function (obj) {
-                    $http.post('/Sied/services/usuario/session.php', obj)
-                            .success(function (data, status, headers, config) {
-                                if (data.session === sessionService.id) {
-                                    return true;
-                                }
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
-                    return false;
+                autentificacion.isLog = function (obj) {
+                    return $http.post('/Sied/services/usuario/session.php', obj);
                 };
 
                 autentificacion.getperfil = function () {

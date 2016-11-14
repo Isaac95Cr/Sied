@@ -33,3 +33,9 @@ define("USERNAME", "root");
  * Contraseña de la base de datos
  */
 define("PASSWORD", ""); 
+
+
+/**
+ * Contraseña de la JWT
+ */
+define("KEY", "userSied");

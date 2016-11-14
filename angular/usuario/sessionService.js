@@ -2,7 +2,7 @@ angular.module('usuario')
         .service('sessionService', ['$sessionStorage',"$q", function ($sessionStorage,$q) {
                 var session = {
                     carga: false,
-                    usuario: "undefined"
+                    usuario: undefined
                 };
 
                 session.guardar = function (token) {
@@ -13,7 +13,7 @@ angular.module('usuario')
                 session.cargar = function () {
                     var token = $sessionStorage.session;
                     var user;
-                    if (token != null) {
+                    if (token !== "undefined") {
                         user = this.getUserFromToken(token);
                         this.usuario = user.user;
                         this.carga = true;
@@ -24,10 +24,7 @@ angular.module('usuario')
                 };
 
                 session.token = function () {
-                    if (!session.carga)
-                        session.cargar();
-                    return {token: $sessionStorage.session};
-
+                    return $sessionStorage.session;
                 };
 
                 session.destroy = function () {

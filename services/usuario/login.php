@@ -7,6 +7,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = $body['id'];
     $contrasena = md5($body['contrasena']);
     $user = Usuario::login($id, $contrasena);
-    $token = Usuario::token($user);
-    echo $token;
+    if ($user) {
+        $token = Usuario::token($user);
+        echo $token;
+    } else {
+        echo "undefined";
+    }
 }

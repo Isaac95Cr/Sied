@@ -136,12 +136,24 @@ angular.module("app")
                         })
                         .otherwise({redirectTo: '/'});
             }])
-        .run(function ($window, $rootScope, autentificacionService, sessionService) {
+        .run(function ($window, $rootScope, autentificacionService, sessionService, $q) {
             $rootScope.$on('$locationChangeStart', function (event, next) {
                 sessionService.cargar();
-                if (sessionService.usuario === "undefined") {
+                var token = sessionService.token();
+                if (typeof token !== "undefined") {
+                    autentificacionService.isLog({token:token}).then(function (res) {
+                         var data = res.data.replace(/^\s+|\s+$/g, '');
+                        if (data == false) {
+                            sessionService.destroy();
+                            $window.location.href = 'login.php';
+                        }
+                    });
+
+                } else {
+                    sessionService.destroy();
                     $window.location.href = 'login.php';
                 }
+
             });
             $rootScope.$on('$locationChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
                 //sessionService.cargar();
@@ -154,7 +166,11 @@ angular.module("app")
                 // }*/
             });
             $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {
-
+                alert(rejection);
+                if (rejection === "noLog") {
+                    sessionService.destroy();
+                    $window.location.href = 'login.php';
+                }
                 if (rejection === "noAutorizado") {
                     $window.location.href = 'index.php';
                 }

@@ -108,7 +108,7 @@
     <div class="col-md-6" ng-controller="controlDepartamento" ng-init="init()">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Departamentos de Empresa: {{empresa.nombre}}</h3>
+                <h3 class="box-title">Departamentos de Empresa: {{empdep.getEmpresa().nombre}}</h3>
 
                 <div class="box-tools pull-right">
 

@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Decodificando formato Json
     $body = json_decode(file_get_contents("php://input"), true);
     $nombre = $body['nombre'];
-    $id = $body['cedula'];
+    $id = $body['id'];
     $apellido1 = $body['apellido1'];
     $apellido2 = $body['apellido2'];
     $correo = $body['correo'];

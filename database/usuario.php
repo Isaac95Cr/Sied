@@ -40,8 +40,8 @@ class Usuario {
                 $response['departamento'] = $user['departamento'];
                 $response['empresa'] = $user['empresa'];
                 $response['perfil'] = array();
-                $response['perfil']['colaborador'] = $user['colaborador'];
-                $response['perfil']['jefe'] = $user['jefe'];
+                $response['perfil']['Colaborador'] = $user['colaborador'];
+                $response['perfil']['Jefe'] = $user['jefe'];
                 $response['perfil']['RH'] = $user['RH'];
                 /* foreach ($perfiles as $perfil){
                   if($user[$perfil]==1){
@@ -83,6 +83,21 @@ class Usuario {
             return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
         }
     }
+    
+    public static function update($id, $nombre, $apellido1, $apellido2, $correo, $estado, $departamento, $perfil = "0") {
+        $comando = "UPDATE usuario set " .
+                " nombre = ?," .
+                " apellido1 = ?, apellido2 = ?," .
+                " correo = ?,estado = b?, departamento = ?,perfil = ? where id = ?";
+
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array( $nombre, $apellido1, $apellido2, $correo, $estado, $departamento, $perfil, $id));
+            return new Mensaje("Exito", "<p>Se registró el usuario con exito :D</p>");
+        } catch (PDOException $pdoExcetion) {
+            return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
+        }
+    }
 
     public static function login($id, $contrasena) {
 
@@ -110,12 +125,10 @@ class Usuario {
     }
 
     public static function token($user) {
-        $key = "userSied";
         $token = array(
-            "kid" => "1",
             "user" => $user
         );
-        $jwt = JWT::encode($token, $key);
+        $jwt = JWT::encode($token, KEY);
         try {
             $sign = JWT::getSign($jwt);
         } catch (Exception $e) {
@@ -133,9 +146,8 @@ class Usuario {
     }
 
     public static function logout($jwt) {
-        $key = "userSied";
         try {
-            $decoded = JWT::decode($jwt, $key, array('HS256'));
+            $decoded = JWT::decode($jwt, KEY, array('HS256'));
         } catch (Exception $e) {
             return null;
         }
@@ -150,9 +162,8 @@ class Usuario {
     }
 
     public static function validarToken($jwt) {
-        $key = "userSied";
         try {
-            $decoded = JWT::decode($jwt, $key, array('HS256'));
+            $decoded = JWT::decode($jwt, KEY, array('HS256'));
             $sign = JWT::getSign($jwt);
         } catch (Exception $e) {
             return false;
@@ -163,7 +174,7 @@ class Usuario {
             $sentencia->execute(array($sign));
             $result = $sentencia->fetch(PDO::FETCH_ASSOC);
             if (result) {
-                return false;
+                return true;
             }
         } catch (PDOException $pdoExcetion) {
             return false;
