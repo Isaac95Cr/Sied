@@ -7,9 +7,13 @@ angular.module('registro')
                 $scope.logout = function () {
                     autentificacionService.logout(sessionService.token());
                 };
+                $scope.correoContrasena = function () {
+                    autentificacionService.correoContrasena($scope.user);
+                };
+                
                 $scope.init = function () {
                     $scope.usuario = sessionService.getUsuario();
                 };
-
+                
             }]);
 

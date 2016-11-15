@@ -26,6 +26,9 @@ angular.module('usuario')
                 autentificacion.isLog = function (obj) {
                     return $http.post('/Sied/services/usuario/session.php', obj);
                 };
+                autentificacion.correoContrasena = function (obj) {
+                    return $http.post('/Sied/services/usuario/correo.php', obj);
+                };
 
                 autentificacion.getperfil = function () {
                     //return "lola";

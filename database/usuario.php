@@ -58,11 +58,29 @@ class Usuario {
     }
 
     public static function getAllFrom($id) {
-        $consulta = "SELECT * FROM usuario where id = ?";
+        $consulta = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,usuario.estado,"
+                . "(departamento.nombre) as departamento, (empresa.nombre) as empresa,"
+                . "perfil.colaborador, perfil.jefe,perfil.RH from usuario, perfil,empresa,departamento where "
+                . "usuario.departamento = departamento.id "
+                . "and departamento.empresa = empresa.id "
+                . "and usuario.perfil = perfil.id and usuario.id = ?";
         try {
             $comando = Database::getInstance()->getDb()->prepare($consulta);
             $comando->execute(array($id));
-            return $comando->fetchAll(PDO::FETCH_ASSOC);
+            $user = $comando->fetch(PDO::FETCH_ASSOC);
+            $response['id'] = $user['id'];
+            $response['nombre'] = $user['nombre'];
+            $response['apellido1'] = $user['apellido1'];
+            $response['apellido2'] = $user['apellido2'];
+            $response['correo'] = $user['correo'];
+            $response['estado'] = $user['estado'];
+            $response['departamento'] = $user['departamento'];
+            $response['empresa'] = $user['empresa'];
+            $response['perfil'] = array();
+            $response['perfil']['Colaborador'] = $user['colaborador'];
+            $response['perfil']['Jefe'] = $user['jefe'];
+            $response['perfil']['RH'] = $user['RH'];
+            return $response;
         } catch (PDOException $e) {
             return false;
         }
@@ -83,7 +101,7 @@ class Usuario {
             return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
         }
     }
-    
+
     public static function update($id, $nombre, $apellido1, $apellido2, $correo, $estado, $departamento, $perfil = "0") {
         $comando = "UPDATE usuario set " .
                 " nombre = ?," .
@@ -92,11 +110,43 @@ class Usuario {
 
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
-            $sentencia->execute(array( $nombre, $apellido1, $apellido2, $correo, $estado, $departamento, $perfil, $id));
+            $sentencia->execute(array($nombre, $apellido1, $apellido2, $correo, $estado, $departamento, $perfil, $id));
             return new Mensaje("Exito", "<p>Se registró el usuario con exito :D</p>");
         } catch (PDOException $pdoExcetion) {
             return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
         }
+    }
+
+    public static function existe($id) {
+
+        $comando = "select 1 from sied.usuario where id = ? ;";
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($id));
+            $result = $sentencia->fetch(PDO::FETCH_ASSOC);
+            if (!$result) {
+                return false;
+            }
+        } catch (PDOException $pdoExcetion) {
+            return false;
+        }
+        return true;
+    }
+    
+    public static function correo($id) {
+
+        $comando = "select usuario.correo from sied.usuario where id = ? ;";
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($id));
+            $result = $sentencia->fetch(PDO::FETCH_ASSOC);
+            if (!$result) {
+                return false;
+            }
+        } catch (PDOException $pdoExcetion) {
+            return false;
+        }
+        return true;
     }
 
     public static function login($id, $contrasena) {
@@ -173,8 +223,8 @@ class Usuario {
         try {
             $sentencia->execute(array($sign));
             $result = $sentencia->fetch(PDO::FETCH_ASSOC);
-            if (result) {
-                return true;
+            if (!$result) {
+                return false;
             }
         } catch (PDOException $pdoExcetion) {
             return false;
@@ -183,13 +233,13 @@ class Usuario {
     }
 
     public static function getPerfil($perfiles) {
-        $perf = ["Colaborador"=>0, "Jefe"=>1, "RH"=>2];
-        $x = [0,0,0];
+        $perf = ["Colaborador" => 0, "Jefe" => 1, "RH" => 2];
+        $x = [0, 0, 0];
         foreach ($perfiles as $perfil) {
             if ($perf[$perfil] !== null) {
-                $x[$perf[$perfil]]=1;
+                $x[$perf[$perfil]] = 1;
             } else {
-                $x[$perf[$perfil]]=0;
+                $x[$perf[$perfil]] = 0;
             }
         }
         $comando = "select id from perfil where perfil.colaborador = ? and perfil.jefe = ? and perfil.RH = ?;";
@@ -199,7 +249,6 @@ class Usuario {
             $sentencia->execute($x);
             $result = $sentencia->fetch(PDO::FETCH_ASSOC);
             return $result['id'];
-            
         } catch (PDOException $pdoExcetion) {
             return 0;
         }
