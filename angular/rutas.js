@@ -134,6 +134,9 @@ angular.module("app")
                                     }]
                             }
                         })
+                        .when("/perfil", {
+                            templateUrl: "paginas/perfil.php"
+                        })
                         .otherwise({redirectTo: '/'});
             }])
         .run(function ($window, $rootScope, autentificacionService, sessionService, $q) {

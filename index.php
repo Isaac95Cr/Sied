@@ -90,7 +90,7 @@
                                     <!-- Menu Footer-->
                                     <li class="user-footer">
                                         <div class="pull-left">
-                                            <a href="" class="btn btn-default btn-flat">Perfil</a>
+                                            <a href="#/perfil" class="btn btn-default btn-flat">Perfil</a>
                                         </div>
                                         <div class="pull-right" >
                                             <a ng-click="logout()" class="btn btn-default btn-flat">Cerrar Sesion</a>
@@ -249,6 +249,7 @@
         <script src="angular/index/controlDetalleCompetJefe.js" type="text/javascript"></script>
         <script src="angular/index/controlEvaluarCompet.js" type="text/javascript"></script>
         <script src="angular/empresas/EmpresaService.js" type="text/javascript"></script>
+        <script src="angular/index/controlPerfil.js" type="text/javascript"></script>
         
         
         <script type="text/ng-template" id="myModalContent.html">

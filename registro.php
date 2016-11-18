@@ -52,8 +52,8 @@
                         <input type="password" class="form-control" placeholder="Contraseña" name="contrasena" ng-model="user.contrasena" required>
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
-                    <div class="form-group has-feedback" ng-class="{ 'has-error' : form.contrasena.$invalid && !form.contrasena.$pristine }">
-                        <input type="password" class="form-control" placeholder="Contraseña" name="contrasena" ng-model="user.contrasena" required>
+                    <div class="form-group has-feedback" ng-class="{ 'has-error' : form.contrasena2.$invalid && !form.contrasena2.$pristine && !confirmarContrasena() }">
+                        <input type="password" class="form-control" placeholder="Contraseña" name="contrasena2" ng-model="user.contrasena2" required>
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
 
@@ -78,7 +78,7 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-xs-6">
-                            <button type="submit" ng-disabled="form.$invalid || bandera" class="btn btn-primary btn-block btn-flat">Registrarse</button>
+                            <button type="submit" ng-disabled="form.$invalid && !confirmarContrasena()" class="btn btn-primary btn-block btn-flat">Registrarse</button>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -129,13 +129,10 @@
         <script src="angular/modal/modalService.js" type="text/javascript"></script>
         <script src="angular/usuario/userService.js" type="text/javascript"></script>
         <script src="angular/ngStorage.min.js" type="text/javascript"></script>
-<<<<<<< HEAD
         <script>
                                 //Initialize Select2 Elements
                                 $(".select2").select2();
         </script>
-=======
-        
->>>>>>> origin/master
+
     </body>
 </html>

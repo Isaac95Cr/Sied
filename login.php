@@ -34,13 +34,14 @@
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback" ng-class="{
-                            'has-error' : form.contrasena.$invalid && !form.contrasena.$pristine }">
+                            'has-error'
+                            : form.contrasena.$invalid&& !form.contrasena.$pristine }">
                         <input type="password" class="form-control" placeholder="Contraseña" name="contrasena" ng-model="user.contrasena" required>
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
                     <div class="row">
                         <div class="col-xs-6">
-                            <a href="#">¿Olvidó su contraseña?</a><br>
+                            <a href="forgotContrasena.php">¿Olvidó su contraseña?</a><br>
                             <a href="registro.php" class="text-center">Registrarse</a>
                         </div>
                         <!-- /.col -->
@@ -54,7 +55,26 @@
             <!-- /.login-box-body -->
         </div>
         <!-- /.login-box -->
+        <script type="text/ng-template" id="myModalContent.html">
+            <div class="modal-header">
+            <button type="button" class="close" ng-click="$close()" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+            <h3 class="modal-title">{{ vm.titulo }} </h3>
+            </div>
+            <form name="form" class="form-horizontal" novalidate>
+            <div class="modal-body">
+            <div compile-data template="{{vm.contenido}}">
 
+            </div>
+            </div>
+            <div class="modal-footer">
+            <div compile-data template="{{vm.footer}}">
+
+            </div>
+            </div>
+            </form>
+
+        </script> 
         <!-- jQuery 2.2.3 -->
         <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
         <!-- Bootstrap 3.3.6 -->

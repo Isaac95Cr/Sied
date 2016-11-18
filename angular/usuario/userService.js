@@ -7,6 +7,7 @@ angular.module('usuario')
                 return $http.get('/Sied/services/usuario/get-usuario.php');
             };
             usuario.cargarUsuario = function (obj) {
+                return $http.post('/Sied/services/usuario/get-usuario.php',obj);
                 return $http.post('/Sied/services/usuario/get-usuario.php', obj);
             };
 

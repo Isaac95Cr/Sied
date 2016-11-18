@@ -9,9 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $body = json_decode(file_get_contents("php://input"), true);
-    $id= $body['id'];
-    $usuarios = Usuario::getAllFrom($id);
+    $usuarios = Usuario::getAllFrom($body);
     $datos["estado"] = 1;
-    $datos["usuarios"] = $usuarios;
+    $datos["usuario"] = $usuarios;
     print json_encode($datos);
 }
