@@ -28,10 +28,9 @@ angular.module("index")
           
           
            $scope.cargarColaborador = function () {
-                    var colab = {id: $routeParams.id}
-                    userService.cargarUsuario(colab)
+                    userService.loadAllUser($routeParams.id)
                             .success(function (data, status, headers, config) {
-                                $scope.colaborador = data.usuarios[0].nombre + " " + data.usuarios[0].apellido1 + " " + data.usuarios[0].apellido2;
+                                $scope.colaborador = data.usuario[0].nombre + " " + data.usuario[0].apellido1 + " " + data.usuario[0].apellido2;
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));

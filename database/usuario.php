@@ -85,6 +85,21 @@ class Usuario {
             return false;
         }
     }
+    
+    
+    
+  public static function getTodaInformacionUser($id) {
+        $consulta = "SELECT * FROM usuario where id = ?";
+        try {
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando->execute(array($id));
+            return $comando->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return false;
+        }
+   }
+    
+    
 
     public static function insert($id, $nombre, $apellido1, $apellido2, $correo, $estado, $contrasena, $departamento, $perfil = "0") {
         $comando = "INSERT INTO usuario ( " .

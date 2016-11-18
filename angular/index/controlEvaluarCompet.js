@@ -43,7 +43,7 @@ angular.module("index")
 
                     }).then(function () {
 
-                        return servicioCompetUser.loadColaborador(colab);
+                        return servicioCompetUser.loadColaborador($routeParams.id);
 
                     }).then(function () {
 
