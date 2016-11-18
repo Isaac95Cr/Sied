@@ -23,49 +23,59 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <div class="box-group" id="accordion">
-                        <div class="panel box box-primary" ng-repeat="competencia in competencias" ng-re>
-                            <div class="box-header with-border">
-                                <h4 class="box-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{$index}}">
-                                        <p>{{competencia.titulo}}</p>                                
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapse{{$index}}" class="panel-collapse collapse">
-                                <div class="box-body table-responsive">
-                                    <!-- detalles-->
-                                    <table class="table table-bordered">
+                    <form name="formEvCompet" ng-submit="confirmarEvaluacion()" class="form-horizontal">
+                        <div class="box-group" id="accordion">
+                            <div class="panel box box-primary" ng-repeat="competencia in competencias" ng-re>
+                                <div class="box-header with-border">
+                                    <h4 class="box-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{$index}}">
+                                            <p>{{competencia.titulo}}</p>                                
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse{{$index}}" class="panel-collapse collapse">
+                                    <div class="box-body table-responsive">
+                                        <!-- detalles-->
+                                        <table class="table table-bordered">
 
-                                        <th>Detalle de Competencia</th>
-                                        <th>Autoevaluación</th>
-                                        <th>Evaluación</th>
+                                            <th>Detalle de Competencia</th>
+                                            <th>Autoevaluación</th>
+                                            <th>Evaluación</th>
 
 
-                                        <tr ng-repeat="elemento in autoEvaluaciones[$index]">
-                                            <td>{{elemento.descrip}}</td>
-                                            <td>{{elemento.valor}}</td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <div class="col-sm-3">
-                                                        <input type="number" min="0" max="100" class="form-control" id={{detalle.id}} name={{competencia.id}} placeholder="0"> 
+                                            <tr ng-repeat="elemento in autoEvaluaciones[$index]">
+                                                <td>{{elemento.descrip}}</td>
+                                                <td>
+                                                    {{elemento.valor === "" ? "Pendiente": elemento.valor}}
+                                                </td>
+                                                
+<!--                                                <td>
+                                                    <small ng-show="{{elemento.valor !== ""}}">{{elemento.valor}}</small>
+                                                    <small ng-show="{{elemento.valor === ""}}" class="label bg-red margin">Pendiente</small>
+                                                </td>-->
+                                                
+                                                
+                                                
+                                                <td>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-5">
+                                                            <input type="number" min="0" max="100" class="form-control" name={{competencia.id}} placeholder="0"> 
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        
-                                    </table>
-                                    <!-- ./detalles-->
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                        <!-- ./detalles-->
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-
-                    </div>
+                        <button type="submit" class="btn btn-primary btn-lg pull-right">Guardar Cambios</button>
+                    </form>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer" >    
-                    <button type="button" class="btn btn-primary btn-lg pull-right">Guardar Cambios</button>
                 </div>
             </div>
             <!-- /.box-footer-->

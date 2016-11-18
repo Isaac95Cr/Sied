@@ -230,7 +230,7 @@
         <script src="angular/usuario/sessionService.js" type="text/javascript"></script>
         <script src="angular/usuario/userService.js" type="text/javascript"></script>
         <script src="angular/usuario/usersColaboradoresMetas.js" type="text/javascript"></script>
-
+        <script src="angular/usuario/usersColaboradoresCompetencias.js" type="text/javascript"></script>
 
         <script src="angular/registro/controlLogin.js" type="text/javascript"></script>
         <script src="angular/index/controlDepartamento.js" type="text/javascript"></script>
@@ -246,7 +246,11 @@
         <script src="angular/index/controlAprobarMetas.js" type="text/javascript"></script>
         <script src="angular/index/controlDetalleMetasJefe.js" type="text/javascript"></script>
         <script src="angular/index/controlUsuario.js" type="text/javascript"></script>
+        <script src="angular/index/controlDetalleCompetJefe.js" type="text/javascript"></script>
+        <script src="angular/index/controlEvaluarCompet.js" type="text/javascript"></script>
         <script src="angular/empresas/EmpresaService.js" type="text/javascript"></script>
+        
+        
         <script type="text/ng-template" id="myModalContent.html">
             <div class="modal-header">
             <button type="button" class="close" ng-click="$close()" aria-label="Close">

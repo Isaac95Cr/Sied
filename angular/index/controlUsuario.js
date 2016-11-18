@@ -13,7 +13,7 @@ angular.module("index")
                 $scope.opciones = ["Colaborador", "Jefe", "RH"];
 
                 $scope.init = function () {
-                    $scope.cargar();
+                    $scope.cargar(); 
 
                     empdep.cargarEmp().then(function () {
                         $scope.empresas = empdep.getEmpresas();

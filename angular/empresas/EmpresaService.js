@@ -15,7 +15,7 @@ angular.module('index')
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
                             });
-                };
+                }; 
                 this.eliminar = function (obj) { // id
                     return factoryEmpresa.eliminarEmpresa(obj);
                 };

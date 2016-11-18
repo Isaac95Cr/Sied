@@ -22,9 +22,9 @@ class evaluacion_Competencia {
 
     
     
-    /* Obtener las autoevaluaciones de los detalles de competencias de un usuario */
+    /* Obtener las autoevaluaciones y el id de los detalles de competencias de un usuario */
     public static function getAutoEvCompetUser($idUser) {
-        $consulta = "SELECT evaluacion_competencia.auto_evaluacion 
+        $consulta = "SELECT evaluacion_competencia.id, evaluacion_competencia.auto_evaluacion 
                                                FROM evaluacion_competencia, usuario, evaluacion_periodo
 		   WHERE usuario.id = ? AND
                                                               usuario.id = evaluacion_periodo.usuario AND
@@ -36,6 +36,7 @@ class evaluacion_Competencia {
             $competencias = $comando->fetchAll(PDO::FETCH_ASSOC);
             foreach ($competencias as $row) {
                 $newrow = array();
+                $newrow['id'] = $row['id'];
                 $newrow['auto_evaluacion'] = $row['auto_evaluacion'];
                 array_push($json_response, $newrow);
             }
@@ -43,6 +44,19 @@ class evaluacion_Competencia {
             //return $comando->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return false;
+        }
+    }
+    
+    
+    
+     public static function updateEvaluacionesDetalles($evaluaciones, $id) {
+        $comando = "UPDATE  evaluacion_competencia set evaluacion = ? where id = ? ;";
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($evaluaciones, $id));
+            return new Mensaje("Éxito", "<p>Evaluaciones ingresadas con éxito</p>");
+        } catch (PDOException $pdoExcetion) {
+            return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
         }
     }
 

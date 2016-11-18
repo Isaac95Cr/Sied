@@ -46,7 +46,13 @@
                                             <tr>
                                                 <td> {{meta.descripcion}} </td>
                                                 <td> {{meta.peso}} </td>
-                                                <td> <input type="number" min="0" max="100"  class="form-control"  placeholder="0"  id={{meta.id}} name={{meta.id}}  ng-value={{meta.auto_evaluacion}}></td>
+                                                <td>
+                                                  <div class="form-group" >
+                                                      <div class="col-sm-5">
+                                                        <input type="number" min="0" max="100"  class="form-control"  placeholder="0"  id={{meta.id}} name={{meta.id}}  ng-value={{meta.auto_evaluacion}}>
+                                                      </div>
+                                                  </div>
+                                                </td>
                                          </tr>
                                         </table>
                                     </div>
