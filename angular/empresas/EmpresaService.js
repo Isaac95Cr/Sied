@@ -1,4 +1,4 @@
-angular.module('index')
+angular.module('empdep')
         .service('empresaService', ['factoryEmpresa', function (factoryEmpresa) {
                 var service = {
                     empresas: undefined,
@@ -15,7 +15,7 @@ angular.module('index')
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
                             });
-                }; 
+                };
                 this.eliminar = function (obj) { // id
                     return factoryEmpresa.eliminarEmpresa(obj);
                 };
@@ -127,6 +127,49 @@ angular.module('index')
                 this.buscarDepartamento = function (nombre) {
                     return departamentoService.buscarDepartamento(nombre);
                 };
-            }]);
+            }])
+        .factory("factoryDepartamento", function ($http) {
+            var departamentos = {};
+
+            departamentos.cargarDepartamentos = function () {
+                return $http.get('/Sied/services/departamento/get-departamento.php');
+            };
+            departamentos.agregarDepartamento = function (obj) {
+                return $http.post('/Sied/services/departamento/add-departamento.php', obj);
+            };
+            departamentos.modificarDepartamento = function (obj) {
+                return $http.post('/Sied/services/departamento/set-departamento.php', obj);
+            };
+            departamentos.eliminarDepartamento = function (obj) {
+                return $http.post('/Sied/services/departamento/del-departamento.php', obj);
+            };
+
+            return departamentos;
+        })
 
 
+        .factory("factoryEmpresa", function ($http) {
+            var empresa = {};
+
+            empresa.cargarEmpresas = function () {
+                return $http.get('/Sied/services/empresa/get-empresa.php');
+            };
+
+            empresa.agregarEmpresa = function (nombre) {
+                var obj = {
+                    nombre: nombre
+                };
+                return $http.post('/Sied/services/empresa/add-empresa.php', obj);
+            };
+            empresa.modificarEmpresa = function (obj) {
+                return $http.post('/Sied/services/empresa/set-empresa.php', obj);
+            };
+
+            empresa.eliminarEmpresa = function (id) {
+                var obj = {
+                    id: id
+                };
+                return $http.post('/Sied/services/empresa/del-empresa.php', obj);
+            };
+            return empresa;
+        })

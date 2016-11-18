@@ -12,7 +12,8 @@
         <!-- Ionicons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <!-- Select2 -->
-        <link rel="stylesheet" href="plugins/select2/select2.min.css">
+        <link href="plugins/select/select.min.css" rel="stylesheet" type="text/css"/>
+        <link href="plugins/select2/select2.min.css" rel="stylesheet" type="text/css"/>
         <!-- Theme style -->
         <link href="dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
         <!-- tabla-->
@@ -23,7 +24,7 @@
     </head>
     <body class="hold-transition register-page" ng-app="registro" >
 
-        <div class="register-box" ng-controller="controlRegistro" ng-init="">
+        <div class="register-box" ng-controller="controlRegistro" ng-init="init()">
 
             <div class="register-box-body">
                 <p class="login-box-msg"><b>Registro</b></p>
@@ -41,7 +42,7 @@
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback" ng-class="{ 'has-error' : form.cedula.$invalid && !form.cedula.$pristine }">
-                        <input type="text" class="form-control" placeholder="Cédula" name="cedula" ng-model="user.cedula" required>
+                        <input type="text" class="form-control" placeholder="Cédula" name="cedula" ng-model="user.id" required>
                         <span class="glyphicon glyphicon-qrcode form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback" ng-class="{ 'has-error' : form.correo.$invalid && !form.correo.$pristine }">
@@ -57,20 +58,26 @@
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
 
-                    <div  name="empresa" class="form-group" ng-controller="controlEmpresa" ng-init="cargarSimple()" ng-class="{ 'has-error' : form.empresa.$invalid && !form.empresa.$pristine }">
-                        <select ng-change="update()" ng-model="empresa" class="form-control select2"  
-                                ng-options="option.nombre for option in empresas track by option.id"
-                                style="width: 100%" required>
-                            <option value="" disabled="disabled">Empresa</option>
-                        </select>
+                    <div  name="empresa" class="form-group has-feedback"  ng-class="{ 'has-error' : formAdd.empresa.$invalid && !formAdd.empresa.$pristine }">
+                        
+                            <ui-select theme="bootstrap" ng-model="user.empresa" on-select="selectEmpresa($item)" class="form-control" title="Empresa" required>
+                                <ui-select-match placeholder="">{{user.empresa.nombre}}</ui-select-match>
+                                <ui-select-choices repeat="empresa in empresas | filter: $select.search" >
+                                    <div ng-bind-html="empresa.nombre | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select> 
+                        <i class="fa fa-industry form-control-feedback "></i>
                     </div>
-
-                    <div class="form-group" ng-controller="controlDepartamento" ng-init="init()" ng-class="{ 'has-error' : form.departamento.$invalid && form.departamento.$dirty }">
-                        <select name="departamento" class="form-control select2"  ng-change="update()" 
-                                ng-options="option.nombre for option in departamentosfiltrados track by option.id"
-                                ng-model="departamento" style="width: 100%" required >
-                            <option value="" disabled="disabled">Departamento</option>
-                        </select>
+                    <div class="form-group has-feedback"  ng-class="{ 'has-error' : formAdd.departamento.$invalid && formAdd.departamento.$dirty }">
+                        
+                        
+                            <ui-select theme="bootstrap"  ng-model="user.departamento" on-select="" class="form-control select2" title="Departamento" required>
+                                <ui-select-match placeholder="">{{user.departamento.nombre}}</ui-select-match>
+                                <ui-select-choices allow-clear ="true" repeat="departamento in departamentos | filter: $select.search | filter: filtro">
+                                    <div ng-bind-html="departamento.nombre | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        <i class="fa fa-building-o form-control-feedback "></i>
                     </div>
                     <div class="row">
                         <div class="col-xs-6">
@@ -78,7 +85,7 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-xs-6">
-                            <button type="submit" ng-disabled="form.$invalid && !confirmarContrasena()" class="btn btn-primary btn-block btn-flat">Registrarse</button>
+                            <button type="submit" ng-disabled="form.$invalid || !confirmarContrasena() && !validar()" class="btn btn-primary btn-block btn-flat">Registrarse</button>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -108,7 +115,7 @@
             </div>
             </form>
         </script> 
-        
+
         <!-- Angular -->
 
 
@@ -116,23 +123,19 @@
         <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
         <!-- Bootstrap 3.3.6 -->
         <script src="bootstrap/js/bootstrap.min.js"></script>
-        <!-- Select2 -->
-        <script src="plugins/select2/select2.full.min.js"></script>
-       <!-- Angular-->
+        <!-- Angular-->
         <script src="angular/angular.min.js" type="text/javascript"></script>
         <script src="angular/angular-route.min.js" type="text/javascript"></script>
+        <script src="angular/angular-sanitize.min.js" type="text/javascript"></script>
         <script src="angular/app.js" type="text/javascript"></script>
         <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
         <script src="angular/registro/controlRegistro.js" type="text/javascript"></script>
-        <script src="angular/registro/controlDepartamento.js" type="text/javascript"></script>
-        <script src="angular/registro/controlEmpresa.js" type="text/javascript"></script>
         <script src="angular/modal/modalService.js" type="text/javascript"></script>
         <script src="angular/usuario/userService.js" type="text/javascript"></script>
         <script src="angular/ngStorage.min.js" type="text/javascript"></script>
-        <script>
-                                //Initialize Select2 Elements
-                                $(".select2").select2();
-        </script>
-
+        <script src="angular/empresas/EmpresaService.js" type="text/javascript"></script>
+        <!-- Select2 -->
+        <script src="plugins/select/select.min.js" type="text/javascript"></script>
+        <script src="plugins/select2/select2.min.js" type="text/javascript"></script>
     </body>
 </html>

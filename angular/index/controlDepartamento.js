@@ -66,22 +66,5 @@ angular.module("index")
                 };
 
             }])
-        .factory("factoryDepartamento", function ($http) {
-            var departamentos = {};
-
-            departamentos.cargarDepartamentos = function () {
-                return $http.get('/Sied/services/departamento/get-departamento.php');
-            };
-            departamentos.agregarDepartamento = function (obj) {
-                return $http.post('/Sied/services/departamento/add-departamento.php', obj);
-            };
-            departamentos.modificarDepartamento = function (obj) {
-                return $http.post('/Sied/services/departamento/set-departamento.php', obj);
-            };
-            departamentos.eliminarDepartamento = function (obj) {
-                return $http.post('/Sied/services/departamento/del-departamento.php', obj);
-            };
-
-            return departamentos;
-        });
+        
 

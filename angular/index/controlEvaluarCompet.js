@@ -215,7 +215,7 @@ angular.module("index")
 
                 this.actualizarEvaluacionesDetalles = function (obj) {
                     return factoryAutoEvCompetencias.updateEvaluacionesDetalles(obj);
-                }
+                };
 
             }]);
 

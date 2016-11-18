@@ -10,7 +10,7 @@ angular.module('modal',['ui.bootstrap']);
 
 angular.module('index', ['ngRoute','modal','usuario','dataTable','select', 'empdep']);
 
-angular.module('registro',['usuario','modal']);
+angular.module('registro',['usuario','modal','select','empdep']);
 
 angular.module('app',['ngRoute','index','registro', 'usuario']);
         

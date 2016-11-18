@@ -12,7 +12,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $correo = $body['correo'];
     $contrasena = md5($body['contrasena']);
     $departamento = $body['departamento']['id'];
-    $perfil =  Usuario::getPerfil($body['perfil']);
+    if ($body['perfil'] != null) {
+        $perfil =  Usuario::getPerfil($body['perfil']);
+    }else{
+        $perfil = 0;
+    }
     if ($body['estado'] != null) {
         $estado = $body['estado'];
     } else {
