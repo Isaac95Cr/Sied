@@ -49,12 +49,27 @@
                                                 <td> {{meta.peso}} </td>                                       
                                                 <td class="text-center">
                                                     <div class="form-group">
-                                                        <div class="col-sm-3" style="text-align: center;">
+<!--                                                        <div class="col-sm-3" style="text-align: center;">
                                                             <input type="checkbox" class="flat-green" id="evaluable{{$index}}" name="meta{{$index}}" checked>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <input type="checkbox" class="flat-red" id="evaluable{{$index}}" name="meta{{$index}}" >
+                                                        </div>-->
+
+                                                        <div class="col-sm-3">
+                                                         <p>Aprobada<p>
+                                                            <input type="checkbox" id="" name="" 
+                                                                ng-model="aprobada" ng-checked="aprobada === 1" 
+                                                                ng-true-value="'1'" ng-false-value="'0'"   color="green" i-check checked>
                                                         </div>
+
+                                                        <div class="col-sm-3">
+                                                         <p>Desaprobada<p>
+                                                         <input type="checkbox" id="" name="" 
+                                                                ng-model="aprobada" ng-checked="aprobada !== 0" 
+                                                                ng-true-value="'0'" ng-false-value="'1'"   color="red" i-check>
+                                                        </div>
+
                                                     </div>
                                                 </td>
 

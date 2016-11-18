@@ -8,7 +8,10 @@ angular.module('usuario')
             };
             usuario.cargarUsuario = function (obj) {
                 return $http.post('/Sied/services/usuario/get-usuario.php',obj);
-                return $http.post('/Sied/services/usuario/get-usuario.php', obj);
+            };
+            
+           usuario.loadAllUser = function (obj) {
+                return $http.post('/Sied/services/usuario/get-AllUser.php',obj);
             };
 
             usuario.insert = function (obj) {
@@ -21,9 +24,9 @@ angular.module('usuario')
             
             
             usuario.loadUserService = function (colab) {
-                    return this.cargarUsuario(colab)
+                    return this.loadAllUser(colab)
                             .success(function (data, status, headers, config) {
-                                nombreUser = data.usuarios[0].nombre + " " + data.usuarios[0].apellido1 + " " + data.usuarios[0].apellido2;
+                                nombreUser = data.usuario[0].nombre + " " + data.usuario[0].apellido1 + " " + data.usuario[0].apellido2;
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
