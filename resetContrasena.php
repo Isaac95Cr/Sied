@@ -18,35 +18,39 @@
         <link href="plugins/datatables/angular-datatables.min.css" rel="stylesheet" type="text/css"/>
         <link href="plugins/datatables/datatables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
     </head>
-    <body class="hold-transition login-page" ng-app="registro" ng-controller="controlLogin">
+    <body class="hold-transition login-page" ng-app="registro" ng-controller="controlLogin" ng-init="initReset()">
         <div class="login-box">
             <div class="login-logo">
                 <h4><b>Sistema de Evaluación del Desempeño</b></h4>
             </div>
             <!-- /.login-logo -->
             <div class="login-box-body">
-                <p class="login-box-msg"><b>¿Olvidó su contraseña?</b></p>
-                <form name="form" class="form-horizontal" ng-submit="correoContrasena()" method="post" novalidate>
-                    <p> Puedes restablecer tu contraseña ingresando tu cédula y siguiendo los pasos que llegaran a su correo electronico.</p>
+                <p class="login-box-msg"><b>Reset Contraseña</b></p>
+                <form name="form" class="form-horizontal" ng-submit="setContrasena()" method="post" novalidate>
+                    <p> Has solicitado cambiar tu contraseña para la identificación {{user.id}} , digita la nueva contraseña y confírmala para hacerla valida. </p>
                     <br>
-                    <div class="form-group" ng-class="{ 'has-error' : form.id.$invalid && !form.id.$pristine}">
-                        <label for="id" class="col-sm-3 control-label">Cédula</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Digite su cédula" name="id" ng-model="user.id" required>
-                            <p ng-show="form.id.$invalid && !form.id.$pristine" class="help-block">Identificación requerida.</p>
+                    <div class="form-group" ng-class="{ 'has-error' : form.contrasena.$invalid && !form.contrasena.$pristine && !confirmarContrasena()}">
+                        <label for="id" class="col-sm-4 control-label">Nueva Contraseña</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" placeholder="Digite su nueva contraseña" name="contrasena" ng-model="user.contrasena" required>
+                            <p ng-show="form.contrasena.$invalid && !form.contrasena.$pristine" class="help-block">Contraseña requerida.</p>
+                        </div>
+                        
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : form.contrasena2.$invalid && !form.contrasena2.$pristine && !confirmarContrasena()}">
+                        <label for="id" class="col-sm-4 control-label">Confirmar Contraseña</label>
+                        <div class="col-sm-8 ">
+                            <input type="password" class="form-control" placeholder="Confirme la contraseña" name="contrasena2" ng-model="user.contrasena2" required>
+                            <p ng-show="form.contrasena2.$invalid && !form.contrasena2.$pristine" class="help-block">Confirmación requerida.</p>
+                            <p ng-show="!confirmarContrasena() && !form.contrasena2.$pristine" class="help-block">La confirmación es incorrecta.</p>
                         </div>
                         
                     </div>
                     
-                    <div class="row">
-                        
-                        <div class="col-xs-6"><br>
-                            <a href="login.php"> Ir a Login</a><br>
-                            <a href="registro.php" class="text-center">Ir a Registrarse</a>
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-xs-6"><br>
-                            <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary btn-block btn-flat">Restablecer</button>
+                    <div class="row" class="">
+                        <div class="col-xs-12" style="text-align: center"><br>
+                            <button type="submit" ng-if="bandera" ng-disabled="form.$invalid || !confirmarContrasena()" class="btn btn-primary btn-block btn-flat">Restablecer contraseña</button>
+                            <a href="login.php" ng-if="!bandera"> Ir a Login</a><br>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -56,6 +60,26 @@
             </div>
             <!-- /.login-box -->
         </div>
+        <script type="text/ng-template" id="myModalContent.html">
+            <div class="modal-header">
+            <button type="button" class="close" ng-click="$close()" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+            <h3 class="modal-title">{{ vm.titulo }} </h3>
+            </div>
+            <form name="form" class="form-horizontal" novalidate>
+            <div class="modal-body">
+            <div compile-data template="{{vm.contenido}}">
+
+            </div>
+            </div>
+            <div class="modal-footer">
+            <div compile-data template="{{vm.footer}}">
+
+            </div>
+            </div>
+            </form>
+
+        </script> 
         <!-- jQuery 2.2.3 -->
         <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
         <!-- Bootstrap 3.3.6 -->

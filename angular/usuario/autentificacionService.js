@@ -29,6 +29,9 @@ angular.module('usuario')
                 autentificacion.correoContrasena = function (obj) {
                     return $http.post('/Sied/services/usuario/correo.php', obj);
                 };
+                autentificacion.setContrasena = function (obj) {
+                    return $http.post('/Sied/services/usuario/set-contrasena.php', obj);
+                };
 
                 autentificacion.getperfil = function () {
                     //return "lola";

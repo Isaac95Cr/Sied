@@ -140,13 +140,11 @@ class Usuario {
         try {
             $sentencia->execute(array($id));
             $result = $sentencia->fetch(PDO::FETCH_ASSOC);
-            if (!$result) {
-                return false;
-            }
+            return $result['correo'];
         } catch (PDOException $pdoExcetion) {
             return false;
         }
-        return true;
+        return $result['correo'];
     }
 
     public static function login($id, $contrasena) {
@@ -253,5 +251,16 @@ class Usuario {
             return 0;
         }
     }
+    
+    public static function setContrasena($contrasena,$token){
+        $comando = "UPDATE usuario SET contrasena = ? WHERE token = ?;";
 
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($contrasena,$token));
+            
+        } catch (PDOException $pdoExcetion) {
+            return new Mensaje("Error", "<p>Error:" . $pdoExcetion->getMessage() . "</p>");
+        }
+    }
 }

@@ -20,6 +20,9 @@ angular.module('registro')
                         $scope.bandera = false;
                     }
                 };
+                $scope.confirmarContrasena = function () {
+                    return $scope.user.contrasena === $scope.user.contrasena2;
+                };
 
                 $scope.$on('departamento', function () {
                     $scope.user.departamento = ShareDataService.departamento.id;
