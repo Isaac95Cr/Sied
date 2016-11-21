@@ -137,6 +137,9 @@ angular.module("app")
                         .when("/perfil", {
                             templateUrl: "paginas/perfil.php"
                         })
+                        .when("/notificaciones", {
+                            templateUrl: "paginas/notificaciones.php"
+                        })
                         .otherwise({redirectTo: '/'});
             }])
         .run(function ($window, $rootScope, autentificacionService, sessionService, $q) {
@@ -144,8 +147,8 @@ angular.module("app")
                 sessionService.cargar();
                 var token = sessionService.token();
                 if (typeof token !== "undefined") {
-                    autentificacionService.isLog({token:token}).then(function (res) {
-                         var data = res.data.replace(/^\s+|\s+$/g, '');
+                    autentificacionService.isLog({token: token}).then(function (res) {
+                        var data = res.data.replace(/^\s+|\s+$/g, '');
                         if (data == false) {
                             sessionService.destroy();
                             $window.location.href = 'login.php';
@@ -219,5 +222,12 @@ angular.module("app")
                     });
                 }
             };
+        })
+        .filter('toDate', function () {
+            return function (dateString) {
+                var dateObject = new Date(dateString);
+                return dateObject;
+            };
         });
+;
 

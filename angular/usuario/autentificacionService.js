@@ -32,6 +32,10 @@ angular.module('usuario')
                 autentificacion.setContrasena = function (obj) {
                     return $http.post('/Sied/services/usuario/set-contrasena.php', obj);
                 };
+                
+                autentificacion.getNotificacion = function () {
+                    return $http.get('/Sied/services/notificacion/get-notificacion.php');
+                };
 
                 autentificacion.getperfil = function () {
                     //return "lola";

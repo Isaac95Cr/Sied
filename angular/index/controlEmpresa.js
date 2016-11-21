@@ -1,5 +1,5 @@
 angular.module("index")
-        .controller("controlEmpresa", ['$scope', 'empdep', 'ShareDataService', 'modalService', function ($scope, empdep, ShareDataService, modalService) {
+        .controller("controlEmpresa", ['$scope', 'empdep', 'modalService', function ($scope, empdep, modalService) {
 
                 $scope.empresas = [];
                 $scope.empresaEdit = {

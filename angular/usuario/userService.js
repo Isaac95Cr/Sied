@@ -36,7 +36,7 @@ angular.module('usuario')
              
              usuario.getNameUser = function (){
                  return nombreUser;
-             }
+             };
 
             return usuario;
         })

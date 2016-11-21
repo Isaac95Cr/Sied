@@ -29,7 +29,7 @@
 
     <body class="hold-transition skin-blue fixed sidebar-mini" ng-app="app">
         <!-- Site wrapper -->
-        <div class="wrapper" ng-controller="controlLogin" ng-init="init()">
+        <div class="wrapper" ng-controller="controlUser" ng-init="init()">
             <!-- header -->
             <header class="main-header">
                 <!-- Logo -->
@@ -54,21 +54,23 @@
                             <li class="dropdown notifications-menu">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-bell-o"></i>
-                                    <span class="label label-warning">10</span>
+                                    <span class="label label-warning">{{filtered.length}}</span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li class="header">You have 10 notifications</li>
+                                    <li class="header">Tienes {{filtered.length}} notificaciones</li>
                                     <li>
                                         <!-- inner menu: contains the actual data -->
                                         <ul class="menu">
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                            <li ng-repeat="notificacion in notificaciones | orderBy: 'visto' as filtered">
+                                                <a href="{{notificacion.url}}">
+                                                    <i ng-show="notificacion.visto == 0" class="fa fa-plus-circle text-red"></i> 
+                                                    <i ng-show="notificacion.visto == 1" class="fa fa-plus-circle text-blue"></i> 
+                                                    {{notificacion.titulo}}
                                                 </a>
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="footer"><a href="#">View all</a></li>
+                                    <li class="footer"><a href="#/notificaciones">Ver todas</a></li>
                                 </ul>
                             </li>
                             <!-- User Account: style can be found in dropdown.less -->
@@ -250,7 +252,7 @@
         <script src="angular/index/controlEvaluarCompet.js" type="text/javascript"></script>
         <script src="angular/empresas/EmpresaService.js" type="text/javascript"></script>
         <script src="angular/index/controlPerfil.js" type="text/javascript"></script>
-        
+        <script src="angular/usuario/controlUser.js" type="text/javascript"></script>
         
         <script type="text/ng-template" id="myModalContent.html">
             <div class="modal-header">
