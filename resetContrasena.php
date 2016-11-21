@@ -87,6 +87,8 @@
         <script src="angular/angular.min.js" type="text/javascript"></script>
         <script src="angular/angular-route.min.js" type="text/javascript"></script>
         <script src="angular/ngStorage.min.js" type="text/javascript"></script>
+                <script src="angular/angular-sanitize.min.js" type="text/javascript"></script>
+
         <script src="angular/app.js" type="text/javascript"></script>
         <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
         <script src="angular/registro/controlLogin.js" type="text/javascript"></script>
@@ -94,6 +96,10 @@
         <script src="angular/usuario/autentificacionService.js" type="text/javascript"></script>
         <script src="angular/usuario/sessionService.js" type="text/javascript"></script>
         <script src="angular/ngStorage.min.js" type="text/javascript"></script>
+        <script src="angular/empresas/EmpresaService.js" type="text/javascript"></script>
+        <!-- Select2 -->
+        <script src="plugins/select/select.min.js" type="text/javascript"></script>
+        <script src="plugins/select2/select2.min.js" type="text/javascript"></script>
 
     </body>
 </html>
