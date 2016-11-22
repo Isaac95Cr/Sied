@@ -108,7 +108,7 @@
                             </div>
                         </div>
                         <div  name="empresa" class="form-group"  ng-class="{ 'has-error' : formAdd.empresa.$invalid && !formAdd.empresa.$pristine }">
-                            <label for="empresa" class="col-sm-4 control-label">Empresa {{userAdd.empresa}}</label>
+                            <label for="empresa" class="col-sm-4 control-label">Empresa</label>
                             <div class="col-sm-8">
                                 <ui-select theme="bootstrap" ng-model="userAdd.empresa" on-select="selectEmpresa($item)" class="form-control select2" title="Empresa" required>
                                     <ui-select-match placeholder="">{{userAdd.empresa.nombre}}</ui-select-match>
@@ -119,7 +119,7 @@
                             </div>
                         </div>
                         <div class="form-group"  ng-class="{ 'has-error' : formAdd.departamento.$invalid && formAdd.departamento.$dirty }">
-                            <label for="departamento" class="col-sm-4 control-label">Departamento {{userAdd.departamento}}</label>                     
+                            <label for="departamento" class="col-sm-4 control-label">Departamento</label>                     
                             <div class="col-sm-8">
                                 <ui-select theme="bootstrap"  ng-model="userAdd.departamento" on-select="" class="form-control select2" title="Departamento" required>
                                     <ui-select-match placeholder="">{{userAdd.departamento.nombre}}</ui-select-match>

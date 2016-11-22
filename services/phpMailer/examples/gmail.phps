@@ -52,7 +52,7 @@ $mail->setFrom('from@example.com', 'First Last');
 $mail->addReplyTo('replyto@example.com', 'First Last');
 
 //Set who the message is to be sent to
-$mail->addAddress($user['correo']', $user['nombre'] . $user['apellido1']);
+$mail->addAddress($user['correo'], $user['nombre'] , $user['apellido1']);
 
 //Set the subject line
 $mail->Subject = 'Sied: Cambio de contraseña';
