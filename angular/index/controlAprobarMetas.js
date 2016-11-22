@@ -4,7 +4,11 @@ angular.module("index")
         $scope.metasUser = [];
         $scope.tiene_Metas = false;
         $scope.colaborador = "";
-        $scope.aprobada = 1;
+        $scope.aprobada = 2;
+        $scope.comentario = "";  // ng-model del comentario de la modal.
+        
+        $scope.metaActual = "0";  // se utiliza para saber cuál es la meta a la que se está haciendo referencia. 
+        $scope.arrayComentarios = [];  // se van a guardar objetos de la forma: [{id: 1, comentario = 'comment'}]
 
                 $scope.metasUser = [];
                 $scope.tiene_Metas = false;
@@ -20,8 +24,9 @@ angular.module("index")
                     factoryMeta.cargarMetasUser(obj)
                             .success(function (data, status, headers, config) {
                                 $scope.metasUser = data.metas;
-                                if ($scope.metasUser.length !== 0)
+                                if ($scope.metasUser.length !== 0){
                                     $scope.tiene_Metas = true;
+                                }
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
@@ -37,6 +42,45 @@ angular.module("index")
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
                             });
+                };
+                
+                
+                $scope.desaprobarMeta = function () {
+                    var obj = {id: $scope.metaActual, comentario: $scope.comentario};  // armar el objeto de la meta que se desaprobó
+                    
+                    factoryMeta.aprobar_Desaprobar(obj)
+                            .success(function (data, status, headers, config) {
+                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
+                                $scope.id = "0";
+                                $scope.comentario = "";
+                            })
+                            .error(function (data, status, headers, config) {
+                                alert("failure message: " + JSON.stringify(data));
+                            });        
+                };
+                
+                
+                
+                
+                $scope.aprobarMeta = function (meta) {
+                    $scope.metaActual = meta;
+                    var obj = {id: $scope.metaActual};  // armar el objeto de la meta que se desaprobó
+                    
+                    factoryMeta.aprobar_Desaprobar(obj)
+                            .success(function (data, status, headers, config) {
+                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
+                                $scope.id = "0";
+                                $scope.comentario = "";
+                            })
+                            .error(function (data, status, headers, config) {
+                                alert("failure message: " + JSON.stringify(data));
+                            });        
+                };
+                
+                
+                $scope.abrirModalCancel = function (meta) {
+                      $('#modalComent').modal();
+                      $scope.metaActual = meta;
                 };
           
           
@@ -82,49 +126,3 @@ angular.module("index")
                 };
             }]);
 
-
-
-// .directive('iCheck', function ($timeout, $parse) {
-//    return {
-//        require: 'ngModel',
-//        link: function ($scope, element, $attrs, ngModel) {
-//            return $timeout(function () {
-//                var value;
-//                value = $attrs['value'];
-//
-//                $scope.$watch($attrs['ngModel'], function (newValue) {
-//                    $(element).iCheck('update');
-//                });
-//
-//                $scope.$watch($attrs['ngDisabled'], function (newValue) {
-//                    $(element).iCheck(newValue ? 'disable' : 'enable');
-//                    $(element).iCheck('update');
-//                })
-//
-//                return $(element).iCheck({
-//                    checkboxClass: 'icheckbox_flat-blue',
-//                    radioClass: 'iradio_square-blue'
-//
-//                }).on('ifChanged', function (event) {
-//                    if ($(element).attr('type') === 'checkbox' && $attrs['ngModel']) {
-//                        $scope.$apply(function () {
-//                            return ngModel.$setViewValue(event.target.checked);
-//                        })
-//                    }
-//                }).on('ifClicked', function (event) {
-//                    if ($(element).attr('type') === 'checkbox' && $attrs['ngModel']) {
-//                        return $scope.$apply(function () {
-//                            //set up for radio buttons to be de-selectable
-//                            if (ngModel.$viewValue !== value)
-//                                return ngModel.$setViewValue(value);
-//                            else
-//                                ngModel.$setViewValue(null);
-//                            ngModel.$render();
-//                            return
-//                        });
-//                    }
-//                });
-//            });
-//        }
-//    };
-//});

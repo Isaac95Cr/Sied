@@ -1,5 +1,5 @@
 angular.module("index")
-        .controller("controlMeta", ['$scope', 'factoryMeta', 'ShareDataService', 'modalService', function ($scope, factoryMeta, ShareDataService, modalService) {
+        .controller("controlMeta", ['$scope', 'factoryMeta', 'modalService', function ($scope, factoryMeta, modalService) {
 
                 $scope.metas = [];
                 $scope.meta = 0;
@@ -14,11 +14,6 @@ angular.module("index")
                 $scope.actual = "0";  // se utiliza para saber cuál es la meta a la que se está haciendo referencia.
                 
                 $scope.auto_Evaluacion = 0;
-
-                $scope.selectMeta = function (msg) {
-                    ShareDataService.prepForBroadcast(msg);
-                };
-
 
                 /*
                  * Función que inicializa la lista de metas 
@@ -200,6 +195,10 @@ angular.module("index")
            meta.updateEvaluaciones = function (metaObj) {
                 return $http.post('/Sied/services/meta/set-EvalMetas.php', metaObj);
             };
+            
+           meta.aprobar_Desaprobar = function (metaObj) {
+                return $http.post('/Sied/services/meta/aprobar_desaprobarMeta.php', metaObj);
+            };            
             
             return meta;
         })

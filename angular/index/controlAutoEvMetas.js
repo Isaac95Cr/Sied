@@ -1,12 +1,9 @@
 angular.module("index")
-        .controller("controlAutoEvMetas", ['$scope', 'factoryMeta', 'ShareDataService', 'modalService', function ($scope, factoryMeta, ShareDataService, modalService) {
+        .controller("controlAutoEvMetas", ['$scope', 'factoryMeta', 'modalService', function ($scope, factoryMeta, modalService) {
 
 //                $scope.auto_Evaluacion = 0;
                 $scope.objAutoEv = new Array();
 
-                $scope.selectMeta = function (msg) {
-                    ShareDataService.prepForBroadcast(msg);
-                };
 
                 /*
                  * Función que inicializa la lista de metas 
@@ -20,7 +17,6 @@ angular.module("index")
                     factoryMeta.cargarMetas()
                             .success(function (data, status, headers, config) {
                                 $scope.metas = data.meta;
-                                $scope.selectMeta(data.meta[0]);
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
