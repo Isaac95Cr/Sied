@@ -152,6 +152,34 @@ public static function update_Evaluacion($arreglo) {
  }
         
         
+ 
+ public static function desaprobarMeta($id, $comment) {       
+     
+        $comando =   "UPDATE meta SET aprobacion_j = b?, comentario_j = ?  WHERE id = ?;";
+                
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array(0, $comment, $id));
+            
+            return new Mensaje("Éxito", "<p>Se actualizó la meta con éxito</p>");
+        } catch (PDOException $pdoExcetion) {
+            return new Mensaje("Error", "<p>Error:" . $pdoExcetion->getMessage(). "</p>");
+        }
+ }
+ 
+ 
+  public static function aprobarMeta($id) {        
+        $comando =   "UPDATE meta SET aprobacion_j = b?, comentario_j = ?  WHERE id = ?;";
+                
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array(1, "", $id));
+            
+            return new Mensaje("Éxito", "<p>Se actualizó la meta con éxito</p>");
+        } catch (PDOException $pdoExcetion) {
+            return new Mensaje("Error", "<p>Error:" . $pdoExcetion->getMessage(). "</p>");
+        }
+ }
         
         
         
