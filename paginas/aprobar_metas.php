@@ -53,23 +53,22 @@
                                                     <div class="col-sm-3">
                                                         <p>Aprobada</p>
                                                         <input type="checkbox" id="" name="" 
-                                                               ng-model="aprobada" ng-checked="aprobada === 1" ng-change="aprobarMeta(meta.id)"
+                                                               ng-model="meta.aprobacion_j" ng-checked="meta.aprobacion_j == 1" ng-change="aprobarMeta(meta.id)"
                                                                ng-true-value="'1'" ng-false-value="'0'"   color="green" i-check>
                                                     </div>
 
                                                     <div class="col-sm-3">
                                                         <p>Desaprobada</p>
                                                         <input type="checkbox" ng-change="abrirModalCancel(meta.id)"
-                                                               ng-model="aprobada" ng-checked="aprobada === 0"
+                                                               ng-model="meta.aprobacion_j" ng-checked="meta.aprobacion_j == 0"
                                                                ng-true-value="'0'" ng-false-value="'1'" color="red" i-check>
                                                     </div>
-
                                                 </div>
                                             </td>
 
                                             <td class="text-center">
-                                                <span data-toggle="modal" data-target="#modalComent">
-                                                    <i class="fa fa-commenting fa-2x"></i>
+                                                <span data-toggle="modal" data-target="#modalVerComent">
+                                                    <i class="fa fa-commenting fa-2x" ng-click="getComment(meta.id)"></i>
                                                 </span>
                                             </td>
                                         </tr>
@@ -103,25 +102,72 @@
                     <h4 class="modal-title">Comentario de la Meta</h4>
                 </div>
                 <div class="modal-body">
-<!--                    <form action="" method="post" class="form-horizontal" ng-submit="desaprobarMeta()" novalidate> -->
-                    <form action="" method="post" class="form-horizontal" novalidate> 
-                        <div class="form-group">
-                            <label for="comentario" class="col-sm-2 control-label">Comentario</label>
+
+                    <form name="formComentar" class="form-horizontal" novalidate>
+                        <div class="form-group" ng-class="{ 'has-error' : formComentar.comentario.$invalid && !formComentar.comentario.$pristine }">
+                            <label for="comment" class="col-sm-2 control-label">Comentario</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" rows="3" placeholder="" id="comentario" ng-model="comentario"></textarea>
+                                <textarea class="form-control" rows="3" placeholder="Comentario de la meta" id="comentario" ng-model="comentario" name="comentario" required>
+                                </textarea>
+                                <p ng-show="formComentar.comentario.$invalid && !formComentar.comentario.$pristine" class="help-block">Comentario de meta requerido.</p>
                             </div>
                         </div>
+
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="cancelar">Cancelar</button>
-                            <button type="button"  class="btn btn-primary" data-dismiss="modal" ng-click="desaprobarMeta()">Agregar</button>
+                            <button type="button" class="btn btn-default pull-left"  data-dismiss="modal">Cancelar</button>
+                            <button type="button"  class="btn btn-primary" ng-disabled="formComentar.$invalid" data-dismiss="modal" ng-click="desaprobarMeta()">Guardar</button>
                         </div>
                     </form>
+
+
+
                 </div>
             </div>
         </div>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
+
+
+
+
+    <div class="modal" id="modalVerComent">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Comentario de la Meta</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form name="formMuestra" class="form-horizontal" novalidate>
+                        <div class="form-group">
+                            <label for="comment" class="col-sm-2 control-label">Comentario</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="3" ng-model="commentIcono" id="comentario" name="comentario" ng-disabled="true">
+                                </textarea>
+                                <p ng-show="commentIcono === null || commentIcono === '' " style="color:green">*La meta no posee comentarios</p>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+      
+                            <button type="button"  class="btn btn-primary"data-dismiss="modal">Aceptar</button>
+                        </div>
+                    </form>
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+
+
+
 
 
     <!-- /.modal -->
@@ -155,4 +201,8 @@
 //    });
 
     //$('input').on('ifChanged', function (event) { $(event.target).trigger('change'); });
+
+
+
+
 </script>

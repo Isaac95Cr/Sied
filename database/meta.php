@@ -52,7 +52,7 @@ class Meta{
             $sentencia->execute(array($is_Evaluable, $peso, $titulo, 
                                                            $descripcion, NULL, NULL,
                                                             NULL, NULL, NULL, NULL,
-                                                            1, 402270956));         
+                                                            1, 123));         
             return new Mensaje("Éxito", "<p>Se agregó la meta con éxito</p>");
         } catch (PDOException $pdoExcetion) {
             return new Mensaje("Error", "<p>Error:" . $pdoExcetion->getMessage(). "</p>");

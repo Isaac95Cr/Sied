@@ -1,14 +1,16 @@
 angular.module("index")
         .controller("controlAprobarMetas", ['$scope', 'factoryMeta', 'userService', '$routeParams', 'modalService', function ($scope, factoryMeta, userService, $routeParams, modalService) {
+
+                $scope.metasUser = [];
+                $scope.tiene_Metas = false;
+                $scope.colaborador = "";
+                //$scope.aprobada = 2;
+                $scope.comentario = "";  // ng-model del comentario de la modal.
                 
-        $scope.metasUser = [];
-        $scope.tiene_Metas = false;
-        $scope.colaborador = "";
-        $scope.aprobada = 2;
-        $scope.comentario = "";  // ng-model del comentario de la modal.
-        
-        $scope.metaActual = "0";  // se utiliza para saber cuál es la meta a la que se está haciendo referencia. 
-        $scope.arrayComentarios = [];  // se van a guardar objetos de la forma: [{id: 1, comentario = 'comment'}]
+                $scope.commentIcono = "";
+
+                $scope.metaActual = "0";  // se utiliza para saber cuál es la meta a la que se está haciendo referencia. 
+                $scope.arrayComentarios = [];  // se van a guardar objetos de la forma: [{id: 1, comentario = 'comment'}]
 
                 $scope.metasUser = [];
                 $scope.tiene_Metas = false;
@@ -16,7 +18,7 @@ angular.module("index")
                 $scope.init = function () {
                     $scope.cargar();
                     $scope.cargarColaborador();
-         };
+                };
 
 
                 $scope.cargar = function () {
@@ -24,17 +26,17 @@ angular.module("index")
                     factoryMeta.cargarMetasUser(obj)
                             .success(function (data, status, headers, config) {
                                 $scope.metasUser = data.metas;
-                                if ($scope.metasUser.length !== 0){
+                                if ($scope.metasUser.length !== 0) {
                                     $scope.tiene_Metas = true;
                                 }
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
                             });
-          };
-          
-          
-               $scope.cargarColaborador = function () {
+                };
+
+
+                $scope.cargarColaborador = function () {
                     userService.loadAllUser($routeParams.id)
                             .success(function (data, status, headers, config) {
                                 $scope.colaborador = data.usuario[0].nombre + " " + data.usuario[0].apellido1 + " " + data.usuario[0].apellido2;
@@ -43,11 +45,11 @@ angular.module("index")
                                 alert("failure message: " + JSON.stringify(headers));
                             });
                 };
-                
-                
+
+
                 $scope.desaprobarMeta = function () {
                     var obj = {id: $scope.metaActual, comentario: $scope.comentario};  // armar el objeto de la meta que se desaprobó
-                    
+
                     factoryMeta.aprobar_Desaprobar(obj)
                             .success(function (data, status, headers, config) {
                                 modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
@@ -56,16 +58,15 @@ angular.module("index")
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(data));
-                            });        
+                            });
                 };
-                
-                
-                
-                
+
+
+
                 $scope.aprobarMeta = function (meta) {
                     $scope.metaActual = meta;
                     var obj = {id: $scope.metaActual};  // armar el objeto de la meta que se desaprobó
-                    
+
                     factoryMeta.aprobar_Desaprobar(obj)
                             .success(function (data, status, headers, config) {
                                 modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
@@ -74,27 +75,42 @@ angular.module("index")
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(data));
-                            });        
+                            });
                 };
-                
-                
+
+
                 $scope.abrirModalCancel = function (meta) {
-                      $('#modalComent').modal();
-                      $scope.metaActual = meta;
+                    $('#modalComent').modal();
+                    $scope.metaActual = meta;
                 };
-          
-          
-          
-                        
-}])
-.directive('iCheck', ['$timeout', '$parse', function ($timeout, $parse) {
+
+
+
+                $scope.getComment = function (meta) {
+                    factoryMeta.getMeta(meta)
+                            .success(function (data, status, headers, config) {
+                                $scope.commentIcono = data.metas[0].comentario_j;
+                                if($scope.commentIcono === null || $scope.commentIcono === ""){
+                                    $scope.commentIcono = "";
+                                }
+                            })
+                            .error(function (data, status, headers, config) {
+                                alert("failure message: " + JSON.stringify(headers));
+                            });
+                };
+
+
+
+
+            }])
+        .directive('iCheck', ['$timeout', '$parse', function ($timeout, $parse) {
                 return {
                     require: 'ngModel',
                     link: function ($scope, element, $attrs, ngModel) {
                         return $timeout(function () {
                             var value = $attrs['value'];
                             var color = $attrs['color'];
-                            if(!color){
+                            if (!color) {
                                 color = "blue";
                             }
                             $scope.$watch($attrs['ngModel'], function (newValue) {
@@ -107,7 +123,7 @@ angular.module("index")
                             });
 
                             return $(element).iCheck({
-                                checkboxClass: 'icheckbox_flat-'+color,
+                                checkboxClass: 'icheckbox_flat-' + color,
                                 radioClass: 'iradio_minimal'
                             }).on('ifToggled', function (event) {
                                 if ($(element).attr('type') === 'checkbox' && $attrs['ngModel']) {

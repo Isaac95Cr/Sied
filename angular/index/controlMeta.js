@@ -40,7 +40,6 @@ angular.module("index")
                     factoryMeta.cargarMetas()
                             .success(function (data, status, headers, config) {
                                 $scope.metas = data.meta;
-                                $scope.selectMeta(data.meta[0]);
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
@@ -198,41 +197,45 @@ angular.module("index")
             
            meta.aprobar_Desaprobar = function (metaObj) {
                 return $http.post('/Sied/services/meta/aprobar_desaprobarMeta.php', metaObj);
-            };            
+            }; 
+            
+           meta.getMeta = function (obj) {
+                return $http.post('/Sied/services/meta/get-metaEspecifica.php', obj);
+            };
             
             return meta;
-        })
-        .directive('iCheck', ['$timeout', '$parse', function ($timeout, $parse) {
-                return {
-                    require: 'ngModel',
-                    link: function ($scope, element, $attrs, ngModel) {
-                        return $timeout(function () {
-                            var value = $attrs.value;
-                            var $element = $(element);
-
-                            // Instantiate the iCheck control.                            
-                            $element.iCheck({
-                                checkboxClass: 'icheckbox_flat-blue',
-                            });
-
-                            // If the model changes, update the iCheck control.
-                            $scope.$watch($attrs.ngModel, function (newValue) {
-                                $element.iCheck('update');
-                            });
-
-                            // If the iCheck control changes, update the model.
-                            $element.on('ifChanged', function (event) {
-                                if ($element.attr('type') === 'checkbox' && $attrs.ngModel) {
-                                    $scope.$apply(function () {
-                                        ngModel.$setViewValue(value);
-                                    });
-                                }
-                            });
-
-                        });
-                    }
-                };
-            }]);
+        });
+//        .directive('iCheck', ['$timeout', '$parse', function ($timeout, $parse) {
+//                return {
+//                    require: 'ngModel',
+//                    link: function ($scope, element, $attrs, ngModel) {
+//                        return $timeout(function () {
+//                            var value = $attrs.value;
+//                            var $element = $(element);
+//
+//                            // Instantiate the iCheck control.                            
+//                            $element.iCheck({
+//                                checkboxClass: 'icheckbox_flat-blue',
+//                            });
+//
+//                            // If the model changes, update the iCheck control.
+//                            $scope.$watch($attrs.ngModel, function (newValue) {
+//                                $element.iCheck('update');
+//                            });
+//
+//                            // If the iCheck control changes, update the model.
+//                            $element.on('ifChanged', function (event) {
+//                                if ($element.attr('type') === 'checkbox' && $attrs.ngModel) {
+//                                    $scope.$apply(function () {
+//                                        ngModel.$setViewValue(value);
+//                                    });
+//                                }
+//                            });
+//
+//                        });
+//                    }
+//                };
+//            }]);
 
 
 
