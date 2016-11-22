@@ -54,7 +54,7 @@
                             <li class="dropdown notifications-menu">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-bell-o"></i>
-                                    <span ng-show="filtered.length!= 0" class="label label-danger">{{filtered.length}}</span>
+                                    <span ng-show="filtered.length != 0" class="label label-danger">{{filtered.length}}</span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="header">Tienes {{filtered.length}} notificaciones nuevas</li>
@@ -64,14 +64,12 @@
                                             <li ng-repeat="notificacion in notificaciones| orderBy: 'visto' | filter: visto as filtered"  sglclick="notificacionVista({{notificacion}})" dblclick="">
                                                 <a href ="{{notificacion.url}}">
                                                     <i class="fa fa-plus-circle text-red"></i> 
-                                                    {{notificacion.visto}}
                                                     {{notificacion.titulo}}
                                                 </a>
                                             </li>
                                             <li ng-repeat="notificacion in notificaciones| filter: vistoN ">
                                                 <a href ="{{notificacion.url}}">
                                                     <i class="fa fa-plus-circle text-blue"></i> 
-                                                    {{notificacion.visto}}
                                                     {{notificacion.titulo}}
                                                 </a>
                                             </li>
