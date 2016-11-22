@@ -69,11 +69,15 @@ angular.module("index")
                     $scope.cargar();
                 };
 
+                $scope.isSelected = function (competencia) {
+                    return competencia.id === $scope.competencia.id;
+                };
+
                 $scope.cargar = function () {
                     factoryperfilCompetencia.cargarPerfilCompetencia($routeParams.perfil)
                             .success(function (data, status, headers, config) {
                                 $scope.perfil = data.perfil;
-                                $scope.selectCompetencia(data.perfil.competencias[0].id, data.perfil.competencias[0].titulo, data.perfil.competencias[0].descripcion);
+                                //$scope.selectCompetencia(data.perfil.competencias[0].id, data.perfil.competencias[0].titulo, data.perfil.competencias[0].descripcion);
                                 ShareDataService.prepForBroadcast(pesos());
                             })
                             .error(function (data, status, headers, config) {
@@ -104,7 +108,7 @@ angular.module("index")
                     factoryDetalleCompetencia.modificarDetalle(descripcion, id)
                             .success(function (data, status, headers, config) {
                                 modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.descripcionDetalleEdit = "";
+                                $scope.descripcionDetalleEdit = undefined;
                                 $scope.cargar();
                             })
                             .error(function (data, status, headers, config) {
@@ -118,7 +122,7 @@ angular.module("index")
                     factoryCompetencia.modificarCompetencia(titulo, descripcion, id)
                             .success(function (data, status, headers, config) {
                                 modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.selectCompetencia(id,titulo,descripcion);
+                                $scope.selectCompetencia(id, titulo, descripcion);
                                 $scope.cargar();
                             })
                             .error(function (data, status, headers, config) {
@@ -134,6 +138,7 @@ angular.module("index")
                                 modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
                                 $scope.descripcionDetalle = "";
                                 $scope.cargar();
+                                $scope.bandera = true;
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));

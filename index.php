@@ -54,17 +54,24 @@
                             <li class="dropdown notifications-menu">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-bell-o"></i>
-                                    <span class="label label-warning">{{filtered.length}}</span>
+                                    <span ng-show="filtered.length!= 0" class="label label-danger">{{filtered.length}}</span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li class="header">Tienes {{filtered.length}} notificaciones</li>
+                                    <li class="header">Tienes {{filtered.length}} notificaciones nuevas</li>
                                     <li>
                                         <!-- inner menu: contains the actual data -->
                                         <ul class="menu">
-                                            <li ng-repeat="notificacion in notificaciones | orderBy: 'visto' as filtered">
-                                                <a href="{{notificacion.url}}">
-                                                    <i ng-show="notificacion.visto == 0" class="fa fa-plus-circle text-red"></i> 
-                                                    <i ng-show="notificacion.visto == 1" class="fa fa-plus-circle text-blue"></i> 
+                                            <li ng-repeat="notificacion in notificaciones| orderBy: 'visto' | filter: visto as filtered"  sglclick="notificacionVista({{notificacion}})" dblclick="">
+                                                <a href ="{{notificacion.url}}">
+                                                    <i class="fa fa-plus-circle text-red"></i> 
+                                                    {{notificacion.visto}}
+                                                    {{notificacion.titulo}}
+                                                </a>
+                                            </li>
+                                            <li ng-repeat="notificacion in notificaciones| filter: vistoN ">
+                                                <a href ="{{notificacion.url}}">
+                                                    <i class="fa fa-plus-circle text-blue"></i> 
+                                                    {{notificacion.visto}}
                                                     {{notificacion.titulo}}
                                                 </a>
                                             </li>
@@ -253,7 +260,7 @@
         <script src="angular/empresas/EmpresaService.js" type="text/javascript"></script>
         <script src="angular/index/controlPerfil.js" type="text/javascript"></script>
         <script src="angular/usuario/controlUser.js" type="text/javascript"></script>
-        
+
         <script type="text/ng-template" id="myModalContent.html">
             <div class="modal-header">
             <button type="button" class="close" ng-click="$close()" aria-label="Close">

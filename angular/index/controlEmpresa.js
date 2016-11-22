@@ -6,9 +6,6 @@ angular.module("index")
                     id: undefined,
                     nombre: undefined
                 };
-                $scope.prueba = function () {
-                    $scope.empresas = empdep.getEmpresas();
-                };
 
                 $scope.init = function () {
                     $scope.cargar();

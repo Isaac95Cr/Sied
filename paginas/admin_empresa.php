@@ -35,7 +35,6 @@
             <!-- /.box-body -->
             <div class="box-footer" >    
                 <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalEmpresaAdd">Agregar</a>
-                <a class="btn btn-primary btn-lg pull-right" ng-click="prueba()">cargar</a>
             </div>
         </div>
         <!-- /.box-footer-->

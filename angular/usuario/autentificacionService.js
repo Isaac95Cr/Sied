@@ -36,6 +36,9 @@ angular.module('usuario')
                 autentificacion.getNotificacion = function () {
                     return $http.get('/Sied/services/notificacion/get-notificacion.php');
                 };
+                autentificacion.setNotificacion = function (obj) {
+                    return $http.post('/Sied/services/notificacion/set-visto.php',obj);
+                };
 
                 autentificacion.getperfil = function () {
                     //return "lola";

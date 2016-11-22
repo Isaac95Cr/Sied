@@ -34,8 +34,7 @@
                                 -->
                             </div>
                         </div>
-                        <div id="collapse{{$index}}" class="panel-collapse collapse" ng-class='{
-                                in:$first}'>
+                        <div id="collapse{{$index}}" class="panel-collapse collapse">
                             <div class="box-body">
                                 <table class="table table-responsive table-hover">
                                     <tr sglclick="" dblclick="modalModificarCompetencia({{detalle}});">
@@ -204,7 +203,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" ng-disabled="detalleFormEdit.$invalid" closemodal="modalDetalleEdit">Agregar</button>
+                        <button type="submit" class="btn btn-primary" ng-disabled="detalleFormEdit.$invalid" closemodal="modalDetalleEdit">Modificar</button>
                     </div>
                 </form>
             </div>
@@ -243,7 +242,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" ng-disabled="pesoForm.$invalid" closemodal="modalPesos">Guardar Cambios</button>
+                        <button type="submit" class="btn btn-primary" ng-disabled="pesoForm.$invalid" closemodal="modalPeso">Guardar Cambios</button>
                     </div>
                 </form>
             </div>

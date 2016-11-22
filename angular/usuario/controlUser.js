@@ -5,7 +5,10 @@ angular.module('usuario')
                 $scope.token = undefined;
 
                 $scope.visto = function (x) {
-                    return (x.visto == 0);
+                    return (x.visto === "0");
+                };
+                $scope.vistoN = function (x) {
+                    return (x.visto === "1");
                 };
 
                 $scope.login = function () {
@@ -24,6 +27,22 @@ angular.module('usuario')
 
                 $scope.setUser = function () {
                     $scope.user = sessionService.getUserFromToken($scope.token).user;
+                };
+                $scope.notificacionVista = function (notificacion) {
+                    var x = $scope.notificaciones.findIndex(function (x) {
+                        return x.id === notificacion.id;
+                    });
+                    $scope.notificaciones[x].visto = "1";
+                     $scope.setVisto(notificacion.id);
+                };
+                $scope.setVisto = function (id) {
+                    autentificacionService.setNotificacion({id:id})
+                            .success(function (data, status, headers, config) {
+                            })
+                            .error(function (data, status, headers, config) {
+                                alert("failure message: " + JSON.stringify(data));
+                            });
+
                 };
 
 

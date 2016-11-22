@@ -5,7 +5,7 @@ angular.module("index")
                 $scope.perfil = 0;
                 $scope.perfilAdd = "";
                 $scope.perfilEdit = "";
-                
+
                 $scope.selectPerfil = function (perfil) {
                     $scope.perfil = perfil;
                 };
@@ -61,7 +61,7 @@ angular.module("index")
                             });
                 };
                 $scope.agregar = function () {
-                    var nombre = $scope.perfilNombre;
+                    var nombre = $scope.perfilAdd;
                     factoryperfilCompetencia.agregarPerfilCompetencia(nombre)
                             .success(function (data, status, headers, config) {
                                 modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
@@ -79,19 +79,19 @@ angular.module("index")
             perfil.cargarPerfilesCompetencia = function () {
                 return $http.get('/Sied/services/competencia/get-perfilCompetencia.php');
             };
-            
+
             perfil.cargarPerfilCompetencia = function (id) {
                 var obj = {
-                    id:id
+                    id: id
                 };
-                return $http.post('/Sied/services/competencia/get-perfilCompetencia.php',obj);
+                return $http.post('/Sied/services/competencia/get-perfilCompetencia.php', obj);
             };
-            perfil.modificarPerfilCompetencia = function (nombre,id) {
+            perfil.modificarPerfilCompetencia = function (nombre, id) {
                 var obj = {
-                    nombre:nombre,
-                    id:id
+                    nombre: nombre,
+                    id: id
                 };
-                return $http.post('/Sied/services/competencia/set-perfilCompetencia.php',obj);
+                return $http.post('/Sied/services/competencia/set-perfilCompetencia.php', obj);
             };
 
             perfil.agregarPerfilCompetencia = function (nombre) {
@@ -109,3 +109,17 @@ angular.module("index")
             };
             return perfil;
         })
+        .factory('ShareDataService', function ($rootScope) {
+            var sharedService = {};
+            sharedService.msg = {};
+            sharedService.prepForBroadcast = function (msg) {
+                this.msg = msg;
+                this.broadcastItem();
+            };
+
+            sharedService.broadcastItem = function () {
+                $rootScope.$broadcast('handleBroadcast');
+            };
+
+            return sharedService;
+        });
