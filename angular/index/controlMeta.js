@@ -1,5 +1,5 @@
 angular.module("index")
-        .controller("controlMeta", ['$scope', 'factoryMeta', 'modalService', function ($scope, factoryMeta, modalService) {
+        .controller("controlMeta", ['$scope', 'factoryMeta', 'modalService', 'sessionService', function ($scope, factoryMeta, modalService, sessionService) {
 
                 $scope.metas = [];
                 $scope.meta = 0;
@@ -14,13 +14,20 @@ angular.module("index")
                 $scope.actual = "0";  // se utiliza para saber cuál es la meta a la que se está haciendo referencia.
                 
                 $scope.auto_Evaluacion = 0;
+                $scope.userOnline = [];
 
                 /*
                  * Función que inicializa la lista de metas 
                  */
                 $scope.init = function () {
+                    $scope.getUserOnline();
                     $scope.cargar();
                 };
+                
+                
+                $scope.getUserOnline = function () {
+                    $scope.userOnline = sessionService.getUsuario();
+                }
 
 
                 /*

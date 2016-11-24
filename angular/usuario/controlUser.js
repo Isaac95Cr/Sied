@@ -21,7 +21,8 @@ angular.module('usuario')
                 $scope.init = function () {
                     $scope.usuario = sessionService.getUsuario();
                     autentificacionService.getNotificacion().then(function (response) {
-                        $scope.notificaciones = response.data.notificacion;
+                        if(response.data.notificacion !== false)
+                            $scope.notificaciones = response.data.notificacion;
                     });
                 };
 

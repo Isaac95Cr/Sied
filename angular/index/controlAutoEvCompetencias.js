@@ -59,7 +59,7 @@ angular.module("index")
                             angular.forEach($scope.inputs, function (autoEv, key) {
                                     
                                     (autoEv.value === "") ?
-                                            $scope.autoEvaluaciones = $scope.autoEvaluaciones.concat("0")
+                                            $scope.autoEvaluaciones = $scope.autoEvaluaciones.concat("-")
                                        :
                                              $scope.autoEvaluaciones = $scope.autoEvaluaciones.concat(autoEv.value);
                             });

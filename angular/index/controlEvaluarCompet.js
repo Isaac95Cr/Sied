@@ -17,10 +17,9 @@ angular.module("index")
                 $scope.autoEvaluaciones = new Array();
                 $scope.CompetAutoEv = new Array();
 
+                $scope.arrayEvaluaciones = new Array();
 
                 var colab = {id: $routeParams.id}
-
-
 
 
                 $scope.init = function () {
@@ -31,7 +30,8 @@ angular.module("index")
 
                     servicioCompetAutoEv.loadAutoEvaluacionesService(colab).then(function () {
 
-                        $scope.cargarAutoEvaluaciones();   // se cargan en los scopes
+                        $scope.cargarAutoEvaluaciones();   // se cargan en los scopes las autoevaluaciones
+                        $scope.cargarEvaluaciones();  // se cargan en los scopes las evaluaciones
 
                     }).then(function () {
 
@@ -49,12 +49,9 @@ angular.module("index")
 
                         $scope.cargarColaborador();
                     });
+                    
 
                 };
-
-
-
-
 
 
 
@@ -65,17 +62,29 @@ angular.module("index")
 
                 $scope.cargarDetalles_AutoEval = function () {
                     $scope.competencias = servicioCompetColab.getCompetencias();
-                    var contador = 0;  // para acceder a las posiciones del array de autoevaluaciones
+                    var contador = 0;  // para acceder a las posiciones del array de autoevaluaciones y de evaluaciones
                     var obj = {};
                     angular.forEach($scope.competencias, function (elemento, key) {
                         angular.forEach(elemento.detalles, function (elementoD, keyD) {
-
-                            // Obj va a ser el objeto que guarda {descrip: , valor: }
-                            ($scope.arrayAutoEvaluacionesList[contador] !== undefined) ?
-                                    obj = {descrip: elementoD.descripcion, valor: $scope.arrayAutoEvaluacionesList[contador]}
-                            :
-                                    obj = {descrip: elementoD.descripcion, valor: ""}
-
+                            
+                            // Hay que verificar si están las autoevaluaciones y las evaluaciones...
+                            
+                                 if ($scope.arrayAutoEvaluacionesList[contador] !== undefined){
+                                     if($scope.arrayEvaluaciones[contador] !== undefined)
+                                            obj = {descrip: elementoD.descripcion, valor: $scope.arrayAutoEvaluacionesList[contador],
+                                                        valor2: $scope.arrayEvaluaciones[contador]};
+                                       else
+                                            obj = {descrip: elementoD.descripcion, valor: $scope.arrayAutoEvaluacionesList[contador],
+                                                        valor2: "0"};
+                                  }
+                                       
+                                else if($scope.arrayEvaluaciones[contador] !== undefined){
+                                       obj = {descrip: elementoD.descripcion, valor: "-", valor2: $scope.arrayEvaluaciones[contador]};
+                                 }
+                                 else{
+                                       obj = {descrip: elementoD.descripcion, valor: "-", valor2: "0"};
+                                 }
+                              
                             contador++;
                             $scope.autoEvaluacion = $scope.autoEvaluacion.concat([obj]);
                         });
@@ -103,6 +112,16 @@ angular.module("index")
                         });
                     }
                 };
+
+
+                // Carga las evaluaciones de competencia en un array
+                $scope.cargarEvaluaciones = function () {
+
+                    var evaluacionesString = servicioCompetAutoEv.getStringEvaluacion();
+                    if (evaluacionesString !== "" && evaluacionesString !== null)
+                        $scope.arrayEvaluaciones = evaluacionesString.split(',');
+
+                }
 
 
 
@@ -158,7 +177,8 @@ angular.module("index")
         .factory("factoryAutoEvCompetencias", function ($http) {
 
             var autoEv_Competencia = {};
-            var stringAutoEv = "";
+            var stringAutoEv = "";  // se recibe el string de las autoevaluaciones
+            var stringEvaluaciones = "";   // se recibe el string de las evaluaciones
             var IDAutoevaluaciones = "";   // aquí se guarda el id de la base de datos correspondiente a las autoevaluaciones 
             // de competencias.
 
@@ -173,7 +193,7 @@ angular.module("index")
 
             autoEv_Competencia.getIdBD = function () {
                 return IDAutoevaluaciones;
-            }
+            };
 
 
             autoEv_Competencia.loadAutoEvaluacionesCompet = function (colab) {
@@ -184,6 +204,7 @@ angular.module("index")
                             stringAutoEv = "";
                             if (tamanoData !== 0) {
                                 stringAutoEv = data.autoEvaluaciones[0].auto_evaluacion;
+                                stringEvaluaciones = data.autoEvaluaciones[0].evaluacion;
                                 IDAutoevaluaciones = data.autoEvaluaciones[0].id;
                             }
                         })
@@ -197,6 +218,11 @@ angular.module("index")
                 return stringAutoEv;
             };
 
+
+            autoEv_Competencia.getStringEvaluaciones = function () {
+                return stringEvaluaciones;
+            };
+
             return autoEv_Competencia;
         })
         .service('servicioCompetAutoEv', ['factoryAutoEvCompetencias', function (factoryAutoEvCompetencias) {
@@ -207,6 +233,10 @@ angular.module("index")
 
                 this.getStringAutoEv = function () {
                     return factoryAutoEvCompetencias.getStringAutoEvaluaciones();
+                };
+
+                this.getStringEvaluacion = function () {
+                    return factoryAutoEvCompetencias.getStringEvaluaciones();
                 };
 
                 this.getIDAutoEv = function () {

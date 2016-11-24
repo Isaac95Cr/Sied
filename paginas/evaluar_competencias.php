@@ -45,21 +45,18 @@
 
                                             <tr ng-repeat="elemento in autoEvaluaciones[$index]">
                                                 <td>{{elemento.descrip}}</td>
-                                                <td>
-                                                    {{elemento.valor === "" ? "Pendiente": elemento.valor}}
-                                                </td>
                                                 
-<!--                                                <td>
-                                                    <small ng-show="{{elemento.valor !== ""}}">{{elemento.valor}}</small>
-                                                    <small ng-show="{{elemento.valor === ""}}" class="label bg-red margin">Pendiente</small>
-                                                </td>-->
+                                                <td>
+                                                    <median ng-show="{{elemento.valor != '-' }}">{{elemento.valor}}</median>
+                                                    <median ng-show="{{elemento.valor == '-' }}" class="label bg-red margin">Pendiente</median>
+                                                </td>
                                                 
                                                 
                                                 
                                                 <td>
                                                     <div class="form-group">
                                                         <div class="col-sm-5">
-                                                            <input type="number" min="0" max="100" class="form-control" name={{competencia.id}} placeholder="0"> 
+                                                            <input type="number" min="0" max="100" ng-value="{{elemento.valor2}}" class="form-control" name={{competencia.id}} placeholder="0"> 
                                                         </div>
                                                     </div>
                                                 </td>

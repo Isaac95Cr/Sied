@@ -26,7 +26,7 @@
                 <div class="box-body table-responsive">
                     <div class="box-group" id="accordion">
 
-                        <div compile-data class="panel box box-primary" ng-repeat="meta in metasUser" ng-if="meta.evaluable === '1'">
+                        <div compile-data class="panel box box-primary" ng-repeat="meta in metasUser">
                             <div class="box-header with-border">
                                 <h4 class="box-title">
                                     <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{$index}}">

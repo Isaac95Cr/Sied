@@ -7,11 +7,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $body = json_decode(file_get_contents("php://input"), true);
     // Insertar meta
     
-    if($body['comentario'] != null){
+    if($body['comentario'] !== ""){
         $retorno = Meta::desaprobarMeta($body['id'], $body['comentario']);
     }else{
-        $retorno = Meta::aprobarMeta($body['id']);
+        $retorno = Meta::aprobarMeta($body['id'], $body['comentario']);
     }
+    
 
     if ($retorno instanceof Mensaje) {
         // Código de éxito

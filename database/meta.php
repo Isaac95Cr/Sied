@@ -115,13 +115,13 @@ class Meta{
     
     
     public static function update_AutoEvaluaciones($arreglo) {        
-               
+
         try{
           for($i = 0; $i < count($arreglo); $i++){
                 $comando = "UPDATE meta set auto_evaluacion = ? where id = ?";
                 $sentencia = Database::getInstance()->getDb()->prepare($comando);
-                $valor_Array = $arreglo[$i][valor];
-                $id_Array = $arreglo[$i][id];
+                $valor_Array = $arreglo[$i]['valor'];
+                $id_Array = $arreglo[$i]['id'];
                 $sentencia->execute(array($valor_Array, $id_Array));
             }
             return new Mensaje("Éxito", "<p>Se ingresaron las autoevaluaciones</p>");
@@ -140,8 +140,8 @@ public static function update_Evaluacion($arreglo) {
           for($i = 0; $i < count($arreglo); $i++){
                 $comando = "UPDATE meta set evaluacion = ? where id = ?";
                 $sentencia = Database::getInstance()->getDb()->prepare($comando);
-                $valor_Array = $arreglo[$i][valor];
-                $id_Array = $arreglo[$i][id];
+                $valor_Array = $arreglo[$i]['valor'];
+                $id_Array = $arreglo[$i]['id'];
                 $sentencia->execute(array($valor_Array, $id_Array));
             }
             return new Mensaje("Éxito", "<p>Se ingresaron las evaluaciones</p>");
@@ -161,21 +161,22 @@ public static function update_Evaluacion($arreglo) {
         try {
             $sentencia->execute(array(0, $comment, $id));
             
-            return new Mensaje("Éxito", "<p>Se actualizó la meta con éxito</p>");
+            return new Mensaje("Éxito", "<p>Meta desaprobada con éxito</p>");
         } catch (PDOException $pdoExcetion) {
             return new Mensaje("Error", "<p>Error:" . $pdoExcetion->getMessage(). "</p>");
         }
  }
  
  
-  public static function aprobarMeta($id) {        
+  public static function aprobarMeta($id, $comment) {        
         $comando =   "UPDATE meta SET aprobacion_j = b?, comentario_j = ?  WHERE id = ?;";
                 
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
-            $sentencia->execute(array(1, "", $id));
+            $sentencia->execute(array(1, $comment, $id));
             
-            return new Mensaje("Éxito", "<p>Se actualizó la meta con éxito</p>");
+            return new Mensaje("Éxito", "<p>Meta aprobada con éxito</p>");
+            
         } catch (PDOException $pdoExcetion) {
             return new Mensaje("Error", "<p>Error:" . $pdoExcetion->getMessage(). "</p>");
         }

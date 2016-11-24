@@ -1,9 +1,7 @@
 angular.module("index")
         .controller("controlAutoEvMetas", ['$scope', 'factoryMeta', 'modalService', function ($scope, factoryMeta, modalService) {
-
-//                $scope.auto_Evaluacion = 0;
+                
                 $scope.objAutoEv = new Array();
-
 
                 /*
                  * Función que inicializa la lista de metas 

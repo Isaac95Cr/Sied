@@ -12,8 +12,6 @@ angular.module("index")
                 $scope.metaActual = "0";  // se utiliza para saber cuál es la meta a la que se está haciendo referencia. 
                 $scope.arrayComentarios = [];  // se van a guardar objetos de la forma: [{id: 1, comentario = 'comment'}]
 
-                $scope.metasUser = [];
-                $scope.tiene_Metas = false;
 
                 $scope.init = function () {
                     $scope.cargar();
@@ -65,7 +63,7 @@ angular.module("index")
 
                 $scope.aprobarMeta = function (meta) {
                     $scope.metaActual = meta;
-                    var obj = {id: $scope.metaActual};  // armar el objeto de la meta que se desaprobó
+                    var obj = {id: $scope.metaActual, comentario: ""};  // armar el objeto de la meta que se desaprobó
 
                     factoryMeta.aprobar_Desaprobar(obj)
                             .success(function (data, status, headers, config) {
