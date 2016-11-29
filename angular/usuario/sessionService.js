@@ -4,6 +4,8 @@ angular.module('usuario')
                     carga: false,
                     usuario: undefined
                 };
+                
+                var usuarioOnline = "";
 
                 session.guardar = function (token) {
                     token = token.replace(/^\s+|\s+$/g, '');
@@ -36,6 +38,16 @@ angular.module('usuario')
                         session.cargar();
                     return this.usuario;
                 };
+                
+                
+                session.loadUser = function () {
+                      usuarioOnline = this.getUsuario().id;
+                };
+                
+                
+                session.getUserId = function () {
+                    return usuarioOnline;
+                }
 
                 session.permisos = function () {
                     if (!session.carga)

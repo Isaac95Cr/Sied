@@ -145,7 +145,7 @@
                         <div class="form-group">
                             <label for="comment" class="col-sm-2 control-label">Comentario</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" rows="3" ng-model="commentIcono" id="comentario" name="comentario" ng-disabled="true">
+                                <textarea class="form-control" rows="3" ng-model="commentIcono" id="comentario" name="comentario" ng-disabled="true" style="color: red">
                                 </textarea>
                                 <p ng-show="commentIcono === null || commentIcono === '' " style="color:green">*La meta no posee comentarios</p>
                             </div>

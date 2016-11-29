@@ -27,7 +27,7 @@ angular.module("index")
                 
                 $scope.getUserOnline = function () {
                     $scope.userOnline = sessionService.getUsuario();
-                }
+                };
 
 
                 /*
@@ -40,13 +40,14 @@ angular.module("index")
                     $scope.meta_peso = 0;
                     $scope.meta_titulo = "";
                     $scope.meta_descripcion = "";
-                }
+                };
 
 
                 $scope.cargar = function () {
-                    factoryMeta.cargarMetas()
+                    var obj = {id: $scope.userOnline.id};
+                    factoryMeta.cargarMetasUser(obj)
                             .success(function (data, status, headers, config) {
-                                $scope.metas = data.meta;
+                                $scope.metas = data.metas;
                             })
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
@@ -101,7 +102,8 @@ angular.module("index")
                         is_Evaluable: $scope.meta_isEvaluable,
                         peso: $scope.meta_peso,
                         titulo: $scope.meta_titulo,
-                        descripcion: $scope.meta_descripcion
+                        descripcion: $scope.meta_descripcion,
+                        usuario: $scope.userOnline.id
                     };
 
                     factoryMeta.agregarMeta(metaObj)
@@ -128,7 +130,7 @@ angular.module("index")
 
                     $scope.meta_isEvaluable = meta.evaluable;
                     ($scope.meta_isEvaluable === "1")? 
-                        ($scope.is_Check = true)  :   ($scope.is_Check = false )
+                        ($scope.is_Check = true)  :   ($scope.is_Check = false );
                         
                     $scope.meta_peso = parseInt(meta.peso);
                     $scope.meta_titulo = meta.titulo;

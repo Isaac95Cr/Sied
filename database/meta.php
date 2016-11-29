@@ -33,7 +33,7 @@ class Meta{
     
     
     
-    public static function insert_Meta($is_Evaluable, $peso, $titulo, $descripcion) {        
+    public static function insert_Meta($is_Evaluable, $peso, $titulo, $descripcion, $usuario) {        
         $comando = "INSERT INTO meta (evaluable, "
                                                                 . "peso, "
                                                                 . "titulo, "
@@ -52,7 +52,7 @@ class Meta{
             $sentencia->execute(array($is_Evaluable, $peso, $titulo, 
                                                            $descripcion, NULL, NULL,
                                                             NULL, NULL, NULL, NULL,
-                                                            1, 123));         
+                                                            1, $usuario));         
             return new Mensaje("Éxito", "<p>Se agregó la meta con éxito</p>");
         } catch (PDOException $pdoExcetion) {
             return new Mensaje("Error", "<p>Error:" . $pdoExcetion->getMessage(). "</p>");

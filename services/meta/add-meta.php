@@ -16,7 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $body['is_Evaluable'],
             $body['peso'],
             $body['titulo'],
-            $body['descripcion']
+            $body['descripcion'],
+            $body['usuario']
      );
 
     if ($retorno instanceof Mensaje) {

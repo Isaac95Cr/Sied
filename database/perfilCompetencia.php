@@ -72,4 +72,25 @@ class perfilCompetencia {
         }
     }
 
+    
+    
+    // Obtener perfil de competencia de un usuario en específico.
+    public static function getPerfilCompetUser($id) {
+        $consulta = "SELECT  perfil_competencia.id, perfil_competencia.nombre 
+                                                FROM perfil_competencia, usuario, evaluacion_periodo
+                                                WHERE usuario.id = ? AND
+                                                evaluacion_periodo.usuario = usuario.id AND
+                                                evaluacion_periodo.perfil_competencia = perfil_competencia.id;";
+        try {
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando->execute(array($id));
+            $perfil = $comando->fetch(PDO::FETCH_ASSOC);
+            $newrow['id'] = $perfil['id'];
+            $newrow['nombre'] = $perfil['nombre'];
+            return $newrow;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
 }
