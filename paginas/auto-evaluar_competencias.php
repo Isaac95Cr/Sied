@@ -24,11 +24,11 @@
             <div class="box-body">
                 <form name="formAutoEv" ng-submit="confirmarAutoEvCompe()" class="form-horizontal">
                     <div class="box-group" id="accordion">
-                        <div class="panel box box-primary" ng-repeat="competencia in competencias">
+                        <div class="panel box box-primary" ng-repeat="detalle in arrayFinal">
                             <div class="box-header with-border">
                                 <h4 class="box-title">
                                     <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{$index}}">
-                                        <p data-toggle="popover" data-trigger="hover" data-html="true" data-content="<b>Jefe: <span class='label label-success'>Aprobado</span> <br> RRHH: <span class='label label-warning'>Pendiente</span></b>">{{competencia.titulo}}</p>
+                                        <p data-toggle="popover" data-trigger="hover" data-html="true" data-content="<b>Jefe: <span class='label label-success'>Aprobado</span> <br> RRHH: <span class='label label-warning'>Pendiente</span></b>">{{detalle[$index].titleCompet}}</p>
                                     </a>
                                 </h4>
                             </div>
@@ -38,16 +38,16 @@
                                 <div class="box-body table-responsive">
                                     <!-- detalles-->
                                     <table class="table table-bordered">
-                                        
+
                                         <th>Detalle de Competencia</th>
                                         <th>Autoevaluación</th>
-                                        
-                                        <tr ng-repeat="detalle in competencia.detalles">
-                                            <td>{{detalle.descripcion}}</td>
+
+                                        <tr ng-repeat="elemento in detalle">
+                                            <td>{{elemento.detail}}</td>
                                             <td>
                                                 <div class="form-group">
                                                     <div class="col-sm-3">
-                                                        <input type="number" min="0" max="100" class="form-control" id={{detalle.id}} name={{competencia.id}} placeholder="0"> 
+                                                        <input type="number" min="0" max="100" ng-value="{{elemento.autoev}}" id="{{elemento.idObj}}" name="{{elemento.nameObj}}" class="form-control"  placeholder="0"> 
                                                     </div>
                                                 </div>
                                             </td>
