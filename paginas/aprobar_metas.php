@@ -61,7 +61,7 @@
                                                         <p>Desaprobada</p>
                                                         <input type="checkbox" ng-change="abrirModalCancel(meta.id)"
                                                                ng-model="meta.aprobacion_j" ng-checked="meta.aprobacion_j == 0"
-                                                               ng-true-value="'0'" ng-false-value="'1'" color="red" i-check>
+                                                               ng-true-value="'0'" ng-false-value="'1'" color="red" i-check >
                                                     </div>
                                                 </div>
                                             </td>

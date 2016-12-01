@@ -258,7 +258,8 @@
         <script src="angular/empresas/EmpresaService.js" type="text/javascript"></script>
         <script src="angular/index/controlPerfil.js" type="text/javascript"></script>
         <script src="angular/usuario/controlUser.js" type="text/javascript"></script>
-
+        <script src="angular/index/controlPesosMetas.js" type="text/javascript"></script>
+        
         <script type="text/ng-template" id="myModalContent.html">
             <div class="modal-header">
             <button type="button" class="close" ng-click="$close()" aria-label="Close">

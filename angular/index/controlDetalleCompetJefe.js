@@ -1,12 +1,18 @@
 angular.module("index")
-        .controller("controlDetalleCompetJefe", ['$scope', 'factoryCompetenciasColab', 'userService', '$routeParams', 'modalService', function ($scope, factoryCompetenciasColab, userService, $routeParams, modalService) {
+        .controller("controlDetalleCompetJefe", ['$scope', 'factoryCompetenciasColab', 'userService', '$routeParams', 'modalService', 'servicioCompetColab', 
+                            function ($scope, factoryCompetenciasColab, userService, $routeParams, modalService, servicioCompetColab) {
 
                 $scope.competencias = "";
                 $scope.colaborador = "";
 
+                $scope.perfilCompet = "";  // aqui se guarda el id del perfil de competencia del usuario.
+                $scope.userOnline = "";
+                $scope.nombrePerfil = "";  // aquí se almacena el nombre del perfil de competencia
+
                 $scope.init = function () {
                     $scope.cargar();
                     $scope.cargarColaborador();
+                    $scope.getPerfilCompetencia();
                 };
 
 
@@ -30,6 +36,21 @@ angular.module("index")
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
                             });
+                };
+
+
+
+                $scope.getPerfilCompetencia = function () {
+                    var colab = {id: $routeParams.id}
+                    return factoryCompetenciasColab.getPerfilCompetUser(colab)
+                            .success(function (data, status, headers, config) {
+                                $scope.perfilCompet = data.perfil.id;
+                                $scope.nombrePerfil = data.perfil.nombre;
+                            })
+                            .error(function (data, status, headers, config) {
+                                alert("failure message: " + JSON.stringify(headers));
+                            });
+
                 };
 
 

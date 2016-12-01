@@ -27,7 +27,7 @@ angular.module("index")
 
                         $scope.cargar().then(function () {
                             
-                            var idObj = {id: $scope.userOnline}
+                            var idObj = {id: $scope.userOnline};
                             servicioCompetAutoEv.loadAutoEvaluacionesService(idObj).then(function () {
 
                                 $scope.cargarAutoEvaluaciones();
@@ -96,6 +96,7 @@ angular.module("index")
                 $scope.guardarAutoEvComp = function () {
 
                     $scope.objAutoEv = new Array();
+                    $scope.autoEvaluaciones = [];
                     $scope.string_AutoEv = "";  // string que contiene todas las autoevaluaciones de los detalles de la competencia.
 
                     // Se recorren los inputs...
@@ -130,8 +131,10 @@ angular.module("index")
                     });
 
                     $scope.string_AutoEv = $scope.string_AutoEv.substr(0, $scope.string_AutoEv.length - 1);
-                    var obj = {value: $scope.string_AutoEv};
-
+                    
+                    var obj = {value: $scope.string_AutoEv, idColab: $scope.userOnline};  // se envía el user para comprobar
+                                                                                                                                              //  si ya posee autoevaluaciones o 
+                                                                                                                                              //  evaluaciones
 
                     factoryCompetenciasColab.updateAutoEvaluacionesCompe(obj)
                             .success(function (data, status, headers, config) {
@@ -149,7 +152,9 @@ angular.module("index")
                 $scope.cargarAutoEvaluaciones = function () {
 
                     $scope.stringAutoEvaluaciones = servicioCompetAutoEv.getStringAutoEv();
-                    if ($scope.stringAutoEvaluaciones !== "") {
+                    $scope.autoEvaluaciones = [];
+                    
+                    if ( $scope.stringAutoEvaluaciones !== "" && $scope.stringAutoEvaluaciones !== null ) {
 
                         $scope.arrayAutoEvaluacionesCompet = $scope.stringAutoEvaluaciones.split(';');
 
