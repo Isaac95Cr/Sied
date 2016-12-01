@@ -7,7 +7,7 @@ angular.module("index")
                 $scope.meta_isEvaluable = 1;
                 $scope.is_Check = true;
 
-                $scope.meta_peso = 0;
+//                $scope.meta_peso = 0;
                 $scope.meta_titulo = "";
                 $scope.meta_descripcion = "";
 
@@ -37,7 +37,7 @@ angular.module("index")
                     $scope.meta_isEvaluable = 1;
                     $scope.is_Check = true;
 
-                    $scope.meta_peso = 0;
+//                    $scope.meta_peso = 0;
                     $scope.meta_titulo = "";
                     $scope.meta_descripcion = "";
                 };
@@ -101,7 +101,7 @@ angular.module("index")
                 $scope.agregar = function () {
                     var metaObj = {
                         is_Evaluable: $scope.meta_isEvaluable,
-                        peso: $scope.meta_peso,
+                        peso: '0',
                         titulo: $scope.meta_titulo,
                         descripcion: $scope.meta_descripcion,
                         usuario: $scope.userOnline.id
@@ -133,7 +133,7 @@ angular.module("index")
                     ($scope.meta_isEvaluable === "1") ?
                             ($scope.is_Check = true) : ($scope.is_Check = false);
 
-                    $scope.meta_peso = parseInt(meta.peso);
+                    //$scope.meta_peso = parseInt(meta.peso);
                     $scope.meta_titulo = meta.titulo;
                     $scope.meta_descripcion = meta.descripcion;
                 };
@@ -144,7 +144,7 @@ angular.module("index")
                 $scope.modificar = function () {
                     var metaObj = {
                         is_Evaluable: $scope.meta_isEvaluable,
-                        peso: parseInt($scope.meta_peso),
+                        //peso: parseInt($scope.meta_peso),
                         titulo: $scope.meta_titulo,
                         descripcion: $scope.meta_descripcion,
                         id: $scope.actual
@@ -155,7 +155,7 @@ angular.module("index")
                                 modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
                                 $scope.meta_isEvaluable = 1;
                                 $scope.is_Check = true;
-                                $scope.meta_peso = 0;
+                                //$scope.meta_peso = 0;
                                 $scope.meta_titulo = "";
                                 $scope.meta_descripcion = "";
                                 $scope.actual = "0";
