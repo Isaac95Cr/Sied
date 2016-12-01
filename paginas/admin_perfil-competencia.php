@@ -1,7 +1,6 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>Administracion de Perfiles de Competencia
-        <small>Blank example to the fixed layout</small>
+    <h1>Administración de Perfiles de Competencia
     </h1>
     <ol class="breadcrumb">
         <li><a href="#/"><i class="fa  fa-building-o"></i> Índice</a></li>

@@ -25,7 +25,7 @@
             </div>
             <!-- /.login-logo -->
             <div class="login-box-body">
-                <p class="login-box-msg"><b>Inicio de Sesion </b></p>
+                <p class="login-box-msg"><b>Inicio de Sesión </b></p>
                 <form name="form" ng-submit="login()" method="post" novalidate>
                     <div class="form-group has-feedback" ng-class="{
                             'has-error'

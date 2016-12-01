@@ -98,13 +98,13 @@ class Meta{
     }
     
     
-    public static function update_Meta($is_Evaluable, $peso, $titulo, $descripcion, $id) {        
+    public static function update_Meta($is_Evaluable, $titulo, $descripcion, $id) {        
         
-        $comando =   "UPDATE meta set evaluable = b?, peso = ?, titulo = ?, descripcion = ? WHERE id = ?";
+        $comando =   "UPDATE meta set evaluable = b?, titulo = ?, descripcion = ? WHERE id = ?";
                 
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
-            $sentencia->execute(array($is_Evaluable, $peso, $titulo, $descripcion, $id));
+            $sentencia->execute(array($is_Evaluable, $titulo, $descripcion, $id));
             
             return new Mensaje("Éxito", "<p>Se actualizó la meta con éxito</p>");
         } catch (PDOException $pdoExcetion) {
@@ -184,15 +184,18 @@ public static function update_Evaluacion($arreglo) {
  
  
  
-     public static function update_PesoMeta($peso, $id) {        
-        
-        $comando =   "UPDATE meta set peso = ? WHERE id = ?";
+     public static function update_PesoMeta($arreglo) {      
+         
+      try {        
+        for($i = 0; $i < count($arreglo); $i++){
+                $comando =   "UPDATE meta set peso = ? WHERE id = ?";
+                $sentencia = Database::getInstance()->getDb()->prepare($comando);
+                $peso_Array = $arreglo[$i]['peso'];
+                $id_Array = $arreglo[$i]['id'];
+                $sentencia->execute(array($peso_Array, $id_Array));
+         }
                 
-        $sentencia = Database::getInstance()->getDb()->prepare($comando);
-        try {
-            $sentencia->execute(array($peso, $id));
-            
-            return new Mensaje("Éxito", "<p>Se actualizó la meta con éxito</p>");
+           return new Mensaje("Éxito", "<p>Pesos actualizados con éxito</p>");
         } catch (PDOException $pdoExcetion) {
             return new Mensaje("Error", "<p>Error:" . $pdoExcetion->getMessage(). "</p>");
         }

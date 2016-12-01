@@ -69,7 +69,7 @@
                 <div class="box-footer" >    
                     <div class="form-group">
                         <button type="button" class="btn btn-primary btn-lg pull-left" ng-click="resetValues()" data-toggle="modal" data-target="#modalMeta" style="margin-right: 10px;">Agregar Meta</button>
-                        <button type="button" class="btn btn-primary btn-lg pull-left" ng-click="" data-toggle="modal" data-target="#modalPeso">Modificar Pesos</button>
+                        <button type="button" class="btn btn-primary btn-lg pull-left" ng-click="" data-toggle="modal" data-target="#modalPeso">Editar Pesos</button>
                         <a type="button" class="btn btn-primary btn-lg pull-right" href="#/auto-evaluar_metas">Autoevaluar</a>
                     </div>
                 </div>
@@ -118,13 +118,6 @@
                                 <label for="evaluable" class="col-sm-2 control-label" >Evaluable</label>
                                 <div class="col-sm-10">
                                  <input type="checkbox"  id="evaluable" name="evaluable" ng-model="is_Check"  i-check />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="peso" class="col-sm-2 control-label">Peso</label>
-                                <div class="col-sm-2">
-                                    <input type="number" class="form-control" placeholder="0" id="peso" ng-model="meta_peso"> 
                                 </div>
                             </div>
 
@@ -179,12 +172,6 @@
                                     <input type="checkbox"  id="evaluable" name="evaluable" ng-model="is_Check"  i-check />
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="peso" class="col-sm-2 control-label">Peso</label>
-                                <div class="col-sm-2">
-                                  <input type="number" class="form-control" placeholder="0" id="peso" ng-model="meta_peso">
-                                </div>
-                            </div>
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
@@ -200,6 +187,7 @@
     </div>
     <!-- /.modal -->
     
+</div>    
     
     
     
@@ -228,8 +216,8 @@
                         <div class="form-group" ng-class="{'has-error':pesoForm.pesoTotal.$invalid}">
                             <label for="peso" class="col-sm-8 control-label">Total</label>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" placeholder="0" step=0.01 id="peso" name="pesoTotal" min="100" max="100" ng-model="sumaTotal" required >
-                                <p ng-show="pesoForm.pesoTotal.$invalid" class="help-block">La suma de los pesos debe ser 100</p>
+                                <input type="number" class="form-control" placeholder="0" step=1 id="peso" name="pesoTotal" min="100" max="100" ng-model="sumaTotal" required >
+                                <p ng-show="pesoForm.pesoTotal.$invalid" class="help-block">*La suma de los pesos debe ser 100</p>
                             </div>
                         </div>
                     </div>
@@ -245,7 +233,7 @@
     <!-- /.modal-dialog -->
 
 
-</div>
+<!--</div>-->
 
 
 

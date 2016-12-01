@@ -1,13 +1,12 @@
 <?php
 
-require '../../database/competencia.php';
+require '../../database/meta.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Decodificando formato Json
     $body = json_decode(file_get_contents("php://input"), true);
-    foreach ($body as $meta) {
-        $retorno = Meta::update_PesoMeta($meta['peso'], $meta['id']);
-    }
+    $retorno = Meta::update_PesoMeta($body);
+ 
     if ($retorno instanceof Mensaje) {
         // Código de éxito
         print $retorno->json();
