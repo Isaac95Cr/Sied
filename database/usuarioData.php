@@ -131,7 +131,7 @@ class usuarioData {
                 return false;
             }
         } catch (PDOException $pdoExcetion) {
-            return $pdoExcetion->getMessage();
+            return FALSE;
         }
         return true;
     }

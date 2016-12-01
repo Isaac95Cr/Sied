@@ -129,6 +129,7 @@
         <script src="angular/angular-sanitize.min.js" type="text/javascript"></script>
         <script src="angular/app.js" type="text/javascript"></script>
         <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
+        <script src="angular/apiconnector.js" type="text/javascript"></script>
         <script src="angular/registro/controlRegistro.js" type="text/javascript"></script>
         <script src="angular/modal/modalService.js" type="text/javascript"></script>
         <script src="angular/usuario/userService.js" type="text/javascript"></script>

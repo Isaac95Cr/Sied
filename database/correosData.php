@@ -3,6 +3,7 @@
 class correoData {
 
     public static function setContraseña($user, $token) {
+        
         date_default_timezone_set('Etc/UTC');
 
 //Create a new PHPMailer instance
@@ -38,7 +39,7 @@ class correoData {
         $mail->Username = "isakucorrales@gmail.com";
 
 //Password to use for SMTP authentication
-        $mail->Password = "";
+        $mail->Password = "casimiro";
 
 //Set who the message is to be sent from
         $mail->setFrom('from@example.com', 'First Last');

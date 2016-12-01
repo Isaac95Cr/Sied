@@ -35,7 +35,7 @@
                             <input type="password" class="form-control" placeholder="Digite su nueva contraseña" name="contrasena" ng-model="user.contrasena" required>
                             <p ng-show="form.contrasena.$invalid && !form.contrasena.$pristine" class="help-block">Contraseña requerida.</p>
                         </div>
-                        
+
                     </div>
                     <div class="form-group" ng-class="{ 'has-error' : form.contrasena2.$invalid && !form.contrasena2.$pristine && !confirmarContrasena()}">
                         <label for="id" class="col-sm-4 control-label">Confirmar Contraseña</label>
@@ -44,9 +44,9 @@
                             <p ng-show="form.contrasena2.$invalid && !form.contrasena2.$pristine" class="help-block">Confirmación requerida.</p>
                             <p ng-show="!confirmarContrasena() && !form.contrasena2.$pristine" class="help-block">La confirmación es incorrecta.</p>
                         </div>
-                        
+
                     </div>
-                    
+
                     <div class="row" class="">
                         <div class="col-xs-12" style="text-align: center"><br>
                             <button type="submit" ng-if="bandera" ng-disabled="form.$invalid || !confirmarContrasena()" class="btn btn-primary btn-block btn-flat">Restablecer contraseña</button>
@@ -87,9 +87,10 @@
         <script src="angular/angular.min.js" type="text/javascript"></script>
         <script src="angular/angular-route.min.js" type="text/javascript"></script>
         <script src="angular/ngStorage.min.js" type="text/javascript"></script>
-                <script src="angular/angular-sanitize.min.js" type="text/javascript"></script>
-
+        <script src="angular/angular-sanitize.min.js" type="text/javascript"></script>
+        
         <script src="angular/app.js" type="text/javascript"></script>
+        <script src="angular/apiconnector.js" type="text/javascript"></script>
         <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
         <script src="angular/registro/controlLogin.js" type="text/javascript"></script>
         <script src="angular/modal/modalService.js" type="text/javascript"></script>

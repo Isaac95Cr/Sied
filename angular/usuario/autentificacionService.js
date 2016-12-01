@@ -5,7 +5,7 @@ angular.module('usuario')
                     return apiConnector.put('api/usuarios/login', obj)
                             .then(function (res) {
                                 if (res.status === 'error') {
-                                    alert(res.message);
+                                   return res.message;
                                 }
                                 if (res.status === 'success') {
                                     sessionService.guardar(res.data);
@@ -25,10 +25,10 @@ angular.module('usuario')
                     return apiConnector.post('api/usuarios/session', obj);
                 };
                 autentificacion.correoContrasena = function (obj) {
-                    return apiConnector.post('/Sied/services/usuario/correo.php', obj);
+                    return apiConnector.post('api/usuarios/correo', obj);
                 };
                 autentificacion.setContrasena = function (obj) {
-                    return apiConnector.post('/Sied/services/usuario/set-contrasena.php', obj);
+                    return apiConnector.put('api/usuarios/setP', obj);
                 };
 
                 autentificacion.getNotificacion = function (obj) {

@@ -3,9 +3,12 @@ angular.module('registro')
                 $scope.user = {};
                 $scope.token = undefined;
                 $scope.bandera = true;
+                $scope.mensaje = undefined;
 
                 $scope.login = function () {
-                    autentificacionService.login($scope.user);
+                    autentificacionService.login($scope.user).then(function(res){
+                        $scope.mensaje = res;
+                    });
                 };
                 $scope.logout = function () {
                     autentificacionService.logout(sessionService.token());
@@ -21,7 +24,7 @@ angular.module('registro')
                     $scope.bandera = false;
                     autentificacionService.setContrasena({user: $scope.user, token: $scope.token})
                             .then(function (response) {
-                                modalService.modalOk("Reset Contraseña", "<p>"+response.data.mensaje+"</p>");
+                                modalService.modalOk("Reset Contraseña", "<p>"+response.message+"</p>");
                             });
                 };
 

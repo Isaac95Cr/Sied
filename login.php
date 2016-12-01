@@ -32,12 +32,16 @@
                             : form.id.$invalid && !form.id.$pristine }">
                         <input type="text" class="form-control" placeholder="Cédula" name="id" ng-model="user.id" required>
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                        
                     </div>
                     <div class="form-group has-feedback" ng-class="{
                             'has-error'
                             : form.contrasena.$invalid&& !form.contrasena.$pristine }">
                         <input type="password" class="form-control" placeholder="Contraseña" name="contrasena" ng-model="user.contrasena" required>
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="row form-group has-error" style="text-align: center;">
+                    <p class="help-block">{{mensaje}}</p>
                     </div>
                     <div class="row">
                         <div class="col-xs-6">

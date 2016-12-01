@@ -7,6 +7,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 require '../database/usuarioData.php';
+require '../database/correosData.php';
 
 class usuarios extends Rest implements interfaceApi {
 
@@ -209,9 +210,9 @@ class usuarios extends Rest implements interfaceApi {
         if ($user) {
             $u = usuarioData::getAllFrom($id);
             $token = usuarioData::token($u);
-            enviarCorreo($u, $token);
-            
-        } 
+            correoData::setContraseña($u, $token);
+            return $this->responseAPI("success", "Cambio de contraseña con exito", 200);
+        } return $this->responseAPI("error", "Algo falló", 200);
     }
 
     public function __destruct() {
