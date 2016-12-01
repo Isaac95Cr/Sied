@@ -238,7 +238,7 @@
         <script src="angular/usuario/userService.js" type="text/javascript"></script>
         <script src="angular/usuario/usersColaboradoresMetas.js" type="text/javascript"></script>
         <script src="angular/usuario/usersColaboradoresCompetencias.js" type="text/javascript"></script>
-
+        
         <script src="angular/registro/controlLogin.js" type="text/javascript"></script>
         <script src="angular/index/controlDepartamento.js" type="text/javascript"></script>
         <script src="angular/index/controlEmpresa.js" type="text/javascript"></script>
