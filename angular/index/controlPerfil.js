@@ -1,19 +1,20 @@
 angular.module('index')
-        .controller('controlPerfil', ['$scope','userService', 'sessionService', function ($scope, userService, sessionService) {
+        .controller('controlPerfil', ['$scope', 'userService', 'sessionService', function ($scope, userService, sessionService) {
                 $scope.user = {};
                 $scope.init = function () {
                     $scope.cargar();
                 };
                 $scope.cargar = function () {
-                    userService.cargarUsuario(sessionService.getUsuario().id)
-                            .success(function (data, status, headers, config) {
-                                $scope.setUser(data.usuario);
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                    userService.cargarUsuario(sessionService.getUsuario().id).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                             $scope.setUser(res.data.usuario);
+                        }
+                    });
                 };
-                
+               
                 $scope.setUser = function (user) {
                     $scope.user = angular.copy(user);
                     var x = [];

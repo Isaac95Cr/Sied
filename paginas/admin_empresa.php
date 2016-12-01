@@ -53,7 +53,7 @@
                             <div class="form-group" ng-class="{ 'has-error' : empresaAddForm.empresaAdd.$invalid && !empresaAddForm.empresaAdd.$pristine}">
                                 <label for="empresa" class="col-sm-2 control-label">Empresa</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="Nombre" id="empresa" ng-model="empresaAdd" name="empresaAdd" required>
+                                    <input type="text" class="form-control" placeholder="Nombre" id="empresa" ng-model="empresaAdd.nombre" name="empresaAdd" required>
                                     <p ng-show="empresaAddForm.empresaAdd.$invalid && !empresaAddForm.empresaAdd.$pristine" class="help-block">Nombre de empresa requerido.</p>
                                 </div>
                             </div>
@@ -143,7 +143,7 @@
                             <div class="form-group" ng-class="{ 'has-error' : departamentoFormAdd.departamentoAdd.$invalid && !departamentoFormAdd.departamentoAdd.$pristine }">
                                 <label for="departamento" class="col-sm-2 control-label">Departamento</label>
                                 <div class="col-sm-10">
-                                    <input class="form-control" placeholder="Nombre" id="departamento" name="departamentoAdd" ng-model="departamentoAdd" required>
+                                    <input class="form-control" placeholder="Nombre" id="departamento" name="departamentoAdd" ng-model="departamentoAdd.nombre" required>
                                     <p ng-show="departamentoFormAdd.departamentoAdd.$invalid && !departamentoFormAdd.departamentoAdd.$pristine" class="help-block">Nombre del departamento.</p>
                                 </div>
                             </div>

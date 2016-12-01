@@ -15,14 +15,13 @@ angular.module('usuario')
                     autentificacionService.login($scope.user);
                 };
                 $scope.logout = function () {
-                    autentificacionService.logout(sessionService.token());
+                    autentificacionService.logout({token:sessionService.token()});
                 };
 
                 $scope.init = function () {
                     $scope.usuario = sessionService.getUsuario();
-                    autentificacionService.getNotificacion().then(function (response) {
-                        if(response.data.notificacion !== false)
-                            $scope.notificaciones = response.data.notificacion;
+                    autentificacionService.getNotificacion({id:$scope.usuario.id}).then(function (res) {
+                        $scope.notificaciones = res.data;
                     });
                 };
 
@@ -34,15 +33,16 @@ angular.module('usuario')
                         return x.id === notificacion.id;
                     });
                     $scope.notificaciones[x].visto = "1";
-                     $scope.setVisto(notificacion.id);
+                    $scope.setVisto(notificacion.id);
                 };
                 $scope.setVisto = function (id) {
-                    autentificacionService.setNotificacion({id:id})
-                            .success(function (data, status, headers, config) {
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                    autentificacionService.setNotificacion({id: id}).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                        }
+                    });
 
                 };
 

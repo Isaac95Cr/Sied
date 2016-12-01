@@ -1,10 +1,13 @@
-angular.module('empdep',[]);
+
+angular.module('apiConnector',[]);
+
+angular.module('empdep',['apiConnector']);
 
 angular.module('dataTable',['datatables', 'datatables.bootstrap']);
 
 angular.module('select', ['ngSanitize', 'ui.select']);
 
-angular.module('usuario',['ngStorage']);
+angular.module('usuario',['ngStorage','apiConnector']);
 
 angular.module('modal',['ui.bootstrap']);
 

@@ -148,13 +148,11 @@ angular.module("app")
                 var token = sessionService.token();
                 if (typeof token !== "undefined") {
                     autentificacionService.isLog({token: token}).then(function (res) {
-                        var data = res.data.replace(/^\s+|\s+$/g, '');
-                        if (data == false) {
+                        if (res.status === 'error') {
                             sessionService.destroy();
                             $window.location.href = 'login.php';
                         }
                     });
-
                 } else {
                     sessionService.destroy();
                     $window.location.href = 'login.php';
@@ -172,7 +170,6 @@ angular.module("app")
                 // }*/
             });
             $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {
-                alert(rejection);
                 if (rejection === "noLog") {
                     sessionService.destroy();
                     $window.location.href = 'login.php';

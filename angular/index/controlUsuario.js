@@ -9,12 +9,9 @@ angular.module("index")
                 };
                 $scope.empresas = [];
                 $scope.departamentos = [];
-
                 $scope.opciones = ["Colaborador", "Jefe", "RH"];
-
                 $scope.init = function () {
-                    $scope.cargar(); 
-
+                    $scope.cargar();
                     empdep.cargarEmp().then(function () {
                         $scope.empresas = empdep.getEmpresas();
                     });
@@ -26,7 +23,6 @@ angular.module("index")
                     empdep.setEmpresa(empresa);
                     $scope.userEdit.departamento = undefined;
                     $scope.userAdd.departamento = undefined;
-
                 };
                 $scope.selectUserEdit = function (user) {
                     $scope.userEdit = angular.copy(user);
@@ -40,44 +36,44 @@ angular.module("index")
                     $scope.selectEmpresa($scope.userEdit.empresa);
                     $scope.userEdit.departamento = empdep.buscarDepartamento(user.departamento);
                 };
-
                 $scope.cargar = function () {
-                    userService.cargarUsuarios()
-                            .success(function (data, status, headers, config) {
-                                $scope.users = data.usuarios;
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
+                    userService.cargarUsuarios().then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.users = res.data;
+                        }
+                    });
                 };
                 $scope.agregar = function () {
-                    userService.insert($scope.userAdd)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.userAdd = {};
-                                $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                    userService.insert($scope.userAdd).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.userAdd = {};
+                            $scope.cargar();
+                            modalService.modalOk("Exito", "<p>" + res.message + "</p>");
+                        }
+                    });
                 };
                 $scope.modificar = function () {
-                    userService.update($scope.userEdit)
-                            .success(function (data, status, headers, config) {
-                                alert(data);
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.userEdit = {};
-                                $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                    userService.update($scope.userEdit).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.userEdit = {};
+                            $scope.cargar();
+                            modalService.modalOk("Exito", "<p>" + res.message + "</p>");
+                        }
+                    });
                 };
                 $scope.modalModificar = function (user) {
                     $scope.selectUserEdit(user);
                     modalService.open("#modalUserEdit");
                 };
-
                 $scope.filtro = function (departamento) {
                     return departamento.empresa == empdep.getEmpresa().id;
                 };

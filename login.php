@@ -84,6 +84,7 @@
         <script src="angular/angular-sanitize.min.js" type="text/javascript"></script>
         <script src="angular/ngStorage.min.js" type="text/javascript"></script>
         <script src="angular/app.js" type="text/javascript"></script>
+        <script src="angular/apiconnector.js" type="text/javascript"></script>
         <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
         <script src="angular/registro/controlLogin.js" type="text/javascript"></script>
         <script src="angular/modal/modalService.js" type="text/javascript"></script>

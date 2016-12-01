@@ -1,5 +1,5 @@
 angular.module('empdep')
-        .service('empresaService', ['factoryEmpresa', function (factoryEmpresa) {
+        .service('empresaService', ['apiConnector', function (apiConnector) {
                 var service = {
                     empresas: undefined,
                     empresa: undefined,
@@ -7,23 +7,31 @@ angular.module('empdep')
                 };
 
                 this.cargar = function () {
-                    return factoryEmpresa.cargarEmpresas()
-                            .success(function (data, status, headers, config) {
-                                service.empresas = data.empresa;
-
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
+                    /* return factoryEmpresa.cargarEmpresas()
+                     .success(function (data, status, headers, config) {
+                     service.empresas = data.empresa;
+                     
+                     })
+                     .error(function (data, status, headers, config) {
+                     alert("failure message: " + JSON.stringify(headers));
+                     });*/
+                    return apiConnector.get("api/empresas/all").then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            service.empresas = res.data;
+                        }
+                    });
                 };
-                this.eliminar = function (obj) { // id
-                    return factoryEmpresa.eliminarEmpresa(obj);
+                this.eliminar = function (obj) {
+                   return apiConnector.post("api/empresas/del",obj);
                 };
                 this.modificar = function (obj) {
-                    return factoryEmpresa.modificarEmpresa(obj);
+                    return apiConnector.put("api/empresas/set",obj);
                 };
-                this.agregar = function (obj) { //nombre
-                    return factoryEmpresa.agregarEmpresa(obj);
+                this.agregar = function (obj) {
+                    return apiConnector.post('api/empresas/add',obj);
                 };
 
                 this.getEmpresas = function () {
@@ -44,7 +52,7 @@ angular.module('empdep')
                     });
                 };
             }])
-        .service('departamentoService', ['factoryDepartamento', function (factoryDepartamento) {
+        .service('departamentoService', ['apiConnector', function (apiConnector) {
                 var service = {
                     departamentos: undefined,
                     departamento: undefined,
@@ -52,22 +60,23 @@ angular.module('empdep')
                 };
 
                 this.cargar = function () {
-                    return factoryDepartamento.cargarDepartamentos()
-                            .success(function (data, status, headers, config) {
-                                service.departamentos = data.departamento;
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
+                    return apiConnector.get("api/departamentos/all").then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            service.departamentos = res.data;
+                        }
+                    });
                 };
-                this.eliminar = function (obj) { // id
-                    return factoryDepartamento.eliminarDepartamento(obj);
+                this.eliminar = function (obj) {
+                   return apiConnector.post("api/departamentos/del",obj);
                 };
                 this.modificar = function (obj) {
-                    return factoryDepartamento.modificarDepartamento(obj);
+                    return apiConnector.put("api/departamentos/set",obj);
                 };
-                this.agregar = function (obj) { //nombre //empresa
-                    return factoryDepartamento.agregarDepartamento(obj);
+                this.agregar = function (obj) {
+                    return apiConnector.post('api/departamentos/add',obj);
                 };
 
                 this.getDepartamentos = function () {
@@ -145,31 +154,4 @@ angular.module('empdep')
             };
 
             return departamentos;
-        })
-
-
-        .factory("factoryEmpresa", function ($http) {
-            var empresa = {};
-
-            empresa.cargarEmpresas = function () {
-                return $http.get('/Sied/services/empresa/get-empresa.php');
-            };
-
-            empresa.agregarEmpresa = function (nombre) {
-                var obj = {
-                    nombre: nombre
-                };
-                return $http.post('/Sied/services/empresa/add-empresa.php', obj);
-            };
-            empresa.modificarEmpresa = function (obj) {
-                return $http.post('/Sied/services/empresa/set-empresa.php', obj);
-            };
-
-            empresa.eliminarEmpresa = function (id) {
-                var obj = {
-                    id: id
-                };
-                return $http.post('/Sied/services/empresa/del-empresa.php', obj);
-            };
-            return empresa;
         })

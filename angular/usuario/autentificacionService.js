@@ -1,43 +1,41 @@
 angular.module('usuario')
-        .service('autentificacionService', ['$http', 'sessionService', '$window', function ($http, sessionService, $window) {
+        .service('autentificacionService', ['apiConnector', 'sessionService', '$window', function (apiConnector, sessionService, $window) {
                 var autentificacion = {};
                 autentificacion.login = function (obj) {
-                    return $http.post('/Sied/services/usuario/login.php', obj)
-                            .success(function (data, status, headers, config) {
-                                sessionService.guardar(data);
-                                $window.location.href = '/Sied/';
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
+                    return apiConnector.put('api/usuarios/login', obj)
+                            .then(function (res) {
+                                if (res.status === 'error') {
+                                    alert(res.message);
+                                }
+                                if (res.status === 'success') {
+                                    sessionService.guardar(res.data);
+                                    $window.location.href = '/Sied/';
+                                }
                             });
                 };
 
                 autentificacion.logout = function (obj) {
-                    return $http.post('/Sied/services/usuario/logout.php', obj)
-                            .success(function (data, status, headers, config) {
-                                sessionService.destroy();
-                                $window.location.href = '/Sied/';
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                    return apiConnector.put('api/usuarios/logout', obj).then(function(res) {
+                        sessionService.destroy();
+                        $window.location.href = 'login.php';
+                    });
                 };
 
                 autentificacion.isLog = function (obj) {
-                    return $http.post('/Sied/services/usuario/session.php', obj);
+                    return apiConnector.post('api/usuarios/session', obj);
                 };
                 autentificacion.correoContrasena = function (obj) {
-                    return $http.post('/Sied/services/usuario/correo.php', obj);
+                    return apiConnector.post('/Sied/services/usuario/correo.php', obj);
                 };
                 autentificacion.setContrasena = function (obj) {
-                    return $http.post('/Sied/services/usuario/set-contrasena.php', obj);
+                    return apiConnector.post('/Sied/services/usuario/set-contrasena.php', obj);
                 };
-                
-                autentificacion.getNotificacion = function () {
-                    return $http.get('/Sied/services/notificacion/get-notificacion.php');
+
+                autentificacion.getNotificacion = function (obj) {
+                    return apiConnector.post('api/notificaciones/all', obj);
                 };
                 autentificacion.setNotificacion = function (obj) {
-                    return $http.post('/Sied/services/notificacion/set-visto.php',obj);
+                    return apiConnector.put('api/notificaciones/set', obj);
                 };
 
                 autentificacion.getperfil = function () {

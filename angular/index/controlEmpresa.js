@@ -6,13 +6,15 @@ angular.module("index")
                     id: undefined,
                     nombre: undefined
                 };
+                $scope.empresaAdd = {
+                    nombre: undefined
+                };
 
                 $scope.init = function () {
                     $scope.cargar();
                 };
                 $scope.selectEmpresa = function (empresa) {
                     empdep.setEmpresa(empresa);
-
                 };
                 $scope.cargar = function () {
                     empdep.cargarEmp().then(function () {
@@ -20,30 +22,33 @@ angular.module("index")
                     });
                 };
                 $scope.agregar = function () {
-                    empdep.getEmpService().agregar($scope.empresaAdd)
-                            .success(function (data, status, headers, config) {
-                                $scope.cargar();
-                                $scope.empresaAdd = "";
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                    empdep.getEmpService().agregar($scope.empresaAdd).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.cargar();
+                            $scope.empresaAdd.nombre = undefined;
+                        }
+
+                    });
                 };
                 $scope.confirmar = function (id) {
                     modalService.modalYesNo("Confirmacion", "<p>" + "¿Esta seguro de realizar la accion?" + "</p>")
                             .result.then(function (selectedItem) {
                                 if (selectedItem === "si")
-                                    $scope.eliminar(id);
+                                    $scope.eliminar({id: id});
                             });
                 };
-                $scope.eliminar = function (obj) { // id
-                    empdep.getEmpService().eliminar(obj)
-                            .success(function (data, status, headers, config) {
-                                $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                $scope.eliminar = function (obj) {
+                    empdep.getEmpService().eliminar(obj).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.cargar();
+                        }
+                    });
                 };
                 $scope.modalModificar = function (empresa) {
                     $scope.selectEmpresa(empresa);
@@ -52,13 +57,15 @@ angular.module("index")
                 };
                 $scope.modificar = function () {
                     empdep.getEmpService().modificar($scope.empresaEdit)
-                            .success(function (data, status, headers, config) {
-                                $scope.empresaEdit.id = undefined;
-                                $scope.empresaEdit.nombre = undefined;
-                                $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
+                            .then(function (res) {
+                                if (res.status === 'error') {
+                                    alert(res.message);
+                                }
+                                if (res.status === 'success') {
+                                    $scope.empresaEdit.id = undefined;
+                                    $scope.empresaEdit.nombre = undefined;
+                                    $scope.cargar();
+                                }
                             });
                 };
-            }])
+            }]);

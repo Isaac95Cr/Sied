@@ -7,6 +7,9 @@ angular.module("index")
                     nombre: undefined,
                     empresa: undefined
                 };
+                $scope.departamentoAdd = {
+                    nombre: undefined
+                };
                 $scope.init = function () {
                     $scope.cargar();
                 };
@@ -20,33 +23,36 @@ angular.module("index")
                 };
                 $scope.agregar = function () {
                     var obj = {
-                        nombre: $scope.departamentoAdd,
+                        nombre: $scope.departamentoAdd.nombre,
                         empresa: empdep.getEmpresa()
                     };
-                    empdep.getDepService().agregar(obj)
-                            .success(function (data, status, headers, config) {
-                                $scope.departamentoAdd = "";
-                                $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                    empdep.getDepService().agregar(obj).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.cargar();
+                            $scope.departamentoAdd.nombre = undefined;
+                        }
+                    });
+
                 };
                 $scope.confirmar = function (id) {
                     modalService.modalYesNo("Confirmacion", "<p>" + "¿Esta seguro de realizar la accion?" + "</p>")
                             .result.then(function (selectedItem) {
                                 if (selectedItem === "si")
-                                    $scope.eliminar(id);
+                                    $scope.eliminar({id:id});
                             });
                 };
                 $scope.eliminar = function (obj) { // id
-                    empdep.getDepService().eliminar({id: obj})
-                            .success(function (data, status, headers, config) {
-                                $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                    empdep.getDepService().eliminar(obj).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.cargar();
+                        }
+                    });
                 };
                 $scope.modalModificar = function (departamento) {
                     $scope.departamentoEdit = departamento;
@@ -54,17 +60,19 @@ angular.module("index")
                 };
                 $scope.modificar = function () {
                     empdep.getDepService().modificar($scope.departamentoEdit)
-                            .success(function (data, status, headers, config) {
-                                $scope.departamentoEdit.id = undefined;
-                                $scope.departamentoEdit.nombre = undefined;
-                                $scope.departamentoEdit.empresa = undefined;
-                                $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
+                            .then(function (res) {
+                                if (res.status === 'error') {
+                                    alert(res.message);
+                                }
+                                if (res.status === 'success') {
+                                    $scope.departamentoEdit.id = undefined;
+                                    $scope.departamentoEdit.nombre = undefined;
+                                    $scope.departamentoEdit.empresa = undefined;
+                                    $scope.cargar();
+                                }
                             });
                 };
 
-            }])
-        
+            }]);
+
 

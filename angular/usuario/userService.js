@@ -1,29 +1,29 @@
 angular.module('usuario')
-        .service('userService', function ($http) {
-            var usuario = {};
-            var nombreUser = "";
+        .service('userService', ['apiConnector', function (apiConnector) {
+                var usuario = {};
+                var nombreUser = "";
 
-            usuario.cargarUsuarios = function () {
-                return $http.get('/Sied/services/usuario/get-usuario.php');
-            };
-            usuario.cargarUsuario = function (obj) {
-                return $http.post('/Sied/services/usuario/get-usuario.php',obj);
-            };
-            
-           usuario.loadAllUser = function (obj) {
-                return $http.post('/Sied/services/usuario/get-AllUser.php',obj);
-            };
+                usuario.cargarUsuarios = function () {
+                    return apiConnector.get('api/usuarios/all');
+                };
+                usuario.cargarUsuario = function (obj) {
+                    return apiConnector.post('api/usuarios/allFrom', obj);
+                };
 
-            usuario.insert = function (obj) {
-                return $http.post('/Sied/services/usuario/add-usuario.php', obj);
-            };
+                usuario.loadAllUser = function (obj) {
+                    return apiConnector.post('/Sied/services/usuario/get-AllUser.php', obj);
+                };
 
-            usuario.update = function (obj) {
-                return $http.post('/Sied/services/usuario/set-usuario.php', obj);
-            };
-            
-            
-            usuario.loadUserService = function (colab) {
+                usuario.insert = function (obj) {
+                    return apiConnector.post('api/usuarios/add', obj);
+                };
+
+                usuario.update = function (obj) {
+                    return apiConnector.put('api/usuarios/set', obj);
+                };
+
+
+                usuario.loadUserService = function (colab) {
                     return this.loadAllUser(colab)
                             .success(function (data, status, headers, config) {
                                 nombreUser = data.usuario[0].nombre + " " + data.usuario[0].apellido1 + " " + data.usuario[0].apellido2;
@@ -31,24 +31,24 @@ angular.module('usuario')
                             .error(function (data, status, headers, config) {
                                 alert("failure message: " + JSON.stringify(headers));
                             });
-             };
-             
-             
-             usuario.getNameUser = function (){
-                 return nombreUser;
-             };
+                };
 
-            return usuario;
-        })
+
+                usuario.getNameUser = function () {
+                    return nombreUser;
+                };
+
+                return usuario;
+            }])
         .service('servicioCompetUser', ['userService', function (userService) {
 
-           this.loadColaborador = function (colab) {
-               return userService.loadUserService(colab);
-           };
-           
-           this.getNombreUsuario  = function (){
-               return  userService.getNameUser();
-           };
-           
+                this.loadColaborador = function (colab) {
+                    return userService.loadUserService(colab);
+                };
 
-        }]);
+                this.getNombreUsuario = function () {
+                    return  userService.getNameUser();
+                };
+
+
+            }]);
