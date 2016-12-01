@@ -181,6 +181,22 @@ public static function update_Evaluacion($arreglo) {
             return new Mensaje("Error", "<p>Error:" . $pdoExcetion->getMessage(). "</p>");
         }
  }
+ 
+ 
+ 
+     public static function update_PesoMeta($peso, $id) {        
+        
+        $comando =   "UPDATE meta set peso = ? WHERE id = ?";
+                
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($peso, $id));
+            
+            return new Mensaje("Éxito", "<p>Se actualizó la meta con éxito</p>");
+        } catch (PDOException $pdoExcetion) {
+            return new Mensaje("Error", "<p>Error:" . $pdoExcetion->getMessage(). "</p>");
+        }
+    }
         
         
         

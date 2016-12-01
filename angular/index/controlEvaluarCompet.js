@@ -156,7 +156,7 @@ angular.module("index")
                     });
 
                     stringEvaluaciones = stringEvaluaciones.substr(0, stringEvaluaciones.length - 1);
-                    obj = {id: idDetalles, evaluaciones: stringEvaluaciones};
+                    obj = {id: idDetalles, evaluaciones: stringEvaluaciones, idColab: colab.id};
 
                     servicioCompetAutoEv.actualizarEvaluacionesDetalles(obj)
                             .success(function (data, status, headers, config) {

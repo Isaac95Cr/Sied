@@ -75,7 +75,7 @@ class Competencia {
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
             $sentencia->execute(array($titulo, $descripcion, $perfil));
-            return new Mensaje("Exito", "<p>Se agregó la competencia con exito :D</p>");
+            return new Mensaje("Éxito", "<p>Se agregó la competencia con éxito</p>");
         } catch (PDOException $pdoExcetion) {
             return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
         }
@@ -86,7 +86,7 @@ class Competencia {
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
             $sentencia->execute(array($titulo, $descripcion, $id));
-            return new Mensaje("Exito", "<p>Se modificó la competencia con exito :D</p>");
+            return new Mensaje("Éxito", "<p>Se modificó la competencia con éxito</p>");
         } catch (PDOException $pdoExcetion) {
             return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
         }
@@ -97,7 +97,7 @@ class Competencia {
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
             $sentencia->execute(array($peso, $id));
-            return new Mensaje("Exito", "<p>Se modificaron los pesos de las competencias con exito :D</p>");
+            return new Mensaje("Éxito", "<p>Se modificaron los pesos de las competencias con éxito</p>");
         } catch (PDOException $pdoExcetion) {
             return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
         }
@@ -108,7 +108,7 @@ class Competencia {
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
             $sentencia->execute(array($id));
-            return new Mensaje("Exito", "<p>Se eliminó la competencia con exito :D</p>");
+            return new Mensaje("Éxito", "<p>Se eliminó la competencia con éxito</p>");
         } catch (PDOException $pdoExcetion) {
             return new Mensaje("Error", "<p>Error#" . $pdoExcetion->getCode() . "</p>");
         }
