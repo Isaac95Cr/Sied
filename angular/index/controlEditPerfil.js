@@ -1,5 +1,5 @@
 angular.module("index")
-        .controller("controlEditPerfil", ['$scope', '$routeParams', '$location', 'factoryCompetencia', 'factoryperfilCompetencia', 'factoryDetalleCompetencia', 'modalService', 'ShareDataService', function ($scope, $routeParams, $location, factoryCompetencia, factoryperfilCompetencia, factoryDetalleCompetencia, modalService, ShareDataService) {
+        .controller("controlEditPerfil", ['$scope', '$routeParams', 'modalService', 'ShareDataService', 'apiConnector', function ($scope, $routeParams, modalService, ShareDataService, apiConnector) {
                 $scope.perfil = {};
                 $scope.competencia = {};
                 $scope.competenciaeditar = {};
@@ -13,44 +13,6 @@ angular.module("index")
 
                 $scope.descripcionCompetenciaEdit = "";
                 $scope.tituloCompetenciaEdit = "";
-
-                /*$scope.$on('$locationChangeStart', function (event) {
-                 /* var answer = confirm("Are you sure you want to leave this page?")
-                 if (!answer) {
-                 event.preventDefault();
-                 }*/
-                /*$timeout(function () {
-                 isLeaving = true;
-                 $location.path(nextUrl.substring($location.absUrl().length - $location.url().length));
-                 $scope.$apply();
-                 }, 1000, false);
-                 ev.preventDefault();
-                 //event.preventDefault();
-                 
-                 modalService.modalYesNo("Confirmacion", "<p>" + "¿Se aseguro de cambiar los pesos de las competencias?" + "</p>")
-                 .result.then(function (selectedItem) {
-                 if (selectedItem !== "si") {
-                 setTimeout(function () {
-                 event.preventDefault();
-                 }, 1000, false);
-                 }
-                 });
-                 
-                 
-                 });*/
-
-                /* $scope.$on("$routeChangeStart", function (event, nextUrl, current) {
-                 modalService.modalYesNo("Confirmacion", "<p>" + "¿Se aseguro de cambiar los pesos de las competencias?" + "</p>")
-                 .result.then(function (selectedItem) {
-                 if (selectedItem !== "si") {
-                 setTimeout(function () {
-                 event.preventDefault();
-                 }, 1000, false);
-                 }
-                 });
-                 // If I remove this line, the modal is working but the browser location changes.
-                 event.preventDefault();
-                 });*/
 
                 $scope.selectCompetencia = function (id, titulo, descripcion) {
 
@@ -74,15 +36,15 @@ angular.module("index")
                 };
 
                 $scope.cargar = function () {
-                    factoryperfilCompetencia.cargarPerfilCompetencia($routeParams.perfil)
-                            .success(function (data, status, headers, config) {
-                                $scope.perfil = data.perfil;
-                                //$scope.selectCompetencia(data.perfil.competencias[0].id, data.perfil.competencias[0].titulo, data.perfil.competencias[0].descripcion);
-                                ShareDataService.prepForBroadcast(pesos());
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
+                    apiConnector.post("api/perfilCompetencias/all", {id: $routeParams.perfil}).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.perfil = res.data;
+                            ShareDataService.prepForBroadcast(pesos());
+                        }
+                    });
                 };
 
                 pesos = function () {
@@ -103,62 +65,80 @@ angular.module("index")
                     modalService.open("#modalCompetenciaEdit");
                 };
                 $scope.modificarDetalle = function () {
-                    var descripcion = $scope.descripcionDetalleEdit;
-                    var id = $scope.detalle.id;
-                    factoryDetalleCompetencia.modificarDetalle(descripcion, id)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.descripcionDetalleEdit = undefined;
-                                $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                    var obj = {
+                        descripcion: $scope.descripcionDetalleEdit,
+                        id: $scope.detalle.id
+                    };
+                    apiConnector.put("api/detalleCompetencia/set", obj).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            modalService.modalOk("Modificar Detalle", "<p>" + res.message + "</p>");
+                            $scope.descripcionDetalleEdit = undefined;
+                            $scope.cargar();
+                        }
+                    });
                 };
                 $scope.modificarCompetencia = function () {
-                    var titulo = $scope.competencia.titulo;
-                    var descripcion = $scope.descripcionCompetenciaEdit;
-                    var id = $scope.competencia.id;
-                    factoryCompetencia.modificarCompetencia(titulo, descripcion, id)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.selectCompetencia(id, titulo, descripcion);
-                                $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                    var obj = {
+                        titulo: $scope.competencia.titulo,
+                        descripcion: $scope.descripcionCompetenciaEdit,
+                        id: $scope.competencia.id
+                    };
+
+                    apiConnector.put("api/competencias/set", obj).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            modalService.modalOk("Modificar Competencia", "<p>" + res.message + "</p>");
+                            $scope.selectCompetencia(obj.id, obj.titulo, obj.descripcion);
+                            $scope.cargar();
+                        }
+                    });
                 };
 
                 $scope.agregarDetalle = function () {
-                    var descripcion = $scope.descripcionDetalle;
-                    var competencia = $scope.competencia.id;
-                    factoryDetalleCompetencia.agregarDetalle(descripcion, competencia)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.descripcionDetalle = "";
-                                $scope.cargar();
-                                $scope.bandera = true;
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
+
+                    var obj = {
+                        descripcion: $scope.descripcionDetalle,
+                        competencia: $scope.competencia.id
+                    };
+                    apiConnector.post('api/detalleCompetencia/add', obj).then(function (res) {
+                        if (res.status === 'error') {
+                            return res.message;
+                        }
+                        if (res.status === 'success') {
+                            modalService.modalOk("Agregar Detalle", "<p>" + res.message + "</p>");
+                            $scope.descripcionDetalle = undefined;
+                            $scope.cargar();
+                            $scope.bandera = true;
+                        }
+                    });
+
                 };
 
                 $scope.agregarCompetencia = function () {
-                    var descripcion = $scope.descripcionCompetencia;
-                    var perfil = $scope.perfil.id;
-                    var titulo = $scope.tituloCompetencia;
-                    factoryCompetencia.agregarCompetencia(titulo, descripcion, perfil)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.descripcionCompetencia = "";
-                                $scope.tituloCompetencia = "";
+
+                    var obj = {
+                        descripcion: $scope.descripcionCompetencia,
+                        perfil: $scope.perfil.id,
+                        titulo: $scope.tituloCompetencia
+                    };
+                    
+                    apiConnector.post('api/competencias/add', obj).then(function (res) {
+                        if (res.status === 'error') {
+                            return res.message;
+                        }
+                        if (res.status === 'success') {
+                             modalService.modalOk("Agregar Competencia", "<p>" +res.message + "</p>");
+                                $scope.descripcionCompetencia = undefined;
+                                $scope.tituloCompetencia = undefined;
                                 $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
+                        }
+                    });
+                  
                 };
             }])
         .factory("factoryCompetencia", function ($http) {

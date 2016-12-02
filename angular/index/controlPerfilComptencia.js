@@ -1,5 +1,5 @@
 angular.module("index")
-        .controller("controlPerfilCompetencia", ['$scope', 'factoryperfilCompetencia', 'modalService', function ($scope, factoryperfilCompetencia, modalService) {
+        .controller("controlPerfilCompetencia", ['$scope', 'modalService', 'apiConnector', function ($scope, modalService, apiConnector) {
 
                 $scope.perfiles = [];
                 $scope.perfil = 0;
@@ -15,14 +15,15 @@ angular.module("index")
                 };
 
                 $scope.cargar = function () {
-                    factoryperfilCompetencia.cargarPerfilesCompetencia()
-                            .success(function (data, status, headers, config) {
-                                $scope.perfiles = data.perfiles;
-                                $scope.perfil = data.perfiles[0];
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
+                    apiConnector.get("api/perfilCompetencias/all").then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.perfiles = res.data;
+                            $scope.perfil = res.data[0];
+                        }
+                    });
                 };
                 $scope.confirmar = function (id) {
                     modalService.modalYesNo("Confirmacion", "<p>" + "¿Esta seguro de realizar la accion?" + "</p>")
@@ -32,15 +33,15 @@ angular.module("index")
                             });
                 };
                 $scope.eliminar = function (id) {
-
-                    factoryperfilCompetencia.eliminarPerfilCompetencia(id)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>")
-                                $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                    apiConnector.post("api/perfilCompetencias/del", {id: id}).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            modalService.modalOk("Eliminar Perfil", "<p>" + res.message + "</p>")
+                            $scope.cargar();
+                        }
+                    });
                 };
                 $scope.modalModificar = function (perfil) {
                     $scope.selectPerfil(perfil);
@@ -48,67 +49,35 @@ angular.module("index")
                     modalService.open("#modalPerfilEdit");
                 };
                 $scope.modificar = function () {
-                    var nombre = $scope.perfilEdit;
-                    var id = $scope.perfil.id;
-                    factoryperfilCompetencia.modificarPerfilCompetencia(nombre, id)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.perfilEdit = "";
-                                $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                    var obj = {
+                        nombre: $scope.perfilEdit,
+                        id: $scope.perfil.id
+                    };
+                    apiConnector.put("api/perfilCompetencias/set", obj).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            modalService.modalOk("Modificar Perfil", "<p>" + res.message + "</p>");
+                            $scope.perfilEdit = undefined;
+                            $scope.cargar();
+                        }
+                    });
                 };
                 $scope.agregar = function () {
                     var nombre = $scope.perfilAdd;
-                    factoryperfilCompetencia.agregarPerfilCompetencia(nombre)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.perfilNombre = "";
-                                $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                    apiConnector.post("api/perfilCompetencias/add", {nombre: nombre}).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            modalService.modalOk("Agregar Competencia", "<p>" + res.message + "</p>");
+                            $scope.perfilNombre = undefined;
+                            $scope.cargar();
+                        }
+                    });
                 };
             }])
-        .factory("factoryperfilCompetencia", function ($http) {
-            var perfil = {};
-
-            perfil.cargarPerfilesCompetencia = function () {
-                return $http.get('/Sied/services/competencia/get-perfilCompetencia.php');
-            };
-
-            perfil.cargarPerfilCompetencia = function (id) {
-                var obj = {
-                    id: id
-                };
-                return $http.post('/Sied/services/competencia/get-perfilCompetencia.php', obj);
-            };
-            perfil.modificarPerfilCompetencia = function (nombre, id) {
-                var obj = {
-                    nombre: nombre,
-                    id: id
-                };
-                return $http.post('/Sied/services/competencia/set-perfilCompetencia.php', obj);
-            };
-
-            perfil.agregarPerfilCompetencia = function (nombre) {
-                var obj = {
-                    nombre: nombre
-                };
-                return $http.post('/Sied/services/competencia/add-perfilCompetencia.php', obj);
-            };
-
-            perfil.eliminarPerfilCompetencia = function (id) {
-                var obj = {
-                    id: id
-                };
-                return $http.post('/Sied/services/competencia/del-perfilCompetencia.php', obj);
-            };
-            return perfil;
-        })
         .factory('ShareDataService', function ($rootScope) {
             var sharedService = {};
             sharedService.msg = {};
