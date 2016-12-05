@@ -1,5 +1,5 @@
 angular.module("index")
-        .controller("controlPesos", ['$scope', 'factoryCompetencia', 'ShareDataService', 'modalService', function ($scope, factoryCompetencia, ShareDataService, modalService) {
+        .controller("controlPesos", ['$scope', 'apiConnector', 'ShareDataService', 'modalService', function ($scope, apiConnector, ShareDataService, modalService) {
                 $scope.competencias = {};
                 $scope.sum = 0;
 
@@ -23,15 +23,15 @@ angular.module("index")
                     $scope.sum = x.round(2);
                 };
                 $scope.modificarPeso = function () {
-                    factoryCompetencia.modificarPeso($scope.competencias)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
-                    ;
-
+                    
+                    apiConnector.put("api/competencias/setPeso", $scope.competencias).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            modalService.modalOk("Pesos", "<p>" + res.message + "</p>");
+                        }
+                    });
                 };
             }
         ]);

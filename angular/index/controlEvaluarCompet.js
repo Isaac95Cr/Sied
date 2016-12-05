@@ -1,10 +1,10 @@
 angular.module("index")
         .controller("controlEvaluarCompet", ['$scope', 'userService', 'factoryCompetenciasColab',
             'factoryAutoEvCompetencias', '$routeParams', 'servicioCompetColab', 'servicioCompetAutoEv',
-            'servicioCompetUser', 'modalService', function ($scope, userService, factoryCompetenciasColab,
+            'servicioCompetUser', 'modalService','apiConnector', function ($scope, userService, factoryCompetenciasColab,
                     factoryAutoEvCompetencias, $routeParams,
                     servicioCompetColab, servicioCompetAutoEv,
-                    servicioCompetUser, modalService) {
+                    servicioCompetUser, modalService,apiConnector) {
 
                 $scope.competencias = "";
                 $scope.colaborador = "";
@@ -174,21 +174,20 @@ angular.module("index")
 
 
             }])
-        .factory("factoryAutoEvCompetencias", function ($http) {
+        .factory("factoryAutoEvCompetencias", function (apiConnector) {
 
             var autoEv_Competencia = {};
-            var stringAutoEv = "";  // se recibe el string de las autoevaluaciones
-            var stringEvaluaciones = "";   // se recibe el string de las evaluaciones
-            var IDAutoevaluaciones = "";   // aquí se guarda el id de la base de datos correspondiente a las autoevaluaciones 
+            var stringAutoEv = undefined;  // se recibe el string de las autoevaluaciones
+            var stringEvaluaciones = undefined;   // se recibe el string de las evaluaciones
+            var IDAutoevaluaciones = undefined;   // aquí se guarda el id de la base de datos correspondiente a las autoevaluaciones 
             // de competencias.
 
             autoEv_Competencia.cargarAutoEvCompet = function (obj) {
-                return $http.post('/Sied/services/competencia/get-AutoEvCompetencias.php', obj);
+                return apiConnector.post('api/evaluacionCompetencias/allAutoFromUser', obj);
             };
 
-
             autoEv_Competencia.updateEvaluacionesDetalles = function (obj) {
-                return $http.post('/Sied/services/competencia/set-evaluacionDetalle.php', obj);
+                return apiConnector.post('api/evaluacionCompetencia/set', obj);
             };
 
             autoEv_Competencia.getIdBD = function () {
@@ -197,20 +196,20 @@ angular.module("index")
 
 
             autoEv_Competencia.loadAutoEvaluacionesCompet = function (colab) {
-                return this.cargarAutoEvCompet(colab)
-                        .success(function (data, status, headers, config) {
-                            // Obtener las autoevaluaciones (que están en un string) de manera separada
-                            var tamanoData = data.autoEvaluaciones.length;
+                return this.cargarAutoEvCompet(colab).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                             var tamanoData = res.data.length;
                             stringAutoEv = "";
                             if (tamanoData !== 0) {
-                                stringAutoEv = data.autoEvaluaciones[0].auto_evaluacion;
-                                stringEvaluaciones = data.autoEvaluaciones[0].evaluacion;
-                                IDAutoevaluaciones = data.autoEvaluaciones[0].id;
+                                stringAutoEv = res.data.autoEvaluaciones[0].auto_evaluacion;
+                                stringEvaluaciones = res.data.autoEvaluaciones[0].evaluacion;
+                                IDAutoevaluaciones = res.data.autoEvaluaciones[0].id;
                             }
-                        })
-                        .error(function (data, status, headers, config) {
-                            alert("failure message: " + JSON.stringify(headers));
-                        });
+                        }
+                    });
             };
 
 

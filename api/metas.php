@@ -6,9 +6,9 @@
  * @copyright Copyright (c) 2014, Felipe Lunardi Farias <ffarias.dev@gmail.com>
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-require '../database/competenciaData.php';
+require '../database/metasData.php';
 
-class competencias extends Rest implements interfaceApi {
+class metas extends Rest implements interfaceApi {
 
     /** @var string|null Should contain the name of this class. */
     public $class = null;
@@ -49,29 +49,32 @@ class competencias extends Rest implements interfaceApi {
     }
 
     public function all() {
+        if ($this->get_request_method() != "POST" && $this->get_request_method() != "GET") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+        if ($this->get_request_method() == "POST") {
+            $body = json_decode(file_get_contents("php://input"), true);
+            $id = $body['id'];
+            $data = metasData::getAllFromUser($id);
+            return $this->responseAPI("success", "get success!", 200, $data);
+        } else {
+            $data = metasData::getAll();
+            return $this->responseAPI("success", "get success!", 200, $data);
+        }
+        return $this->responseAPI("success", "get success!", 200, $data);
+    }
+
+    public function allFrom() {
+
         if ($this->get_request_method() != "POST") {
             return $this->responseAPI("error", "Not allowed.", 406);
         }
 
         $body = json_decode(file_get_contents("php://input"), true);
-        $id = $body['id'];
-        $data = competenciaData::getAllFrom($id);
 
+        $data = metasData::getAllFrom($body);
         return $this->responseAPI("success", "get success!", 200, $data);
     }
-    
-    public function allFromUser() {
-        if ($this->get_request_method() != "POST") {
-            return $this->responseAPI("error", "Not allowed.", 406);
-        }
-
-        $body = json_decode(file_get_contents("php://input"), true);
-        $id = $body['id'];
-        $data = competenciaData::getAllFromUser($id);
-
-        return $this->responseAPI("success", "get success!", 200, $data);
-    }
-
 
     public function add() {
 
@@ -80,13 +83,27 @@ class competencias extends Rest implements interfaceApi {
         }
 
         $body = json_decode(file_get_contents("php://input"), true);
-        $titulo = $body['titulo'];
-        $descripcion = $body['descripcion'];
-        $perfil = $body['perfil'];
 
-        $data = competenciaData::insert($titulo, $descripcion, $perfil);
+        $data = metasData::insert($body['is_Evaluable'], $body['peso'], $body['titulo'], $body['descripcion'], $body['usuario']
+        );
+
         if ($data === true) {
             return $this->responseAPI("success", "add success", 200);
+        }
+        return $this->responseAPI("error", "", 200);
+    }
+
+    public function del() {
+
+        if ($this->get_request_method() != "POST") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+
+        $body = json_decode(file_get_contents("php://input"), true);
+
+        $data = metasData::delete($body['id']);
+        if ($data === true) {
+            return $this->responseAPI("success", "del success", 200);
         }
         return $this->responseAPI("error", "", 200);
     }
@@ -99,15 +116,59 @@ class competencias extends Rest implements interfaceApi {
 
         $body = json_decode(file_get_contents("php://input"), true);
 
-        $titulo = $body['titulo'];
-        $descripcion = $body['descripcion'];
-        $id= $body['id'];
-
-        $data = competenciaData::update($titulo, $descripcion, $id);
+        $data = metasData::update($body['is_Evaluable'], $body['titulo'], $body['descripcion'], $body['id']);
         if ($data === true) {
             return $this->responseAPI("success", "set success", 200);
         }
-        return $this->responseAPI("error", $data, 200);
+        return $this->responseAPI("error", "", 200);
+    }
+
+    public function aprobarMeta() {
+
+        if ($this->get_request_method() != "PUT") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+
+        $body = json_decode(file_get_contents("php://input"), true);
+
+        if ($body['comentario'] !== "") {
+            $data = metasData::desaprobarMeta($body['id'], $body['comentario']);
+        } else {
+            $data = metasData::aprobarMeta($body['id'], $body['comentario']);
+        }
+
+        if ($data === true) {
+            return $this->responseAPI("success", "set success", 200);
+        }
+        return $this->responseAPI("error", "", 200);
+    }
+
+    public function setEvaluacion() {
+
+        if ($this->get_request_method() != "PUT") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+
+        $body = json_decode(file_get_contents("php://input"), true);
+
+        $data = metasData::updateEvaluacion($body);
+        if ($data === true) {
+            return $this->responseAPI("success", "set success", 200);
+        }
+        return $this->responseAPI("error", "", 200);
+    }
+    public function setAuto() {
+
+        if ($this->get_request_method() != "PUT") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+
+        $body = json_decode(file_get_contents("php://input"), true);
+        $data = metasData::updateAuto($body) ;
+        if ($data === true) {
+            return $this->responseAPI("success", "set success", 200);
+        }
+        return $this->responseAPI("error", "", 200);
     }
     
     public function setPeso() {
@@ -118,31 +179,11 @@ class competencias extends Rest implements interfaceApi {
 
         $body = json_decode(file_get_contents("php://input"), true);
 
-        foreach ($body as $competencia) {
-            $data = competenciaData::updatePeso($competencia['peso'], $competencia['id']);
-        }
-    
+        $data = metasData::updatePeso($body);
         if ($data === true) {
             return $this->responseAPI("success", "set success", 200);
         }
-        return $this->responseAPI("error", $data, 200);
-    }
-
-    public function del() {
-
-        if ($this->get_request_method() != "POST") {
-            return $this->responseAPI("error", "Not allowed.", 406);
-        }
-
-        $body = json_decode(file_get_contents("php://input"), true);
-
-        $id = $body['id'];
-
-        $data = competenciaData::delete($id);
-        if ($data === true) {
-            return $this->responseAPI("success", "del success", 200);
-        }
-        return $this->responseAPI("error", $data, 200);
+        return $this->responseAPI("error", "", 200);
     }
 
     public function __destruct() {

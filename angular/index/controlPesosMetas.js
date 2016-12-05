@@ -38,13 +38,14 @@ angular.module("index")
                 
                 
                 $scope.setPesosMetas = function () {
-                    factoryMeta.modificarPeso($scope.metas)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                    factoryMeta.modificarPeso($scope.metas).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            modalService.modalOk("Pesos", "<p>" + res.message + "</p>");
+                        }
+                    });
                 };
                 
                 

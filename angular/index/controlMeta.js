@@ -45,14 +45,15 @@ angular.module("index")
 
                 $scope.cargar = function () {
                     var obj = {id: $scope.userOnline.id};
-                    factoryMeta.cargarMetasUser(obj)
-                            .success(function (data, status, headers, config) {
-                                $scope.metas = data.metas;
-                                ShareDataService.prepForBroadcast(pesos());
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
+                    factoryMeta.cargarMetasUser(obj).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.metas = res.data;
+                            ShareDataService.prepForBroadcast(pesos());
+                        }
+                    });
                 };
 
 
@@ -78,25 +79,22 @@ angular.module("index")
                             });
                 };
 
-
-
-
                 $scope.eliminar = function (idParam) {
 
                     var metaObj = {
                         id: idParam
                     };
-
                     factoryMeta.eliminarMeta(metaObj)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
+                            .then(function (res) {
+                                if (res.status === 'error') {
+                                    alert(res.message);
+                                }
+                                if (res.status === 'success') {
+                                    modalService.modalOk("Eliminar Meta", "<p>" + res.message + "</p>");
+                                    $scope.cargar();
+                                }
                             });
                 };
-
 
                 $scope.agregar = function () {
                     var metaObj = {
@@ -107,20 +105,21 @@ angular.module("index")
                         usuario: $scope.userOnline.id
                     };
 
-                    factoryMeta.agregarMeta(metaObj)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.meta_isEvaluable = 1;
-                                $scope.is_Check = true;
+                    factoryMeta.agregarMeta(metaObj).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            modalService.modalOk("Agregar Meta", "<p>" + res.message + "</p>");
+                            $scope.meta_isEvaluable = 1;
+                            $scope.is_Check = true;
+                            $scope.meta_peso = 0;
+                            $scope.meta_titulo = undefined;
+                            $scope.meta_descripcion = undefined;
+                            $scope.cargar();
+                        }
+                    });
 
-                                $scope.meta_peso = 0;
-                                $scope.meta_titulo = "";
-                                $scope.meta_descripcion = "";
-                                $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
                 };
 
 
@@ -151,24 +150,26 @@ angular.module("index")
                     };
 
                     factoryMeta.updateMeta(metaObj)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
+                    .then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            modalService.modalOk("Modificar Meta", "<p>" + res.message + "</p>");
                                 $scope.meta_isEvaluable = 1;
                                 $scope.is_Check = true;
                                 //$scope.meta_peso = 0;
-                                $scope.meta_titulo = "";
-                                $scope.meta_descripcion = "";
+                                $scope.meta_titulo = undefined;
+                                $scope.meta_descripcion = undefined;
                                 $scope.actual = "0";
                                 $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                        }
+                    });
                 };
-                
-                
-                
-               pesos = function () {
+
+
+
+                pesos = function () {
                     var x = [];
                     $scope.metas.forEach(function (meta) {
                         x.push({id: meta.id, titulo: meta.titulo, peso: meta.peso});
@@ -179,53 +180,53 @@ angular.module("index")
 
 
             }])
-        .factory("factoryMeta", function ($http) {
+        .factory("factoryMeta", function (apiConnector) {
             var meta = {};
 
             meta.cargarMetas = function () {
-                return $http.get('/Sied/services/meta/get-metas.php');
+                return apiConnector.get('api/metas/all');
             };
 
 
             meta.cargarMetasUser = function (obj) {
-                return $http.post('/Sied/services/meta/get-metas.php', obj);
+                return apiConnector.post('api/metas/all', obj);
             };
 
 
             meta.agregarMeta = function (metaObj) {
-                return $http.post('/Sied/services/meta/add-meta.php', metaObj);
+                return apiConnector.post('api/metas/add', metaObj);
             };
 
 
             meta.updateMeta = function (obj) {
-                return $http.post('/Sied/services/meta/set-meta.php', obj);
+                return apiConnector.put('api/metas/set', obj);
             };
 
             meta.eliminarMeta = function (metaObj) {
-                return $http.post('/Sied/services/meta/del-meta.php', metaObj);
+                return apiConnector.post('api/metas/del', metaObj);
             };
 
 
             meta.updateAutoEvaluaciones = function (metaObj) {
-                return $http.post('/Sied/services/meta/set-autoevMetas.php', metaObj);
+                return apiConnector.put('api/metas/setAuto', metaObj);
             };
 
 
             meta.updateEvaluaciones = function (metaObj) {
-                return $http.post('/Sied/services/meta/set-EvalMetas.php', metaObj);
+                return apiConnector.put('api/metas/setEvaluacion', metaObj);
             };
 
             meta.aprobar_Desaprobar = function (metaObj) {
-                return $http.post('/Sied/services/meta/aprobar_desaprobarMeta.php', metaObj);
+                return apiConnector.put('api/metas/aprobarMeta', metaObj);
             };
 
             meta.getMeta = function (obj) {
-                return $http.post('/Sied/services/meta/get-metaEspecifica.php', obj);
+                return apiConnector.put('api/metas/getAllFrom', obj);
             };
 
 
             meta.modificarPeso = function (obj) {
-                return $http.post('/Sied/services/meta/set-PesoMeta.php', obj);
+                return apiConnector.put('api/metas/setPeso', obj);
             };
 
             return meta;

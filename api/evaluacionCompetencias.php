@@ -6,9 +6,9 @@
  * @copyright Copyright (c) 2014, Felipe Lunardi Farias <ffarias.dev@gmail.com>
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-require '../database/competenciaData.php';
+require '../database/evaluacionCompetenciaData.php';
 
-class competencias extends Rest implements interfaceApi {
+class evaluacionCompetencias extends Rest implements interfaceApi {
 
     /** @var string|null Should contain the name of this class. */
     public $class = null;
@@ -48,30 +48,15 @@ class competencias extends Rest implements interfaceApi {
         }
     }
 
-    public function all() {
+    public function allAutoFromUser() {
         if ($this->get_request_method() != "POST") {
             return $this->responseAPI("error", "Not allowed.", 406);
         }
-
         $body = json_decode(file_get_contents("php://input"), true);
         $id = $body['id'];
-        $data = competenciaData::getAllFrom($id);
-
+        $data = evaluacionCompetenciaData::getAutoFromUser($id);
         return $this->responseAPI("success", "get success!", 200, $data);
     }
-    
-    public function allFromUser() {
-        if ($this->get_request_method() != "POST") {
-            return $this->responseAPI("error", "Not allowed.", 406);
-        }
-
-        $body = json_decode(file_get_contents("php://input"), true);
-        $id = $body['id'];
-        $data = competenciaData::getAllFromUser($id);
-
-        return $this->responseAPI("success", "get success!", 200, $data);
-    }
-
 
     public function add() {
 
@@ -80,11 +65,7 @@ class competencias extends Rest implements interfaceApi {
         }
 
         $body = json_decode(file_get_contents("php://input"), true);
-        $titulo = $body['titulo'];
-        $descripcion = $body['descripcion'];
-        $perfil = $body['perfil'];
-
-        $data = competenciaData::insert($titulo, $descripcion, $perfil);
+        $data = evaluacionCompetenciaData::insert_Evaluacion($body);
         if ($data === true) {
             return $this->responseAPI("success", "add success", 200);
         }
@@ -99,48 +80,10 @@ class competencias extends Rest implements interfaceApi {
 
         $body = json_decode(file_get_contents("php://input"), true);
 
-        $titulo = $body['titulo'];
-        $descripcion = $body['descripcion'];
-        $id= $body['id'];
+        $data = evaluacionCompetenciaData::updateEvaluacionesDetalles($body['evaluaciones'],$body['id'], $body['idColab']);
 
-        $data = competenciaData::update($titulo, $descripcion, $id);
         if ($data === true) {
             return $this->responseAPI("success", "set success", 200);
-        }
-        return $this->responseAPI("error", $data, 200);
-    }
-    
-    public function setPeso() {
-
-        if ($this->get_request_method() != "PUT") {
-            return $this->responseAPI("error", "Not allowed.", 406);
-        }
-
-        $body = json_decode(file_get_contents("php://input"), true);
-
-        foreach ($body as $competencia) {
-            $data = competenciaData::updatePeso($competencia['peso'], $competencia['id']);
-        }
-    
-        if ($data === true) {
-            return $this->responseAPI("success", "set success", 200);
-        }
-        return $this->responseAPI("error", $data, 200);
-    }
-
-    public function del() {
-
-        if ($this->get_request_method() != "POST") {
-            return $this->responseAPI("error", "Not allowed.", 406);
-        }
-
-        $body = json_decode(file_get_contents("php://input"), true);
-
-        $id = $body['id'];
-
-        $data = competenciaData::delete($id);
-        if ($data === true) {
-            return $this->responseAPI("success", "del success", 200);
         }
         return $this->responseAPI("error", $data, 200);
     }

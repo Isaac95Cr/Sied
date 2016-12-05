@@ -2,9 +2,9 @@ angular.module("index")
         .controller("cntrlCompetenciasColab", ['$scope', 'factoryCompetenciasColab', 'modalService', 'servicioCompetColab', function ($scope, factoryCompetenciasColab, modalService, servicioCompetColab) {
 
                 $scope.competencias = 0;
-                $scope.perfilCompet = "";  // aqui se guarda el id del perfil de competencia del usuario.
-                $scope.userOnline = "";
-                $scope.nombrePerfil = "";  // aquí se almacena el nombre del perfil de competencia
+                $scope.perfilCompet = undefined;  // aqui se guarda el id del perfil de competencia del usuario.
+                $scope.userOnline = undefined;
+                $scope.nombrePerfil = undefined;  // aquí se almacena el nombre del perfil de competencia
 
                 $scope.init = function () {
 
@@ -27,28 +27,32 @@ angular.module("index")
                 $scope.getPerfilCompetencia = function () {
                     var obj = {id: $scope.userOnline};
                     return factoryCompetenciasColab.getPerfilCompetUser(obj)
-                            .success(function (data, status, headers, config) {
-                                $scope.perfilCompet = data.perfil.id;
-                                $scope.nombrePerfil = data.perfil.nombre;
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
+                            .then(function (res) {
+                                if (res.status === 'error') {
+                                    alert(res.message);
+                                }
+                                if (res.status === 'success') {
+                                    $scope.perfilCompet = res.data.id;
+                                    $scope.nombrePerfil = res.data.nombre;
+                                }
                             });
-
                 };
 
                 $scope.cargar = function () {
-                    return factoryCompetenciasColab.cargarCompetenciasDePerfil($scope.perfilCompet)  // hay que fijarse cuál Perfil de Competencia tiene asociado el Colaborador
-                            .success(function (data, status, headers, config) {
-                                $scope.competencias = data.competencias;
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
+                    return factoryCompetenciasColab.cargarCompetenciasDePerfil($scope.perfilCompet)
+                            // hay que fijarse cuál Perfil de Competencia tiene asociado el Colaborador
+                            .then(function (res) {
+                                if (res.status === 'error') {
+                                    alert(res.message);
+                                }
+                                if (res.status === 'success') {
+                                    $scope.competencias = res.data;
+                                }
                             });
                 };
 
             }])
-        .factory("factoryCompetenciasColab", function ($http) {
+        .factory("factoryCompetenciasColab", function (apiConnector) {
 
             var competencia = {};
             var competenciasUser = new Array();
@@ -57,25 +61,26 @@ angular.module("index")
                 var obj = {
                     id: id
                 };
-                return $http.post('/Sied/services/competencia/get-competencia.php', obj);
+
+                return apiConnector.post("api/competencias/all", {id: id});
             };
 
 
             competencia.getPerfilCompetUser = function (obj) {
 
-                return $http.post('/Sied/services/competencia/get-PerfilCompetUser.php', obj);
+                return apiConnector.post('api/perfilCompetencias/allFromUser', obj);
             };
 
 
             competencia.guardarAutoEvCompetencias = function (id) {
                 var obj = {
                 };
-                return $http.post('/Sied/services/competencia/get-competencia.php', obj);
+                return apiConnector.post('api/competencias/all', obj);
             };
 
-            competencia.updateAutoEvaluacionesCompe = function (metaObj) {
+            competencia.updateAutoEvaluacionesCompe = function (Obj) {
 
-                return $http.post('/Sied/services/competencia/set-evalCompetencias.php', metaObj);
+                return apiConnector.post('api/evaluacionCompetencias/add', Obj);
             };
 
 
@@ -83,7 +88,7 @@ angular.module("index")
                 var obj = {
                     id: id
                 };
-                return $http.post('/Sied/services/competencia/get-competencia.php', obj);
+                return apiConnector.post('api/competencias/all', obj);
             };
 
 
@@ -91,21 +96,21 @@ angular.module("index")
             /*Le carga al jefe las competencias y detalles de un colaborador en específico*/
             competencia.cargarDetalleCompetenciasJefe = function (obj) {
 
-                return $http.post('/Sied/services/competencia/get-CompetenciasUser.php', obj);
+                return apiConnector.post('api/competencias/allFromUser', obj);
             };
 
 
 
             competencia.loadCompetenciasUser = function (colab) {
 
-                return this.cargarDetalleCompetenciasJefe(colab)
-                        .success(function (data, status, headers, config) {
-
-                            competenciasUser = data.competencias;
-                        })
-                        .error(function (data, status, headers, config) {
-                            alert("failure message: " + JSON.stringify(headers));
-                        });
+                return this.cargarDetalleCompetenciasJefe(colab).then(function (res) {
+                    if (res.status === 'error') {
+                        alert(res.message);
+                    }
+                    if (res.status === 'success') {
+                        competenciasUser = data.competencias;
+                    }
+                });
             };
 
 

@@ -7,16 +7,16 @@ angular.module("index")
                 $scope.idCompetencias = new Array();
                 $scope.autoEvaluaciones = new Array();
 
-                $scope.stringAutoEvaluaciones = "";
+                $scope.stringAutoEvaluaciones = undefined;
                 $scope.arrayAutoEvaluacionesCompet = [];
                 $scope.arrayTemporalAutoEv = new Array();
 
                 $scope.objetoCompuesto = new Array();
 
-                $scope.perfilCompet = "";  // aqui se guarda el id del perfil de competencia del usuario.
-                $scope.userOnline = "";
-                $scope.nombrePerfil = "";  // aquí se almacena el nombre del perfil de competencia
-                
+                $scope.perfilCompet = undefined;  // aqui se guarda el id del perfil de competencia del usuario.
+                $scope.userOnline = undefined;
+                $scope.nombrePerfil = undefined;  // aquí se almacena el nombre del perfil de competencia
+
                 $scope.arrayFinal = new Array();
 
 
@@ -26,7 +26,7 @@ angular.module("index")
                     $scope.getPerfilCompetencia().then(function () {
 
                         $scope.cargar().then(function () {
-                            
+
                             var idObj = {id: $scope.userOnline};
                             servicioCompetAutoEv.loadAutoEvaluacionesService(idObj).then(function () {
 
@@ -51,32 +51,33 @@ angular.module("index")
                 $scope.getPerfilCompetencia = function () {
                     var obj = {id: $scope.userOnline};
                     return factoryCompetenciasColab.getPerfilCompetUser(obj)
-                            .success(function (data, status, headers, config) {
-                                $scope.perfilCompet = data.perfil.id;
-                                $scope.nombrePerfil = data.perfil.nombre;
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
+                            .then(function (res) {
+                                if (res.status === 'error') {
+                                    alert(res.message);
+                                }
+                                if (res.status === 'success') {
+                                    $scope.perfilCompet = res.data.id;
+                                    $scope.nombrePerfil = res.data.nombre;
+                                }
                             });
-
                 };
 
 
 
                 $scope.cargar = function () {
                     return factoryCompetenciasColab.cargarCompetenciasDePerfil($scope.perfilCompet)  // hay que fijarse cuál Perfil de Competencia tiene asociado el Colaborador
-                            .success(function (data, status, headers, config) {
-                                $scope.competencias = data.competencias;
-                        
-                                $scope.idCompetencias = new Array();
-                                angular.forEach($scope.competencias, function (compet, key) {
+                            .then(function (res) {
+                                if (res.status === 'error') {
+                                    alert(res.message);
+                                }
+                                if (res.status === 'success') {
+                                    $scope.competencias = res.data;
 
-                                    $scope.idCompetencias = $scope.idCompetencias.concat(compet.id);
-                                 
-                                });
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
+                                    $scope.idCompetencias = new Array();
+                                    angular.forEach($scope.competencias, function (compet) {
+                                        $scope.idCompetencias = $scope.idCompetencias.concat(compet.id);
+                                    });
+                                }
                             });
                 };
 
@@ -131,19 +132,22 @@ angular.module("index")
                     });
 
                     $scope.string_AutoEv = $scope.string_AutoEv.substr(0, $scope.string_AutoEv.length - 1);
-                    
-                    var obj = {value: $scope.string_AutoEv, idColab: $scope.userOnline};  // se envía el user para comprobar
-                                                                                                                                              //  si ya posee autoevaluaciones o 
-                                                                                                                                              //  evaluaciones
 
-                    factoryCompetenciasColab.updateAutoEvaluacionesCompe(obj)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                    var obj = {value: $scope.string_AutoEv, idColab: $scope.userOnline};  // se envía el user para comprobar
+                    //  si ya posee autoevaluaciones o 
+                    //  evaluaciones
+
+                    factoryCompetenciasColab.updateAutoEvaluacionesCompe(obj).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            modalService.modalOk("Actualizacion de datos", "<p>" + res.message + "</p>");
+                            $scope.cargar();
+
+                        }
+                    });
+
                 };
 
 
@@ -153,8 +157,8 @@ angular.module("index")
 
                     $scope.stringAutoEvaluaciones = servicioCompetAutoEv.getStringAutoEv();
                     $scope.autoEvaluaciones = [];
-                    
-                    if ( $scope.stringAutoEvaluaciones !== "" && $scope.stringAutoEvaluaciones !== null ) {
+
+                    if ($scope.stringAutoEvaluaciones !== "" && $scope.stringAutoEvaluaciones !== null) {
 
                         $scope.arrayAutoEvaluacionesCompet = $scope.stringAutoEvaluaciones.split(';');
 
@@ -171,7 +175,7 @@ angular.module("index")
 
 
 
-              $scope.loadTodo = function () {
+                $scope.loadTodo = function () {
                     var obj = {};
                     var contadorEvaluaciones = 0;
 
@@ -179,22 +183,17 @@ angular.module("index")
                         angular.forEach(elemento.detalles, function (elemento2, key2) {
 
                             obj = {detail: elemento2.descripcion, autoev: $scope.autoEvaluaciones[contadorEvaluaciones],
-                                        idObj: elemento2.id, nameObj: elemento.id, titleCompet: elemento.titulo};
+                                idObj: elemento2.id, nameObj: elemento.id, titleCompet: elemento.titulo};
                             contadorEvaluaciones++;
                             $scope.objetoCompuesto = $scope.objetoCompuesto.concat([obj]);
                         });
-                        
+
                         $scope.arrayFinal = $scope.arrayFinal.concat([$scope.objetoCompuesto]);
                         $scope.objetoCompuesto = [];
 
                     });
 
                 };
-
-
-
-
-
             }]);
 
 

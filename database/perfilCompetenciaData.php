@@ -75,7 +75,7 @@ class perfilCompetenciaData {
     
     
     // Obtener perfil de competencia de un usuario en específico.
-    public static function getPerfilCompetUser($id) {
+    public static function getFromUser($id) {
         $consulta = "SELECT  perfil_competencia.id, perfil_competencia.nombre 
                                                 FROM perfil_competencia, usuario, evaluacion_periodo
                                                 WHERE usuario.id = ? AND

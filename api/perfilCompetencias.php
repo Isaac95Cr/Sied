@@ -62,6 +62,15 @@ class perfilCompetencias extends Rest implements interfaceApi {
             return $this->responseAPI("success", "get success!", 200, $data);
         }
     }
+    public function allFromUser() {
+        if ($this->get_request_method() != "POST") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+            $body = json_decode(file_get_contents("php://input"), true);
+            $id = $body['id'];
+            $data = perfilCompetenciaData::getFromUser($id);
+            return $this->responseAPI("success", "get success!", 200, $data);        
+    }
 
     public function add() {
 

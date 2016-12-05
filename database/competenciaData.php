@@ -40,7 +40,7 @@ class competenciaData {
 
     
     /*Obtener las competencias de un usuario de acuerdo a su perfil */
-    public static function getCompetUser($idUser) {
+    public static function getAllFromUser($idUser) {
         $consulta = "SELECT competencia.id, competencia.titulo, competencia.descripcion, competencia.peso
                                                FROM competencia, perfil_competencia, usuario, evaluacion_periodo
                                                WHERE usuario.id = ? AND
@@ -58,7 +58,7 @@ class competenciaData {
                 $newrow['titulo'] = $row['titulo'];
                 $newrow['descripcion'] = $row['descripcion'];
                 $newrow['peso'] = $row['peso'];
-                $newrow['detalles'] = DetalleCompetencia::getAllFrom($row['id']);
+                $newrow['detalles'] = detalleCompetenciaData::getAllFrom($row['id']);
                 array_push($json_response, $newrow);
             }
             return $json_response;
