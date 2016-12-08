@@ -225,6 +225,11 @@ angular.module("app")
                 var dateObject = new Date(dateString);
                 return dateObject;
             };
+        })
+        .filter('toMoment', function () {
+            return function (dateString) {
+                var dateObject = moment(dateString, moment.ISO_8601);
+                return ""+dateObject.format("YYYY-MM-DD")+"";
+            };
         });
-;
 

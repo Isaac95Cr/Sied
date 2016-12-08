@@ -9,11 +9,15 @@
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+        <!-- data Range -->
+        <link href="plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css"/>
         <!-- Ionicons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <!-- Select2 -->
         <link href="plugins/select/select.min.css" rel="stylesheet" type="text/css"/>
         <link href="plugins/select2/select2.min.css" rel="stylesheet" type="text/css"/>
+        <!-- wizard -->
+        <link href="plugins/wizard/angular-wizard.min.css" rel="stylesheet" type="text/css"/>
         <!-- tabla-->
         <link href="plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
         <link href="plugins/datatables/angular-datatables.min.css" rel="stylesheet" type="text/css"/>
@@ -231,6 +235,12 @@
         <!-- Select2 -->
         <script src="plugins/select/select.min.js" type="text/javascript"></script>
         <script src="plugins/select2/select2.min.js" type="text/javascript"></script>
+        <!-- Data RAnge-->
+        <script src="plugins/daterangepicker/moment.min.js" type="text/javascript"></script>
+        <script src="plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+        <script src="plugins/daterangepicker/angular-daterangepicker.js" type="text/javascript"></script>
+        <!-- wizard -->
+        <script src="plugins/wizard/angular-wizard.min.js" type="text/javascript"></script>
         <!-- controles -->
         <script src="angular/apiconnector.js" type="text/javascript"></script>
         <script src="angular/modal/modalService.js" type="text/javascript"></script>
@@ -239,7 +249,7 @@
         <script src="angular/usuario/userService.js" type="text/javascript"></script>
         <script src="angular/usuario/usersColaboradoresMetas.js" type="text/javascript"></script>
         <script src="angular/usuario/usersColaboradoresCompetencias.js" type="text/javascript"></script>
-        
+
         <script src="angular/registro/controlLogin.js" type="text/javascript"></script>
         <script src="angular/index/controlDepartamento.js" type="text/javascript"></script>
         <script src="angular/index/controlEmpresa.js" type="text/javascript"></script>
@@ -259,8 +269,9 @@
         <script src="angular/empresas/EmpresaService.js" type="text/javascript"></script>
         <script src="angular/index/controlPerfil.js" type="text/javascript"></script>
         <script src="angular/usuario/controlUser.js" type="text/javascript"></script>
+        <script src="angular/index/controlPeriodo.js" type="text/javascript"></script>
         <script src="angular/index/controlPesosMetas.js" type="text/javascript"></script>
-        
+
         <script type="text/ng-template" id="myModalContent.html">
             <div class="modal-header">
             <button type="button" class="close" ng-click="$close()" aria-label="Close">
