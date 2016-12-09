@@ -1,5 +1,6 @@
 angular.module('usuario')
-        .controller('usersColaboradoresCompetencias', ['$scope', 'userService', 'modalService', function ($scope, userService, modalService) {
+        .controller('usersColaboradoresCompetencias', ['$scope', 'userService', 'modalService', 'Navigator', 
+                           function ($scope, userService, modalService, Navigator) {
 
                 $scope.listaUsuarios = [];
                 $scope.userID = "";
@@ -8,6 +9,11 @@ angular.module('usuario')
                 $scope.init = function () {
                     $scope.cargar();
                 };
+                
+    // función que pasa el id del usuario elegido
+                $scope.pasarId = function (id) {
+                    Navigator.goTo('', {idUser: id});
+                };                
 
 
                 $scope.cargar = function () {

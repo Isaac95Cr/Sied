@@ -74,9 +74,18 @@ angular.module("index")
                     $scope.selectUserEdit(user);
                     modalService.open("#modalUserEdit");
                 };
+//                $scope.filtro = function (departamento) {
+//                    return departamento.empresa == empdep.getEmpresa().id;
+//                };
+
+
                 $scope.filtro = function (departamento) {
-                    return departamento.empresa == empdep.getEmpresa().id;
+                    if(empdep.getEmpresa() !== undefined)
+                        return departamento.empresa == empdep.getEmpresa().id;
+                    else
+                        return false;
                 };
+
                 /*$scope.$on('departamento', function () {
                  $scope.userEdit.empresa = ShareDataService.empresa;
                  $scope.userEdit.departamento = ShareDataService.departamento.selected;

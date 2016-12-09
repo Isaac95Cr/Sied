@@ -46,7 +46,7 @@
                                             <td style="font-weight: bold;">Eliminar</td>
                                         </tr>
                                         <tr>
-                                            <td> {{meta.descripcion}} </td>
+                                            <td> {{meta.descripcion}}</td>
                                             <td> {{meta.peso}} </td>
                                             <td> {{meta.evaluable == 1? 'Sí' : 'No'}} </td>
                                             <td>

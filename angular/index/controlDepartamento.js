@@ -13,9 +13,18 @@ angular.module("index")
                 $scope.init = function () {
                     $scope.cargar();
                 };
+                       
+//                $scope.filtro = function (departamento) {
+//                    return departamento.empresa == empdep.getEmpresa().id;
+//                };
+//                
                 $scope.filtro = function (departamento) {
-                    return departamento.empresa == empdep.getEmpresa().id;
+                    if(empdep.getEmpresa() !== undefined)
+                        return departamento.empresa == empdep.getEmpresa().id;
+                    else
+                        return false;
                 };
+                
                 $scope.cargar = function () {
                     empdep.cargarDep().then(function () {
                         $scope.departamentos = empdep.getDepartamentos();

@@ -1,10 +1,8 @@
 angular.module("index")
-        .controller("controlEvaluarCompet", ['$scope', 'userService', 'factoryCompetenciasColab',
-            'factoryAutoEvCompetencias', '$routeParams', 'servicioCompetColab', 'servicioCompetAutoEv',
-            'servicioCompetUser', 'modalService', 'apiConnector', function ($scope, userService, factoryCompetenciasColab,
-                    factoryAutoEvCompetencias, $routeParams,
-                    servicioCompetColab, servicioCompetAutoEv,
-                    servicioCompetUser, modalService, apiConnector) {
+        .controller("controlEvaluarCompet", ['$scope', '$routeParams', 'servicioCompetColab', 'servicioCompetAutoEv',
+            'servicioCompetUser', 'modalService', 'tempStorage', 'storageSession', '$crypto',
+             function ($scope, $routeParams, servicioCompetColab, servicioCompetAutoEv,
+             servicioCompetUser, modalService, tempStorage, storageSession, $crypto) {
 
                 $scope.competencias = "";
                 $scope.colaborador = "";
@@ -19,23 +17,34 @@ angular.module("index")
 
                 $scope.arrayEvaluaciones = new Array();
 
-                var colab = {id: $routeParams.id}
+                //var colab = {id: $routeParams.id}
 
 
                 $scope.init = function () {
+                    
+                    $scope.argumentosIdUser = tempStorage.args;
+                    
+                    if($scope.argumentosIdUser !== undefined){
+                        $scope.infoIdUser = $scope.argumentosIdUser.idUser;
+                        $scope.idEncrypt = $crypto.encrypt($scope.infoIdUser);
+                        storageSession.saveId($scope.idEncrypt);
+                                     
+                    }else{
+                        $scope.infoIdUser = $crypto.decrypt(storageSession.loadId());
+                    }          
 
                     // Primero se solicitan las autoevaluaciones al servidor, después se cargan en los scopes.
                     // Luego se solicitan los detalles de competencia, después se cargan en los scopes los
                     // detalles y sus respectivas autoevaluaciones.
 
-                    servicioCompetAutoEv.loadAutoEvaluacionesService(colab).then(function () {
+                    servicioCompetAutoEv.loadAutoEvaluacionesService({id: $scope.infoIdUser}).then(function () {
 
                         $scope.cargarAutoEvaluaciones();   // se cargan en los scopes las autoevaluaciones
                         $scope.cargarEvaluaciones();  // se cargan en los scopes las evaluaciones
 
                     }).then(function () {
 
-                        return servicioCompetColab.loadDetalles(colab);
+                        return servicioCompetColab.loadDetalles({id: $scope.infoIdUser});
 
                     }).then(function () {
 
@@ -43,7 +52,7 @@ angular.module("index")
 
                     }).then(function () {
 
-                        return servicioCompetUser.loadColaborador($routeParams.id);
+                        return servicioCompetUser.loadColaborador($scope.infoIdUser);
 
                     }).then(function () {
 
@@ -153,7 +162,7 @@ angular.module("index")
                     });
 
                     stringEvaluaciones = stringEvaluaciones.substr(0, stringEvaluaciones.length - 1);
-                    obj = {id: idDetalles, evaluaciones: stringEvaluaciones, idColab: colab.id};
+                    obj = {id: idDetalles, evaluaciones: stringEvaluaciones, idColab: $scope.infoIdUser };
 
                     servicioCompetAutoEv.actualizarEvaluacionesDetalles(obj).then(function (res) {
                         if (res.status === 'error') {

@@ -44,7 +44,7 @@ angular.module("index")
                 $scope.cargar = function () {
                     var obj = {id: $scope.userOnline.id};
                     $scope.tiene_Metas = false;
-                    
+
                     factoryMeta.cargarMetasUser(obj).then(function (res) {
                         if (res.status === 'error') {
                             alert(res.message);
@@ -72,7 +72,6 @@ angular.module("index")
                 });
 
 
-
                 $scope.confirmarEliminacion = function (id) {
                     modalService.modalYesNo("Confirmación", "<p>" + "¿Está seguro de realizar la acción?" + "</p>")
                             .result.then(function (selectedItem) {
@@ -92,9 +91,15 @@ angular.module("index")
                                     alert(res.message);
                                 }
                                 if (res.status === 'success') {
-                                    modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
                                     $scope.cargar();
-                                }
+                                    modalService.modalOk("Éxito", "<p>" + res.message + "</p>")
+                                            .result.then(function () {
+                                                modalService.modalOk("Aviso", "<p>¡Debe recalcular los pesos de las metas!</p>")
+                                                        .result.then(function () {
+                                                            angular.element( document.querySelector( '#modalPeso' ) ).modal();  // para abrir la modal de los pesos
+                                                        });
+                                            });
+                                  }
                             });
                 };
 

@@ -94,7 +94,7 @@ angular.module("app")
                                     }]
                             }
                         })
-                        .when("/evaluar_competencias/:id", {
+                        .when("/evaluar_competencias", {
                             templateUrl: "paginas/evaluar_competencias.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {
@@ -126,7 +126,7 @@ angular.module("app")
                                     }]
                             }
                         })
-                        .when("/detalleCompetenciasJefe/:id", {
+                        .when("/detalleCompetenciasJefe", {
                             templateUrl: "paginas/detalleCompetenciasJefe.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {

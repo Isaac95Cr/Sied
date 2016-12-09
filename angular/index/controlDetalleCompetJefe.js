@@ -1,6 +1,6 @@
 angular.module("index")
-        .controller("controlDetalleCompetJefe", ['$scope', 'factoryCompetenciasColab', 'userService', '$routeParams', 'modalService', 'servicioCompetColab',
-            function ($scope, factoryCompetenciasColab, userService, $routeParams, modalService, servicioCompetColab) {
+        .controller("controlDetalleCompetJefe", ['$scope', 'factoryCompetenciasColab', 'userService', 'tempStorage', 'storageSession', '$crypto',                             
+            function ($scope, factoryCompetenciasColab, userService, tempStorage, storageSession, $crypto) {
 
                 $scope.competencias = "";
                 $scope.colaborador = "";
@@ -10,6 +10,18 @@ angular.module("index")
                 $scope.nombrePerfil = "";  // aquí se almacena el nombre del perfil de competencia
 
                 $scope.init = function () {
+                    
+                    $scope.argumentosIdUser = tempStorage.args;
+                    
+                    if($scope.argumentosIdUser !== undefined){
+                        $scope.infoIdUser = $scope.argumentosIdUser.idUser;
+                        $scope.idEncrypt = $crypto.encrypt($scope.infoIdUser);
+                        storageSession.saveId($scope.idEncrypt);
+                                     
+                    }else{
+                        $scope.infoIdUser = $crypto.decrypt(storageSession.loadId());
+                    }                    
+                    
                     $scope.cargar();
                     $scope.cargarColaborador();
                     $scope.getPerfilCompetencia();
@@ -18,7 +30,7 @@ angular.module("index")
 
 
                 $scope.cargarColaborador = function () {
-                    userService.cargarUsuario($routeParams.id).then(function (res) {
+                    userService.cargarUsuario($scope.infoIdUser).then(function (res) {
                         if (res.status === 'error') {
                             alert(res.message);
                         }
@@ -30,7 +42,7 @@ angular.module("index")
 
 
                 $scope.cargar = function () {
-                    var colab = {id: $routeParams.id};
+                    var colab = {id: $scope.infoIdUser};
                     factoryCompetenciasColab.cargarDetalleCompetenciasJefe(colab).then(function (res) {
                         if (res.status === 'error') {
                             alert(res.message);
@@ -44,7 +56,7 @@ angular.module("index")
 
 
                 $scope.getPerfilCompetencia = function () {
-                    var colab = {id: $routeParams.id};
+                    var colab = {id: $scope.infoIdUser};
                     return factoryCompetenciasColab.getPerfilCompetUser(colab).then(function (res) {
                         if (res.status === 'error') {
                             alert(res.message);

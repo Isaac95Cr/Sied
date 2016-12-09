@@ -34,8 +34,8 @@
 
                    <tr ng-repeat="user in listaUsuarios">
                         <td><p data-toggle="popover" data-trigger="hover" data-html="true" data-content="<b>Jefe: <span class='label label-success'>Aprobado</span> <br> RRHH: <span class='label label-warning'>Pendiente</span></b>" > {{user.nombre + " " + user.apellido1 + " " + " " + user.apellido2}} </p></td>
-                        <td><a class="btn btn-primary btn-block" href="#/detalleCompetenciasJefe/{{user.id}}">Detalle</a></td>
-                        <td><a class="btn btn-primary btn-block" href="#/evaluar_competencias/{{user.id}}">Evaluar</a></td>
+                        <td><a class="btn btn-primary btn-block" ng-click="pasarId(user.id)" href="#/detalleCompetenciasJefe">Detalle</a></td>
+                        <td><a class="btn btn-primary btn-block" ng-click="pasarId(user.id)" href="#/evaluar_competencias">Evaluar</a></td>
                     </tr>
                     
                     
