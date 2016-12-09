@@ -34,7 +34,7 @@
                                     </a>
                                 </h4>
                             </div>
-                            
+
                             <div id="collapse{{$index}}" class="panel-collapse collapse">
                                 <div class="box-body table-responsive">
                                     <table class="table table-bordered">
@@ -64,14 +64,14 @@
                         </div>
 
                     </div>
+
                 </div>
                 <!-- /.box-body -->
+
                 <div class="box-footer" >    
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-lg pull-left" ng-click="resetValues()" data-toggle="modal" data-target="#modalMeta" style="margin-right: 10px;">Agregar Meta</button>
-                        <button type="button" class="btn btn-primary btn-lg pull-left" ng-click="" data-toggle="modal" data-target="#modalPeso">Editar Pesos</button>
-                        <a type="button" class="btn btn-primary btn-lg pull-right" href="#/auto-evaluar_metas">Autoevaluar</a>
-                    </div>
+                    <button  class="btn btn-primary btn-lg pull-left" ng-click="resetValues()" data-toggle="modal" data-target="#modalMeta" style="margin-right: 10px;">Agregar Meta</button>
+                    <button ng-show="tiene_Metas" class="btn btn-primary btn-lg pull-left" ng-click="" data-toggle="modal" data-target="#modalPeso">Editar Pesos</button>
+                    <a type="button" ng-show="tiene_Metas"  class="btn btn-primary btn-lg pull-right" href="#/auto-evaluar_metas">Autoevaluar</a>
                 </div>
                 <!-- /.box-footer-->
             </div>
@@ -117,7 +117,7 @@
                             <div class="form-group">
                                 <label for="evaluable" class="col-sm-2 control-label" >Evaluable</label>
                                 <div class="col-sm-10">
-                                 <input type="checkbox"  id="evaluable" name="evaluable" ng-model="is_Check"  i-check />
+                                    <input type="checkbox"  id="evaluable" name="evaluable" ng-model="is_Check"  i-check />
                                 </div>
                             </div>
 
@@ -186,51 +186,51 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-    
+
 </div>    
-    
-    
-    
-    
-    
-        <!-- /.modalPesos -->
-    <div class="modal" id="modalPeso" ng-controller="controlPesosMetas">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Editar los Pesos de las metas</h4>
-                </div> 
-                <form name="pesoForm" method="post" class="form-horizontal" ng-submit="setPesosMetas()" novalidate>
-                    <div class="modal-body">
-                        <div ng-repeat="meta in metas">
-                            <div class="form-group" ng-class="{'has-error':pesoForm.peso{{$index}}.$invalid && !pesoForm.peso{{$index}}.$pristine }">
-                                <label for="peso" class="col-sm-8 control-label">Peso de meta {{meta.titulo}} </label>
-                                <div class="col-sm-4">
-                                    <input type="number" class="form-control" string-to-number step=0.01 min="0" max="100" id="peso" name="meta{{$index}}"  ng-model="meta.peso" ng-change="getTotal()" required>
-                                    <p ng-show="pesoForm.peso{{$index}}.$invalid && !pesoForm.peso{{$index}}.$pristine" class="help-block">Peso de la meta requerido.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group" ng-class="{'has-error':pesoForm.pesoTotal.$invalid}">
-                            <label for="peso" class="col-sm-8 control-label">Total</label>
+
+
+
+
+
+<!-- /.modalPesos -->
+<div class="modal" id="modalPeso" ng-controller="controlPesosMetas">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Editar los Pesos de las metas</h4>
+            </div> 
+            <form name="pesoForm" method="post" class="form-horizontal" ng-submit="setPesosMetas()" novalidate>
+                <div class="modal-body">
+                    <div ng-repeat="meta in metas">
+                        <div class="form-group" ng-class="{'has-error':pesoForm.peso{{$index}}.$invalid && !pesoForm.peso{{$index}}.$pristine }">
+                            <label for="peso" class="col-sm-8 control-label">Peso de meta {{meta.titulo}} </label>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" placeholder="0" step=1 id="peso" name="pesoTotal" min="100" max="100" ng-model="sumaTotal" required >
-                                <p ng-show="pesoForm.pesoTotal.$invalid" class="help-block">*La suma de los pesos debe ser 100</p>
+                                <input type="number" class="form-control" string-to-number step=0.01 min="0" max="100" id="peso" name="meta{{$index}}"  ng-model="meta.peso" ng-change="getTotal()" required>
+                                <p ng-show="pesoForm.peso{{$index}}.$invalid && !pesoForm.peso{{$index}}.$pristine" class="help-block">Peso de la meta requerido.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" ng-disabled="pesoForm.$invalid" closemodal="modalPeso">Guardar Cambios</button>
+                    <div class="form-group" ng-class="{'has-error':pesoForm.pesoTotal.$invalid}">
+                        <label for="peso" class="col-sm-8 control-label">Total</label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control" placeholder="0" step=1 id="peso" name="pesoTotal" min="100" max="100" ng-model="sumaTotal" required >
+                            <p ng-show="pesoForm.pesoTotal.$invalid" class="help-block">*La suma de los pesos debe ser 100</p>
+                        </div>
                     </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" ng-disabled="pesoForm.$invalid" closemodal="modalPeso">Guardar Cambios</button>
+                </div>
+            </form>
         </div>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
 
 
 <!--</div>-->
@@ -239,19 +239,15 @@
 
 <script>
     $(document).ready(function () {
-        $('[data-toggle="popover"]').popover({
-        });
+    $('[data-toggle="popover"]').popover({
     });
-
-
+    });
     $('#add-meta').click(function () {
-        $('#modalMeta').modal('toggle');
-        return true;
+    $('#modalMeta').modal('toggle');
+    return true;
     });
-
-
     $('#modify-meta').click(function () {
-        $('#modalEdit').modal('toggle');
-        return true;
+    $('#modalEdit').modal('toggle');
+    return true;
     });
 </script>

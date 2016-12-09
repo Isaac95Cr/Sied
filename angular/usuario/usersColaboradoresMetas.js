@@ -1,5 +1,6 @@
 angular.module('usuario')
-        .controller('usersColaboradoresMetas', ['$scope', 'userService', 'modalService', function ($scope, userService, modalService) {
+        .controller('usersColaboradoresMetas', ['$scope', 'userService', 'modalService', 'Navigator',
+           function ($scope, userService, modalService, Navigator) {
 
                 $scope.listaUsuarios = [];
                 $scope.userID = "";
@@ -21,6 +22,21 @@ angular.module('usuario')
                     });
                 };
 
-            }]);
+
+    // función que pasa el id del usuario elegido
+                $scope.pasarId = function (id) {
+                    Navigator.goTo('', {idUser: id});
+                };
+
+
+
+            }]).value("tempStorage", {})
+        .service("Navigator", function (tempStorage) {
+            return {
+                goTo: function (url, args) {
+                    tempStorage.args = args;
+                }
+            };
+        });
 
 

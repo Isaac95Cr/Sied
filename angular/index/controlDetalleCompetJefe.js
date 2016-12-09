@@ -1,6 +1,6 @@
 angular.module("index")
-        .controller("controlDetalleCompetJefe", ['$scope', 'factoryCompetenciasColab', 'userService', '$routeParams', 'modalService', 'servicioCompetColab', 
-                            function ($scope, factoryCompetenciasColab, userService, $routeParams, modalService, servicioCompetColab) {
+        .controller("controlDetalleCompetJefe", ['$scope', 'factoryCompetenciasColab', 'userService', '$routeParams', 'modalService', 'servicioCompetColab',
+            function ($scope, factoryCompetenciasColab, userService, $routeParams, modalService, servicioCompetColab) {
 
                 $scope.competencias = "";
                 $scope.colaborador = "";
@@ -16,43 +16,46 @@ angular.module("index")
                 };
 
 
+
                 $scope.cargarColaborador = function () {
-                    userService.loadAllUser($routeParams.id)
-                            .success(function (data, status, headers, config) {
-                                $scope.colaborador = data.usuario[0].nombre + " " + data.usuario[0].apellido1 + " " + data.usuario[0].apellido2;
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
+                    userService.cargarUsuario($routeParams.id).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.colaborador = res.data.usuario.nombre + " " + res.data.usuario.apellido1 + " " + res.data.usuario.apellido2;
+                        }
+                    });
                 };
 
 
                 $scope.cargar = function () {
-                    var colab = {id: $routeParams.id}
-                    factoryCompetenciasColab.cargarDetalleCompetenciasJefe(colab)
-                            .success(function (data, status, headers, config) {
-                                $scope.competencias = data.competencias;
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
+                    var colab = {id: $routeParams.id};
+                    factoryCompetenciasColab.cargarDetalleCompetenciasJefe(colab).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                                $scope.competencias = res.data;
+                        }
+                    });
                 };
 
 
 
                 $scope.getPerfilCompetencia = function () {
-                    var colab = {id: $routeParams.id}
-                    return factoryCompetenciasColab.getPerfilCompetUser(colab)
-                            .success(function (data, status, headers, config) {
-                                $scope.perfilCompet = data.perfil.id;
-                                $scope.nombrePerfil = data.perfil.nombre;
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
+                    var colab = {id: $routeParams.id};
+                    return factoryCompetenciasColab.getPerfilCompetUser(colab).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                                $scope.perfilCompet = res.data.id;
+                                $scope.nombrePerfil = res.data.nombre;
+                        }
+                    });
 
                 };
-
 
             }]);
 

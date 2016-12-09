@@ -108,7 +108,7 @@ angular.module("index")
                         alert(res.message);
                     }
                     if (res.status === 'success') {
-                        competenciasUser = data.competencias;
+                        competenciasUser = res.data;
                     }
                 });
             };

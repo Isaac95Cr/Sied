@@ -1,40 +1,76 @@
 angular.module("index")
-        .controller("controlDetalleMetasJefe", ['$scope', 'factoryMeta', 'userService', '$routeParams', 'modalService', function ($scope, factoryMeta, userService, $routeParams, modalService) {
+        .controller("controlDetalleMetasJefe", ['$scope', 'factoryMeta', 'userService', 'tempStorage', 'storageSession', '$crypto',
+                            function ($scope, factoryMeta, userService, tempStorage, storageSession, $crypto) {
 
                 $scope.metasUser = [];
-                $scope.tiene_Metas = false;
+                $scope.tiene_Metas = true;
                 $scope.colaborador = "";
 
+
                 $scope.init = function () {
+                    $scope.argumentosIdUser = tempStorage.args;
+                    
+                    if($scope.argumentosIdUser !== undefined){
+                        $scope.infoIdUser = $scope.argumentosIdUser.idUser;
+                        $scope.idEncrypt = $crypto.encrypt($scope.infoIdUser);
+                        storageSession.saveId($scope.idEncrypt);
+                                     
+                    }else{
+                        $scope.infoIdUser = $crypto.decrypt(storageSession.loadId());
+                    }
+                    
                     $scope.cargar();
                     $scope.cargarColaborador();
                 };
 
 
                 $scope.cargar = function () {
-                    var obj = {id: $routeParams.id}
-                    factoryMeta.cargarMetasUser(obj)
-                            .success(function (data, status, headers, config) {
-                                $scope.metasUser = data.metas;
-                                if ($scope.metasUser.length !== 0)
-                                    $scope.tiene_Metas = true;
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
+                    var obj = {id: $scope.infoIdUser};
+                    factoryMeta.cargarMetasUser(obj).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.metasUser = res.data;
+                            if ($scope.metasUser.length === 0)
+                                $scope.tiene_Metas = false;
+                        }
+                    });
+                };
+
+
+                $scope.cargarColaborador = function () {
+                    userService.cargarUsuario($scope.infoIdUser).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.colaborador = res.data.usuario.nombre + " " + res.data.usuario.apellido1 + " " + res.data.usuario.apellido2;
+                        }
+                    });
+                };
+
+
+            }]).service("storageSession", function ($sessionStorage) {
+            
+                var sesion = {};
+                
+                sesion.saveId = function (id){
+                    $sessionStorage.idUser = id;       
+                };
+                               
+                sesion.loadId = function (){
+                    var id;
+                    id = $sessionStorage.idUser;
+                    return id;
                 };
                 
+                return sesion;
+        }).config(['$cryptoProvider', function($cryptoProvider){
                 
-               $scope.cargarColaborador = function () {
-                    userService.loadAllUser($routeParams.id)
-                            .success(function (data, status, headers, config) {
-                                $scope.colaborador = data.usuario[0].nombre + " " + data.usuario[0].apellido1 + " " + data.usuario[0].apellido2;
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
-                };
-                
-                
-            }]);
+                 $cryptoProvider.setCryptographyKey('ABCD123');
+   }]);
+
+
+
 

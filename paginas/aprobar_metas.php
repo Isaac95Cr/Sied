@@ -78,7 +78,7 @@
                         </div>
 
 
-
+                    <p style="font-size: 90%" ng-show="!tiene_Metas" class="label bg-red margin">El Colaborador no posee metas</p>
                     </div>
                 </div>
                 <!-- /.box-body -->

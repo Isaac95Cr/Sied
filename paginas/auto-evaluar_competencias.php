@@ -46,7 +46,7 @@
                                             <td>{{elemento.detail}}</td>
                                             <td>
                                                 <div class="form-group">
-                                                    <div class="col-sm-12">
+                                                    <div class="col-sm-7">
                                                         <input type="number" min="0" max="100" ng-value="{{elemento.autoev}}" id="{{elemento.idObj}}" name="{{elemento.nameObj}}" class="form-control"  placeholder="0"> 
                                                     </div>
                                                 </div>

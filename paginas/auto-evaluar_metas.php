@@ -60,7 +60,7 @@
                             </div>                    
                         </div>
                         <div class="box-footer" >
-                            <button type="submit" class="btn btn-primary btn-lg pull-right">Guardar cambios</button>
+                            <button type="submit"  ng-show="tiene_Metas" class="btn btn-primary btn-lg pull-right">Guardar cambios</button>
                         </div>
                     </form>
                 </div>

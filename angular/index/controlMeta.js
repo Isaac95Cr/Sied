@@ -2,12 +2,12 @@ angular.module("index")
         .controller("controlMeta", ['$scope', 'factoryMeta', 'modalService', 'sessionService', 'ShareDataService', function ($scope, factoryMeta, modalService, sessionService, ShareDataService) {
 
                 $scope.metas = [];
+                $scope.tiene_Metas = false;
                 $scope.meta = 0;
 
                 $scope.meta_isEvaluable = 1;
                 $scope.is_Check = true;
 
-//                $scope.meta_peso = 0;
                 $scope.meta_titulo = "";
                 $scope.meta_descripcion = "";
 
@@ -36,8 +36,6 @@ angular.module("index")
                 $scope.resetValues = function () {
                     $scope.meta_isEvaluable = 1;
                     $scope.is_Check = true;
-
-//                    $scope.meta_peso = 0;
                     $scope.meta_titulo = "";
                     $scope.meta_descripcion = "";
                 };
@@ -45,12 +43,16 @@ angular.module("index")
 
                 $scope.cargar = function () {
                     var obj = {id: $scope.userOnline.id};
+                    $scope.tiene_Metas = false;
+                    
                     factoryMeta.cargarMetasUser(obj).then(function (res) {
                         if (res.status === 'error') {
                             alert(res.message);
                         }
                         if (res.status === 'success') {
                             $scope.metas = res.data;
+                            if ($scope.metas.length !== 0)
+                                $scope.tiene_Metas = true;
                             ShareDataService.prepForBroadcast(pesos());
                         }
                     });
@@ -90,7 +92,7 @@ angular.module("index")
                                     alert(res.message);
                                 }
                                 if (res.status === 'success') {
-                                    modalService.modalOk("Eliminar Meta", "<p>" + res.message + "</p>");
+                                    modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
                                     $scope.cargar();
                                 }
                             });
@@ -110,7 +112,7 @@ angular.module("index")
                             alert(res.message);
                         }
                         if (res.status === 'success') {
-                            modalService.modalOk("Agregar Meta", "<p>" + res.message + "</p>");
+                            modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
                             $scope.meta_isEvaluable = 1;
                             $scope.is_Check = true;
                             $scope.meta_peso = 0;
@@ -132,7 +134,6 @@ angular.module("index")
                     ($scope.meta_isEvaluable === "1") ?
                             ($scope.is_Check = true) : ($scope.is_Check = false);
 
-                    //$scope.meta_peso = parseInt(meta.peso);
                     $scope.meta_titulo = meta.titulo;
                     $scope.meta_descripcion = meta.descripcion;
                 };
@@ -143,28 +144,26 @@ angular.module("index")
                 $scope.modificar = function () {
                     var metaObj = {
                         is_Evaluable: $scope.meta_isEvaluable,
-                        //peso: parseInt($scope.meta_peso),
                         titulo: $scope.meta_titulo,
                         descripcion: $scope.meta_descripcion,
                         id: $scope.actual
                     };
 
                     factoryMeta.updateMeta(metaObj)
-                    .then(function (res) {
-                        if (res.status === 'error') {
-                            alert(res.message);
-                        }
-                        if (res.status === 'success') {
-                            modalService.modalOk("Modificar Meta", "<p>" + res.message + "</p>");
-                                $scope.meta_isEvaluable = 1;
-                                $scope.is_Check = true;
-                                //$scope.meta_peso = 0;
-                                $scope.meta_titulo = undefined;
-                                $scope.meta_descripcion = undefined;
-                                $scope.actual = "0";
-                                $scope.cargar();
-                        }
-                    });
+                            .then(function (res) {
+                                if (res.status === 'error') {
+                                    alert(res.message);
+                                }
+                                if (res.status === 'success') {
+                                    modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
+                                    $scope.meta_isEvaluable = 1;
+                                    $scope.is_Check = true;
+                                    $scope.meta_titulo = undefined;
+                                    $scope.meta_descripcion = undefined;
+                                    $scope.actual = "0";
+                                    $scope.cargar();
+                                }
+                            });
                 };
 
 
@@ -221,13 +220,14 @@ angular.module("index")
             };
 
             meta.getMeta = function (obj) {
-                return apiConnector.put('api/metas/getAllFrom', obj);
+                return apiConnector.post('api/metas/allFrom', obj);
             };
 
 
             meta.modificarPeso = function (obj) {
                 return apiConnector.put('api/metas/setPeso', obj);
             };
+
 
             return meta;
 

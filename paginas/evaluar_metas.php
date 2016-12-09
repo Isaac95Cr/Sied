@@ -48,12 +48,12 @@
                                             <tr style="text-align: center;">
                                                 <td> {{meta.descripcion}} </td>
                                                 <td> {{meta.peso}} </td>
-                                                
-                                                 <td>
-                                                    <median ng-show="{{meta.auto_evaluacion !== null }}">{{meta.auto_evaluacion}}</median>
-                                                    <median ng-show="{{meta.auto_evaluacion === null }}" class="label bg-red margin">Pendiente</median>
+
+                                                <td>
+                                                    <median ng-show="{{meta.auto_evaluacion !== null}}">{{meta.auto_evaluacion}}</median>
+                                                    <median ng-show="{{meta.auto_evaluacion === null}}" class="label bg-red margin">Pendiente</median>
                                                 </td>
-                                                
+
                                                 <td>
                                                     <div class="form-group" >
                                                         <div class="col-sm-5">
@@ -67,7 +67,7 @@
                                 </div>
                             </div>
 
-
+                            <p style="font-size: 90%" ng-show="!tiene_Metas" class="label bg-red margin">El Colaborador no posee metas</p>
                         </div>
                         <div class="box-footer" >
                             <button type="submit" class="btn btn-primary btn-lg pull-right" ng-show="tiene_Metas">Guardar cambios</button>

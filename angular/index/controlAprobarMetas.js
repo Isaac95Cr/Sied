@@ -1,12 +1,13 @@
 angular.module("index")
-        .controller("controlAprobarMetas", ['$scope', 'factoryMeta', 'userService', '$routeParams', 'modalService', function ($scope, factoryMeta, userService, $routeParams, modalService) {
+        .controller("controlAprobarMetas", ['$scope', 'factoryMeta', 'userService', 'modalService', 'tempStorage',
+            'storageSession', '$crypto',
+            function ($scope, factoryMeta, userService, modalService, tempStorage, storageSession, $crypto) {
 
                 $scope.metasUser = [];
-                $scope.tiene_Metas = false;
+                $scope.tiene_Metas = true;
                 $scope.colaborador = "";
-                //$scope.aprobada = 2;
                 $scope.comentario = "";  // ng-model del comentario de la modal.
-                
+
                 $scope.commentIcono = "";
 
                 $scope.metaActual = "0";  // se utiliza para saber cuál es la meta a la que se está haciendo referencia. 
@@ -14,50 +15,65 @@ angular.module("index")
 
 
                 $scope.init = function () {
+                    $scope.argumentosIdUser = tempStorage.args;
+
+                    if ($scope.argumentosIdUser !== undefined) {
+                        $scope.infoIdUser = $scope.argumentosIdUser.idUser;
+                        $scope.idEncrypt = $crypto.encrypt($scope.infoIdUser);
+                        storageSession.saveId($scope.idEncrypt);
+
+                    } else {
+                        $scope.infoIdUser = $crypto.decrypt(storageSession.loadId());
+                    }
+
                     $scope.cargar();
                     $scope.cargarColaborador();
                 };
 
 
+
                 $scope.cargar = function () {
-                    var obj = {id: $routeParams.id}
-                    factoryMeta.cargarMetasUser(obj)
-                            .success(function (data, status, headers, config) {
-                                $scope.metasUser = data.metas;
-                                if ($scope.metasUser.length !== 0) {
-                                    $scope.tiene_Metas = true;
-                                }
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
+                    var obj = {id: $scope.infoIdUser};
+                    factoryMeta.cargarMetasUser(obj).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.metasUser = res.data;
+                            if ($scope.metasUser.length === 0)
+                                $scope.tiene_Metas = false;
+                        }
+                    });
                 };
 
 
                 $scope.cargarColaborador = function () {
-                    userService.loadAllUser($routeParams.id)
-                            .success(function (data, status, headers, config) {
-                                $scope.colaborador = data.usuario[0].nombre + " " + data.usuario[0].apellido1 + " " + data.usuario[0].apellido2;
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
+                    userService.cargarUsuario($scope.infoIdUser).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.colaborador = res.data.usuario.nombre + " " + res.data.usuario.apellido1 + " " + res.data.usuario.apellido2;
+                        }
+                    });
                 };
 
 
                 $scope.desaprobarMeta = function () {
                     var obj = {id: $scope.metaActual, comentario: $scope.comentario};  // armar el objeto de la meta que se desaprobó
 
-                    factoryMeta.aprobar_Desaprobar(obj)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.id = "0";
-                                $scope.comentario = "";
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                    factoryMeta.aprobar_Desaprobar(obj).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
+                            $scope.id = "0";
+                            $scope.comentario = "";
+                        }
+                    });
                 };
+
 
 
 
@@ -65,15 +81,16 @@ angular.module("index")
                     $scope.metaActual = meta;
                     var obj = {id: $scope.metaActual, comentario: ""};  // armar el objeto de la meta que se desaprobó
 
-                    factoryMeta.aprobar_Desaprobar(obj)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.id = "0";
-                                $scope.comentario = "";
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                    factoryMeta.aprobar_Desaprobar(obj).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
+                            $scope.id = "0";
+                            $scope.comentario = "";
+                        }
+                    });
                 };
 
 
@@ -83,20 +100,19 @@ angular.module("index")
                 };
 
 
-
                 $scope.getComment = function (meta) {
-                    factoryMeta.getMeta(meta)
-                            .success(function (data, status, headers, config) {
-                                $scope.commentIcono = data.metas[0].comentario_j;
-                                if($scope.commentIcono === null || $scope.commentIcono === ""){
-                                    $scope.commentIcono = "";
-                                }
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
+                    factoryMeta.getMeta(meta).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.commentIcono = res.data[0].comentario_j;
+                            if ($scope.commentIcono === null || $scope.commentIcono === "") {
+                                $scope.commentIcono = "";
+                            }
+                        }
+                    });
                 };
-
 
 
 

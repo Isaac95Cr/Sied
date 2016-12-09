@@ -142,7 +142,7 @@ angular.module("index")
                             alert(res.message);
                         }
                         if (res.status === 'success') {
-                            modalService.modalOk("Actualizacion de datos", "<p>" + res.message + "</p>");
+                            modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
                             $scope.cargar();
 
                         }

@@ -67,7 +67,7 @@ class evaluacionCompetencias extends Rest implements interfaceApi {
         $body = json_decode(file_get_contents("php://input"), true);
         $data = evaluacionCompetenciaData::insert_Evaluacion($body);
         if ($data === true) {
-            return $this->responseAPI("success", "add success", 200);
+            return $this->responseAPI("success", "Autoevaluaciones ingresadas", 200);
         }
         return $this->responseAPI("error", "", 200);
     }
@@ -83,7 +83,7 @@ class evaluacionCompetencias extends Rest implements interfaceApi {
         $data = evaluacionCompetenciaData::updateEvaluacionesDetalles($body['evaluaciones'],$body['id'], $body['idColab']);
 
         if ($data === true) {
-            return $this->responseAPI("success", "set success", 200);
+            return $this->responseAPI("success", "Evaluaciones ingresadas", 200);
         }
         return $this->responseAPI("error", $data, 200);
     }

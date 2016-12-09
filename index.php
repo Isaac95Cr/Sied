@@ -231,6 +231,10 @@
         <!-- Select2 -->
         <script src="plugins/select/select.min.js" type="text/javascript"></script>
         <script src="plugins/select2/select2.min.js" type="text/javascript"></script>
+        <!-- CryptoJS -->
+<!--        <script type="text/javascript" src="http://cryptojs.altervista.org/api/functions_cryptography.js"></script>-->
+        <script src="plugins/cryptojs/aes.js" type="text/javascript"></script>
+        <script src="plugins/cryptojs/mdo-angular-cryptography.js" type="text/javascript"></script>
         <!-- controles -->
         <script src="angular/apiconnector.js" type="text/javascript"></script>
         <script src="angular/modal/modalService.js" type="text/javascript"></script>

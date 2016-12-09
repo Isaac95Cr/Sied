@@ -68,7 +68,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-lg pull-right">Guardar Cambios</button>
+                        <button type="submit" ng-show="{{competencias.length == 0}}" class="btn btn-primary btn-lg pull-right">Guardar Cambios</button>
                     </form>
                 </div>
                 <!-- /.box-body -->

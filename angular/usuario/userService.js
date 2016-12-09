@@ -24,13 +24,14 @@ angular.module('usuario')
 
 
                 usuario.loadUserService = function (colab) {
-                    return this.loadAllUser(colab)
-                            .success(function (data, status, headers, config) {
-                                nombreUser = data.usuario[0].nombre + " " + data.usuario[0].apellido1 + " " + data.usuario[0].apellido2;
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
+                    return this.cargarUsuario(colab).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            nombreUser = res.data.usuario.nombre + " " + res.data.usuario.apellido1 + " " + res.data.usuario.apellido2;
+                        }
+                    });
                 };
 
 

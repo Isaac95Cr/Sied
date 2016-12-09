@@ -11,7 +11,7 @@ angular.module('usuario',['ngStorage','apiConnector']);
 
 angular.module('modal',['ui.bootstrap']);
 
-angular.module('index', ['ngRoute','modal','usuario','dataTable','select', 'empdep']);
+angular.module('index', ['ngRoute','modal','usuario','dataTable','select', 'empdep', 'mdo-angular-cryptography']);
 
 angular.module('registro',['usuario','modal','select','empdep']);
 

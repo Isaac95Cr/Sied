@@ -1,10 +1,10 @@
 angular.module("index")
         .controller("controlEvaluarCompet", ['$scope', 'userService', 'factoryCompetenciasColab',
             'factoryAutoEvCompetencias', '$routeParams', 'servicioCompetColab', 'servicioCompetAutoEv',
-            'servicioCompetUser', 'modalService','apiConnector', function ($scope, userService, factoryCompetenciasColab,
+            'servicioCompetUser', 'modalService', 'apiConnector', function ($scope, userService, factoryCompetenciasColab,
                     factoryAutoEvCompetencias, $routeParams,
                     servicioCompetColab, servicioCompetAutoEv,
-                    servicioCompetUser, modalService,apiConnector) {
+                    servicioCompetUser, modalService, apiConnector) {
 
                 $scope.competencias = "";
                 $scope.colaborador = "";
@@ -35,7 +35,7 @@ angular.module("index")
 
                     }).then(function () {
 
-                        return servicioCompetColab.loadDetalles(colab)
+                        return servicioCompetColab.loadDetalles(colab);
 
                     }).then(function () {
 
@@ -49,7 +49,7 @@ angular.module("index")
 
                         $scope.cargarColaborador();
                     });
-                    
+
 
                 };
 
@@ -66,25 +66,22 @@ angular.module("index")
                     var obj = {};
                     angular.forEach($scope.competencias, function (elemento, key) {
                         angular.forEach(elemento.detalles, function (elementoD, keyD) {
-                            
+
                             // Hay que verificar si están las autoevaluaciones y las evaluaciones...
-                            
-                                 if ($scope.arrayAutoEvaluacionesList[contador] !== undefined){
-                                     if($scope.arrayEvaluaciones[contador] !== undefined)
-                                            obj = {descrip: elementoD.descripcion, valor: $scope.arrayAutoEvaluacionesList[contador],
-                                                        valor2: $scope.arrayEvaluaciones[contador]};
-                                       else
-                                            obj = {descrip: elementoD.descripcion, valor: $scope.arrayAutoEvaluacionesList[contador],
-                                                        valor2: "0"};
-                                  }
-                                       
-                                else if($scope.arrayEvaluaciones[contador] !== undefined){
-                                       obj = {descrip: elementoD.descripcion, valor: "-", valor2: $scope.arrayEvaluaciones[contador]};
-                                 }
-                                 else{
-                                       obj = {descrip: elementoD.descripcion, valor: "-", valor2: "0"};
-                                 }
-                              
+
+                            if ($scope.arrayAutoEvaluacionesList[contador] !== undefined) {
+                                if ($scope.arrayEvaluaciones[contador] !== undefined)
+                                    obj = {descrip: elementoD.descripcion, valor: $scope.arrayAutoEvaluacionesList[contador],
+                                        valor2: $scope.arrayEvaluaciones[contador]};
+                                else
+                                    obj = {descrip: elementoD.descripcion, valor: $scope.arrayAutoEvaluacionesList[contador],
+                                        valor2: "0"};
+                            } else if ($scope.arrayEvaluaciones[contador] !== undefined) {
+                                obj = {descrip: elementoD.descripcion, valor: "-", valor2: $scope.arrayEvaluaciones[contador]};
+                            } else {
+                                obj = {descrip: elementoD.descripcion, valor: "-", valor2: "0"};
+                            }
+
                             contador++;
                             $scope.autoEvaluacion = $scope.autoEvaluacion.concat([obj]);
                         });
@@ -158,14 +155,16 @@ angular.module("index")
                     stringEvaluaciones = stringEvaluaciones.substr(0, stringEvaluaciones.length - 1);
                     obj = {id: idDetalles, evaluaciones: stringEvaluaciones, idColab: colab.id};
 
-                    servicioCompetAutoEv.actualizarEvaluacionesDetalles(obj)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                // $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+                    servicioCompetAutoEv.actualizarEvaluacionesDetalles(obj).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
+                            $scope.cargar();
+
+                        }
+                    });
 
                 };
 
@@ -187,7 +186,7 @@ angular.module("index")
             };
 
             autoEv_Competencia.updateEvaluacionesDetalles = function (obj) {
-                return apiConnector.post('api/evaluacionCompetencia/set', obj);
+                return apiConnector.put('api/evaluacionCompetencias/set', obj);
             };
 
             autoEv_Competencia.getIdBD = function () {
@@ -197,19 +196,19 @@ angular.module("index")
 
             autoEv_Competencia.loadAutoEvaluacionesCompet = function (colab) {
                 return this.cargarAutoEvCompet(colab).then(function (res) {
-                        if (res.status === 'error') {
-                            alert(res.message);
+                    if (res.status === 'error') {
+                        alert(res.message);
+                    }
+                    if (res.status === 'success') {
+                        var tamanoData = res.data.length;
+                        stringAutoEv = "";
+                        if (tamanoData !== 0) {
+                            stringAutoEv = res.data[0].auto_evaluacion;
+                            stringEvaluaciones = res.data[0].evaluacion;
+                            IDAutoevaluaciones = res.data[0].id;
                         }
-                        if (res.status === 'success') {
-                             var tamanoData = res.data.length;
-                            stringAutoEv = "";
-                            if (tamanoData !== 0) {
-                                stringAutoEv = res.data.autoEvaluaciones[0].auto_evaluacion;
-                                stringEvaluaciones = res.data.autoEvaluaciones[0].evaluacion;
-                                IDAutoevaluaciones = res.data.autoEvaluaciones[0].id;
-                            }
-                        }
-                    });
+                    }
+                });
             };
 
 

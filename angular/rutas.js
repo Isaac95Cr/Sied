@@ -76,7 +76,7 @@ angular.module("app")
                                     }]
                             }
                         })
-                        .when("/aprobar_metas/:id", {
+                        .when("/aprobar_metas", {
 //                            templateUrl: "paginas/aprobar_metas.php"
 //                        .when("/aprobar_metas", {
                             templateUrl: "paginas/aprobar_metas.php",
@@ -86,7 +86,7 @@ angular.module("app")
                                     }]
                             }
                         })
-                        .when("/evaluar_metas/:id", {
+                        .when("/evaluar_metas", {
                             templateUrl: "paginas/evaluar_metas.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {
@@ -118,7 +118,7 @@ angular.module("app")
                                     }]
                             }
                         })
-                        .when("/detalleMetasJefe/:id", {
+                        .when("/detalleMetasJefe", {
                             templateUrl: "paginas/detalleMetasJefe.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {

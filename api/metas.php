@@ -88,7 +88,7 @@ class metas extends Rest implements interfaceApi {
         );
 
         if ($data === true) {
-            return $this->responseAPI("success", "add success", 200);
+            return $this->responseAPI("success", "Meta agregada con éxito", 200);
         }
         return $this->responseAPI("error", "", 200);
     }
@@ -103,7 +103,7 @@ class metas extends Rest implements interfaceApi {
 
         $data = metasData::delete($body['id']);
         if ($data === true) {
-            return $this->responseAPI("success", "del success", 200);
+            return $this->responseAPI("success", "Meta eliminada con éxito", 200);
         }
         return $this->responseAPI("error", "", 200);
     }
@@ -118,7 +118,7 @@ class metas extends Rest implements interfaceApi {
 
         $data = metasData::update($body['is_Evaluable'], $body['titulo'], $body['descripcion'], $body['id']);
         if ($data === true) {
-            return $this->responseAPI("success", "set success", 200);
+            return $this->responseAPI("success", "Meta actualizada con éxito", 200);
         }
         return $this->responseAPI("error", "", 200);
     }
@@ -153,7 +153,7 @@ class metas extends Rest implements interfaceApi {
 
         $data = metasData::updateEvaluacion($body);
         if ($data === true) {
-            return $this->responseAPI("success", "set success", 200);
+            return $this->responseAPI("success", "Evaluaciones ingresadas", 200);
         }
         return $this->responseAPI("error", "", 200);
     }
@@ -166,7 +166,7 @@ class metas extends Rest implements interfaceApi {
         $body = json_decode(file_get_contents("php://input"), true);
         $data = metasData::updateAuto($body) ;
         if ($data === true) {
-            return $this->responseAPI("success", "set success", 200);
+            return $this->responseAPI("success", "Autoevaluaciones ingresadas", 200);
         }
         return $this->responseAPI("error", "", 200);
     }
@@ -181,7 +181,7 @@ class metas extends Rest implements interfaceApi {
 
         $data = metasData::updatePeso($body);
         if ($data === true) {
-            return $this->responseAPI("success", "set success", 200);
+            return $this->responseAPI("success", "Pesos actualizados con éxito", 200);
         }
         return $this->responseAPI("error", "", 200);
     }

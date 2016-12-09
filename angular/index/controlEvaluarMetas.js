@@ -1,77 +1,93 @@
 angular.module("index")
-        .controller("controlEvaluarMetas", ['$scope', 'factoryMeta', 'userService', '$routeParams', 'modalService', function ($scope, factoryMeta, userService, $routeParams, modalService) {
-                
-        $scope.metasUser = [];
-        $scope.tiene_Metas = false;
-        $scope.colaborador = "";
+        .controller("controlEvaluarMetas", ['$scope', 'factoryMeta', 'userService', '$routeParams', 'modalService', 
+                             'tempStorage', 'storageSession', '$crypto',
+                             function ($scope, factoryMeta, userService, $routeParams, modalService, tempStorage, storageSession, $crypto) {
 
-        $scope.init = function () {
+                $scope.metasUser = [];
+                $scope.tiene_Metas = true;
+                $scope.colaborador = "";
+
+                $scope.init = function () {
+                    $scope.argumentosIdUser = tempStorage.args;
+                    
+                    if($scope.argumentosIdUser !== undefined){
+                        $scope.infoIdUser = $scope.argumentosIdUser.idUser;
+                        $scope.idEncrypt = $crypto.encrypt($scope.infoIdUser);
+                        storageSession.saveId($scope.idEncrypt);
+                                     
+                    }else{
+                        $scope.infoIdUser = $crypto.decrypt(storageSession.loadId());
+                    }
+                    
                     $scope.cargar();
                     $scope.cargarColaborador();
-         };
+                };
 
 
-        $scope.cargar = function () {
-            var obj = {id:$routeParams.id}
-                    factoryMeta.cargarMetasUser(obj)
-                            .success(function (data, status, headers, config) {
-                                $scope.metasUser = data.metas;
-                                if ($scope.metasUser.length !== 0)
-                                            $scope.tiene_Metas = true;
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
+
+                $scope.cargar = function () {
+                    var obj = {id: $scope.infoIdUser};
+                    factoryMeta.cargarMetasUser(obj).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.metasUser = res.data;
+                            if ($scope.metasUser.length === 0)
+                                $scope.tiene_Metas = false;
+                        }
+                    });
+                };
+
+
+
+                $scope.cargarColaborador = function () {
+                    userService.cargarUsuario($scope.infoIdUser).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.colaborador = res.data.usuario.nombre + " " + res.data.usuario.apellido1 + " " + res.data.usuario.apellido2;
+                        }
+                    });
+                };
+
+
+
+                $scope.confirmarEvaluacion = function (id) {
+                    modalService.modalYesNo("Confirmación", "<p>" + "¿Está seguro de realizar la acción?" + "</p>")
+                            .result.then(function (selectedItem) {
+                                if (selectedItem === "si")
+                                    $scope.evaluar();
                             });
-          };
-          
-          
-          
-          
-           $scope.cargarColaborador = function () {
-                    userService.loadAllUser($routeParams.id)
-                            .success(function (data, status, headers, config) {
-                                $scope.colaborador = data.usuario[0].nombre + " " + data.usuario[0].apellido1 + " " + data.usuario[0].apellido2;
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(headers));
-                            });
-            };
-          
-          
-          
-             $scope.confirmarEvaluacion = function (id) {
-                       modalService.modalYesNo("Confirmación", "<p>" + "¿Está seguro de realizar la acción?" + "</p>")
-                               .result.then(function (selectedItem) {
-                                   if (selectedItem === "si")
-                                       $scope.evaluar();
-                        });
-             };
-          
-          
-              $scope.evaluar = function () {
+                };
+
+
+                $scope.evaluar = function () {
                     $scope.objEv = new Array();
                     $scope.inputs = angular.element(document).find('input');  // Obtiene todos los inputs de la página;
                     var obj;
                     // Se recorren los inputs...
                     angular.forEach($scope.inputs, function (elemento, key) {
-                       (elemento.value === "") ?
-                            obj = {id: elemento.id, valor: "0"}
-                            :
-                            obj = {id: elemento.id, valor: parseInt(elemento.value)};
-                    
+                        (elemento.value === "") ?
+                                obj = {id: elemento.id, valor: "0"}
+                        :
+                                obj = {id: elemento.id, valor: parseInt(elemento.value)};
+
                         $scope.objEv.push(obj);
                     });
 
-                    factoryMeta.updateEvaluaciones($scope.objEv)
-                            .success(function (data, status, headers, config) {
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.cargar();
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
+
+                    factoryMeta.updateEvaluaciones($scope.objEv).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
+                            $scope.cargar();
+                        }
+                    });
+                    
                 };
-          
-                        
-}]);                
+            }]);
 

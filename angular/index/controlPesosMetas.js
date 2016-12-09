@@ -1,5 +1,6 @@
 angular.module("index")
-        .controller("controlPesosMetas", ['$scope', 'factoryMeta', 'ShareDataService', 'modalService', function ($scope, factoryMeta, ShareDataService, modalService) {
+        .controller("controlPesosMetas", ['$scope', 'factoryMeta', 'ShareDataService', 'modalService', 
+                             function ($scope, factoryMeta, ShareDataService, modalService) {
 
                 $scope.metas = [];
                 $scope.sumaTotal = 0;
@@ -43,7 +44,7 @@ angular.module("index")
                             alert(res.message);
                         }
                         if (res.status === 'success') {
-                            modalService.modalOk("Pesos", "<p>" + res.message + "</p>");
+                            modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
                         }
                     });
                 };
