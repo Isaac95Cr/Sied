@@ -1,6 +1,6 @@
 angular.module("index")
-        .controller("controlPesosMetas", ['$scope', 'factoryMeta', 'ShareDataService', 'modalService', 
-                             function ($scope, factoryMeta, ShareDataService, modalService) {
+        .controller("controlPesosMetas", ['$scope', 'factoryMeta', 'ShareDataService', 'modalService', '$rootScope',
+            function ($scope, factoryMeta, ShareDataService, modalService, $rootScope) {
 
                 $scope.metas = [];
                 $scope.sumaTotal = 0;
@@ -20,36 +20,41 @@ angular.module("index")
 
 
                 $scope.init = function () {
-                        $scope.getTotal();
+                    $scope.getTotal();
                 };
-                
-                
+
+
                 $scope.getTotal = function () {
-                        $scope.sumaTotal = 0;
-                        var x = 0;
+                    $scope.sumaTotal = 0;
+                    var x = 0;
 
-                        $scope.metas.forEach(function (meta) {
-                            x += parseFloat(meta.peso);
-                        });
+                    $scope.metas.forEach(function (meta) {
+                        x += parseFloat(meta.peso);
+                    });
 
-                        $scope.sumaTotal = x.round(2);
+                    $scope.sumaTotal = x.round(2);
                 };
-                
-                
-                
-                
+
+
+                $scope.childmethod = function () {
+                    $rootScope.$emit("CallParentMethod", {});
+                };
+
+
                 $scope.setPesosMetas = function () {
+
                     factoryMeta.modificarPeso($scope.metas).then(function (res) {
                         if (res.status === 'error') {
                             alert(res.message);
                         }
                         if (res.status === 'success') {
+                            $scope.childmethod();
                             modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
                         }
                     });
                 };
-                
-                
+
+
 
             }]);
 

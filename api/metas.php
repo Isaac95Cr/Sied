@@ -130,15 +130,18 @@ class metas extends Rest implements interfaceApi {
         }
 
         $body = json_decode(file_get_contents("php://input"), true);
+        $mensaje = "";
 
         if ($body['comentario'] !== "") {
             $data = metasData::desaprobarMeta($body['id'], $body['comentario']);
+            $mensaje = "Meta desaprobada con éxito";
         } else {
             $data = metasData::aprobarMeta($body['id'], $body['comentario']);
+            $mensaje = "Meta aprobada con éxito";
         }
 
         if ($data === true) {
-            return $this->responseAPI("success", "set success", 200);
+            return $this->responseAPI("success", $mensaje, 200);
         }
         return $this->responseAPI("error", "", 200);
     }

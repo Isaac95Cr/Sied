@@ -208,7 +208,7 @@
                         <div class="form-group" ng-class="{'has-error':pesoForm.peso{{$index}}.$invalid && !pesoForm.peso{{$index}}.$pristine }">
                             <label for="peso" class="col-sm-8 control-label">Peso de meta {{meta.titulo}} </label>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" string-to-number step=0.01 min="0" max="100" id="peso" name="meta{{$index}}"  ng-model="meta.peso" ng-change="getTotal()" required>
+                                <input type="number" class="form-control" string-to-number step=0.01 min="0" max="100" id="peso" name="peso{{$index}}"  ng-model="meta.peso" ng-change="getTotal()" required>
                                 <p ng-show="pesoForm.peso{{$index}}.$invalid && !pesoForm.peso{{$index}}.$pristine" class="help-block">Peso de la meta requerido.</p>
                             </div>
                         </div>

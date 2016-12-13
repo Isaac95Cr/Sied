@@ -1,5 +1,6 @@
 angular.module("index")
-        .controller("controlMeta", ['$scope', 'factoryMeta', 'modalService', 'sessionService', 'ShareDataService', function ($scope, factoryMeta, modalService, sessionService, ShareDataService) {
+        .controller("controlMeta", ['$scope', 'factoryMeta', 'modalService', 'sessionService', 'ShareDataService', '$rootScope',
+            function ($scope, factoryMeta, modalService, sessionService, ShareDataService, $rootScope) {
 
                 $scope.metas = [];
                 $scope.tiene_Metas = false;
@@ -39,6 +40,11 @@ angular.module("index")
                     $scope.meta_titulo = "";
                     $scope.meta_descripcion = "";
                 };
+
+
+                $rootScope.$on("CallParentMethod", function () {
+                    $scope.cargar();
+                });
 
 
                 $scope.cargar = function () {
@@ -96,10 +102,10 @@ angular.module("index")
                                             .result.then(function () {
                                                 modalService.modalOk("Aviso", "<p>¡Debe recalcular los pesos de las metas!</p>")
                                                         .result.then(function () {
-                                                            angular.element( document.querySelector( '#modalPeso' ) ).modal();  // para abrir la modal de los pesos
+                                                            angular.element(document.querySelector('#modalPeso')).modal();  // para abrir la modal de los pesos
                                                         });
                                             });
-                                  }
+                                }
                             });
                 };
 

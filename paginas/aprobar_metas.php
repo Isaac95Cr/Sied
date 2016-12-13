@@ -52,14 +52,15 @@
 
                                                     <div class="col-sm-3">
                                                         <p>Aprobada</p>
-                                                        <input type="checkbox" id="" name="" 
-                                                               ng-model="meta.aprobacion_j" ng-checked="meta.aprobacion_j == 1" ng-change="aprobarMeta(meta.id)"
+                                                        <input type="checkbox" id="{{'a'+$index}}" name="" 
+                                                               ng-model="meta.aprobacion_j" ng-checked="meta.aprobacion_j == 1" ng-change="comprobarAprobado('a'+$index, meta.id)"
                                                                ng-true-value="'1'" ng-false-value="'0'"   color="green" i-check>
                                                     </div>
 
                                                     <div class="col-sm-3">
                                                         <p>Desaprobada</p>
-                                                        <input type="checkbox" ng-change="abrirModalCancel(meta.id)"
+                                                        <input type="checkbox" id="{{$index+'d'}}" name=""
+                                                               ng-change="comprobarDesaprobado('a'+$index, meta.id)"
                                                                ng-model="meta.aprobacion_j" ng-checked="meta.aprobacion_j == 0"
                                                                ng-true-value="'0'" ng-false-value="'1'" color="red" i-check >
                                                     </div>

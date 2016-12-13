@@ -75,9 +75,32 @@ angular.module("index")
                 };
 
 
+                $scope.comprobarAprobado = function (idCheck, meta) {
+                    var input = $('#' + idCheck);
+                    var estado = input[0].checked;  // determina si está checked o no
+
+                    if (estado)
+                        $scope.aprobarMeta(meta);
+                    else
+                        $scope.abrirModalCancel(meta);
+                };
+
+
+
+                $scope.comprobarDesaprobado = function (idCheck, meta) {
+                    var input = $('#' + idCheck);
+                    var estado = input[0].checked;  // determina si está checked o no
+
+                    if (estado)
+                         $scope.abrirModalCancel(meta);
+                    else
+                        $scope.aprobarMeta(meta);
+                };
+
 
 
                 $scope.aprobarMeta = function (meta) {
+
                     $scope.metaActual = meta;
                     var obj = {id: $scope.metaActual, comentario: ""};  // armar el objeto de la meta que se desaprobó
 
