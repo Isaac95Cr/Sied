@@ -35,11 +35,11 @@
                             <input type="text" class="form-control" placeholder="Digite su cédula" name="id" ng-model="user.id" required>
                             <p ng-show="form.id.$invalid && !form.id.$pristine" class="help-block">Identificación requerida.</p>
                         </div>
-
                     </div>
-
+                    <div class="form-group" ng-show='isCapsLockOn'>
+                        <span class="fa fa-warning text-yellow" ></span><small> Mayus.</small>
+                    </div>
                     <div class="row">
-
                         <div class="col-xs-6"><br>
                             <a href="login.php"> Ir a Login</a><br>
                             <a href="registro.php" class="text-center">Ir a Registrarse</a>
@@ -83,16 +83,18 @@
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <script src="angular/angular.min.js" type="text/javascript"></script>
         <script src="angular/angular-route.min.js" type="text/javascript"></script>
-                <script src="angular/angular-sanitize.min.js" type="text/javascript"></script>
+        <script src="angular/angular-sanitize.min.js" type="text/javascript"></script>
         <script src="angular/ngStorage.min.js" type="text/javascript"></script>
         <script src="angular/app.js" type="text/javascript"></script>
         <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
+        <script src="angular/apiconnector.js" type="text/javascript"></script>
         <script src="angular/registro/controlLogin.js" type="text/javascript"></script>
         <script src="angular/modal/modalService.js" type="text/javascript"></script>
         <script src="angular/usuario/autentificacionService.js" type="text/javascript"></script>
         <script src="angular/usuario/sessionService.js" type="text/javascript"></script>
         <script src="angular/ngStorage.min.js" type="text/javascript"></script>
         <script src="angular/empresas/EmpresaService.js" type="text/javascript"></script>
+        <script src="angular/ng-caps-lock.min.js" type="text/javascript"></script>
         <!-- Select2 -->
         <script src="plugins/select/select.min.js" type="text/javascript"></script>
         <script src="plugins/select2/select2.min.js" type="text/javascript"></script>

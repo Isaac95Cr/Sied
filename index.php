@@ -224,6 +224,7 @@
         <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>
         <script src="angular/app.js" type="text/javascript"></script>
         <script src="angular/ngStorage.min.js" type="text/javascript"></script>
+        <script src="angular/ng-caps-lock.min.js" type="text/javascript"></script>
         <!-- rutas -->
         <script src="angular/rutas.js" type="text/javascript"></script>
         <!-- icheck -->

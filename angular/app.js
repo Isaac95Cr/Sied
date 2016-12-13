@@ -13,7 +13,7 @@ angular.module('modal',['ui.bootstrap']);
 
 angular.module('index', ['ngRoute','modal','usuario','dataTable','select', 'empdep', 'daterangepicker', 'mgo-angular-wizard', 'mdo-angular-cryptography']);
 
-angular.module('registro',['usuario','modal','select','empdep']);
+angular.module('registro',['usuario','modal','select','empdep','ngCapsLock']);
 
 angular.module('app',['ngRoute','index','registro', 'usuario']);
         

@@ -44,9 +44,11 @@
                             <p ng-show="form.contrasena2.$invalid && !form.contrasena2.$pristine" class="help-block">Confirmación requerida.</p>
                             <p ng-show="!confirmarContrasena() && !form.contrasena2.$pristine" class="help-block">La confirmación es incorrecta.</p>
                         </div>
-
+                        
                     </div>
-
+                    <div class="form-group" ng-show='isCapsLockOn'>
+                        <span class="fa fa-warning text-yellow" ></span><small> Mayus.</small>
+                    </div>
                     <div class="row" class="">
                         <div class="col-xs-12" style="text-align: center"><br>
                             <button type="submit" ng-if="bandera" ng-disabled="form.$invalid || !confirmarContrasena()" class="btn btn-primary btn-block btn-flat">Restablecer contraseña</button>
@@ -88,7 +90,7 @@
         <script src="angular/angular-route.min.js" type="text/javascript"></script>
         <script src="angular/ngStorage.min.js" type="text/javascript"></script>
         <script src="angular/angular-sanitize.min.js" type="text/javascript"></script>
-        
+        <script src="angular/ng-caps-lock.min.js" type="text/javascript"></script>
         <script src="angular/app.js" type="text/javascript"></script>
         <script src="angular/apiconnector.js" type="text/javascript"></script>
         <script src="bootstrap/js/ui-bootstrap-tpls-2.1.4.min.js" type="text/javascript"></script>

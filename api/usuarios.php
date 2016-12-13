@@ -163,11 +163,15 @@ class usuarios extends Rest implements interfaceApi {
         $id = $body['id'];
         $contrasena = md5($body['contrasena']);
         $user = usuarioData::login($id, $contrasena);
-        if ($user) {
+        if (!is_a($user,'Exception')) {
             $token = usuarioData::token($user);
             return $this->responseAPI("success", "log success", 200, $token);
-        } else {
+        } if($user === false) {
             return $this->responseAPI("error", "Usuario o contraseña incorrectos", 200);
+        }
+        else{
+            return $this->responseAPI("error", $user->getMessage(), 200);
+            
         }
     }
 

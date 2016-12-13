@@ -5,7 +5,7 @@
  * @author Marco Vinicio Cambronero Fonseca <marcovcambronero@gmail.com>
  */
 require 'database.php';
-require 'mensaje.php';
+require '../services/variable.php';
 
 /**
  *  Descripción de la clase...
@@ -153,7 +153,7 @@ class usuarioData {
     public static function login($id, $contrasena) {
 
         $comando = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,departamento, 
-            perfil.colaborador, perfil.jefe,perfil.RH from usuario, perfil
+            perfil.colaborador, perfil.jefe,perfil.RH,usuario.estado from usuario, perfil
             where usuario.id = ? and usuario.contrasena = ? and usuario.perfil = perfil.id;";
 
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
@@ -161,17 +161,24 @@ class usuarioData {
             $sentencia->execute(array($id, $contrasena));
             $user = $sentencia->fetch(PDO::FETCH_ASSOC);
             if ($user) {
-                $response['id'] = $user['id'];
-                $response['nombre'] = $user['nombre'] . " " . $user['apellido1'] . " " . $user['apellido2'];
-                $response['correo'] = $user['correo'];
-                $response['perfil']['colaborador'] = $user['colaborador'];
-                $response['perfil']['jefe'] = $user['jefe'];
-                $response['perfil']['RH'] = $user['RH'];
-                return $response;
+                if ($user['estado'] != 1) {
+                    throw new Exception("No se tienen permisos para ingresar");
+                }
+                    $response['id'] = $user['id'];
+                    $response['nombre'] = $user['nombre'] . " " . $user['apellido1'] . " " . $user['apellido2'];
+                    $response['correo'] = $user['correo'];
+                    $response['perfil']['colaborador'] = $user['colaborador'];
+                    $response['perfil']['jefe'] = $user['jefe'];
+                    $response['perfil']['RH'] = $user['RH'];
+                    return $response;
+                
             }
             return false;
         } catch (PDOException $pdoExcetion) {
             return $pdoExcetion;
+        }
+        catch (Exception $excetion) {
+            return $excetion;
         }
     }
 
@@ -179,7 +186,7 @@ class usuarioData {
         $token = array(
             "user" => $user
         );
-        $jwt = JWT::encode($token, KEY);
+        $jwt = JWT::encode($token, $GLOBALS['KEY']);
         try {
             $sign = JWT::getSign($jwt);
         } catch (Exception $e) {
@@ -198,7 +205,7 @@ class usuarioData {
 
     public static function logout($jwt) {
         try {
-            $decoded = JWT::decode($jwt, KEY, array('HS256'));
+            $decoded = JWT::decode($jwt, $GLOBALS['KEY'], array('HS256'));
         } catch (Exception $e) {
             return $e->getMessage();
         }
@@ -215,7 +222,7 @@ class usuarioData {
 
     public static function validarToken($jwt) {
         try {
-            $decoded = JWT::decode($jwt, KEY, array('HS256'));
+            $decoded = JWT::decode($jwt, $GLOBALS['KEY'], array('HS256'));
             $sign = JWT::getSign($jwt);
         } catch (Exception $e) {
             return $e->getMessage();

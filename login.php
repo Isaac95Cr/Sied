@@ -32,7 +32,7 @@
                             : form.id.$invalid && !form.id.$pristine }">
                         <input type="text" class="form-control" placeholder="Cédula" name="id" ng-model="user.id" required>
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                        
+
                     </div>
                     <div class="form-group has-feedback" ng-class="{
                             'has-error'
@@ -40,8 +40,11 @@
                         <input type="password" class="form-control" placeholder="Contraseña" name="contrasena" ng-model="user.contrasena" required>
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
+                    <div class="form-group" ng-show='isCapsLockOn'>
+                        <span class="fa fa-warning text-yellow" ></span><small> Mayus.</small>
+                    </div>
                     <div class="row form-group has-error" style="text-align: center;">
-                    <p class="help-block">{{mensaje}}</p>
+                        <p class="help-block">{{mensaje}}</p>
                     </div>
                     <div class="row">
                         <div class="col-xs-6">
@@ -96,6 +99,7 @@
         <script src="angular/usuario/sessionService.js" type="text/javascript"></script>
         <script src="angular/ngStorage.min.js" type="text/javascript"></script>
         <script src="angular/empresas/EmpresaService.js" type="text/javascript"></script>
+        <script src="angular/ng-caps-lock.min.js" type="text/javascript"></script>
         <!-- Select2 -->
         <script src="plugins/select/select.min.js" type="text/javascript"></script>
         <script src="plugins/select2/select2.min.js" type="text/javascript"></script>

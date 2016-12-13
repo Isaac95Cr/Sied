@@ -57,6 +57,9 @@
                         <input type="password" class="form-control" placeholder="Contraseña" name="contrasena2" ng-model="user.contrasena2" required>
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
+                    <div class="form-group" ng-show='isCapsLockOn'>
+                        <span class="fa fa-warning text-yellow" ></span><small> Mayus.</small>
+                    </div>
 
                     <div  name="empresa" class="form-group has-feedback"  ng-class="{ 'has-error' : formAdd.empresa.$invalid && !formAdd.empresa.$pristine }">
                         
@@ -135,6 +138,7 @@
         <script src="angular/usuario/userService.js" type="text/javascript"></script>
         <script src="angular/ngStorage.min.js" type="text/javascript"></script>
         <script src="angular/empresas/EmpresaService.js" type="text/javascript"></script>
+        <script src="angular/ng-caps-lock.min.js" type="text/javascript"></script>
         <!-- Select2 -->
         <script src="plugins/select/select.min.js" type="text/javascript"></script>
         <script src="plugins/select2/select2.min.js" type="text/javascript"></script>
