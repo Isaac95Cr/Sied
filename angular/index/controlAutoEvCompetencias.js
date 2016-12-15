@@ -158,7 +158,8 @@ angular.module("index")
                     $scope.stringAutoEvaluaciones = servicioCompetAutoEv.getStringAutoEv();
                     $scope.autoEvaluaciones = [];
 
-                    if ($scope.stringAutoEvaluaciones !== "" && $scope.stringAutoEvaluaciones !== null) {
+                    if ($scope.stringAutoEvaluaciones !== "" && $scope.stringAutoEvaluaciones !== null
+                            && $scope.stringAutoEvaluaciones !== undefined) {
 
                         $scope.arrayAutoEvaluacionesCompet = $scope.stringAutoEvaluaciones.split(';');
 

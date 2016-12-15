@@ -41,7 +41,7 @@
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
                     <div class="form-group" ng-show='isCapsLockOn'>
-                        <span class="fa fa-warning text-yellow" ></span><small> Mayus.</small>
+                        <span class="fa fa-warning text-yellow" ></span><small> Bloq Mayús activado.</small>
                     </div>
                     <div class="row form-group has-error" style="text-align: center;">
                         <p class="help-block">{{mensaje}}</p>

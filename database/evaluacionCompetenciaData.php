@@ -1,6 +1,6 @@
 <?php
 
-require 'evalCompetencia.php';
+require 'database.php';
 
 class evaluacionCompetenciaData {
 

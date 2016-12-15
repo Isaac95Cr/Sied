@@ -58,7 +58,7 @@
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
                     <div class="form-group" ng-show='isCapsLockOn'>
-                        <span class="fa fa-warning text-yellow" ></span><small> Mayus.</small>
+                        <span class="fa fa-warning text-yellow" ></span><small> Bloq Mayús activado.</small>
                     </div>
 
                     <div  name="empresa" class="form-group has-feedback"  ng-class="{ 'has-error' : formAdd.empresa.$invalid && !formAdd.empresa.$pristine }">

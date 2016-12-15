@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <div class="form-group" ng-show='isCapsLockOn'>
-                        <span class="fa fa-warning text-yellow" ></span><small> Mayus.</small>
+                        <span class="fa fa-warning text-yellow" ></span><small> Bloq Mayús activado.</small>
                     </div>
                     <div class="row">
                         <div class="col-xs-6"><br>

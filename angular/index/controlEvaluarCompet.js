@@ -1,7 +1,7 @@
 angular.module("index")
-        .controller("controlEvaluarCompet", ['$scope', '$routeParams', 'servicioCompetColab', 'servicioCompetAutoEv',
+        .controller("controlEvaluarCompet", ['$scope', 'servicioCompetColab', 'servicioCompetAutoEv',
             'servicioCompetUser', 'modalService', 'tempStorage', 'storageSession', '$crypto',
-             function ($scope, $routeParams, servicioCompetColab, servicioCompetAutoEv,
+             function ($scope, servicioCompetColab, servicioCompetAutoEv,
              servicioCompetUser, modalService, tempStorage, storageSession, $crypto) {
 
                 $scope.competencias = "";

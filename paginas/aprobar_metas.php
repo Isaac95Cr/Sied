@@ -59,8 +59,8 @@
 
                                                     <div class="col-sm-3">
                                                         <p>Desaprobada</p>
-                                                        <input type="checkbox" id="{{$index+'d'}}" name=""
-                                                               ng-change="comprobarDesaprobado('a'+$index, meta.id)"
+                                                        <input type="checkbox" id="{{'d'+$index}}" name=""
+                                                               ng-change="comprobarDesaprobado('d'+$index, meta.id)"
                                                                ng-model="meta.aprobacion_j" ng-checked="meta.aprobacion_j == 0"
                                                                ng-true-value="'0'" ng-false-value="'1'" color="red" i-check >
                                                     </div>
