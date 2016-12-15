@@ -11,11 +11,13 @@
 
 <!-- Main content -->
 <section class="content" ng-controller="controlUsuario as cu" ng-init="init()">
-    <!-- Default box -->
-    <div class="box box-primary">
+     <!-- Default box -->
+    <div class="box box-primary collapsed-box">
         <div class="box-header with-border">
-            <h3 class="box-title">Administración de Usuarios</h3>
+            <h3 class="box-title">Administración de solicitudes</h3>
             <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                </button>
             </div>
         </div>
         <div class="box-body">
@@ -63,7 +65,62 @@
         <!-- /.box-footer-->
     </div>
     <!-- /.box -->
-
+    
+    <!-- Default box -->
+    <div class="box box-primary collapsed-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Administración de Usuarios</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <table id="example1" class="table table-hover table-bordered table-responsive" datatable="ng">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Perfil</th>
+                        <th>Estado</th>
+                        <th>Departamento</th>
+                        <th>Empresa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in users" sglclick="" dblclick="modalModificar({{user}});">
+                        <td> {{user.nombre + " " + user.apellido1 + " " + user.apellido2}} </td>
+                        <td class="text-center"> 
+                            <small ng-show="user.perfil.Colaborador == 1" class="label bg-blue margin">Colaborador</small>
+                            <small ng-show="user.perfil.Jefe == 1"class="label bg-blue margin">Jefe</small>
+                            <small ng-show="user.perfil.RH == 1"class="label bg-blue margin">RH</small>
+                        </td>
+                        <td> 
+                            <small ng-show="user.estado == 1" class="label bg-green margin">Activo</small>
+                            <small ng-show="user.estado != 1"class="label bg-red margin">Inactivo</small>
+                        </td>
+                        <td> {{user.departamento}}</td>
+                        <td> {{user.empresa}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Perfil</th>
+                        <th>Estado</th>
+                        <th>Departamento</th>
+                        <th>Empresa</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <button type="button" class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalUserAdd">Agregar Usuario</button>
+        </div>
+        <!-- /.box-footer-->
+    </div>
+    <!-- /.box -->
+   
     <!-- /modal -->
     <div class="modal" id="modalUserAdd">
         <div class="modal-dialog" role="document">
