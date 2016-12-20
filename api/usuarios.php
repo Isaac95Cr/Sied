@@ -55,6 +55,13 @@ class usuarios extends Rest implements interfaceApi {
 
         return $this->responseAPI("success", "get success!", 200, $data);
     }
+    
+    public function allSolicitudes() {
+
+        $data = usuarioData::getAllSolicitudes();
+
+        return $this->responseAPI("success", "get success!", 200, $data);
+    }
 
     public function allFrom() {
 
@@ -131,7 +138,22 @@ class usuarios extends Rest implements interfaceApi {
         }
         return $this->responseAPI("error", $data, 200);
     }
+    
+    public function del() {
 
+        if ($this->get_request_method() != "POST") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+
+        $body = json_decode(file_get_contents("php://input"), true);
+
+        $data = usuarioData::delete($body);
+        if ($data === true) {
+            return $this->responseAPI("success", "Usuario eliminado con éxito", 200);
+        }
+        return $this->responseAPI("error", "", 200);
+    }
+    
     public function setP() {
 
         if ($this->get_request_method() != "PUT") {

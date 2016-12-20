@@ -23,6 +23,17 @@ class perfilCompetenciaData {
             return $e->getMessage();
         }
     }
+    public static function getOnly() {
+        $consulta = "SELECT * FROM perfil_competencia;";
+        try {
+            $json_response = array();
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando->execute();
+            return $comando->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
 
     public static function getAllFrom($id) {
         $consulta = "SELECT * FROM perfil_competencia where id = ?";
