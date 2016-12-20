@@ -188,6 +188,12 @@ angular.module("index")
                             contadorEvaluaciones++;
                             $scope.objetoCompuesto = $scope.objetoCompuesto.concat([obj]);
                         });
+                        
+//                        if($scope.objetoCompuesto.length === 0){
+//                              obj = {detail: "", autoev: undefined,
+//                                idObj: "", nameObj: elemento.id, titleCompet: elemento.titulo};
+//                              $scope.objetoCompuesto = $scope.objetoCompuesto.concat([obj]);
+//                        }
 
                         $scope.arrayFinal = $scope.arrayFinal.concat([$scope.objetoCompuesto]);
                         $scope.objetoCompuesto = [];

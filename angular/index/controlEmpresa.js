@@ -9,6 +9,12 @@ angular.module("index")
                 $scope.empresaAdd = {
                     nombre: undefined
                 };
+                
+                // Para limpiar la modal cuando se le da 'x' de cerrar o Cancelar.
+                $scope.resetForm = function (form) {
+                    form.$setPristine();
+                    form.$setUntouched();
+                };
 
                 $scope.init = function () {
                     $scope.cargar();
@@ -21,13 +27,14 @@ angular.module("index")
                         $scope.empresas = empdep.getEmpresas();
                     });
                 };
-                $scope.agregar = function () {
+                $scope.agregar = function (idForm) {
                     empdep.getEmpService().agregar($scope.empresaAdd).then(function (res) {
                         if (res.status === 'error') {
                             alert(res.message);
                         }
                         if (res.status === 'success') {
                             $scope.cargar();
+                            $scope.resetForm(idForm);
                             $scope.empresaAdd.nombre = undefined;
                         }
 

@@ -34,6 +34,12 @@ angular.module("index")
                 $scope.isSelected = function (competencia) {
                     return competencia.id === $scope.competencia.id;
                 };
+                
+                // Para limpiar la modal cuando se le da 'x' de cerrar o Cancelar.
+                $scope.resetForm = function (form) {
+                    form.$setPristine();
+                    form.$setUntouched();
+                };
 
                 $scope.cargar = function () {
                     apiConnector.post("api/perfilCompetencias/all", {id: $routeParams.perfil}).then(function (res) {
@@ -119,7 +125,7 @@ angular.module("index")
 
                 };
 
-                $scope.agregarCompetencia = function () {
+                $scope.agregarCompetencia = function (idForm) {
 
                     var obj = {
                         descripcion: $scope.descripcionCompetencia,
@@ -136,6 +142,7 @@ angular.module("index")
                                 $scope.descripcionCompetencia = undefined;
                                 $scope.tituloCompetencia = undefined;
                                 $scope.cargar();
+                                $scope.resetForm(idForm);
                         }
                     });
                   

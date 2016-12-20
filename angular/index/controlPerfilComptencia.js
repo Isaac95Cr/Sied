@@ -13,6 +13,12 @@ angular.module("index")
                 $scope.init = function () {
                     $scope.cargar();
                 };
+                
+                // Para limpiar la modal cuando se le da 'x' de cerrar o Cancelar.
+                $scope.resetForm = function (form) {
+                    form.$setPristine();
+                    form.$setUntouched();
+                };
 
                 $scope.cargar = function () {
                     apiConnector.get("api/perfilCompetencias/all").then(function (res) {

@@ -126,11 +126,11 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="reset" class="close" data-dismiss="modal" ng-click="resetForm(formAdd)" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Agregar un Usuario</h4>
                 </div>
-                <form name="formAdd"  method="post" class="form-horizontal" ng-submit="agregar()">
+                <form id="formAdd" name="formAdd"  method="post" class="form-horizontal" ng-submit="agregar()">
                     <div class="modal-body">
 
                         <div class="form-group" ng-class="{ 'has-error' : formAdd.nombre.$invalid && !formAdd.nombre.$pristine }">
@@ -212,7 +212,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                        <button type="reset" class="btn btn-default pull-left" ng-click="resetForm(formAdd)" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary" ng-disabled="formAdd.$invalid" closemodal="modalUserAdd">Agregar</button>
                     </div>
                 </form>

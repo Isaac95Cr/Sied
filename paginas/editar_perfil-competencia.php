@@ -78,11 +78,11 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="reset" class="close" data-dismiss="modal" ng-click="resetForm(competenciaForm)" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Agregar una Competencia</h4>
                 </div>
-                <form name="competenciaForm" method="post" class="form-horizontal" ng-submit="agregarCompetencia()" vnovalidate>
+                <form id="competenciaForm" name="competenciaForm" method="post" class="form-horizontal" ng-submit="agregarCompetencia(competenciaForm)" vnovalidate>
                     <div class="modal-body">
 
                         <div class="form-group" ng-class="{'has-error':competenciaForm.tituloCompetencia.$invalid && !competenciaForm.tituloCompetencia.$pristine }">
@@ -101,7 +101,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                        <button type="reset" class="btn btn-default pull-left" ng-click="resetForm(competenciaForm)" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary" ng-disabled="competenciaForm.$invalid" closemodal="modalCompetencia">Agregar</button>
                     </div>
                 </form>

@@ -40,11 +40,11 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="reset" class="close" data-dismiss="modal" ng-click="resetForm(perfilFormAdd)" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Agregar Perfil de Competencia</h4>
                     </div>
-                    <form name="perfilFormAdd" class="form-horizontal" ng-submit="agregar()" novalidate> 
+                    <form id="perfilFormAdd" name="perfilFormAdd" class="form-horizontal" ng-submit="agregar()" novalidate> 
                         <div class="modal-body">
 
                             <div class="form-group" ng-class="{ 'has-error' : perfilFormAdd.perfilAdd.$invalid && !perfilFormAdd.perfilAdd.$pristine }">
@@ -57,7 +57,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="cancelar">Cancelar</button>
+                            <button type="reset" class="btn btn-default pull-left" ng-click="resetForm(perfilFormAdd)" data-dismiss="modal" id="cancelar">Cancelar</button>
                             <button type="submit" class="btn btn-primary" ng-disabled="perfilFormAdd.$invalid" closemodal="modalPerfilAdd">Agregar</button>
                         </div>
                     </form>

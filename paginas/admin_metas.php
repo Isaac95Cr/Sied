@@ -90,11 +90,11 @@
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="reset" class="close" ng-click="resetForm(metaForm)" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Agregar una Meta</h4>
                     </div>
-                    <form name="metaForm" ng-submit="agregar()"  class="form-horizontal" novalidate>
+                    <form id="metaForm" name="metaForm" ng-submit="agregar(metaForm)"  class="form-horizontal" novalidate>
                         <div class="modal-body">
 
                             <div class="form-group" ng-class="{ 'has-error' : metaForm.meta_titulo.$invalid && !metaForm.meta_titulo.$pristine }">
@@ -124,7 +124,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                            <button type="reset" ng-click="resetForm(metaForm)" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
                             <button type="submit" ng-disabled="metaForm.$invalid" id="add-meta"  class="btn btn-primary">Agregar</button>
                         </div>
                     </form>

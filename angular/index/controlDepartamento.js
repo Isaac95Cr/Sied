@@ -13,6 +13,12 @@ angular.module("index")
                 $scope.init = function () {
                     $scope.cargar();
                 };
+                
+                // Para limpiar la modal cuando se le da 'x' de cerrar o Cancelar.
+                $scope.resetForm = function (form) {
+                    form.$setPristine();
+                    form.$setUntouched();
+                };
                        
 //                $scope.filtro = function (departamento) {
 //                    return departamento.empresa == empdep.getEmpresa().id;
@@ -30,7 +36,7 @@ angular.module("index")
                         $scope.departamentos = empdep.getDepartamentos();
                     });
                 };
-                $scope.agregar = function () {
+                $scope.agregar = function (idForm) {
                     var obj = {
                         nombre: $scope.departamentoAdd.nombre,
                         empresa: empdep.getEmpresa()
@@ -41,6 +47,7 @@ angular.module("index")
                         }
                         if (res.status === 'success') {
                             $scope.cargar();
+                            $scope.resetForm(idForm);
                             $scope.departamentoAdd.nombre = undefined;
                         }
                     });

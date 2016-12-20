@@ -41,6 +41,12 @@ angular.module("index")
                     $scope.meta_descripcion = "";
                 };
 
+// Para limpiar la modal cuando se le da 'x' de cerrar o Cancelar.
+                $scope.resetForm = function (form) {
+                    form.$setPristine();
+                    form.$setUntouched();
+                };
+
 
                 $rootScope.$on("CallParentMethod", function () {
                     $scope.cargar();
@@ -109,7 +115,7 @@ angular.module("index")
                             });
                 };
 
-                $scope.agregar = function () {
+                $scope.agregar = function (idForm) {
                     var metaObj = {
                         is_Evaluable: $scope.meta_isEvaluable,
                         peso: '0',
@@ -130,6 +136,7 @@ angular.module("index")
                             $scope.meta_titulo = undefined;
                             $scope.meta_descripcion = undefined;
                             $scope.cargar();
+                            $scope.resetForm(idForm);
                         }
                     });
 
@@ -229,8 +236,8 @@ angular.module("index")
             meta.aprobar_Desaprobar = function (metaObj) {
                 return apiConnector.put('api/metas/aprobarMeta', metaObj);
             };
-            
-           meta.aprobar_DesaprobarRH = function (metaObj) {
+
+            meta.aprobar_DesaprobarRH = function (metaObj) {
                 return apiConnector.put('api/metas/aprobarMetaRH', metaObj);
             };
 

@@ -85,6 +85,12 @@ angular.module("index")
                     else
                         return false;
                 };
+                
+                // Para limpiar la modal cuando se le da 'x' de cerrar o Cancelar.
+                $scope.resetForm = function (form) {
+                    form.$setPristine();
+                    form.$setUntouched();
+                };
 
                 /*$scope.$on('departamento', function () {
                  $scope.userEdit.empresa = ShareDataService.empresa;

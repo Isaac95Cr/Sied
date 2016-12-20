@@ -1,6 +1,6 @@
 
 <section class="content-header">
-    <h1>Administración de Metas     
+    <h1>Administración de Competencias     
     </h1>
     <ol class="breadcrumb">
         <li><a href="#/"><i class="fa  fa-building-o"></i> Índice</a></li>
@@ -44,7 +44,7 @@
                                             </tr>
                                         </thead>
 
-                                        <tr ng-repeat="user in departamento.usuarios">
+                                        <tr ng-show="{{user.id !== userOnline}}" ng-repeat="user in departamento.usuarios">
                                             <td><p data-toggle="popover" data-trigger="hover" data-html="true" data-content="<b>Jefe: <span class='label label-success'>Aprobado</span> <br> RRHH: <span class='label label-warning'>Pendiente</span></b>" > {{user.nombre + " " + user.apellido1 + " " + " " + user.apellido2}} </p></td>
                                             <td><a class="btn btn-primary btn-block" ng-click="pasarId(user.id)" href="#/detalleCompetenciasJefe">Detalle</a></td>
                                             <td><a class="btn btn-primary btn-block" ng-click="pasarId(user.id)" href="#/evaluar_competencias">Evaluar</a></td>

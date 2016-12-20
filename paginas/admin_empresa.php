@@ -42,11 +42,11 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="reset" class="close" data-dismiss="modal" ng-click="resetForm(empresaAddForm)" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Agregar Empresa </h4>
                     </div>
-                    <form name="empresaAddForm" class="form-horizontal" ng-submit="agregar()" novalidate> 
+                    <form id="empresaAddForm" name="empresaAddForm" class="form-horizontal" ng-submit="agregar(empresaAddForm)" novalidate> 
                         <div class="modal-body">
 
                             <div class="form-group" ng-class="{ 'has-error' : empresaAddForm.empresaAdd.$invalid && !empresaAddForm.empresaAdd.$pristine}">
@@ -59,7 +59,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="cancelar">Cancelar</button>
+                            <button type="reset" class="btn btn-default pull-left" ng-click="resetForm(empresaAddForm)" data-dismiss="modal" id="cancelar">Cancelar</button>
                             <button type="submit" class="btn btn-primary" ng-disabled="empresaAddForm.$invalid" closemodal="modalEmpresaAdd">Agregar</button>
                         </div>
                     </form>
@@ -132,11 +132,11 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="reset" class="close" ng-click="resetForm(departamentoFormAdd)"  data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Agregar Departamento</h4>
                     </div>
-                    <form name="departamentoFormAdd" class="form-horizontal" ng-submit="agregar()" novalidate> 
+                    <form id="departamentoFormAdd" name="departamentoFormAdd" class="form-horizontal" ng-submit="agregar(departamentoFormAdd)" novalidate> 
                         <div class="modal-body">
 
                             <div class="form-group" ng-class="{ 'has-error' : departamentoFormAdd.departamentoAdd.$invalid && !departamentoFormAdd.departamentoAdd.$pristine }">
@@ -149,7 +149,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="cancelar">Cancelar</button>
+                            <button type="reset" class="btn btn-default pull-left" ng-click="resetForm(departamentoFormAdd)" data-dismiss="modal" id="cancelar">Cancelar</button>
                             <button type="submit" class="btn btn-primary" ng-disabled="departamentoFormAdd.$invalid"  closemodal="modalDepartamentoAdd">Agregar</button>
                         </div>
                     </form>
