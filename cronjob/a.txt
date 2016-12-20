@@ -1,3 +1,2 @@
 
-Hora actual: 2016-12-13 14:41:02 <br> 
-2016-12-13 00:00:00 = 2016-12-13 00:00:00hoy es la fecha inicio
+Hora actual: 2016-12-15 14:41:02 <br> 

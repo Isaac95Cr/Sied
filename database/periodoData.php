@@ -5,7 +5,7 @@ require 'database.php';
 class periodoData {
 
     public static function getAll() {
-        $consulta = "SELECT *  FROM periodo where periodo.id = 0 and date_format(periodo.fechainicio, '%Y-%m-%d');";
+        $consulta = "SELECT *  FROM periodo;";
         try {
             $comando = Database::getInstance()->getDb()->prepare($consulta);
             $comando->execute();
@@ -14,12 +14,25 @@ class periodoData {
             return false;
         }
     }
+    
+     public static function getActual() {
+        $consulta = "SELECT * FROM periodo WHERE NOW() BETWEEN periodo.fechainicio AND periodo.fechafinal;";
+        try {
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando->execute();
+            return $comando->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return $e;
+        }
+    }
 
-    public static function insert($nombre, $empresa) {
-        $comando = "INSERT INTO departamento (nombre, empresa) VALUES (?,?);";
+
+    public static function insert($id,$fechainicio,$fechafinal,$nombre,$fiper1,$ffper1,$fiper2,$ffper2) {
+        $comando = "INSERT INTO periodo (id, fechainicio, fechafinal, nombre, fiper1, ffper1, fiper2, ffper2)"
+                . " VALUES (?, ?,?, ?, ?, ?, ?, ?);";
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
-            $sentencia->execute(array($nombre, $empresa));
+            $sentencia->execute(array($id,$fechainicio,$fechafinal,$nombre,$fiper1,$ffper1,$fiper2,$ffper2));
             return true;
         } catch (PDOException $pdoExcetion) {
             return $pdoExcetion->getMessage();
@@ -27,7 +40,8 @@ class periodoData {
     }
 
     public static function update($nombre, $id) {
-        $comando = "UPDATE departamento set nombre = ? where id = ?;";
+        $comando = "UPDATE periodo SET fechainicio=?, fechafinal=?, nombre=?, fiper1=?, ffper1=?, fiper2=?, ffper2=? WHERE id=?;
+";
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
             $sentencia->execute(array($nombre, $id));
@@ -38,7 +52,7 @@ class periodoData {
     }
 
     public static function delete($id) {
-        $comando = "DELETE FROM departamento WHERE id = ?;";
+        $comando = "DELETE FROM periodo WHERE id = ?;";
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
             $sentencia->execute(array($id));
