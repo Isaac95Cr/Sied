@@ -17,12 +17,15 @@ class usuarioData {
     }
 
     public static function getAll() {
-        $consulta = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,usuario.estado,"
-                . "(departamento.nombre) as departamento, (empresa.nombre) as empresa,"
-                . "perfil.colaborador, perfil.jefe,perfil.RH from usuario, perfil,empresa,departamento where "
-                . "usuario.departamento = departamento.id "
-                . "and departamento.empresa = empresa.id "
-                . "and usuario.perfil = perfil.id;";
+        $consulta = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,usuario.estado,
+            (departamento.nombre) as departamento, (empresa.nombre) as empresa,
+            perfil.colaborador, perfil.jefe,perfil.RH, evaluacion_periodo.perfil_competencia as perfilId, perfil_competencia.nombre as nombrePerfil
+            from usuario, perfil,empresa,departamento, perfil_competencia, evaluacion_periodo where 
+            usuario.departamento = departamento.id 
+            and departamento.empresa = empresa.id 
+            and usuario.perfil = perfil.id 
+            and usuario.id = evaluacion_periodo.usuario
+            and evaluacion_periodo.perfil_competencia = perfil_competencia.id and perfil.id != 0;";
         try {
 
             $json_response = array();
@@ -43,11 +46,8 @@ class usuarioData {
                 $response['perfil']['Colaborador'] = $user['colaborador'];
                 $response['perfil']['Jefe'] = $user['jefe'];
                 $response['perfil']['RH'] = $user['RH'];
-                /* foreach ($perfiles as $perfil){
-                  if($user[$perfil]==1){
-                  array_push($response['perfil'],$perfil);
-                  }
-                  } */
+                $response['nombrePerfil'] = $user['nombrePerfil'];
+                $response['perfilId'] = $user['perfilId'];
                 array_push($json_response, $response);
             }
             return $json_response;
@@ -55,6 +55,42 @@ class usuarioData {
         } catch (PDOException $e) {
             return false;
         }
+    }
+
+    public static function getAllSolicitudes() {
+        $consulta = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,usuario.estado,
+(departamento.nombre) as departamento, (empresa.nombre) as empresa,
+perfil.colaborador, perfil.jefe,perfil.RH from usuario, perfil,empresa,departamento where 
+usuario.departamento = departamento.id 
+and departamento.empresa = empresa.id 
+and usuario.perfil = perfil.id
+and perfil.id = 0;";
+        try {
+            $json_response = array();
+            $perfiles = ['colaborador', 'jefe', 'RH'];
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando->execute();
+            $users = $comando->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($users as $user) {
+                $response['id'] = $user['id'];
+                $response['nombre'] = $user['nombre'];
+                $response['apellido1'] = $user['apellido1'];
+                $response['apellido2'] = $user['apellido2'];
+                $response['correo'] = $user['correo'];
+                $response['estado'] = $user['estado'];
+                $response['departamento'] = $user['departamento'];
+                $response['empresa'] = $user['empresa'];
+                $response['perfil'] = array();
+                $response['perfil']['Colaborador'] = $user['colaborador'];
+                $response['perfil']['Jefe'] = $user['jefe'];
+                $response['perfil']['RH'] = $user['RH'];
+                array_push($json_response, $response);
+            }
+            return $json_response;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+        return false;
     }
 
     public static function getAllFrom($id) {
@@ -110,10 +146,27 @@ class usuarioData {
                 " nombre = ?," .
                 " apellido1 = ?, apellido2 = ?," .
                 " correo = ?,estado = b?, departamento = ?,perfil = ? where id = ?";
-
+        /*
+          INSERT INTO
+          evaluacion_periodo (estado,aprobacion_j,aprobacion_rh,auto_eva,eva,usuario,periodo,perfil_competencia)
+          VALUES (b'0',b'1',b'0',b'1',b'0',123,'0','3')
+          ON DUPLICATE KEY UPDATE estado=VALUES(estado), aprobacion_j = values(aprobacion_j),aprobacion_rh = values(aprobacion_rh)
+          ,auto_eva = values(auto_eva),eva=values(eva), perfil_competencia = values(perfil_competencia); */
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
             $sentencia->execute(array($nombre, $apellido1, $apellido2, $correo, $estado, $departamento, $perfil, $id));
+            return true;
+        } catch (PDOException $pdoExcetion) {
+            return $pdoExcetion->getMessage();
+        }
+    }
+
+    public static function delete($id) {
+        $comando = "DELETE FROM usuario WHERE id = ?;";
+
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($id));
             return true;
         } catch (PDOException $pdoExcetion) {
             return $pdoExcetion->getMessage();
@@ -164,20 +217,18 @@ class usuarioData {
                 if ($user['estado'] != 1) {
                     throw new Exception("No se tienen permisos para ingresar");
                 }
-                    $response['id'] = $user['id'];
-                    $response['nombre'] = $user['nombre'] . " " . $user['apellido1'] . " " . $user['apellido2'];
-                    $response['correo'] = $user['correo'];
-                    $response['perfil']['colaborador'] = $user['colaborador'];
-                    $response['perfil']['jefe'] = $user['jefe'];
-                    $response['perfil']['RH'] = $user['RH'];
-                    return $response;
-                
+                $response['id'] = $user['id'];
+                $response['nombre'] = $user['nombre'] . " " . $user['apellido1'] . " " . $user['apellido2'];
+                $response['correo'] = $user['correo'];
+                $response['perfil']['colaborador'] = $user['colaborador'];
+                $response['perfil']['jefe'] = $user['jefe'];
+                $response['perfil']['RH'] = $user['RH'];
+                return $response;
             }
             return false;
         } catch (PDOException $pdoExcetion) {
             return $pdoExcetion;
-        }
-        catch (Exception $excetion) {
+        } catch (Exception $excetion) {
             return $excetion;
         }
     }
@@ -273,9 +324,9 @@ class usuarioData {
             return $pdoExcetion->getMessage();
         }
     }
-    
-        public static function getUsersByDepartament($idDepartamento) {
-            
+
+    public static function getUsersByDepartament($idDepartamento) {
+
         $comando = "SELECT id, nombre, apellido1, apellido2 FROM usuario where departamento = ?;";
 
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
@@ -287,6 +338,5 @@ class usuarioData {
             return $pdoExcetion->getMessage();
         }
     }
-    
 
 }

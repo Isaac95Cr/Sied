@@ -11,10 +11,12 @@
 
 <!-- Main content -->
 <section class="content" ng-controller="controlUsuario as cu" ng-init="init()">
-     <!-- Default box -->
+    <!-- Default box -->
     <div class="box box-primary collapsed-box">
         <div class="box-header with-border">
+            <span ng-show="solicitudes.length != 0" class="label label-danger">{{solicitudes.length}}</span>
             <h3 class="box-title">Administración de solicitudes</h3>
+
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                 </button>
@@ -32,7 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="user in users" sglclick="" dblclick="modalModificar({{user}});">
+                    <tr ng-repeat="user in solicitudes" sglclick="" dblclick="modalModificar({{user}},true);">
                         <td> {{user.nombre + " " + user.apellido1 + " " + user.apellido2}} </td>
                         <td class="text-center"> 
                             <small ng-show="user.perfil.Colaborador == 1" class="label bg-blue margin">Colaborador</small>
@@ -65,7 +67,7 @@
         <!-- /.box-footer-->
     </div>
     <!-- /.box -->
-    
+
     <!-- Default box -->
     <div class="box box-primary collapsed-box">
         <div class="box-header with-border">
@@ -120,8 +122,8 @@
         <!-- /.box-footer-->
     </div>
     <!-- /.box -->
-   
-    <!-- /modal -->
+
+    <!-- /modalAdd -->
     <div class="modal" id="modalUserAdd">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -185,6 +187,17 @@
                                 </ui-select>
                             </div>
                         </div>
+                        <div class="form-group"  ng-class="{ 'has-error' : formAdd.perfilcompetencia.$invalid && formAdd.perfilcompetencia.$dirty }">
+                            <label for="departamento" class="col-sm-4 control-label">Perfil de competencia</label>                     
+                            <div class="col-sm-8">
+                                <ui-select theme="bootstrap"  ng-model="userAdd.perfilcompetencia" on-select="" class="form-control select2" title="Perfil Competencia" required>
+                                    <ui-select-match placeholder="">{{userAdd.perfilcompetencia.nombre}}</ui-select-match>
+                                    <ui-select-choices allow-clear ="true" repeat="perfilcompetencia in competencias | filter: $select.search">
+                                        <div ng-bind-html="perfilcompetencia.nombre | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
                         <div class="form-group" ng-class="{ 'has-error' : formAdd.empresa.$invalid && !formAdd.empresa.$pristine }">
                             <label for="perfil" class="col-sm-4 control-label">Perfil</label>
                             <div class="col-sm-8">
@@ -222,19 +235,20 @@
     </div>
     <!-- /.modal-dialog -->
 
-    <!-- /modal -->
+    <!-- /modalEditar -->
     <div class="modal" id="modalUserEdit">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Editar un Usuario</h4>
+                    <h4 ng-show="!bandera" class="modal-title">Editar un Usuario</h4>
+                    <h4 ng-show="bandera"class="modal-title">Solicitud de Usuario</h4>
                 </div>
                 <form name="formEdit" method="post" class="form-horizontal" ng-submit="modificar()">
                     <div class="modal-body">
 
-                        <div class="form-group" ng-class="{ 'has-error' : formEditorm.nombre.$invalid && !formEdit.nombre.$pristine }">
+                        <div class="form-group" ng-class="{ 'has-error' : formEdit.nombre.$invalid && !formEdit.nombre.$pristine }">
                             <label for="nombre" class="col-sm-4 control-label">Nombre</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" placeholder="Nombre" name="nombre" ng-model="userEdit.nombre" required> 
@@ -274,10 +288,7 @@
                                     </ui-select-choices>
                                 </ui-select>
                             </div>
-
                         </div>
-
-
                         <div class="form-group"  ng-class="{ 'has-error' : formEdit.departamento.$invalid && formEdit.departamento.$dirty }">
                             <label for="departamento" class="col-sm-4 control-label">Departamento </label>                     
                             <div class="col-sm-8">
@@ -289,12 +300,21 @@
                                 </ui-select>
                             </div>
                         </div>
-
-
-                        <div class="form-group" >
+                        <div class="form-group"  ng-class="{ 'has-error' : formEdit.perfilcompetencia.$invalid && formEdit.perfilcompetencia.$dirty }">
+                            <label for="departamento" class="col-sm-4 control-label">Perfil de competencia</label>                     
+                            <div class="col-sm-8">
+                                <ui-select theme="bootstrap"  ng-model="userEdit.perfilcompetencia" on-select="" class="form-control select2" title="Perfil Competencia" required>
+                                    <ui-select-match placeholder="">{{userEdit.perfilcompetencia.nombre}}</ui-select-match>
+                                    <ui-select-choices allow-clear ="true" repeat="perfilcompetencia in competencias | filter: $select.search">
+                                        <div ng-bind-html="perfilcompetencia.nombre | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error' : formEdit.empresa.$invalid && !formEdit.empresa.$pristine }">
                             <label for="perfil" class="col-sm-4 control-label">Perfil</label>
                             <div class="col-sm-8">
-                                <ui-select  multiple  class="form-control select2" ng-model="userEdit.perfil" close-on-select="false" style="width: 100%;" title="Perfiles">
+                                <ui-select  multiple  class="form-control select2" ng-model="userEdit.perfil" close-on-select="false" style="width: 100%;" title="Asigna el perfil" required>
                                     <ui-select-match placeholder="Seleccione los perfiles">{{$item}}</ui-select-match>
                                     <ui-select-choices repeat="a in opciones  |  filter: $select.search">
                                         {{a}}
@@ -319,7 +339,9 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" ng-disabled="formEdit.$invalid" closemodal="modalUserEdit">Modificar</button>
+                        <button type="submit" ng-show="!bandera" class="btn btn-primary" ng-disabled="formEdit.$invalid" closemodal="modalUserEdit">Modificar</button>
+                        <button type="button"  ng-click="eliminar()" ng-show="bandera" class="btn btn-primary" ng-disabled="" closemodal="modalUserEdit">Eliminar Solicitud</button>
+                        <button type="submit" ng-show="bandera" class="btn btn-primary" ng-disabled="formEdit.$invalid" closemodal="modalUserEdit">Aceptar Solicitud</button>
                     </div>
                 </form>
             </div>

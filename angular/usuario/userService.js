@@ -7,8 +7,14 @@ angular.module('usuario')
                 usuario.cargarUsuarios = function () {
                     return apiConnector.get('api/usuarios/all');
                 };
+                usuario.cargarSolicitudes = function () {
+                    return apiConnector.get('api/usuarios/allSolicitudes');
+                };
                 usuario.cargarUsuario = function (obj) {
                     return apiConnector.post('api/usuarios/allFrom', obj);
+                };
+                usuario.eliminar = function (obj) {
+                   return apiConnector.post('api/usuarios/del',obj);
                 };
                 
                 usuario.cargarUsuariosDeJefe = function (obj) {
