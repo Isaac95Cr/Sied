@@ -52,7 +52,33 @@ class departamentos extends Rest implements interfaceApi {
 
         $data = departamentoData::getAll();
 
-        return $this->responseAPI("success", "get success!", 200, $data);
+        if($data == true){
+            return $this->responseAPI("success", "get success!", 200, $data);
+        }
+            return $this->responseAPI("error", "", 200);
+    }
+    
+    
+    public function allAndUsers() {
+
+        $data = departamentoData::getDepartmentsAndUsers();
+        
+        if($data == true){
+            return $this->responseAPI("success", "get success!", 200, $data);
+        }
+            return $this->responseAPI("error", "", 200);
+    }
+    
+    
+    public function getUsersDeJefe() {
+        
+        $body = json_decode(file_get_contents("php://input"), true);
+        $data = departamentoData::getUsersFromJefe($body);
+        
+        if($data == true){
+            return $this->responseAPI("success", "get success!", 200, $data);
+        }
+            return $this->responseAPI("error", "", 200);
     }
 
     public function add() {

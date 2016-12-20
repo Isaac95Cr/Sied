@@ -1,25 +1,34 @@
 angular.module('usuario')
-        .controller('usersColaboradoresMetas', ['$scope', 'userService', 'modalService', 'Navigator',
-           function ($scope, userService, modalService, Navigator) {
+        .controller('usersColaboradoresMetas', ['$scope', 'userService', 'Navigator', 'servicioCompetColab',
+           function ($scope, userService, Navigator, servicioCompetColab) {
 
                 $scope.listaUsuarios = [];
                 $scope.userID = "";
+                $scope.userOnline = undefined;
+                $scope.tiene_Metas = true;
 
 
                 $scope.init = function () {
+                    $scope.getUserOnline();
                     $scope.cargar();
                 };
 
 
                 $scope.cargar = function () {
-                    userService.cargarUsuarios().then(function (res) {
+                    userService.cargarUsuariosDeJefe($scope.userOnline).then(function (res) {
                         if (res.status === 'error') {
-                            alert(res.message);
+                            $scope.tiene_Metas = false;
                         }
                         if (res.status === 'success') {
-                            $scope.listaUsuarios = res.data;
+                                  $scope.listaUsuarios = res.data;
                         }
                     });
+                };
+                
+                
+                $scope.getUserOnline = function () {
+                    servicioCompetColab.loadUsuarioId();
+                    $scope.userOnline = servicioCompetColab.getUsuarioID();
                 };
 
 

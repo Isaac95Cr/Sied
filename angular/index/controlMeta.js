@@ -229,6 +229,10 @@ angular.module("index")
             meta.aprobar_Desaprobar = function (metaObj) {
                 return apiConnector.put('api/metas/aprobarMeta', metaObj);
             };
+            
+           meta.aprobar_DesaprobarRH = function (metaObj) {
+                return apiConnector.put('api/metas/aprobarMetaRH', metaObj);
+            };
 
             meta.getMeta = function (obj) {
                 return apiConnector.post('api/metas/allFrom', obj);

@@ -30,7 +30,7 @@
                             <div class="box-header with-border">
                                 <h4 class="box-title">
                                     <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{$index}}">
-                                        <p popover data-toggle="popover" data-trigger="hover" data-container="body" data-html="true" data-content="<b>Jefe: <span class='label label-primary'>{{meta.aprobacion_j == 1? 'Aprobada' : 'Desaprobada'}}</span> <br> RRHH: <span class='label label-primary'>Pendiente</span></b>">{{meta.titulo}}</p>
+                                        <p popover data-toggle="popover" data-trigger="hover" data-container="body" data-html="true" data-content="<b>Jefe: <span class='label label-primary'>{{meta.aprobacion_j == 1? 'Aprobada' : 'Desaprobada'}}</span> <br> RRHH: <span class='label label-primary'>{{meta.aprobacion_rh == 1? 'Aprobada' : 'Desaprobada'}}</span></b>">{{meta.titulo}}</p>
                                     </a>
                                 </h4>
                             </div>

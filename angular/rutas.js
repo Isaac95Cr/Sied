@@ -1,3 +1,4 @@
+// Nuevo
 angular.module("app")
         .config(['$routeProvider', function ($routeProvider) {
                 $routeProvider
@@ -126,6 +127,14 @@ angular.module("app")
                                     }]
                             }
                         })
+                        .when("/detalleMetasRH", {
+                            templateUrl: "paginas/detalleMetasRH.php",
+                            resolve: {
+                                access: ["sessionService", function (sessionService) {
+                                        return sessionService.perfil("jefe");
+                                    }]
+                            }
+                        })
                         .when("/detalleCompetenciasJefe", {
                             templateUrl: "paginas/detalleCompetenciasJefe.php",
                             resolve: {
@@ -134,6 +143,22 @@ angular.module("app")
                                     }]
                             }
                         })
+                        .when("/admin_colab_metas_RH", {
+                            templateUrl: "paginas/admin_colab_metas_RH.php",
+                            resolve: {
+                                access: ["sessionService", function (sessionService) {
+                                        return sessionService.perfil("RH");
+                                    }]
+                            }
+                        })
+                        .when("/aprobar_metas_RH", {
+                            templateUrl: "paginas/aprobar_metas_RH.php",
+                            resolve: {
+                                access: ["sessionService", function (sessionService) {
+                                        return sessionService.perfil("RH");
+                                    }]
+                            }
+                        })       
                         .when("/perfil", {
                             templateUrl: "paginas/perfil.php"
                         })

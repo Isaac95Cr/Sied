@@ -1,6 +1,6 @@
 
 <section class="content-header">
-    <h1>Administración de Metas
+    <h1>Administración de Metas     
     </h1>
     <ol class="breadcrumb">
         <li><a href="#/"><i class="fa  fa-building-o"></i> Índice</a></li>
@@ -8,63 +8,73 @@
     </ol>
 </section>
 
+
 <!-- Main content -->
-<div ng-controller="usersColaboradoresMetas" ng-init="cargar()">
+<div ng-controller="usersColaboradoresMetas" ng-init="init();">
     <section class="content">
         <!-- Default box -->
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title">Colaboradores</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                        <i class="fa fa-minus"></i>
-                    </button>
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Colaboradores por Departamento</h3>
+
+                    <div class="box-tools pull-right">
+
+                    </div>
                 </div>
+                <div class="box-body">
+                    <div class="box-group" id="accordion">
+                        <div class="panel box box-primary" ng-repeat="departamento in listaUsuarios">
+                            <div class="box-header with-border">
+                                <h4 class="box-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{$index}}">
+                                        <p>{{departamento.nombre}}</p>
+                                    </a>
+                                </h4>
+                            </div>
+
+                            <div id="collapse{{$index}}" class="panel-collapse collapse">
+                                <div>
+                                    <table id="example1" class="table table-bordered table-striped" datatable="ng" >
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Detalles</th>
+                                                <th>Aprobar</th>
+                                                <th>Evaluar</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tr ng-repeat="user in departamento.usuarios">
+                                            <td><p data-toggle="popover" data-trigger="hover" data-html="true" data-content="<b>Jefe: <span class='label label-success'>Aprobado</span> <br> RRHH: <span class='label label-warning'>Pendiente</span></b>" > {{user.nombre + " " + user.apellido1 + " " + " " + user.apellido2}} </p></td>
+                                            <td><a class="btn btn-primary btn-block" ng-click="pasarId(user.id)" href="#/detalleMetasJefe">Detalle</a></td>
+                                            <td><a class="btn btn-primary btn-block" ng-click="pasarId(user.id)" href="#/aprobar_metas">Aprobar</a></td>
+                                            <td><a class="btn btn-primary btn-block" ng-click="pasarId(user.id)" href="#/evaluar_metas">Evaluar</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <p style="font-size: 90%" ng-show="!tiene_Metas" class="label bg-red margin">No posee departamentos a cargo</p>
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer" >    
+                </div>
+                <!-- /.box-footer-->
             </div>
-            <div class="box-body">
-                <table id="example1" class="table table-bordered table-striped" datatable="ng" >
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Detalles</th>
-                            <th>Aprobar</th>
-                            <th>Evaluar</th>
-                        </tr>
-                    </thead>
+            <!-- /.box -->
+    </section>
+    <!-- /.content -->
 
-                   <tr ng-repeat="user in listaUsuarios">
-                        <td><p data-toggle="popover" data-trigger="hover" data-html="true" data-content="<b>Jefe: <span class='label label-success'>Aprobado</span> <br> RRHH: <span class='label label-warning'>Pendiente</span></b>" > {{user.nombre + " " + user.apellido1 + " " + " " + user.apellido2}} </p></td>
-                        <td><a class="btn btn-primary btn-block" ng-click="pasarId(user.id)" href="#/detalleMetasJefe">Detalle</a></td>
-                        <td><a class="btn btn-primary btn-block" ng-click="pasarId(user.id)" href="#/aprobar_metas">Aprobar</a></td>
-                        <td><a class="btn btn-primary btn-block" ng-click="pasarId(user.id)" href="#/evaluar_metas">Evaluar</a></td>
-                    </tr>
+</div>    
 
-<!--                        <tr>
-        <td> <p data-toggle="popover" data-trigger="hover" data-html="true" data-content="<b>Jefe: <span class='label label-success'>Aprobado</span> <br> RRHH: <span class='label label-warning'>Pendiente</span></b>">Juan</p> </td>
-        <td><a class="btn btn-primary btn-block" href="#/admin_metas">Detalle</a></td>
-        <td><a class="btn btn-primary btn-block" href="#/aprobar_metas">Aprobar</a></td>
-        <td><a class="btn btn-primary btn-block" href="#/evaluar_metas">Evaluar</a></td>
-    </tr>-->
-                </table>
-            </div>
-        </div>
-</div>
-<!-- /.box-body -->
-<div class="box-footer">
-</div>
-<!-- /.box-footer-->
-</div>
-<!-- /.box -->
+<!--</div>-->
 
-</section>
-<!-- /.content -->
+
 
 <script>
-    //Initialize Select2 Elements
-    $("#example1").DataTable();
 
-    $(document).ready(function () {
-        $('[data-toggle="popover"]').popover({
-        });
-    });
 </script>

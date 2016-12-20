@@ -2,12 +2,17 @@ angular.module('usuario')
         .service('userService', ['apiConnector', function (apiConnector) {
                 var usuario = {};
                 var nombreUser = "";
+                var usuarios = [];
 
                 usuario.cargarUsuarios = function () {
                     return apiConnector.get('api/usuarios/all');
                 };
                 usuario.cargarUsuario = function (obj) {
                     return apiConnector.post('api/usuarios/allFrom', obj);
+                };
+                
+                usuario.cargarUsuariosDeJefe = function (obj) {
+                    return apiConnector.post('api/departamentos/getUsersDeJefe', obj);
                 };
 
                 usuario.loadAllUser = function (obj) {
@@ -32,12 +37,14 @@ angular.module('usuario')
                             nombreUser = res.data.usuario.nombre + " " + res.data.usuario.apellido1 + " " + res.data.usuario.apellido2;
                         }
                     });
-                };
+                };                
 
 
                 usuario.getNameUser = function () {
                     return nombreUser;
                 };
+                
+                
 
                 return usuario;
             }])

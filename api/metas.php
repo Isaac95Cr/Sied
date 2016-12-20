@@ -123,6 +123,7 @@ class metas extends Rest implements interfaceApi {
         return $this->responseAPI("error", "", 200);
     }
 
+// Aprobar/Desaprobar meta de Jefe
     public function aprobarMeta() {
 
         if ($this->get_request_method() != "PUT") {
@@ -145,6 +146,35 @@ class metas extends Rest implements interfaceApi {
         }
         return $this->responseAPI("error", "", 200);
     }
+    
+    
+// Aprobar/Desaprobar meta de RH
+    public function aprobarMetaRH() {
+
+        if ($this->get_request_method() != "PUT") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+
+        $body = json_decode(file_get_contents("php://input"), true);
+        $mensaje = "";
+
+        if ($body['comentario'] !== "") {
+            $data = metasData::desaprobarMetaRH($body['id'], $body['comentario']);
+            $mensaje = "Meta desaprobada con éxito";
+        } else {
+            $data = metasData::aprobarMetaRH($body['id'], $body['comentario']);
+            $mensaje = "Meta aprobada con éxito";
+        }
+
+        if ($data === true) {
+            return $this->responseAPI("success", $mensaje, 200);
+        }
+        return $this->responseAPI("error", "", 200);
+    }    
+    
+    
+    
+    
 
     public function setEvaluacion() {
 

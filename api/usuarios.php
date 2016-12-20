@@ -72,6 +72,7 @@ class usuarios extends Rest implements interfaceApi {
         }
         return $this->responseAPI("error", "", $user, 200);
     }
+    
 
     public function add() {
 

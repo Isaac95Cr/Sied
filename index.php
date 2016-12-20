@@ -138,6 +138,7 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li ng-if="usuario.perfil.colaborador == 1"><a href="#/admin_metas"><i class="fa fa-flag-o"></i>Administrar Metas</a></li>
+                                <li ng-if="usuario.perfil.RH == 1"><a href="#/admin_colab_metas_RH"><i class="fa fa-users"></i>Administrar Metas RH</a></li>
                                 <li ng-if="usuario.perfil.jefe == 1"><a href="#/admin_colaboradores_metas"><i class="fa fa-users"></i>Colaboradores</a></li>
                             </ul>
                         </li>
@@ -276,6 +277,9 @@
         <script src="angular/usuario/controlUser.js" type="text/javascript"></script>
         <script src="angular/index/controlPeriodo.js" type="text/javascript"></script>
         <script src="angular/index/controlPesosMetas.js" type="text/javascript"></script>
+        <script src="angular/index/controlMetaColabRH.js" type="text/javascript"></script>
+        <script src="angular/index/controlDetalleMetasRH.js" type="text/javascript"></script>
+        <script src="angular/index/controlAprobarMetasRH.js" type="text/javascript"></script>
 
         <script type="text/ng-template" id="myModalContent.html">
             <div class="modal-header">

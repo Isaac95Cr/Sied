@@ -273,5 +273,20 @@ class usuarioData {
             return $pdoExcetion->getMessage();
         }
     }
+    
+        public static function getUsersByDepartament($idDepartamento) {
+            
+        $comando = "SELECT id, nombre, apellido1, apellido2 FROM usuario where departamento = ?;";
+
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($idDepartamento));
+            $result = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $pdoExcetion) {
+            return $pdoExcetion->getMessage();
+        }
+    }
+    
 
 }

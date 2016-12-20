@@ -151,7 +151,7 @@ public static function updateEvaluacion($arreglo) {
  }
         
         
- 
+ // Desaprobar meta de parte de Jefe.
  public static function desaprobarMeta($id, $comment) {       
      
         $comando =   "UPDATE meta SET aprobacion_j = b?, comentario_j = ?  WHERE id = ?;";
@@ -166,7 +166,8 @@ public static function updateEvaluacion($arreglo) {
         }
  }
  
- 
+
+// Aprobar meta de parte de Jefe. 
   public static function aprobarMeta($id, $comment) {        
         $comando =   "UPDATE meta SET aprobacion_j = b?, comentario_j = ?  WHERE id = ?;";
                 
@@ -180,6 +181,44 @@ public static function updateEvaluacion($arreglo) {
             return $pdoExcetion->getMessage();
         }
  }
+ 
+
+
+
+ // Desaprobar meta de parte de RH.
+ public static function desaprobarMetaRH($id, $comment) {       
+     
+        $comando =   "UPDATE meta SET aprobacion_rh = b?, comentario_rh = ?  WHERE id = ?;";
+                
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array(0, $comment, $id));
+            
+            return true;
+        } catch (PDOException $pdoExcetion) {
+            return $pdoExcetion->getMessage();
+        }
+ }
+ 
+
+// Aprobar meta de parte de RH. 
+  public static function aprobarMetaRH($id, $comment) {        
+        $comando =   "UPDATE meta SET aprobacion_rh = b?, comentario_rh = ?  WHERE id = ?;";
+                
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array(1, $comment, $id));
+            
+            return true;
+            
+        } catch (PDOException $pdoExcetion) {
+            return $pdoExcetion->getMessage();
+        }
+ }
+ 
+ 
+ 
+ 
  
  
  

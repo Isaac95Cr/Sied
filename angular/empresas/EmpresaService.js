@@ -7,14 +7,6 @@ angular.module('empdep')
                 };
 
                 this.cargar = function () {
-                    /* return factoryEmpresa.cargarEmpresas()
-                     .success(function (data, status, headers, config) {
-                     service.empresas = data.empresa;
-                     
-                     })
-                     .error(function (data, status, headers, config) {
-                     alert("failure message: " + JSON.stringify(headers));
-                     });*/
                     return apiConnector.get("api/empresas/all").then(function (res) {
                         if (res.status === 'error') {
                             alert(res.message);
@@ -69,6 +61,19 @@ angular.module('empdep')
                         }
                     });
                 };
+                
+                 // llama al método que carga departamentos y los usuarios de cada uno.
+                this.cargarConUsuarios = function () {
+                    return apiConnector.get("api/departamentos/allAndUsers").then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            service.departamentos = res.data;
+                        }
+                    });
+                };
+                
                 this.eliminar = function (obj) {
                    return apiConnector.post("api/departamentos/del",obj);
                 };
