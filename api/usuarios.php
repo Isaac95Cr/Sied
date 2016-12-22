@@ -8,6 +8,7 @@
  */
 require '../database/usuarioData.php';
 require '../database/correosData.php';
+require '../database/periodoData.php';
 
 class usuarios extends Rest implements interfaceApi {
 
@@ -55,7 +56,7 @@ class usuarios extends Rest implements interfaceApi {
 
         return $this->responseAPI("success", "get success!", 200, $data);
     }
-    
+
     public function allSolicitudes() {
 
         $data = usuarioData::getAllSolicitudes();
@@ -79,7 +80,6 @@ class usuarios extends Rest implements interfaceApi {
         }
         return $this->responseAPI("error", "", $user, 200);
     }
-    
 
     public function add() {
 
@@ -127,18 +127,20 @@ class usuarios extends Rest implements interfaceApi {
         $correo = $body['correo'];
         $departamento = $body['departamento']['id'];
         $perfil = usuarioData::getPerfil($body['perfil']);
+        $perfilCompetencia = $body['perfilcompetencia'];
         if ($body['estado'] != null) {
             $estado = $body['estado'];
         } else {
             $estado = 0;
-        }
-        $data = usuarioData::update($id, $nombre, $apellido1, $apellido2, $correo, $estado, $departamento, $perfil);
-        if ($data === true) {
+        }$periodo = periodoData::getActual();
+        $data0 = usuarioData::updateEvaluacion($id, $periodo['id'], $perfilCompetencia['id']);
+        $data1 = usuarioData::update($id, $nombre, $apellido1, $apellido2, $correo, $estado, $departamento, $perfil);
+        if ($data1 === true && $data0 === true) {
             return $this->responseAPI("success", "set success", 200);
         }
-        return $this->responseAPI("error", $data, 200);
+        return $this->responseAPI("error", $data0 . " " . $data1, 200);
     }
-    
+
     public function del() {
 
         if ($this->get_request_method() != "POST") {
@@ -153,7 +155,7 @@ class usuarios extends Rest implements interfaceApi {
         }
         return $this->responseAPI("error", "", 200);
     }
-    
+
     public function setP() {
 
         if ($this->get_request_method() != "PUT") {
@@ -186,15 +188,14 @@ class usuarios extends Rest implements interfaceApi {
         $id = $body['id'];
         $contrasena = md5($body['contrasena']);
         $user = usuarioData::login($id, $contrasena);
-        if (!is_a($user,'Exception')) {
-            $token = usuarioData::token($user);
-            return $this->responseAPI("success", "log success", 200, $token);
-        } if($user === false) {
+        if ($user === false) {
             return $this->responseAPI("error", "Usuario o contraseña incorrectos", 200);
         }
-        else{
+        if (!is_a($user, 'Exception')) {
+            $token = usuarioData::token($user);
+            return $this->responseAPI("success", "log success", 200, $token);
+        } else {
             return $this->responseAPI("error", $user->getMessage(), 200);
-            
         }
     }
 

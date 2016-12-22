@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="box-body">
-            <table id="example1" class="table table-hover table-bordered table-responsive" datatable="ng">
+            <table id="solicitudes" class="table table-hover table-bordered table-responsive" datatable="ng">
                 <thead>
                     <tr>
                         <th>Nombre</th>
@@ -37,9 +37,7 @@
                     <tr ng-repeat="user in solicitudes" sglclick="" dblclick="modalModificar({{user}},true);">
                         <td> {{user.nombre + " " + user.apellido1 + " " + user.apellido2}} </td>
                         <td class="text-center"> 
-                            <small ng-show="user.perfil.Colaborador == 1" class="label bg-blue margin">Colaborador</small>
-                            <small ng-show="user.perfil.Jefe == 1"class="label bg-blue margin">Jefe</small>
-                            <small ng-show="user.perfil.RH == 1"class="label bg-blue margin">RH</small>
+                            <small class="label bg-blue margin">Sin perfil</small>
                         </td>
                         <td> 
                             <small ng-show="user.estado == 1" class="label bg-green margin">Activo</small>
@@ -78,7 +76,7 @@
             </div>
         </div>
         <div class="box-body">
-            <table id="example1" class="table table-hover table-bordered table-responsive" datatable="ng">
+            <table id="usuarios" class="table table-hover table-bordered table-responsive" datatable="ng">
                 <thead>
                     <tr>
                         <th>Nombre</th>

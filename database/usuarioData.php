@@ -4,7 +4,6 @@
  * @author Isaac Corrales Cruz <isakucorrales@gmail.com>
  * @author Marco Vinicio Cambronero Fonseca <marcovcambronero@gmail.com>
  */
-require 'database.php';
 require '../services/variable.php';
 
 /**
@@ -25,7 +24,7 @@ class usuarioData {
             and departamento.empresa = empresa.id 
             and usuario.perfil = perfil.id 
             and usuario.id = evaluacion_periodo.usuario
-            and evaluacion_periodo.perfil_competencia = perfil_competencia.id and perfil.id != 0;";
+            and evaluacion_periodo.perfil_competencia = perfil_competencia.id";
         try {
 
             $json_response = array();
@@ -146,15 +145,25 @@ and perfil.id = 0;";
                 " nombre = ?," .
                 " apellido1 = ?, apellido2 = ?," .
                 " correo = ?,estado = b?, departamento = ?,perfil = ? where id = ?";
-        /*
-          INSERT INTO
-          evaluacion_periodo (estado,aprobacion_j,aprobacion_rh,auto_eva,eva,usuario,periodo,perfil_competencia)
-          VALUES (b'0',b'1',b'0',b'1',b'0',123,'0','3')
-          ON DUPLICATE KEY UPDATE estado=VALUES(estado), aprobacion_j = values(aprobacion_j),aprobacion_rh = values(aprobacion_rh)
-          ,auto_eva = values(auto_eva),eva=values(eva), perfil_competencia = values(perfil_competencia); */
+
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
             $sentencia->execute(array($nombre, $apellido1, $apellido2, $correo, $estado, $departamento, $perfil, $id));
+            return true;
+        } catch (PDOException $pdoExcetion) {
+            return $pdoExcetion->getMessage();
+        }
+    }
+
+    public static function updateEvaluacion($id, $periodo, $perfil) {
+        $comando = "INSERT INTO
+            evaluacion_periodo (usuario,periodo,perfil_competencia)
+            VALUES (?,?,?)
+            ON DUPLICATE KEY UPDATE  perfil_competencia = values(perfil_competencia);";
+
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($id, $periodo, $perfil));
             return true;
         } catch (PDOException $pdoExcetion) {
             return $pdoExcetion->getMessage();

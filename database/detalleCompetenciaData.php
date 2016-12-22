@@ -1,6 +1,5 @@
 <?php
 
-require 'database.php';
 
 
 class detalleCompetenciaData {

@@ -5,7 +5,6 @@
   * @author Marco Vinicio Cambronero Fonseca <marcovcambronero@gmail.com>
   */
 
-require 'database.php';
 
 
  /**

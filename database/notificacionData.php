@@ -1,6 +1,6 @@
 <?php
 
-require 'database.php';
+
 
 class notificacionData {
 
