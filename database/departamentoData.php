@@ -1,5 +1,6 @@
 <?php
 
+require 'usuarioData.php';
 
 class departamentoData {
 
