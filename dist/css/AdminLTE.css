@@ -2991,10 +2991,6 @@ table.text-center th {
 .modal-footer {
   border-top-color: #f4f4f4;
 }
-.modal-primary .modal-header,
-.modal-primary .modal-footer {
-  border-color: #307095;
-}
 .modal-warning .modal-header,
 .modal-warning .modal-footer {
   border-color: #c87f0a;
@@ -4378,7 +4374,6 @@ table.text-center th {
 .label-warning,
 .label-primary,
 .label-success,
-.modal-primary .modal-body,
 .modal-primary .modal-header,
 .modal-primary .modal-footer,
 .modal-warning .modal-body,
@@ -4431,8 +4426,7 @@ table.text-center th {
   background-color: #0073b7 !important;
 }
 .bg-light-blue,
-.label-primary,
-.modal-primary .modal-body {
+.label-primary{
   background-color: #3c8dbc !important;
 }
 .bg-green,
@@ -4492,8 +4486,7 @@ table.text-center th {
   background-color: #005384 !important;
 }
 .bg-light-blue-active,
-.modal-primary .modal-header,
-.modal-primary .modal-footer {
+.modal-primary .modal-header{
   background-color: #357ca5 !important;
 }
 .bg-green-active,

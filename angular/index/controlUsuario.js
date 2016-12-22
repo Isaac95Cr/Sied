@@ -41,7 +41,7 @@ angular.module("index")
                     $scope.userEdit.empresa = empdep.buscarEmpresa(user.empresa);
                     $scope.selectEmpresa($scope.userEdit.empresa);
                     $scope.userEdit.departamento = empdep.buscarDepartamento(user.departamento);
-                    $scope.userEdit.perfilcompetencia = {nombre:user.nombrePerfil,id:user.perfilId};
+                    $scope.userEdit.perfilcompetencia = {nombre: user.nombrePerfil, id: user.perfilId};
                 };
                 $scope.cargar = function () {
                     userService.cargarUsuarios().then(function (res) {
@@ -52,7 +52,7 @@ angular.module("index")
                             $scope.users = res.data;
                         }
                     });
-                     userService.cargarSolicitudes().then(function (res) {
+                    userService.cargarSolicitudes().then(function (res) {
                         if (res.status === 'error') {
                             alert(res.message);
                         }
@@ -100,11 +100,15 @@ angular.module("index")
                     $scope.selectUserEdit(user);
                     modalService.open("#modalUserEdit");
                 };
-//                $scope.filtro = function (departamento) {
-//                    return departamento.empresa == empdep.getEmpresa().id;
-//                };
+                $scope.confirmar = function () {
+                    modalService.modalYesNo("Confirmacion", "<p>" + "¿Esta seguro de realizar la accion?" + "</p>")
+                            .result.then(function (selectedItem) {
+                                if (selectedItem === "si")
+                                    $scope.eliminar();
+                            });
+                };
                 $scope.eliminar = function () {
-                   userService.eliminar($scope.userEdit.id).then(function (res) {
+                    userService.eliminar($scope.userEdit.id).then(function (res) {
                         if (res.status === 'error') {
                             alert(res.message);
                         }
@@ -120,7 +124,7 @@ angular.module("index")
                     else
                         return false;
                 };
-                
+
                 // Para limpiar la modal cuando se le da 'x' de cerrar o Cancelar.
                 $scope.resetForm = function (form) {
                     form.$setPristine();

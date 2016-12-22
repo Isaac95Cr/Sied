@@ -234,7 +234,7 @@
     <!-- /.modal-dialog -->
 
     <!-- /modalEditar -->
-    <div class="modal" id="modalUserEdit">
+    <div class="modal modal-primary" id="modalUserEdit">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -338,7 +338,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
                         <button type="submit" ng-show="!bandera" class="btn btn-primary" ng-disabled="formEdit.$invalid" closemodal="modalUserEdit">Modificar</button>
-                        <button type="button"  ng-click="eliminar()" ng-show="bandera" class="btn btn-primary" ng-disabled="" closemodal="modalUserEdit">Eliminar Solicitud</button>
+                        <button type="button"  ng-click="confirmar()" ng-show="bandera" class="btn btn-primary" ng-disabled="" closemodal="modalUserEdit">Eliminar Solicitud</button>
                         <button type="submit" ng-show="bandera" class="btn btn-primary" ng-disabled="formEdit.$invalid" closemodal="modalUserEdit">Aceptar Solicitud</button>
                     </div>
                 </form>
