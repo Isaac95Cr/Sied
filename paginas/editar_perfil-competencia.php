@@ -77,8 +77,8 @@
     <div class="modal" id="modalCompetencia">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="reset" class="close" data-dismiss="modal" ng-click="resetForm(competenciaForm)" aria-label="Close">
+                <div class="modal-header" style="background-color: #3c8dbc; color:#FFF">
+                    <button type="reset" style='opacity: initial; color: #FFF' class="close" data-dismiss="modal" ng-click="resetForm(competenciaForm)" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Agregar una Competencia</h4>
                 </div>
@@ -96,7 +96,7 @@
                             <label for="descripcion" class="col-sm-2 control-label">Descripción</label>
                             <div class="col-sm-10">
                                 <textarea class="form-control" rows="5" placeholder="Descripción de la meta" id="descripcion" name="descripcionCompetencia"  ng-model="descripcionCompetencia" required></textarea>
-                                <p ng-show="detalleForm.descripcionDetalle.$invalid && !detalleForm.descripcionDetalle.$pristine" class="help-block">Descripcion de la competencia requerido.</p>
+                                <p ng-show="detalleForm.descripcionDetalle.$invalid && !detalleForm.descripcionDetalle.$pristine" class="help-block">Descripción de la competencia requerido.</p>
                             </div>
                         </div>
                     </div>
@@ -115,8 +115,8 @@
     <div class="modal" id="modalCompetenciaEdit">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <div class="modal-header" style="background-color: #3c8dbc; color:#FFF">
+                    <button type="button" style='opacity: initial; color: #FFF' class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Agregar una Competencia</h4>
                 </div>
@@ -153,10 +153,10 @@
     <div class="modal" id="modalDetalle">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <div class="modal-header" style="background-color: #3c8dbc; color:#FFF">
+                    <button type="button" style='opacity: initial; color: #FFF' class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Agregar una Detalle a la competencia: {{competencia.titulo}}</h4>
+                    <h4 class="modal-title">Agregar un Detalle a la competencia: {{competencia.titulo}}</h4>
                 </div> 
                 <form name="detalleForm" method="post" class="form-horizontal" ng-submit="agregarDetalle()" novalidate>
                     <div class="modal-body">
@@ -184,10 +184,10 @@
     <div class="modal" id="modalDetalleEdit">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <div class="modal-header" style="background-color: #3c8dbc; color:#FFF">
+                    <button type="button" style='opacity: initial; color: #FFF' class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Editar Detalle a la competencia: {{competencia.titulo}}</h4>
+                    <h4 class="modal-title">Editar Detalle de la competencia: {{competencia.titulo}}</h4>
                 </div> 
                 <form name="detalleFormEdit" method="post" class="form-horizontal" ng-submit="modificarDetalle()" novalidate>
                     <div class="modal-body">
@@ -215,8 +215,8 @@
     <div class="modal" id="modalPeso" ng-controller="controlPesos">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <div class="modal-header" style="background-color: #3c8dbc; color:#FFF">
+                    <button type="button" style='opacity: initial; color: #FFF' class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Editar los Pesos de las competencias</h4>
                 </div> 

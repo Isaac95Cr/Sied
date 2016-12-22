@@ -1,6 +1,6 @@
 <?php
 
-require 'database.php';
+require 'evaluacionPeriodoData.php';
 
 class evaluacionCompetenciaData {
 
@@ -22,13 +22,14 @@ class evaluacionCompetenciaData {
                 $sentencia->execute(array($valores_Autoev, $existeId));
                 
             } else { // si no existen, entonces inserte uno nuevo.
+                $idEvaluacionPeriodo = evaluacionPeriodoData::getEvaluacionPeriodoUser($userColab);
                 $comando = "INSERT INTO evaluacion_competencia (auto_evaluacion, "
                         . "evaluacion, "
                         . "evaluacion_periodo) VALUES (?,?,?);";
 
                 $sentencia = Database::getInstance()->getDb()->prepare($comando);
                 $valores_Autoev = $evaluacion['value'];
-                $sentencia->execute(array($valores_Autoev, NULL, 1));
+                $sentencia->execute(array($valores_Autoev, NULL, $idEvaluacionPeriodo));
             }
 
            return true;
@@ -64,6 +65,7 @@ class evaluacionCompetenciaData {
         }
     }
 
+    
     public static function updateEvaluacionesDetalles($evaluaciones, $id, $idColab) {
 
         try {
@@ -76,13 +78,13 @@ class evaluacionCompetenciaData {
                 $sentencia->execute(array($evaluaciones, $id));
                 
             }else{  // sino entonces inserte...
-                
+               $idEvaluacionPeriodo = evaluacionPeriodoData::getEvaluacionPeriodoUser($idColab);
                $comando = "INSERT INTO evaluacion_competencia (auto_evaluacion, "
                                        . "evaluacion, "
                                        . "evaluacion_periodo) VALUES (?,?,?);";
 
                 $sentencia = Database::getInstance()->getDb()->prepare($comando);
-                $sentencia->execute(array(NULL, $evaluaciones, 1));
+                $sentencia->execute(array(NULL, $evaluaciones, $idEvaluacionPeriodo));
             }
 
             return true;
@@ -90,5 +92,10 @@ class evaluacionCompetenciaData {
             return $pdoExcetion->getMessage();
         }
     }
+    
+    
+    
+    
+    
 
 }

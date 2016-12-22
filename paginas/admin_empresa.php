@@ -41,8 +41,8 @@
         <div class="modal" id="modalEmpresaAdd">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="reset" class="close" data-dismiss="modal" ng-click="resetForm(empresaAddForm)" aria-label="Close">
+                    <div class="modal-header" style="background-color: #3c8dbc; color:#FFF">
+                        <button type="reset" style='opacity: initial; color: #FFF' class="close" data-dismiss="modal" ng-click="resetForm(empresaAddForm)" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Agregar Empresa </h4>
                     </div>
@@ -72,8 +72,8 @@
         <div class="modal" id="modalEmpresaEdit">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <div class="modal-header" style="background-color: #3c8dbc; color:#FFF">
+                        <button type="button" style='opacity: initial; color: #FFF' class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Editar Empresa {{empresa.nombre}} </h4>
                     </div>
@@ -131,8 +131,8 @@
         <div class="modal" id="modalDepartamentoAdd">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="reset" class="close" ng-click="resetForm(departamentoFormAdd)"  data-dismiss="modal" aria-label="Close">
+                    <div class="modal-header" style="background-color: #3c8dbc; color:#FFF">
+                        <button type="reset" style='opacity: initial; color: #FFF' class="close" ng-click="resetForm(departamentoFormAdd)"  data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Agregar Departamento</h4>
                     </div>
@@ -162,8 +162,8 @@
         <div class="modal" id="modalDepartamentoEdit">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <div class="modal-header" style="background-color: #3c8dbc; color:#FFF">
+                        <button type="button" style='opacity: initial; color: #FFF' class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Editar Departamento {{departamento.nombre}}</h4>
                     </div>

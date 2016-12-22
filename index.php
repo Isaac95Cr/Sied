@@ -97,7 +97,7 @@
                                     <li class="user-body">    
                                     </li>
                                     <!-- Menu Footer-->
-                                    <li class="user-footer" style='background-color: #3c8dbc'>
+                                    <li class="user-footer">
                                         <div class="pull-left">
                                             <a href="#/perfil" class="btn btn-default btn-flat">Perfil</a>
                                         </div>

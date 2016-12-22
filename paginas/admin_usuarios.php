@@ -127,8 +127,8 @@
     <div class="modal" id="modalUserAdd">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="reset" class="close" data-dismiss="modal" ng-click="resetForm(formAdd)" aria-label="Close">
+                <div class="modal-header" style="background-color: #3c8dbc; color:#FFF">
+                    <button type="reset" style='opacity: initial; color: #FFF' class="close" data-dismiss="modal" ng-click="resetForm(formAdd)" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Agregar un Usuario</h4>
                 </div>
