@@ -2,7 +2,7 @@
 include '../database/periodoData.php';
 $today = date("Y-m-d");
 $today2 = date("Y-m-d H:i:s");
-$data = periodoData::getAll();
+$data = periodoData::getActual();
 //echo date('Y-m-d', strtotime($data[0]["fechainicio"] . ' -1 day')) ."<br>";
 //echo $data[0]["fechainicio"] ."<br>";
 //echo $data[0]["fechainicio"] . ' -1 day';
@@ -10,10 +10,10 @@ $data = periodoData::getAll();
 
 $today_time = new DateTime($today);
 $exact_time = new DateTime($today2);
-$fechainicio = new DateTime($data[0]["fechainicio"]);//->modify('+1 day');->format('Y-m-d H:i:s');
-$fechainicioantes = new DateTime($data[0]["fechainicio"] . ' -1 day');
-$fechafinal = new DateTime($data[0]["fechafinal"]);
-$fechafinalantes = new DateTime($data[0]["fechafinal"] . ' -1 day');
+$fechainicio = new DateTime($data["fechainicio"]);//->modify('+1 day');->format('Y-m-d H:i:s');
+$fechainicioantes = new DateTime($data["fechainicio"] . ' -1 day');
+$fechafinal = new DateTime($data["fechafinal"]);
+$fechafinalantes = new DateTime($data["fechafinal"] . ' -1 day');
 
 echo "Hora actual: ".$exact_time->format('Y-m-d H:i:s') . " <br> \n";
 

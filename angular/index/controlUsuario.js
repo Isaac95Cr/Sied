@@ -41,7 +41,7 @@ angular.module("index")
                     $scope.userEdit.empresa = empdep.buscarEmpresa(user.empresa);
                     $scope.selectEmpresa($scope.userEdit.empresa);
                     $scope.userEdit.departamento = empdep.buscarDepartamento(user.departamento);
-                    $scope.userEdit.perfilcompetencia = {nombre:user.nombrePerfil,id:user.nombreId};
+                    $scope.userEdit.perfilcompetencia = {nombre:user.nombrePerfil,id:user.perfilId};
                 };
                 $scope.cargar = function () {
                     userService.cargarUsuarios().then(function (res) {

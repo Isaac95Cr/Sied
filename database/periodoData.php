@@ -1,7 +1,5 @@
 <?php
 
-require 'database.php';
-
 class periodoData {
 
     public static function getAll() {
