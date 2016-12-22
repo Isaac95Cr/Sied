@@ -25,7 +25,7 @@
                         <div class="box-header with-border">
                             <h4 class="box-title">
                                 <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{$index}}" ng-click="selectCompetencia(competencia.id, competencia.titulo, competencia.descripcion);">
-                                    #{{$index + 1}} {{competencia.titulo}}
+                                    {{competencia.titulo}}
                                 </a>
                             </h4>
                             <div class="box-tools pull-right">

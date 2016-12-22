@@ -10,6 +10,7 @@ angular.module("index")
                     nombre: undefined
                 };
                 
+                
                 // Para limpiar la modal cuando se le da 'x' de cerrar o Cancelar.
                 $scope.resetForm = function (form) {
                     form.$setPristine();
@@ -22,6 +23,7 @@ angular.module("index")
                 $scope.selectEmpresa = function (empresa) {
                     empdep.setEmpresa(empresa);
                 };
+                
                 $scope.cargar = function () {
                     empdep.cargarEmp().then(function () {
                         $scope.empresas = empdep.getEmpresas();

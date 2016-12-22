@@ -14,6 +14,14 @@ angular.module("index")
                     $scope.cargar();
                 };
                 
+                $scope.empresaSeleccionada = "";
+                
+                $scope.updateEmpresaSelect = function () {
+                    if(empdep.getEmpresa() !== undefined)
+                        $scope.empresaSeleccionada = empdep.getEmpresa().nombre;
+                    return $scope.empresaSeleccionada;
+                };
+                
                 // Para limpiar la modal cuando se le da 'x' de cerrar o Cancelar.
                 $scope.resetForm = function (form) {
                     form.$setPristine();

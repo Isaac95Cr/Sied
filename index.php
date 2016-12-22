@@ -97,12 +97,12 @@
                                     <li class="user-body">    
                                     </li>
                                     <!-- Menu Footer-->
-                                    <li class="user-footer">
+                                    <li class="user-footer" style='background-color: #3c8dbc'>
                                         <div class="pull-left">
                                             <a href="#/perfil" class="btn btn-default btn-flat">Perfil</a>
                                         </div>
                                         <div class="pull-right" >
-                                            <a ng-click="logout()" class="btn btn-default btn-flat">Cerrar Sesion</a>
+                                            <a ng-click="logout()" class="btn btn-default btn-flat">Cerrar Sesión</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -136,7 +136,7 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li ng-if="usuario.perfil.colaborador == 1"><a href="#/admin_metas"><i class="fa fa-flag-o"></i>Administrar Metas</a></li>
-                                <li ng-if="usuario.perfil.RH == 1"><a href="#/admin_colab_metas_RH"><i class="fa fa-users"></i>Administrar Metas RH</a></li>
+                                <li ng-if="usuario.perfil.RH == 1"><a href="#/admin_colab_metas_RH"><i class="fa fa-flag-o"></i>Administrar Metas RH</a></li>
                                 <li ng-if="usuario.perfil.jefe == 1"><a href="#/admin_colaboradores_metas"><i class="fa fa-users"></i>Colaboradores</a></li>
                             </ul>
                         </li>
@@ -194,10 +194,10 @@
 
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
-                    <b>Version</b> beta
+                    <!--  <b>Version</b> beta-->
+                    <?php echo 'Derechos reservados.  ' . date("Y"). '.'; ?>
                 </div>
-                <strong></strong> All rights
-                reserved.
+                <strong></strong> Sistema Evaluación del Desempeño.
             </footer>
 
         </div>

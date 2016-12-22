@@ -1,7 +1,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
 
-    <h1>Administración Periodo
+    <h1>Administración Período
     </h1>
     <ol class="breadcrumb">
         <li><a href="#/"><i class="fa  fa-building-o"></i> Índice</a></li>
@@ -43,9 +43,9 @@
     <div class="col-md-9">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title" ng-show="!addBool && isPeriodoActual()">Periodo Actual</h3>
-                <h3 class="box-title" ng-show="!addBool && !isPeriodoActual()">Periodo</h3>
-                <h3 class="box-title" ng-show="addBool">Agregar nuevo Periodo</h3>
+                <h3 class="box-title" ng-show="!addBool && isPeriodoActual()">Período Actual</h3>
+                <h3 class="box-title" ng-show="!addBool && !isPeriodoActual()">Período</h3>
+                <h3 class="box-title" ng-show="addBool">Agregar nuevo Período</h3>
                 <div class="box-tools pull-right">
                 </div>
             </div>
@@ -55,7 +55,7 @@
                     <div class="form-group" ng-class="{
                         'has-error'
                         : form.date1.$invalid}">
-                        <label for="daterange2" class="col-sm-4 control-label">Nombre del Periodo</label>
+                        <label for="daterange2" class="col-sm-4 control-label">Nombre del Período</label>
                         <div class="col-sm-8">
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" ng-model="periodo.nombre" required disabled/>
@@ -65,11 +65,11 @@
                     <div class="form-group" ng-class="{
                         'has-error'
                         : form.date1.$invalid}">
-                        <label for="daterange2" class="col-sm-4 control-label">Rango del Periodo General</label>
+                        <label for="daterange2" class="col-sm-4 control-label">Rango del Período General</label>
                         <div class="col-sm-8">
                             <div class="col-sm-8">
                                 <input date-range-picker id="daterange2" name="date1" class="form-control date-picker" type="text"
-                                       min="" max="" ng-model="periodo.date1" options="{locale: {format: 'MM / D / YYYY'}}"
+                                       min="" max="" ng-model="periodo.date1" options="{locale: {format: 'D / MM / YYYY'}}"
                                        required disabled/>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                         <div class="col-sm-8">
                             <div class="col-sm-8">
                                 <input date-range-picker id="daterange2" name="date2" class="form-control date-picker" type="text"
-                                       min="time('date1','startDate')" max="time('date1','endDate')" ng-model="periodo.date2" options="{locale: {format: 'MM / D / YYYY'}}"
+                                       min="time('date1','startDate')" max="time('date1','endDate')" ng-model="periodo.date2" options="{locale: {format: 'D / MM / YYYY'}}"
                                        required disabled/>
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                             <form class="form-horizontal" name="fdate1">
                                 <div class="form-group" ng-class="{
                                     'has-error': fdate1.date1.$invalid && !fdate1.date1.$pristine}">
-                                    <label for="daterange2" class="col-sm-4 control-label">Seleccione el rango del Periodo</label>
+                                    <label for="daterange2" class="col-sm-4 control-label">Seleccione el rango del Período</label>
                                     <div class="col-sm-8">
                                         <div class="col-sm-6">
                                             <input date-range-picker id="daterange2" name="date1" class="form-control date-picker" type="text"
@@ -126,14 +126,14 @@
                             </form>
                         </wz-step>
                         <wz-step wz-title="Rango de ingreso de metas">
-                            <h1>Continuing</h1>
-                            <p>You have continued here!</p>
+                            <h1>Continuación</h1>
+                            <p>Establezca el siguiente rango de fechas </p>
                             <br>
                             <form class="form-horizontal" name="fdate2" >
                                 <div class="form-group" ng-class="{
                                     'has-error'
                                     : fdate2.date2.$invalid && !fdate2.date2.$pristine}">
-                                    <label for="daterange2" class="col-sm-4 control-label">Seleccione el rango del Periodo</label>
+                                    <label for="daterange2" class="col-sm-4 control-label">Seleccione el rango del Período</label>
                                     <div class="col-sm-8">
                                         <div class="col-sm-6">
                                             <input date-range-picker id="daterange2" name="date2" class="form-control date-picker" type="text"
@@ -150,13 +150,13 @@
                             </form>
                         </wz-step>
                         <wz-step wz-title="Rango de calificación de competencias">
-                            <h1>Continuing</h1>
-                            <p>You have continued here!</p>
+                            <h1>Continuación</h1>
+                            <p>Establezca el siguiente rango de fechas</p>
                             <br>
                             <form class="form-horizontal" name="fdate3">
                                 <div class="form-group" ng-class="{
                                     'has-error': fdate3.date3.$invalid && !fdate3.date3.$pristine}">
-                                    <label for="daterange2" class="col-sm-4 control-label">Seleccione el rango del Periodo</label>
+                                    <label for="daterange2" class="col-sm-4 control-label">Seleccione el rango del Período</label>
                                     <div class="col-sm-8">
                                         <div class="col-sm-6">
                                             <input date-range-picker id="daterange2" name="date3" class="form-control date-picker" type="text"
@@ -176,7 +176,7 @@
                             <form class="form-horizontal" name="form" ng-submit="agregar()">
                                 <div class="form-group" ng-class="{
                                     'has-error': form.date1.$invalid}">
-                                    <label for="daterange2" class="col-sm-5 control-label">Nombre del Periodo</label>
+                                    <label for="daterange2" class="col-sm-5 control-label">Nombre del Período</label>
                                     <div class="col-sm-7">
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control" ng-model="model.nombre" required disabled/>
@@ -186,7 +186,7 @@
                                 <div class="form-group" ng-class="{
                                     'has-error'
                                     : form.date1.$invalid}">
-                                    <label for="daterange2" class="col-sm-5 control-label">Rango del Periodo General</label>
+                                    <label for="daterange2" class="col-sm-5 control-label">Rango del Período General</label>
                                     <div class="col-sm-7">
                                         <div class="col-sm-9">
                                             <input date-range-picker id="daterange2" name="date1" class="form-control date-picker" type="text"
@@ -219,7 +219,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="row form-group has-error" style="text-align: center;"> 
-                                        <p ng-show="!validar()" class="help-block"> Las fechas no coinsiden.</p>
+                                        <p ng-show="!validar()" class="help-block"> Las fechas no coinciden.</p>
                                         <input ng-show="!validar()" type="button" class="btn btn-primary" wz-reset value="Reiniciar"/>
                                     </div>
                                     <div class="col-sm-12">

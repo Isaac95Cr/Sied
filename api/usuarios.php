@@ -96,19 +96,19 @@ class usuarios extends Rest implements interfaceApi {
         $correo = $body['correo'];
         $contrasena = md5($body['contrasena']);
         $departamento = $body['departamento']['id'];
-        if ($body['perfil'] != null) {
+        if (isset($body['perfil'])) {
             $perfil = usuarioData::getPerfil($body['perfil']);
         } else {
             $perfil = 0;
         }
-        if ($body['estado'] != null) {
+        if (isset($body['estado'])) {
             $estado = $body['estado'];
         } else {
             $estado = 0;
         }
         $data = usuarioData::insert($id, $nombre, $apellido1, $apellido2, $correo, $estado, $contrasena, $departamento, $perfil);
         if ($data === true) {
-            return $this->responseAPI("success", "add success", 200, $data);
+            return $this->responseAPI("success", "Registro completado", 200, $data);
         }
         return $this->responseAPI("error", "$data", 200);
     }

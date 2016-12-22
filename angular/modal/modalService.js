@@ -73,8 +73,8 @@ angular.module("modal")
                                 return contenido;
                             },
                             footer: function () {
-                                return "<button class='btn btn-primary pull-rigth' ng-click='vm.ok()' aria-label='Close'>Si</button>" +
-                                        "<button class='btn btn-default pull-left' ng-click='vm.cancel()' aria-label='Close'>Cancel</button>";
+                                return "<button class='btn btn-primary pull-rigth' ng-click='vm.ok()' aria-label='Close'>Sí</button>" +
+                                        "<button class='btn btn-default pull-left' ng-click='vm.cancel()' aria-label='Close'>Cancelar</button>";
                             },
                             variable: function () {
                                 return variable;

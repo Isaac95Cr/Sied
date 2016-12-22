@@ -13,22 +13,28 @@ angular.module('registro')
                     });
                 };
                 $scope.filtro = function (departamento) {
-                    return departamento.empresa == empdep.getEmpresa().id;
+                    if (empdep.getEmpresa() !== undefined)
+                        return departamento.empresa == empdep.getEmpresa().id;
+                    else
+                        return false;
                 };
                 $scope.selectEmpresa = function (empresa) {
                     empdep.setEmpresa(empresa);
-                }
-                $scope.agregarUsuario = function () {
-                    userService.insert($scope.user)
-                            .success(function (data, status, headers, config) {
-                                alert(data);
-                                modalService.modalOk(data.titulo, "<p>" + data.msj + "</p>");
-                                $scope.user = {};
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert("failure message: " + JSON.stringify(data));
-                            });
                 };
+
+
+                $scope.agregarUsuario = function () {
+                    userService.insert($scope.user).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
+                            $scope.user = {};
+                        }
+                    });
+                };
+
 
                 $scope.validar = function () {
                     if ($scope.user.departamento) {

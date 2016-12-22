@@ -22,9 +22,9 @@
                 </div>
             </div>
             <div class="box-body table-responsive no-padding">
-                <table class="table table-hover">
+                <table class="table table-hover" id='tablaEmpresas'>
 
-                    <tr ng-repeat="empresa in empresas" sglclick="selectEmpresa({{empresa}})" dblclick="modalModificar({{empresa}});">
+                    <tr class='clickable-row' ng-repeat="empresa in empresas" sglclick="selectEmpresa({{empresa}})" dblclick="modalModificar({{empresa}});">
                         <td> {{empresa.nombre}} </td>
                         <td style="text-align:center"><a ng-click="confirmar(empresa.id)" class=""><i class="fa fa-close"></i>  </a> </td>
                     </tr>
@@ -106,7 +106,7 @@
     <div class="col-md-6" ng-controller="controlDepartamento" ng-init="init()">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Departamentos de Empresa: {{empdep.getEmpresa().nombre}}</h3>
+                <h3 class="box-title">Departamentos de Empresa: <b>{{updateEmpresaSelect()}}</b></h3>
 
                 <div class="box-tools pull-right">
 
@@ -202,9 +202,13 @@
 <!-- /.modal -->
 
 <script type="text/javascript">
-    $("tr").click(function () {
-        $(this).addClass("active").siblings().removeClass("active");
-    });
+//    $("tr").click(function () {
+//        $(this).addClass("active").siblings().removeClass("active");
+//    });
+
+$('#tablaEmpresas').on('click', '.clickable-row', function(event) {
+  $(this).addClass('active').siblings().removeClass('active');
+});
 
 </script>
 

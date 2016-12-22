@@ -42,8 +42,14 @@ angular.module('index')
                 $scope.verPeriodo = function (periodo) {
                     $scope.setPeriodo(periodo);
                 };
+//                $scope.isPeriodoActual = function () {
+//                    return $scope.periodo.id === $scope.periodoActual.id;
+//                };
                 $scope.isPeriodoActual = function () {
-                    return $scope.periodo.id === $scope.periodoActual.id;
+                    if($scope.periodo.id !== undefined && $scope.periodoActual.id !== undefined)
+                        return $scope.periodo.id === $scope.periodoActual.id;
+                    else
+                        return false;
                 };
                 $scope.agregarPeriodo = function () {
                     $scope.addBool = true;
@@ -129,8 +135,13 @@ angular.module('index')
                 $scope.time = function (x, moment) {
                     return $scope.$eval("model." + x + "." + moment);
                 };
+//                $scope.$watch('model.date1', function () {
+//                    $scope.model.nombre = "Periodo" + ($scope.model.date1.startDate.month() + 1) + "-" + ($scope.model.date1.endDate.month() + 1) + "/" + $scope.model.date1.startDate.year();
+//                }, true);
+
                 $scope.$watch('model.date1', function () {
-                    $scope.model.nombre = "Periodo" + ($scope.model.date1.startDate.month() + 1) + "-" + ($scope.model.date1.endDate.month() + 1) + "/" + $scope.model.date1.startDate.year();
+                    if($scope.model.date1.startDate !== undefined)
+                        $scope.model.nombre = "Periodo" + ($scope.model.date1.startDate.month() + 1) + "-" + ($scope.model.date1.endDate.month() + 1) + "/" + $scope.model.date1.startDate.year();
                 }, true);
 
 

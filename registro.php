@@ -52,7 +52,7 @@
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback" ng-class="{ 'has-error' : form.contrasena2.$invalid && !form.contrasena2.$pristine && !confirmarContrasena() }">
-                        <input type="password" class="form-control" placeholder="Contraseña" name="contrasena2" ng-model="user.contrasena2" required>
+                        <input type="password" class="form-control" placeholder="Confirmar contraseña" name="contrasena2" ng-model="user.contrasena2" required>
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
                     <div class="form-group" ng-show='isCapsLockOn'>
@@ -60,7 +60,6 @@
                     </div>
 
                     <div  name="empresa" class="form-group has-feedback"  ng-class="{ 'has-error' : formAdd.empresa.$invalid && !formAdd.empresa.$pristine }">
-                        
                             <ui-select theme="bootstrap" ng-model="user.empresa" on-select="selectEmpresa($item)" class="form-control" title="Empresa" required>
                                 <ui-select-match placeholder="">{{user.empresa.nombre}}</ui-select-match>
                                 <ui-select-choices repeat="empresa in empresas | filter: $select.search" >

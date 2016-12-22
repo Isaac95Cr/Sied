@@ -2748,7 +2748,7 @@
         return list(format, index, 'weekdaysMin', 7, 'day');
     }
 
-    locale_locales__getSetGlobalLocale('en', {
+    locale_locales__getSetGlobalLocale('es', {
         ordinalParse: /\d{1,2}(th|st|nd|rd)/,
         ordinal : function (number) {
             var b = number % 10,

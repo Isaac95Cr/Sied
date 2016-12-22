@@ -21,8 +21,8 @@
                 </div>
             </div>
             <div class="box-body table-responsive no-padding" >
-                <table class="table table-hover"> 
-                    <tr ng-repeat="perfil in perfiles" sglclick="selectPerfil({{perfil}})" dblclick="modalModificar({{perfil}});">
+                <table class="table table-hover" id='tablaCompetencias'> 
+                    <tr class='clickable-row' ng-repeat="perfil in perfiles" sglclick="selectPerfil({{perfil}})" dblclick="modalModificar({{perfil}});">
                         <td> {{perfil.nombre}} </td>
                         <td style="text-align:center"><a ng-click="confirmar(perfil.id)"><i class="fa fa-close"></i>  </a> </td>
                     </tr>
@@ -101,7 +101,7 @@
     <div class="col-md-8">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Competencias de Perfil {{perfil.nombre}} </h3>
+                <h3 class="box-title">Competencias de Perfil: <b>{{perfil.nombre}}</b> </h3>
                 <div class="box-tools pull-right">
 
                 </div>
@@ -112,11 +112,11 @@
                         <div class="box-header with-border">
                             <h4 class="box-title">
                                 <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{$index}}">
-                                    #{{$index + 1}} {{competencia.titulo}}
+                                     {{competencia.titulo}}
                                 </a>
                             </h4>
                         </div>
-                        <div id="collapse{{$index}}" class="panel-collapse collapse" ng-class='{in:$first}'>
+                        <div id="collapse{{$index}}" class="panel-collapse collapse">
                             <div class="box-body">
                                 <b>Descripción:</b>
                                 <p>{{competencia.descripcion}}</p>
@@ -152,7 +152,11 @@
 </section>
 <!-- /.content -->
 <script type="text/javascript">
-    $("tr").click(function () {
-        $(this).addClass("active").siblings().removeClass("active");
-    });
+//    $("tr").click(function () {
+//        $(this).addClass("active").siblings().removeClass("active");
+//    });
+    
+ $('#tablaCompetencias').on('click', '.clickable-row', function(event) {
+  $(this).addClass('active').siblings().removeClass('active');
+});
 </script>
