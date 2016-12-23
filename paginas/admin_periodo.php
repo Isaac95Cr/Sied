@@ -69,7 +69,7 @@
                         <div class="col-sm-8">
                             <div class="col-sm-8">
                                 <input date-range-picker id="daterange2" name="date1" class="form-control date-picker" type="text"
-                                       min="" max="" ng-model="periodo.date1" options="{locale: {format: 'D / MM / YYYY'}}"
+                                       min="" max="" ng-model="periodo.date1" options="{locale: {format: 'D/ MM / YYYY'}}"
                                        required disabled/>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                         <div class="col-sm-8">
                             <div class="col-sm-8">
                                 <input date-range-picker id="daterange2" name="date2" class="form-control date-picker" type="text"
-                                       min="time('date1','startDate')" max="time('date1','endDate')" ng-model="periodo.date2" options="{locale: {format: 'D / MM / YYYY'}}"
+                                       min="time('date1','startDate')" max="time('date1','endDate')" ng-model="periodo.date2" options="{locale:  {format: 'D/ MM / YYYY'}}"
                                        required disabled/>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                         <div class="col-sm-8">
                             <div class="col-sm-8">
                                 <input date-range-picker id="daterange2" name="date3" class="form-control date-picker" type="text"
-                                       min="time('date2','endDate')" max="time('date1','endDate')" ng-model="periodo.date3" options="{locale: {format: 'MM / D / YYYY'}}"
+                                       min="time('date2','endDate')" max="time('date1','endDate')" ng-model="periodo.date3" options="{locale: {format: 'D / MM / YYYY'}}"
                                        required disabled/>
                             </div>
                         </div>
@@ -114,7 +114,7 @@
                                     <div class="col-sm-8">
                                         <div class="col-sm-6">
                                             <input date-range-picker id="daterange2" name="date1" class="form-control date-picker" type="text"
-                                                   min="''" max="''" ng-model="model.date1" options="{locale: {format: 'MM / D / YYYY'}}"
+                                                   min="periodoActEnd()" max="''" ng-model="model.date1" options="{locale: {format: 'D/ MM / YYYY'}}"
                                                    required/>
                                         </div>
                                     </div>
@@ -137,7 +137,7 @@
                                     <div class="col-sm-8">
                                         <div class="col-sm-6">
                                             <input date-range-picker id="daterange2" name="date2" class="form-control date-picker" type="text"
-                                                   min="time('date1','startDate')" max="time('date1','endDate')"ng-model="model.date2" options="{locale: {format: 'MM / D / YYYY'}}"
+                                                   min="time('date1','startDate')" max="time('date1','endDate')"ng-model="model.date2" options="{locale:  {format: 'D/ MM / YYYY'}}"
                                                    required/>
                                         </div>
                                     </div>
@@ -160,7 +160,7 @@
                                     <div class="col-sm-8">
                                         <div class="col-sm-6">
                                             <input date-range-picker id="daterange2" name="date3" class="form-control date-picker" type="text"
-                                                   min="time('date2','endDate')" max="time('date1','endDate')" ng-model="model.date3" options="{locale: {format: 'MM / D / YYYY'}}"
+                                                   min="time('date2','endDate')" max="time('date1','endDate')" ng-model="model.date3" options="{locale:  {format: 'D/ MM / YYYY'}}"
                                                    required/>
                                         </div>
                                     </div>
@@ -190,7 +190,7 @@
                                     <div class="col-sm-7">
                                         <div class="col-sm-9">
                                             <input date-range-picker id="daterange2" name="date1" class="form-control date-picker" type="text"
-                                                   min="" max="" ng-model="model.date1" options="{locale: {format: 'MM / D / YYYY'}}"
+                                                   min="" max="" ng-model="model.date1" options="{locale:  {format: 'D/ MM / YYYY'}}"
                                                    required disabled/>
                                         </div>
                                     </div>
@@ -201,7 +201,7 @@
                                     <div class="col-sm-7">
                                         <div class="col-sm-9">
                                             <input date-range-picker id="daterange2" name="date2" class="form-control date-picker" type="text"
-                                                   min="time('date1','startDate')" max="time('date1','endDate')" ng-model="model.date2" options="{locale: {format: 'MM / D / YYYY'}}"
+                                                   min="time('date1','startDate')" max="time('date1','endDate')" ng-model="model.date2" options="{locale:  {format: 'D/ MM / YYYY'}}"
                                                    required disabled/>
                                         </div>
                                     </div>
@@ -212,7 +212,7 @@
                                     <div class="col-sm-7">
                                         <div class="col-sm-9">
                                             <input date-range-picker id="daterange2" name="date3" class="form-control date-picker" type="text"
-                                                   min="time('date2','endDate')" max="time('date1','endDate')" ng-model="model.date3" options="{locale: {format: 'MM / D / YYYY'}}"
+                                                   min="time('date2','endDate')" max="time('date1','endDate')" ng-model="model.date3" options="{locale:  {format: 'D/ MM / YYYY'}}"
                                                    required disabled/>
                                         </div>
                                     </div>

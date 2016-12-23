@@ -1,2 +1,6 @@
 
-Hora actual: 2016-12-22 14:41:04 <br> 
+Fatal error: Uncaught Error: Class 'Database' not found in C:\wamp64\www\Sied\database\periodoData.php:19
+Stack trace:
+#0 C:\wamp64\www\Sied\services\periodo.php(5): periodoData::getActual()
+#1 {main}
+  thrown in C:\wamp64\www\Sied\database\periodoData.php on line 19

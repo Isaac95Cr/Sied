@@ -135,6 +135,9 @@ angular.module('index')
                 $scope.time = function (x, moment) {
                     return $scope.$eval("model." + x + "." + moment);
                 };
+                $scope.periodoActEnd = function () {
+                    return $scope.periodoActual.date1.endDate;
+                };
 //                $scope.$watch('model.date1', function () {
 //                    $scope.model.nombre = "Periodo" + ($scope.model.date1.startDate.month() + 1) + "-" + ($scope.model.date1.endDate.month() + 1) + "/" + $scope.model.date1.startDate.year();
 //                }, true);
