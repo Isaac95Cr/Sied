@@ -56,12 +56,11 @@ class metas extends Rest implements interfaceApi {
             $body = json_decode(file_get_contents("php://input"), true);
             $id = $body['id'];
             $data = metasData::getAllFromUser($id);
-            return $this->responseAPI("success", "get success!", 200, $data);
+            return $this->responseAPI("success", "get $id success!", 200, $data);
         } else {
             $data = metasData::getAll();
-            return $this->responseAPI("success", "get success!", 200, $data);
+            return $this->responseAPI("success", "get $id success!", 200, $data);
         }
-        return $this->responseAPI("success", "get success!", 200, $data);
     }
 
     public function allFrom() {
@@ -146,8 +145,7 @@ class metas extends Rest implements interfaceApi {
         }
         return $this->responseAPI("error", "", 200);
     }
-    
-    
+
 // Aprobar/Desaprobar meta de RH
     public function aprobarMetaRH() {
 
@@ -170,11 +168,7 @@ class metas extends Rest implements interfaceApi {
             return $this->responseAPI("success", $mensaje, 200);
         }
         return $this->responseAPI("error", "", 200);
-    }    
-    
-    
-    
-    
+    }
 
     public function setEvaluacion() {
 
@@ -190,6 +184,7 @@ class metas extends Rest implements interfaceApi {
         }
         return $this->responseAPI("error", "", 200);
     }
+
     public function setAuto() {
 
         if ($this->get_request_method() != "PUT") {
@@ -197,13 +192,13 @@ class metas extends Rest implements interfaceApi {
         }
 
         $body = json_decode(file_get_contents("php://input"), true);
-        $data = metasData::updateAuto($body) ;
+        $data = metasData::updateAuto($body);
         if ($data === true) {
             return $this->responseAPI("success", "Autoevaluaciones ingresadas", 200);
         }
         return $this->responseAPI("error", "", 200);
     }
-    
+
     public function setPeso() {
 
         if ($this->get_request_method() != "PUT") {
