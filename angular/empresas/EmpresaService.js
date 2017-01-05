@@ -74,6 +74,20 @@ angular.module('empdep')
                     });
                 };
                 
+                
+              // llama al método que carga departamentos y los usuarios de cada uno (que posean metas aprobadas por Jefe).
+                this.cargarUsuariosMetasAprob = function () {
+                    return apiConnector.get("api/departamentos/allAndUsersMetasAprob").then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            service.departamentos = res.data;
+                        }
+                    });
+                };
+                
+                
                 this.eliminar = function (obj) {
                    return apiConnector.post("api/departamentos/del",obj);
                 };

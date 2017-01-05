@@ -59,6 +59,7 @@ class departamentos extends Rest implements interfaceApi {
     }
     
     
+    // todos los departamentos y sus usuarios
     public function allAndUsers() {
 
         $data = departamentoData::getDepartmentsAndUsers();
@@ -70,6 +71,21 @@ class departamentos extends Rest implements interfaceApi {
     }
     
     
+    
+    // todos los departamentos y sus usuarios (con metas aprobadas por el Jefe)
+    public function allAndUsersMetasAprob() {
+
+        $data = departamentoData::departmentsUsersMetasAprob();
+        
+        if($data == true){
+            return $this->responseAPI("success", "get success!", 200, $data);
+        }
+            return $this->responseAPI("error", "", 200);
+    }    
+    
+    
+    
+    // Obtiene todos los departamentos (junto con los usuarios) de un jefe específico.
     public function getUsersDeJefe() {
         
         $body = json_decode(file_get_contents("php://input"), true);
@@ -80,6 +96,28 @@ class departamentos extends Rest implements interfaceApi {
         }
             return $this->responseAPI("error", "", 200);
     }
+    
+    
+    
+     // Obtiene todos los departamentos (junto con los usuarios) de un jefe específico, que posean METAS PENDIENTES 
+    // de aprobar.
+//    public function usersDeJefeMetasPendiente() {
+//        
+//        $body = json_decode(file_get_contents("php://input"), true);
+//        $data = departamentoData::usersFromJefeMetasPendientes($body);
+//        
+//        if($data == true){
+//            return $this->responseAPI("success", "get success!", 200, $data);
+//        }
+//            return $this->responseAPI("error", "", 200);
+//    }
+    
+    
+    
+    
+    
+    
+    
 
     public function add() {
 

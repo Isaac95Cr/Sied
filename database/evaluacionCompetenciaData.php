@@ -1,5 +1,6 @@
 <?php
 
+require 'evaluacionPeriodoData.php';
 
 
 class evaluacionCompetenciaData {
@@ -41,16 +42,18 @@ class evaluacionCompetenciaData {
     /* Obtener las autoevaluaciones, evaluaciones y el id de los detalles de competencias de un usuario */
 
     public static function getAutoFromUser($idUser) {
+        $idPeriodoActual = periodoData::getActual()['id'];
         $consulta = "SELECT evaluacion_competencia.id, evaluacion_competencia.auto_evaluacion,
-                                               evaluacion_competencia.evaluacion
-                                               FROM evaluacion_competencia, usuario, evaluacion_periodo
-		   WHERE usuario.id = ? AND
-                                                              usuario.id = evaluacion_periodo.usuario AND
-                                                              evaluacion_periodo.id = evaluacion_competencia.evaluacion_periodo;";
+	                         evaluacion_competencia.evaluacion
+	                         FROM evaluacion_competencia, usuario, evaluacion_periodo
+	                         WHERE usuario.id = ? AND
+	                                        usuario.id = evaluacion_periodo.usuario AND
+                                                              evaluacion_periodo.periodo = ? AND
+		                  evaluacion_periodo.id = evaluacion_competencia.evaluacion_periodo;";
         try {
             $json_response = array();
             $comando = Database::getInstance()->getDb()->prepare($consulta);
-            $comando->execute(array($idUser));
+            $comando->execute(array($idUser, $idPeriodoActual));
             $competencias = $comando->fetchAll(PDO::FETCH_ASSOC);
             foreach ($competencias as $row) {
                 $newrow = array();
@@ -69,7 +72,7 @@ class evaluacionCompetenciaData {
     public static function updateEvaluacionesDetalles($evaluaciones, $id, $idColab) {
 
         try {
-            $is_RegistrosColab = evaluacion_Competencia::getAutoEvCompetUser($idColab);  // comprobar si existen registros del user.
+            $is_RegistrosColab = evaluacionCompetenciaData::getAutoFromUser($idColab);  // comprobar si existen registros del user.
 
             if (isset($is_RegistrosColab[0]) ) {   // si existen, entonces actualice...
                 

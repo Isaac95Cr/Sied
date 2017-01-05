@@ -27,7 +27,7 @@
                 <div class="box-body">
                     <form name="formAutoEv" ng-submit="confirmarEvaluacion()" class="form-horizontal">
                         <div class="box-group" id="accordion">
-                            <div class="panel box box-primary" ng-repeat="meta in metasUser" ng-if="meta.evaluable === '1'">
+                            <div class="panel box box-primary" ng-repeat="meta in metasUser" ng-if="meta.evaluable === '1' && meta.aprobacion_j === '1' && meta.aprobacion_rh === '1' ">
                                 <div class="box-header with-border">
                                     <h4 class="box-title">
                                         <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{$index}}">
@@ -68,9 +68,10 @@
                             </div>
 
                             <p style="font-size: 90%" ng-show="!tiene_Metas" class="label bg-red margin">El Colaborador no posee metas</p>
+                            <p style="font-size: 90%" ng-show="tiene_Metas && !isEvaluables" class="label label-primary margin">No hay metas por evaluar</p>
                         </div>
                         <div class="box-footer" >
-                            <button type="submit" class="btn btn-primary btn-lg pull-right" ng-show="tiene_Metas">Guardar cambios</button>
+                            <button type="submit" class="btn btn-primary btn-lg pull-right" ng-show="tiene_Metas && isEvaluables">Guardar cambios</button>
                         </div>
                     </form>
                 </div>

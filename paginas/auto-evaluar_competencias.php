@@ -24,11 +24,11 @@
             <div class="box-body">
                 <form name="formAutoEv" ng-submit="confirmarAutoEvCompe()" class="form-horizontal">
                     <div class="box-group" id="accordion">
-                        <div class="panel box box-primary" ng-repeat="detalle in arrayFinal">
+                        <div class="panel box box-primary" 	ng-repeat="competencia in arrayFinal">
                             <div class="box-header with-border">
                                 <h4 class="box-title">
                                     <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{$index}}">
-                                        <p data-toggle="popover" data-trigger="hover" data-html="true" data-content="<b>Jefe: <span class='label label-success'>Aprobado</span> <br> RRHH: <span class='label label-warning'>Pendiente</span></b>">{{detalle[0].titleCompet}}</p>
+                                        <p data-toggle="popover" data-trigger="hover" data-html="true" data-content="<b>Jefe: <span class='label label-success'>Aprobado</span> <br> RRHH: <span class='label label-warning'>Pendiente</span></b>">{{competencia.titulo}}</p>
                                     </a>
                                 </h4>
                             </div>
@@ -42,7 +42,7 @@
                                         <th>Detalle de Competencia</th>
                                         <th>Autoevaluación</th>
 
-                                        <tr ng-repeat="elemento in detalle">
+                                        <tr ng-repeat="elemento in competencia.detalles">
                                             <td>{{elemento.detail}}</td>
                                             <td>
                                                 <div class="form-group">

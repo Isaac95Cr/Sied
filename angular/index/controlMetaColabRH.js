@@ -12,7 +12,7 @@ angular.module("index")
                 
 
                 $scope.cargarDepartamentos = function () {
-                    return departamentoService.cargarConUsuarios().then(function () {
+                    return departamentoService.cargarUsuariosMetasAprob().then(function () {
                         $scope.listadoDepartamentos = departamentoService.getDepartamentos();
                     });
                 };

@@ -3,11 +3,12 @@ angular.module("index")
             function ($scope, factoryMeta, modalService, sessionService, ShareDataService, $rootScope) {
 
                 $scope.metas = [];
-                $scope.tiene_Metas = false;
+                $scope.tiene_Metas = true;
                 $scope.meta = 0;
 
                 $scope.meta_isEvaluable = 1;
                 $scope.is_Check = true;
+                $scope.metaAprobRH = false;  // para saber si la meta ya fue aprobada por RH.
 
                 $scope.meta_titulo = "";
                 $scope.meta_descripcion = "";
@@ -55,7 +56,7 @@ angular.module("index")
 
                 $scope.cargar = function () {
                     var obj = {id: $scope.userOnline.id};
-                    $scope.tiene_Metas = false;
+                    $scope.tiene_Metas = true;
 
                     factoryMeta.cargarMetasUser(obj).then(function (res) {
                         if (res.status === 'error') {
@@ -63,8 +64,8 @@ angular.module("index")
                         }
                         if (res.status === 'success') {
                             $scope.metas = res.data;
-                            if ($scope.metas.length !== 0)
-                                $scope.tiene_Metas = true;
+                            if ($scope.metas.length === 0)
+                                $scope.tiene_Metas = false;
                             ShareDataService.prepForBroadcast(pesos());
                         }
                     });
@@ -147,10 +148,15 @@ angular.module("index")
 
                 $scope.updateActual = function (meta) {
                     $scope.actual = meta.id;
+                    $scope.metaAprobRH = false;
 
                     $scope.meta_isEvaluable = meta.evaluable;
                     ($scope.meta_isEvaluable === "1") ?
                             ($scope.is_Check = true) : ($scope.is_Check = false);
+
+
+                    if (meta.aprobacion_rh === "1")
+                        $scope.metaAprobRH = true;
 
                     $scope.meta_titulo = meta.titulo;
                     $scope.meta_descripcion = meta.descripcion;

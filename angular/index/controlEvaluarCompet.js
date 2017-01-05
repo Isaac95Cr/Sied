@@ -1,8 +1,8 @@
 angular.module("index")
         .controller("controlEvaluarCompet", ['$scope', 'servicioCompetColab', 'servicioCompetAutoEv',
             'servicioCompetUser', 'modalService', 'tempStorage', 'storageSession', '$crypto',
-             function ($scope, servicioCompetColab, servicioCompetAutoEv,
-             servicioCompetUser, modalService, tempStorage, storageSession, $crypto) {
+            function ($scope, servicioCompetColab, servicioCompetAutoEv,
+                    servicioCompetUser, modalService, tempStorage, storageSession, $crypto) {
 
                 $scope.competencias = "";
                 $scope.colaborador = "";
@@ -16,22 +16,22 @@ angular.module("index")
                 $scope.CompetAutoEv = new Array();
 
                 $scope.arrayEvaluaciones = new Array();
+                $scope.idCompetencias = new Array();
 
-                //var colab = {id: $routeParams.id}
 
 
                 $scope.init = function () {
-                    
+
                     $scope.argumentosIdUser = tempStorage.args;
-                    
-                    if($scope.argumentosIdUser !== undefined){
+
+                    if ($scope.argumentosIdUser !== undefined) {
                         $scope.infoIdUser = $scope.argumentosIdUser.idUser;
                         $scope.idEncrypt = $crypto.encrypt($scope.infoIdUser);
                         storageSession.saveId($scope.idEncrypt);
-                                     
-                    }else{
+
+                    } else {
                         $scope.infoIdUser = $crypto.decrypt(storageSession.loadId());
-                    }          
+                    }
 
                     // Primero se solicitan las autoevaluaciones al servidor, después se cargan en los scopes.
                     // Luego se solicitan los detalles de competencia, después se cargan en los scopes los
@@ -74,6 +74,11 @@ angular.module("index")
                     var contador = 0;  // para acceder a las posiciones del array de autoevaluaciones y de evaluaciones
                     var obj = {};
                     angular.forEach($scope.competencias, function (elemento, key) {
+
+                        $scope.idCompetencias = $scope.idCompetencias.concat(elemento.id);
+                        if (elemento.detalles.length === 0)
+                            contador++;
+                        
                         angular.forEach(elemento.detalles, function (elementoD, keyD) {
 
                             // Hay que verificar si están las autoevaluaciones y las evaluaciones...
@@ -141,23 +146,32 @@ angular.module("index")
 
 
 
-
-
-
-
-                // Guardar Evaluaciones de Detalles de Competencias
+                 // Guardar Evaluaciones de Detalles de Competencias
                 $scope.evaluar = function () {
-                    $scope.inputs = angular.element(document).find('input');  // Obtiene todos los inputs de la página;
                     var obj;
                     var idDetalles = servicioCompetAutoEv.getIDAutoEv();  // id de las evaluaciones en la bd.
                     var stringEvaluaciones = "";
+                    
+                    
+                   angular.forEach($scope.idCompetencias, function (id_Elemento, key) {
 
-                    // Se recorren los inputs...
-                    angular.forEach($scope.inputs, function (elemento, key) {
-                        (elemento.value === "") ?
-                                stringEvaluaciones = stringEvaluaciones + "0,"
-                                :
-                                stringEvaluaciones = stringEvaluaciones + elemento.value + ",";
+                        /*
+                         Encontrar los inputs que tengan el mismo name, con lo cual corresponden a una competencia
+                         en específico.
+                         */
+                        $scope.inputs = angular.element(document).find('input').filter(document.getElementsByName(id_Elemento));           
+                        
+                        if($scope.inputs.length === 0)
+                            stringEvaluaciones = stringEvaluaciones + ",";
+                        
+                            // Se recorren los inputs...
+                            angular.forEach($scope.inputs, function (elemento, key) {
+                                (elemento.value === "") ?
+                                        stringEvaluaciones = stringEvaluaciones + "0,"
+                                        :
+                                        stringEvaluaciones = stringEvaluaciones + elemento.value + ",";
+
+                            });
 
                     });
 

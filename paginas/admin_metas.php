@@ -30,8 +30,10 @@
                             <div class="box-header with-border">
                                 <h4 class="box-title">
                                     <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{$index}}">
-                                        <p popover data-toggle="popover" data-trigger="hover" data-container="body" data-html="true" data-content="<b>Jefe: <span class='label label-primary'>{{meta.aprobacion_j == 1? 'Aprobada' : 'Desaprobada'}}</span> <br> RRHH: <span class='label label-primary'>{{meta.aprobacion_rh == 1? 'Aprobada' : 'Desaprobada'}}</span></b>">{{meta.titulo}}</p>
-                                              
+                                        <p popover data-toggle="popover" data-trigger="hover" data-container="body" data-html="true" data-content="<b>Jefe: <span class='{{meta.aprobacion_j == 1? 'label label-success' : ( (meta.aprobacion_j == 0)? 'label label-danger' : 'label label-warning' )}}'>    {{meta.aprobacion_j == 1? 'Aprobada' : ( (meta.aprobacion_j == 0)? 'Desaprobada' : 'Pendiente' )}}
+                                           </span> <br> RRHH: <span class='{{meta.aprobacion_rh == 1? 'label label-success' : ( (meta.aprobacion_rh == 0)? 'label label-danger' : 'label label-warning' )}}'>              {{meta.aprobacion_rh == 1? 'Aprobada' : ( (meta.aprobacion_rh == 0)? 'Desaprobada' : 'Pendiente' )}}</span></b>">{{meta.titulo}}
+                                        </p>
+
                                     </a>
                                 </h4>
                             </div>
@@ -43,6 +45,7 @@
                                             <td style="font-weight: bold;">Descripción</td>
                                             <td style="font-weight: bold;">Peso</td>
                                             <td style="font-weight: bold;">Autoevaluable</td>
+                                            <td style="font-weight: bold;">Comentarios</td>
                                             <td style="font-weight: bold;">Editar</td>
                                             <td style="font-weight: bold;">Eliminar</td>
                                         </tr>
@@ -50,6 +53,7 @@
                                             <td> {{meta.descripcion}}</td>
                                             <td> {{meta.peso}} </td>
                                             <td> {{meta.evaluable == 1? 'Sí' : 'No'}} </td>
+                                            <td></td>
                                             <td>
                                                 <button type="button" id={{meta.id}} name={{meta.id}} value={{meta.id}} ng-click="updateActual(meta)"   class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalEdit"><i class="fa fa-clipboard"></i></button>
                                             </td>
@@ -65,7 +69,7 @@
                         </div>
 
                     </div>
-
+                    <p style="font-size: 90%" ng-show="!tiene_Metas" class="label label-success">¡Pulse sobre el botón inferior para agregar una meta!</p>
                 </div>
                 <!-- /.box-body -->
 
@@ -155,14 +159,14 @@
                             <div class="form-group" ng-class="{ 'has-error' : formModif.meta_titulo.$invalid && !formModif.meta_titulo.$pristine }">
                                 <label for="titulo" class="col-sm-2 control-label">Titulo</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="Titulo" id="titulo" ng-model="meta_titulo" name="meta_titulo" required> 
+                                    <input type="text" class="form-control" placeholder="Titulo" id="titulo" ng-model="meta_titulo" ng-disabled="metaAprobRH" name="meta_titulo" required> 
                                     <p ng-show="formModif.meta_titulo.$invalid && !formModif.meta_titulo.$pristine" class="help-block">Título de meta requerido.</p>
                                 </div>
                             </div>
                             <div class="form-group" ng-class="{ 'has-error' : formModif.meta_descripcion.$invalid && !formModif.meta_descripcion.$pristine }">
                                 <label for="descripcion" class="col-sm-2 control-label">Descripción</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" rows="3" placeholder="Descripción de la meta" id="descripcion" ng-model="meta_descripcion" name="meta_descripcion" required>
+                                    <textarea class="form-control" rows="3" placeholder="Descripción de la meta" id="descripcion" ng-model="meta_descripcion" name="meta_descripcion" ng-disabled="metaAprobRH" required>
                                     </textarea>
                                     <p ng-show="formModif.meta_descripcion.$invalid && !formModif.meta_descripcion.$pristine" class="help-block">Descripción de meta requerida.</p>
                                 </div>

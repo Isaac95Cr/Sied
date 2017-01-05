@@ -48,7 +48,7 @@
                                                 
                                                 <td>
                                                     <median ng-show="{{elemento.valor != '-' }}">{{elemento.valor}}</median>
-                                                    <median ng-show="{{elemento.valor == '-' }}" class="label bg-red margin">Pendiente</median>
+                                                    <median ng-show="{{elemento.valor == '-' || elemento.valor == ''}}" class="label bg-red margin">Pendiente</median>
                                                 </td>
                                                 
                                                 

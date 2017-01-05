@@ -25,7 +25,7 @@
                 </div>
                 <div class="box-body">
                     <div class="box-group" id="accordion">
-                        <div class="panel box box-primary" ng-repeat="meta in metasUser">
+                        <div class="panel box box-primary" ng-repeat="meta in metasUser" ng-if="meta.aprobacion_j === '1' && meta.aprobacion_rh === null">
                             <div class="box-header with-border">
                                 <h4 class="box-title">
                                     <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{$index}}">

@@ -18,6 +18,7 @@ angular.module("index")
                 $scope.nombrePerfil = undefined;  // aquí se almacena el nombre del perfil de competencia
 
                 $scope.arrayFinal = new Array();
+                $scope.objetoCompuesto = {titulo: "", detalles: ""};
 
 
                 $scope.init = function () {
@@ -179,25 +180,24 @@ angular.module("index")
                 $scope.loadTodo = function () {
                     var obj = {};
                     var contadorEvaluaciones = 0;
+                    var detalles = new Array();
 
                     angular.forEach($scope.competencias, function (elemento, key) {
+                        if(elemento.detalles.length === 0)
+                            contadorEvaluaciones++;
                         angular.forEach(elemento.detalles, function (elemento2, key2) {
 
                             obj = {detail: elemento2.descripcion, autoev: $scope.autoEvaluaciones[contadorEvaluaciones],
                                 idObj: elemento2.id, nameObj: elemento.id, titleCompet: elemento.titulo};
+                            detalles = detalles.concat([obj]);
                             contadorEvaluaciones++;
-                            $scope.objetoCompuesto = $scope.objetoCompuesto.concat([obj]);
                         });
                         
-//                        if($scope.objetoCompuesto.length === 0){
-//                              obj = {detail: "", autoev: undefined,
-//                                idObj: "", nameObj: elemento.id, titleCompet: elemento.titulo};
-//                              $scope.objetoCompuesto = $scope.objetoCompuesto.concat([obj]);
-//                        }
-
-                        $scope.arrayFinal = $scope.arrayFinal.concat([$scope.objetoCompuesto]);
-                        $scope.objetoCompuesto = [];
-
+                        $scope.objetoCompuesto.titulo = elemento.titulo;
+                        $scope.objetoCompuesto.detalles = detalles;
+                        $scope.arrayFinal = $scope.arrayFinal.concat($scope.objetoCompuesto);
+                        $scope.objetoCompuesto = {titulo: "", detalles: ""};
+                        detalles = [];
                     });
 
                 };

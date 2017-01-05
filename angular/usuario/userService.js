@@ -17,9 +17,18 @@ angular.module('usuario')
                    return apiConnector.post('api/usuarios/del',obj);
                 };
                 
+                
+                // carga los departamentos (y sus usuarios) que tiene a cargo un jefe en específico
                 usuario.cargarUsuariosDeJefe = function (obj) {
                     return apiConnector.post('api/departamentos/getUsersDeJefe', obj);
                 };
+                
+                
+                //  carga los departamentos (y sus usuarios con metas pendientes de aprobar/desaprobar)
+                //  que tiene a cargo un jefe en específico
+//                usuario.cargarUsuariosMetasPendientesJefe = function (obj) {
+//                    return apiConnector.post('api/departamentos/usersDeJefeMetasPendiente', obj);
+//                };
 
                 usuario.loadAllUser = function (obj) {
                     return apiConnector.post('/Sied/services/usuario/get-AllUser.php', obj);

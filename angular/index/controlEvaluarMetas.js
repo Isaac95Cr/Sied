@@ -5,6 +5,7 @@ angular.module("index")
 
                 $scope.metasUser = [];
                 $scope.tiene_Metas = true;
+                $scope.isEvaluables = true;  // para saber si hay metas por evaluar, y que hayan sido aprobadas por Jefe y RH.
                 $scope.colaborador = "";
 
                 $scope.init = function () {
@@ -33,8 +34,12 @@ angular.module("index")
                         }
                         if (res.status === 'success') {
                             $scope.metasUser = res.data;
-                            if ($scope.metasUser.length === 0)
+                            if ($scope.metasUser.length === 0){
                                 $scope.tiene_Metas = false;
+                            }else{
+                                $scope.isEvaluables = 
+                                        $scope.metasUser.some(elem => (elem.aprobacion_j === '1' && elem.aprobacion_rh === '1'));
+                            }
                         }
                     });
                 };
