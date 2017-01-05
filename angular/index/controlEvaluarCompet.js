@@ -110,7 +110,7 @@ angular.module("index")
                 $scope.cargarAutoEvaluaciones = function () {
 
                     $scope.stringAutoEvaluaciones = servicioCompetAutoEv.getStringAutoEv();
-                    if ($scope.stringAutoEvaluaciones !== "") {
+                    if ($scope.stringAutoEvaluaciones !== "" && $scope.stringAutoEvaluaciones !== null && $scope.stringAutoEvaluaciones !== undefined) {
 
                         $scope.arrayAutoEvaluacionesCompet = $scope.stringAutoEvaluaciones.split(';');
 
@@ -129,7 +129,7 @@ angular.module("index")
                 $scope.cargarEvaluaciones = function () {
 
                     var evaluacionesString = servicioCompetAutoEv.getStringEvaluacion();
-                    if (evaluacionesString !== "" && evaluacionesString !== null)
+                    if (evaluacionesString !== "" && evaluacionesString !== null && evaluacionesString !== undefined)
                         $scope.arrayEvaluaciones = evaluacionesString.split(',');
 
                 }
