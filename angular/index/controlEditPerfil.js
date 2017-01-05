@@ -29,6 +29,7 @@ angular.module("index")
 
                 $scope.init = function () {
                     $scope.cargar();
+                    $scope.bandera = false;
                 };
 
                 $scope.isSelected = function (competencia) {
