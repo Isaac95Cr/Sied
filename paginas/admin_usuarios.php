@@ -48,13 +48,6 @@
                     </tr>
                 </tbody>
                 <tfoot>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Perfil</th>
-                        <th>Estado</th>
-                        <th>Departamento</th>
-                        <th>Empresa</th>
-                    </tr>
                 </tfoot>
             </table>
         </div>
@@ -103,13 +96,6 @@
                     </tr>
                 </tbody>
                 <tfoot>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Perfil</th>
-                        <th>Estado</th>
-                        <th>Departamento</th>
-                        <th>Empresa</th>
-                    </tr>
                 </tfoot>
             </table>
         </div>

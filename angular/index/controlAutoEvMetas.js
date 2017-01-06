@@ -5,6 +5,7 @@ angular.module("index")
                 $scope.objAutoEv = new Array();
                 $scope.metas = [];
                 $scope.tiene_Metas = false;
+                $scope.isEvaluables = true;  // para saber si hay metas por evaluar, y que hayan sido aprobadas por Jefe y RH.
 
                 /*
                  * Función que inicializa la lista de metas 
@@ -29,8 +30,11 @@ angular.module("index")
                         }
                         if (res.status === 'success') {
                             $scope.metas = res.data;
-                            if ($scope.metas.length !== 0)
+                            if ($scope.metas.length !== 0){
                                 $scope.tiene_Metas = true;
+                                $scope.isEvaluables = 
+                                        $scope.metas.some(elem => (elem.evaluable == 1 && elem.aprobacion_j === '1' && elem.aprobacion_rh === '1'));
+                            }
                         }
                     });
                 };

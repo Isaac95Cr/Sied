@@ -26,7 +26,7 @@
                 <div class="box-body">
                     <form name="formAutoEv" ng-submit="confirmarAutoEv()" class="form-horizontal">
                         <div class="box-group" id="accordion">
-                            <div class="panel box box-primary" ng-repeat="meta in metas" ng-if="meta.evaluable === '1'">
+                            <div class="panel box box-primary" ng-repeat="meta in metas" ng-if="meta.evaluable === '1' && meta.aprobacion_j === '1' && meta.aprobacion_rh === '1' ">
                                 <div class="box-header with-border">
                                     <h4 class="box-title">
                                         <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{$index}}">
@@ -57,10 +57,12 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>                    
+                            </div>           
+                            
+                            <p style="font-size: 90%" ng-show="!isEvaluables"  class="label label-primary margin">No hay metas por evaluar</p>
                         </div>
                         <div class="box-footer" >
-                            <button type="submit"  ng-show="tiene_Metas" class="btn btn-primary btn-lg pull-right">Guardar cambios</button>
+                            <button type="submit"  ng-show="isEvaluables" class="btn btn-primary btn-lg pull-right">Guardar cambios</button>
                         </div>
                     </form>
                 </div>

@@ -107,6 +107,8 @@ class metas extends Rest implements interfaceApi {
         return $this->responseAPI("error", "", 200);
     }
 
+    
+    // modifica toda la meta.
     public function set() {
 
         if ($this->get_request_method() != "PUT") {
@@ -121,6 +123,30 @@ class metas extends Rest implements interfaceApi {
         }
         return $this->responseAPI("error", "", 200);
     }
+    
+    
+    
+    
+    // modifica solo la característica 'evaluable' de la meta.
+    public function setEvaluable() {
+
+        if ($this->get_request_method() != "PUT") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+
+        $body = json_decode(file_get_contents("php://input"), true);
+
+        $data = metasData::updateEvaluableMeta($body['is_Evaluable'], $body['id']);
+        if ($data === true) {
+            return $this->responseAPI("success", "Meta actualizada con éxito", 200);
+        }
+        return $this->responseAPI("error", "", 200);
+    }
+    
+    
+    
+    
+    
 
 // Aprobar/Desaprobar meta de Jefe
     public function aprobarMeta() {

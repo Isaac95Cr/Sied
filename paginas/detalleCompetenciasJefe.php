@@ -15,7 +15,7 @@
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title"><b>Colaborador: </b> {{colaborador}}</h3> <br /> <br />
-                <h3 class="box-title"><b>Perfil de Competencias: </b>{{nombrePerfil}}</h3>
+                <h3 class="box-title" ng-show="tiene_Perfil"><b>Perfil de Competencias: </b>{{nombrePerfil}}</h3>
 
                 <div class="box-tools pull-right">
 
@@ -54,6 +54,9 @@
                     </div>
 
                 </div>
+                
+                    <p style="font-size: 90%" ng-show="!tiene_Perfil"  class="label label-danger margin">El Colaborador no tiene un perfil de competencia asociado</p>
+                    <p style="font-size: 90%" ng-show="tiene_Perfil && !tiene_Competencias"  class="label label-danger margin">No existen competencias asociadas al perfil del Colaborador</p>
             </div>
             <!-- /.box-body -->
 

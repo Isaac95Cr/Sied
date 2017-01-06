@@ -16,7 +16,9 @@
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title"><b>Colaborador: </b> {{colaborador}}</h3>
+                    <h3 class="box-title">Competencias</h3>
+                    <br /><br>
+                    <h3 class="box-title" ng-show="tiene_Competencias"><b>Colaborador: </b> {{colaborador}}</h3>
 
                     <div class="box-tools pull-right">
 
@@ -45,14 +47,14 @@
 
                                             <tr ng-repeat="elemento in autoEvaluaciones[$index]">
                                                 <td>{{elemento.descrip}}</td>
-                                                
+
                                                 <td>
-                                                    <median ng-show="{{elemento.valor != '-' }}">{{elemento.valor}}</median>
-                                                    <median ng-show="{{elemento.valor == '-' || elemento.valor == ''}}" class="label bg-red margin">Pendiente</median>
+                                                    <median ng-show="{{elemento.valor != '-'}}">{{elemento.valor}}</median>
+                                                    <median ng-show="{{elemento.valor == '-'|| elemento.valor == ''}}" class="label bg-red margin">Pendiente</median>
                                                 </td>
-                                                
-                                                
-                                                
+
+
+
                                                 <td>
                                                     <div class="form-group">
                                                         <div class="col-sm-5">
@@ -67,8 +69,12 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            <p style="font-size: 90%" ng-show="!tiene_Competencias"  class="label label-danger margin">El Colaborador no tiene un perfil de competencia asociado</p>
+
                         </div>
-                        <button type="submit" ng-show="{{competencias.length == 0}}" class="btn btn-primary btn-lg pull-right">Guardar Cambios</button>
+                        <button type="submit" ng-show="tiene_Competencias" class="btn btn-primary btn-lg pull-right">Guardar Cambios</button>
                     </form>
                 </div>
                 <!-- /.box-body -->

@@ -18,7 +18,7 @@ angular.module("index")
                 $scope.arrayEvaluaciones = new Array();
                 $scope.idCompetencias = new Array();
 
-
+                $scope.tiene_Competencias = true;  // para saber si su perfil (en caso de tener) tiene competencias asociadas.
 
                 $scope.init = function () {
 
@@ -71,6 +71,12 @@ angular.module("index")
 
                 $scope.cargarDetalles_AutoEval = function () {
                     $scope.competencias = servicioCompetColab.getCompetencias();
+                    
+                    if($scope.competencias.length === 0){
+                        $scope.tiene_Competencias = false;
+                    }
+                        
+                        
                     var contador = 0;  // para acceder a las posiciones del array de autoevaluaciones y de evaluaciones
                     var obj = {};
                     angular.forEach($scope.competencias, function (elemento, key) {
@@ -184,7 +190,7 @@ angular.module("index")
                         }
                         if (res.status === 'success') {
                             modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
-                            $scope.cargar();
+                            $scope.init();
 
                         }
                     });

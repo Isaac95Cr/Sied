@@ -53,7 +53,13 @@
                                             <td> {{meta.descripcion}}</td>
                                             <td> {{meta.peso}} </td>
                                             <td> {{meta.evaluable == 1? 'Sí' : 'No'}} </td>
-                                            <td></td>
+
+                                            <td class="text-center">
+                                                <span data-toggle="modal" data-target="#modalVerComent">
+                                                    <i class="fa fa-commenting fa-2x" ng-click="getComments(meta.id)"></i>
+                                                </span>
+                                            </td>
+
                                             <td>
                                                 <button type="button" id={{meta.id}} name={{meta.id}} value={{meta.id}} ng-click="updateActual(meta)"   class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalEdit"><i class="fa fa-clipboard"></i></button>
                                             </td>
@@ -122,7 +128,7 @@
                             <div class="form-group">
                                 <label for="evaluable" class="col-sm-2 control-label" >Evaluable</label>
                                 <div class="col-sm-10">
-                                    <input type="checkbox"  id="evaluable" name="evaluable" ng-model="is_Check"  i-check />
+                                    <input type="checkbox"  id="evaluable" name="evaluable" ng-model="is_Check" ng-change="verCambio()"  i-check/>
                                 </div>
                             </div>
 
@@ -174,7 +180,7 @@
                             <div class="form-group">
                                 <label for="evaluable" class="col-sm-2 control-label" >Evaluable</label>
                                 <div class="col-sm-10">
-                                    <input type="checkbox"  id="evaluable" name="evaluable" ng-model="is_Check"  i-check />
+                                    <input type="checkbox"  id="evaluable" name="evaluable" ng-model="is_Check" ng-change="verCambio()"  i-check />
                                 </div>
                             </div>
 
@@ -192,6 +198,58 @@
     </div>
     <!-- /.modal -->
 
+
+
+
+
+
+    <div>
+        <div class="modal" id="modalVerComent">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #3c8dbc; color:#FFF">
+                        <button type="button" style='opacity: initial; color: #FFF' class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" ng-model="titleMeta">Comentarios de la Meta: <br /> {{titleMeta}}</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <form name="formMuestra" class="form-horizontal" novalidate>
+                            <div class="form-group">
+                                <label for="comment" class="col-sm-2 control-label">Comentario Jefe</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" rows="3" ng-model="commentJefe" id="comentarioJ" name="comentarioJ" ng-disabled="true" style="color: red">
+                                    </textarea>
+                                    <p ng-show="commentJefe === null || commentJefe === ''" style="color:green">*La meta no posee comentarios de Jefe</p>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="comment" class="col-sm-2 control-label">Comentario RRHH</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" rows="3" ng-model="commentRH" id="comentarioRH" name="comentarioRH" ng-disabled="true" style="color: red">
+                                    </textarea>
+                                    <p ng-show="commentRH === null || commentRH === ''" style="color:green">*La meta no posee comentarios de RH</p>
+                                </div>
+                            </div>                        
+
+                            <div class="modal-footer">
+
+                                <button type="button"  class="btn btn-primary"data-dismiss="modal">Aceptar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+            <!-- /.modal-content -->
 </div>    
 
 

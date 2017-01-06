@@ -80,6 +80,7 @@
 
 
                     <p style="font-size: 90%" ng-show="!tiene_Metas" class="label bg-red margin">El Colaborador no posee metas</p>
+                    <p style="font-size: 90%" ng-show="tiene_Metas && !is_Aprobar" class="label label-primary margin">No hay metas por aprobar</p>
                     </div>
                 </div>
                 <!-- /.box-body -->

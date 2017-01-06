@@ -38,7 +38,7 @@ angular.module("index")
                                 $scope.tiene_Metas = false;
                             }else{
                                 $scope.isEvaluables = 
-                                        $scope.metasUser.some(elem => (elem.aprobacion_j === '1' && elem.aprobacion_rh === '1'));
+                                        $scope.metasUser.some(elem => (elem.evaluable === '1' && elem.aprobacion_j === '1' && elem.aprobacion_rh === '1'));
                             }
                         }
                     });

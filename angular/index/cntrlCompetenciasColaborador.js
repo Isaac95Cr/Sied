@@ -5,6 +5,10 @@ angular.module("index")
                 $scope.perfilCompet = undefined;  // aqui se guarda el id del perfil de competencia del usuario.
                 $scope.userOnline = undefined;
                 $scope.nombrePerfil = undefined;  // aquí se almacena el nombre del perfil de competencia
+                
+                $scope.tiene_Perfil = true;   // para saber si tiene un perfil asociado.
+                $scope.tiene_Competencias = true;  // para saber si su perfil (en caso de tener) tiene competencias asociadas.
+                $scope.tiene_Todo = false;  // para saber si tiene perfil asociado y a su vez, este competencias.
 
                 $scope.init = function () {
 
@@ -34,6 +38,8 @@ angular.module("index")
                                 if (res.status === 'success') {
                                     $scope.perfilCompet = res.data.id;
                                     $scope.nombrePerfil = res.data.nombre;
+                                    if($scope.nombrePerfil === null || $scope.nombrePerfil === undefined)
+                                            $scope.tiene_Perfil = false;      // no tiene perfil asociado
                                 }
                             });
                 };
@@ -47,6 +53,12 @@ angular.module("index")
                                 }
                                 if (res.status === 'success') {
                                     $scope.competencias = res.data;
+                                    if($scope.competencias.length === 0){
+                                            $scope.tiene_Competencias = false;    // no tiene competencias
+                                    }
+                                    if($scope.tiene_Perfil && $scope.tiene_Competencias){
+                                            $scope.tiene_Todo = true;  // tiene perfil asociado y este competencias.
+                                    }
                                 }
                             });
                 };

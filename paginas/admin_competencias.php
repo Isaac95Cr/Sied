@@ -14,7 +14,9 @@
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Perfil de Competencias: <b>{{nombrePerfil}}</b></h3>
+                <h3 class="box-title">Competencias</h3>
+                <br /><br />
+                <h3 class="box-title" ng-show="tiene_Perfil">Perfil de Competencias: <b>{{nombrePerfil}}</b></h3>
 
                 <div class="box-tools pull-right">
 
@@ -39,10 +41,10 @@
                                     <b>Descripción:</b>
                                     <p>{{competencia.descripcion}}</p>
                                     <table class="table table-bordered">
-                                      <th>Detalles de la competencia</th>
-                                      
-                                      <tr ng-repeat="detalle in competencia.detalles">
-                                          <td>{{detalle.descripcion}}</td>
+                                        <th>Detalles de la competencia</th>
+
+                                        <tr ng-repeat="detalle in competencia.detalles">
+                                            <td>{{detalle.descripcion}}</td>
                                         </tr>
 
                                     </table>
@@ -51,14 +53,19 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <p style="font-size: 90%" ng-show="!tiene_Perfil"  class="label label-danger margin">No tiene un perfil de competencia asociado</p>
+                    <p style="font-size: 90%" ng-show="tiene_Perfil && !tiene_Competencias"  class="label label-danger margin">No existen competencias asociadas a su perfil</p>
 
                 </div>
+
+                <div class="box-footer">    
+                    <a class="btn btn-primary btn-lg pull-right" ng-show="tiene_Todo" href="#/auto-evaluar_competencias">Autoevaluar</a>
+                </div>
+
             </div>
             <!-- /.box-body -->
 
-            <div class="box-footer" >    
-                <a class="btn btn-primary btn-lg pull-right" href="#/auto-evaluar_competencias">Autoevaluar</a>
-            </div>
         </div>
         <!-- /.box-footer-->
     </div>

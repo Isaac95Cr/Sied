@@ -96,19 +96,40 @@ class metasData{
     }
     
     
+    // Actualiza toda la meta.
     public static function update($is_Evaluable, $titulo, $descripcion, $id) {        
         
-        $comando =   "UPDATE meta set evaluable = b?, titulo = ?, descripcion = ? WHERE id = ?";
+        $comando =   "UPDATE meta SET evaluable = b?, titulo = ?, descripcion = ?, aprobacion_j = ?, aprobacion_rh = ?, comentario_j = ?, comentario_rh = ?  WHERE id = ?";
                 
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
-            $sentencia->execute(array($is_Evaluable, $titulo, $descripcion, $id));
+           $sentencia->execute(array($is_Evaluable, $titulo, $descripcion, NULL, NULL, NULL, NULL, $id));
             
             return true;
         } catch (PDOException $pdoExcetion) {
             return $pdoExcetion->getMessage();
         }
     }
+    
+    
+    
+    // Actualiza si la meta es evaluable o no.
+    public static function updateEvaluableMeta($is_Evaluable, $id) {        
+        
+        $comando =  "UPDATE meta SET evaluable = b? WHERE id = ?";
+                
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+           $sentencia->execute(array($is_Evaluable, $id));
+            
+            return true;
+        } catch (PDOException $pdoExcetion) {
+            return $pdoExcetion->getMessage();
+        }
+    }    
+    
+    
+    
     
     
     

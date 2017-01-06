@@ -27,7 +27,9 @@
                             <div class="box-header with-border">
                                 <h4 class="box-title">
                                     <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{$index}}">
-                                        <p>{{departamento.nombre}}</p>
+                                        <p>{{departamento.nombre}}
+                                        <span ng-show="departamento.usuarios != 0" class="label label-danger">{{departamento.usuarios.length}}</span>
+                                        </p>
                                     </a>
                                 </h4>
                             </div>

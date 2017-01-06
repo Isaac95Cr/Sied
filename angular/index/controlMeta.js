@@ -18,6 +18,12 @@ angular.module("index")
                 $scope.auto_Evaluacion = 0;
                 $scope.userOnline = [];
 
+                // En las siguientes variables comment se guardarán los comentarios de la meta hechos por Jefe y RH.
+                $scope.commentJefe = "";
+                $scope.commentRH = "";
+
+                $scope.titleMeta = "";
+
                 /*
                  * Función que inicializa la lista de metas 
                  */
@@ -72,17 +78,18 @@ angular.module("index")
                 };
 
 
+                $scope.verCambio = function () {
+                    $('input').on('ifUnchecked', function () {
+                        $scope.meta_isEvaluable = 0;
+                        $scope.is_Check = false;
+                    });
 
-                $('input').on('ifUnchecked', function () {
-                    $scope.meta_isEvaluable = 0;
-                    $scope.is_Check = false;
+                    $('input').on('ifChecked', function () {
+                        $scope.meta_isEvaluable = 1;
+                        $scope.is_Check = true;
+                    });
+                };
 
-                });
-
-                $('input').on('ifChecked', function () {
-                    $scope.meta_isEvaluable = 1;
-                    $scope.is_Check = true;
-                });
 
 
                 $scope.confirmarEliminacion = function (id) {
@@ -166,28 +173,50 @@ angular.module("index")
 
 
                 $scope.modificar = function () {
-                    var metaObj = {
-                        is_Evaluable: $scope.meta_isEvaluable,
-                        titulo: $scope.meta_titulo,
-                        descripcion: $scope.meta_descripcion,
-                        id: $scope.actual
-                    };
+                    if (!$scope.metaAprobRH) {  // si NO ha sido aprobado por RH, entonces puede cambiar todo...
+                        var metaObj = {
+                            is_Evaluable: $scope.meta_isEvaluable,
+                            titulo: $scope.meta_titulo,
+                            descripcion: $scope.meta_descripcion,
+                            id: $scope.actual
+                        };
 
-                    factoryMeta.updateMeta(metaObj)
-                            .then(function (res) {
-                                if (res.status === 'error') {
-                                    alert(res.message);
-                                }
-                                if (res.status === 'success') {
-                                    modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
-                                    $scope.meta_isEvaluable = 1;
-                                    $scope.is_Check = true;
-                                    $scope.meta_titulo = undefined;
-                                    $scope.meta_descripcion = undefined;
-                                    $scope.actual = "0";
-                                    $scope.cargar();
-                                }
-                            });
+                        factoryMeta.updateMeta(metaObj)
+                                .then(function (res) {
+                                    if (res.status === 'error') {
+                                        alert(res.message);
+                                    }
+                                    if (res.status === 'success') {
+                                        modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
+                                        $scope.meta_isEvaluable = 1;
+                                        $scope.is_Check = true;
+                                        $scope.meta_titulo = undefined;
+                                        $scope.meta_descripcion = undefined;
+                                        $scope.actual = "0";
+                                        $scope.cargar();
+                                    }
+                                });
+                    } else { // si YA fue aprobada por RH, entonces solo puede cambiar lo de evaluable...
+
+                        var metaObj = {
+                            is_Evaluable: $scope.meta_isEvaluable,
+                            id: $scope.actual
+                        };
+
+                        factoryMeta.updateEvaluableMeta(metaObj)
+                                .then(function (res) {
+                                    if (res.status === 'error') {
+                                        alert(res.message);
+                                    }
+                                    if (res.status === 'success') {
+                                        modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
+                                        $scope.meta_isEvaluable = 1;
+                                        $scope.is_Check = true;
+                                        $scope.actual = "0";
+                                        $scope.cargar();
+                                    }
+                                });
+                    }
                 };
 
 
@@ -198,6 +227,31 @@ angular.module("index")
                         x.push({id: meta.id, titulo: meta.titulo, peso: meta.peso});
                     });
                     return {metas: x};
+                };
+
+
+
+                // función que trae los comentarios hechos por Jefe y RH de una meta en específico.
+                $scope.getComments = function (meta) {
+                    factoryMeta.getMeta(meta).then(function (res) {
+                        if (res.status === 'error') {
+                            alert(res.message);
+                        }
+                        if (res.status === 'success') {
+                            $scope.titleMeta = res.data[0].titulo;
+                            $scope.commentJefe = res.data[0].comentario_j;
+                            $scope.commentRH = res.data[0].comentario_rh;
+
+                            if ($scope.commentJefe === null || $scope.commentJefe === "") {
+                                $scope.commentJefe = "";
+                            }
+
+                            if ($scope.commentRH === null || $scope.commentRH === "") {
+                                $scope.commentRH = "";
+                            }
+                        }
+
+                    });
                 };
 
 
@@ -223,6 +277,11 @@ angular.module("index")
 
             meta.updateMeta = function (obj) {
                 return apiConnector.put('api/metas/set', obj);
+            };
+
+
+            meta.updateEvaluableMeta = function (obj) {
+                return apiConnector.put('api/metas/setEvaluable', obj);
             };
 
             meta.eliminarMeta = function (metaObj) {
