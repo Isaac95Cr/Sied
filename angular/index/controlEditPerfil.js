@@ -5,6 +5,7 @@ angular.module("index")
                 $scope.competenciaeditar = {};
                 $scope.detalle = {};
                 $scope.bandera = true;
+                $scope.pesoBool = false;
                 $scope.descripcionDetalle = "";
                 $scope.descripcionDetalleEdit = "";
 
@@ -121,6 +122,7 @@ angular.module("index")
                             $scope.descripcionDetalle = undefined;
                             $scope.cargar();
                             $scope.bandera = true;
+                            $scope.pesoBool = true;
                         }
                     });
 
@@ -144,6 +146,7 @@ angular.module("index")
                                 $scope.tituloCompetencia = undefined;
                                 $scope.cargar();
                                 $scope.resetForm(idForm);
+                                $scope.pesoBool = true;
                         }
                     });
                   

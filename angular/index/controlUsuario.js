@@ -137,7 +137,9 @@ angular.module("index")
                 $scope.tienePerfil = function (user) {
                     return !(user.perfil.Colaborador == 1 || user.perfil.Jefe == 1 || user.perfil.RH == 1);
                 };
-
+                $scope.reporte = function (user){
+                    location.href = 'http://localhost/Sied/reportes/reporteBasico.php?usuario='+user.id;
+                };
                 /*$scope.$on('departamento', function () {
                  $scope.userEdit.empresa = ShareDataService.empresa;
                  $scope.userEdit.departamento = ShareDataService.departamento.selected;

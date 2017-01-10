@@ -158,7 +158,23 @@ angular.module("app")
                                         return sessionService.perfil("RH");
                                     }]
                             }
-                        })       
+                        })
+                        .when("/reporteIndividual", {
+                            templateUrl: "paginas/reporteIndividual.php",
+                            resolve: {
+                                access: ["sessionService", function (sessionService) {
+                                        return sessionService.perfil("RH");
+                                    }]
+                            }
+                        }) 
+                        .when("/reporteDepatamento", {
+                            templateUrl: "paginas/reporteDepatamento.php",
+                            resolve: {
+                                access: ["sessionService", function (sessionService) {
+                                        return sessionService.perfil("RH");
+                                    }]
+                            }
+                        }) 
                         .when("/perfil", {
                             templateUrl: "paginas/perfil.php"
                         })
