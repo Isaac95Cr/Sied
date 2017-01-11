@@ -82,7 +82,7 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-            <button type="button" class="btn btn-primary pull-right" href="" >Cambiar Contraseña</button>
+            <a type="button" class="btn btn-primary pull-right" href="#/cambiarPassword" >Cambiar Contraseña</a>
         </div>
         <!-- /.box-footer-->
     </div>

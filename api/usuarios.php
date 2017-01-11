@@ -242,6 +242,48 @@ class usuarios extends Rest implements interfaceApi {
             return $this->responseAPI("success", "Cambio de contraseña con exito", 200);
         } return $this->responseAPI("error", "Algo falló", 200);
     }
+    
+    
+     public function comprobarPassword() {
+         
+        if ($this->get_request_method() != "POST") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+        
+        $body = json_decode(file_get_contents("php://input"), true);
+        $passwordMD5 = md5($body['contrasena']);
+
+        $data = usuarioData::comprobarUserPassword($body['id'], $passwordMD5);
+
+        if(isset($data)){
+            return $this->responseAPI("success", "get success!", 200, $data);
+        }
+        else{
+             return $this->responseAPI("error", $data, 200);
+        }
+    }
+    
+    
+    
+    
+       public function cambiarPasswordUser() {
+         
+        if ($this->get_request_method() != "PUT") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+        
+        $body = json_decode(file_get_contents("php://input"), true);
+        $passwordMD5 = md5($body['contrasena']);
+
+        $data = usuarioData::cambiarContrasenaUser($passwordMD5, $body['id']);
+
+        if(isset($data)){
+            return $this->responseAPI("success", "get success!", 200, $data);
+        }
+        else{
+             return $this->responseAPI("error", $data, 200);
+        }
+    }
 
     public function __destruct() {
         return true;

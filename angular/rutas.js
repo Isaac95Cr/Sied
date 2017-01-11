@@ -158,7 +158,10 @@ angular.module("app")
                                         return sessionService.perfil("RH");
                                     }]
                             }
-                        })       
+                        })
+                        .when("/cambiarPassword", {
+                            templateUrl: "paginas/cambiarPassword.php"
+                        })
                         .when("/perfil", {
                             templateUrl: "paginas/perfil.php"
                         })
@@ -254,7 +257,7 @@ angular.module("app")
         .filter('toMoment', function () {
             return function (dateString) {
                 var dateObject = moment(dateString, moment.ISO_8601);
-                return ""+dateObject+"";
+                return "" + dateObject + "";
             };
         });
 

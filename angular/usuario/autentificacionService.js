@@ -1,5 +1,6 @@
 angular.module('usuario')
-        .service('autentificacionService', ['apiConnector', 'sessionService', '$window', function (apiConnector, sessionService, $window) {
+        .service('autentificacionService', ['apiConnector', 'sessionService', '$window',
+                       function (apiConnector, sessionService, $window) {
                 var autentificacion = {};
                 autentificacion.login = function (obj) {
                     return apiConnector.put('api/usuarios/login', obj)
@@ -15,11 +16,26 @@ angular.module('usuario')
                 };
 
                 autentificacion.logout = function (obj) {
+                    
                     return apiConnector.put('api/usuarios/logout', obj).then(function(res) {
                         sessionService.destroy();
                         $window.location.href = 'login.php';
                     });
                 };
+                
+                
+                
+                autentificacion.logoutAndSetPassword = function (objUser) {
+                     var obj = {token:sessionService.token()};
+                     return apiConnector.put('api/usuarios/cambiarPasswordUser', objUser)
+                      .then( function() { 
+                         return apiConnector.put('api/usuarios/logout', obj); 
+                         }).then(function() {
+                            sessionService.destroy();
+                            $window.location.href = 'login.php';
+                        }); 
+                };
+                
 
                 autentificacion.isLog = function (obj) {
                     return apiConnector.post('api/usuarios/session', obj);

@@ -12,7 +12,7 @@ angular.module('registro')
                 };
                 $scope.logout = function () {
                     autentificacionService.logout(sessionService.token());
-                };
+                };            
                 $scope.correoContrasena = function () {
                     $scope.bandera = false;
                     autentificacionService.correoContrasena($scope.user)

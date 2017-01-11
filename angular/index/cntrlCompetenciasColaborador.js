@@ -1,5 +1,6 @@
 angular.module("index")
-        .controller("cntrlCompetenciasColab", ['$scope', 'factoryCompetenciasColab', 'modalService', 'servicioCompetColab', function ($scope, factoryCompetenciasColab, modalService, servicioCompetColab) {
+        .controller("cntrlCompetenciasColab", ['$scope', 'factoryCompetenciasColab', 'modalService', 'servicioCompetColab', 
+                          function ($scope, factoryCompetenciasColab, modalService, servicioCompetColab) {
 
                 $scope.competencias = 0;
                 $scope.perfilCompet = undefined;  // aqui se guarda el id del perfil de competencia del usuario.

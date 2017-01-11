@@ -347,5 +347,55 @@ and perfil.id = 0;";
             return $pdoExcetion->getMessage();
         }
     }
+    
+    
+    // Obtener el password (MD5) de un usuario específico
+        public static function getUserPassword($id) {
 
+        $comando = "SELECT contrasena FROM usuario WHERE id = ?;";
+
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($id));
+            $result = $sentencia->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $pdoExcetion) {
+            return $pdoExcetion->getMessage();
+        }
+    }
+    
+    
+    
+        // Comparar password digitado con el de la base.
+      public static function comprobarUserPassword($id, $contrasena) {
+
+        $passUserBD = usuarioData::getUserPassword($id);
+        
+        try {
+            if($passUserBD['contrasena'] == $contrasena){
+                return true;
+            }else{            
+            return false;
+            }
+        } catch (PDOException $pdoExcetion) {
+            return $pdoExcetion->getMessage();
+        }
+    }
+
+    
+    // cambiar password de un usuario en específico
+      public static function cambiarContrasenaUser($contrasena, $id) {
+        $comando = "UPDATE usuario SET contrasena = ? WHERE id = ?;";
+
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($contrasena, $id));
+            return true;
+        } catch (PDOException $pdoExcetion) {
+            return $pdoExcetion->getMessage();
+        }
+    }
+    
+    
+    
 }

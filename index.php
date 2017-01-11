@@ -278,6 +278,7 @@
         <script src="angular/index/controlMetaColabRH.js" type="text/javascript"></script>
         <script src="angular/index/controlDetalleMetasRH.js" type="text/javascript"></script>
         <script src="angular/index/controlAprobarMetasRH.js" type="text/javascript"></script>
+        <script src="angular/index/controlCambiarPassword.js" type="text/javascript"></script>
 
         <script type="text/ng-template" id="myModalContent.html">
             <div class="modal-header">
