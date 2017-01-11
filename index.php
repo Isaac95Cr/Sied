@@ -174,7 +174,9 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="index.php"><i class="fa fa-circle-o"></i></a></li>
+                                <li><a href="#/reporteIndividual"><i class="fa fa-circle-o"></i>Reporte Individual</a></li>
+                                <li><a href="#/reporteDepatamento"><i class="fa fa-circle-o"></i>Reporte por Departamento</a></li>
+                                <!--<li><a href="#/reporteIndividual"><i class="fa fa-circle-o"></i>Reporte por Evaluador</a></li> -->
                             </ul>
                         </li>
                     </ul>
@@ -195,7 +197,7 @@
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
                     <!--  <b>Version</b> beta-->
-                    <?php echo 'Derechos reservados.  ' . date("Y"). '.'; ?>
+                    <?php echo 'Derechos reservados.  ' . date("Y") . '.'; ?>
                 </div>
                 <strong></strong> Sistema Evaluación del Desempeño.
             </footer>

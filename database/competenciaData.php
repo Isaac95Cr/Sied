@@ -38,15 +38,14 @@ class competenciaData {
         }
     }
 
-    
-    /*Obtener las competencias de un usuario de acuerdo a su perfil */
+    /* Obtener las competencias de un usuario de acuerdo a su perfil */
+
     public static function getAllFromUser($idUser) {
-        $consulta = "SELECT competencia.id, competencia.titulo, competencia.descripcion, competencia.peso
-                                               FROM competencia, perfil_competencia, usuario, evaluacion_periodo
-                                               WHERE usuario.id = ? AND
-                                                              evaluacion_periodo.usuario = usuario.id AND
-                                                              evaluacion_periodo.perfil_competencia = perfil_competencia.id AND
-                                                              competencia.perfil = perfil_competencia.id;";
+        $consulta = "SELECT competencia.id,competencia.titulo,competencia.descripcion,competencia.peso
+FROM competencia,perfil_competencia,usuario,evaluacion_periodo
+WHERE usuario.id = ? AND evaluacion_periodo.usuario = usuario.id
+        AND evaluacion_periodo.perfil_competencia = perfil_competencia.id
+        AND competencia.perfil = perfil_competencia.id;";
         try {
             $json_response = array();
             $comando = Database::getInstance()->getDb()->prepare($consulta);
@@ -66,9 +65,6 @@ class competenciaData {
             return false;
         }
     }
-    
-    
-    
 
     public static function insert($titulo, $descripcion, $perfil) {
         $comando = "INSERT INTO competencia (titulo,descripcion,perfil) VALUES (?,?,?);";
@@ -115,4 +111,3 @@ class competenciaData {
     }
 
 }
-

@@ -64,8 +64,10 @@
             <!-- /.box-body -->
             <div class="box-footer" >    
                 <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalCompetencia" ng-hide="!bandera">Agregar Competencia </a>
-                <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalDetalle" ng-hide="bandera">Agregar Detalle </a>
-                <a class="btn btn-warning btn-lg pull-left" data-toggle="modal" data-target="#modalPeso">Asignar pesos</a>
+                <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalDetalle" ng-hide="bandera">Agregar Detalle </a>                    
+                
+                <a class="btn btn-primary btn-lg pull-left"  data-toggle="modal" data-target="#modalPeso">Asignar pesos <span ng-show="pesoBool" class="label label-danger">!</span> </a>
+
 
             </div>
             <!-- /.box-footer-->
@@ -234,7 +236,7 @@
                         <div class="form-group" ng-class="{'has-error':pesoForm.pesoTotal.$invalid}">
                             <label for="peso" class="col-sm-8 control-label">Total</label>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" placeholder="0" step=0.01 id="peso" name="pesoTotal" min="100" max="100" ng-model="sum" required >
+                                <input type="number" class="form-control" placeholder="0" step=0.01 id="peso" name="pesoTotal" min="100" max="100" ng-model="sum" required disabled>
                                 <p ng-show="pesoForm.pesoTotal.$invalid" class="help-block">La suma de los pesos debe ser 100</p>
                             </div>
                         </div>
@@ -257,8 +259,8 @@
 
 
 <script type="text/javascript">
-            $("tr").click(function () {
-                $(this).addClass("active").siblings().removeClass("active");
-            });
+    $("tr").click(function () {
+    $(this).addClass("active").siblings().removeClass("active");
+    });
 </script>
 

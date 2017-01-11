@@ -4,9 +4,10 @@
 require '../libraries/tcpdf/tcpdf.php';
 require_once '../libraries/Curl/Curl.php';
 
+$usuario = $_GET['usuario'];
 
 $curl = new Curl();
-$curl->post('localhost/Sied/api/usuarios/allFrom', "123");
+$curl->post('localhost/Sied/api/usuarios/allFrom', $usuario);
 if ($curl->error) {
     echo 'Error: ' . $curl->errorCode . ': ' . $curl->errorMessage . "\n";
 } else {
@@ -19,7 +20,7 @@ if ($curl->error) {
 }
 
 $curl2 = new Curl();
-$curl2->post('localhost/Sied/api/metas/all', json_encode(array("id" => "123", 'ID' => '123',)));
+$curl2->post('localhost/Sied/api/metas/all', json_encode(array('id' => $usuario, 'ID' => '123',)));
 
 if ($curl2->error) {
     echo 'Error: ' . $curl2->errorCode . ': ' . $curl2->errorMessage . "\n";
@@ -32,7 +33,7 @@ if ($curl2->error) {
 }
 
 $curl3 = new Curl();
-$curl3->post('localhost/Sied/api/competencias/allFromUser', json_encode(array("id" => "123", 'ID' => '123',)));
+$curl3->post('localhost/Sied/api/competencias/allFromUser', json_encode(array("id" => "$usuario", 'ID' => '123',)));
 
 if ($curl3->error) {
     echo 'Error: ' . $curl3->errorCode . ': ' . $curl3->errorMessage . "\n";
@@ -45,7 +46,7 @@ if ($curl3->error) {
 }
 
 $curl4 = new Curl();
-$curl4->post('localhost/Sied/api/evaluacionCompetencias/allAutoFromUser', json_encode(array("id" => "123", 'ID' => '123',)));
+$curl4->post('localhost/Sied/api/evaluacionCompetencias/allAutoFromUser', json_encode(array("id" => "$usuario", 'ID' => '123',)));
 
 if ($curl4->error) {
     echo 'Error: ' . $curl4->errorCode . ': ' . $curl4->errorMessage . "\n";
@@ -60,7 +61,7 @@ if ($curl4->error) {
 }
 
 $curl5 = new Curl();
-$curl5->post('localhost/Sied/api/perfilCompetencias/allFromUser',json_encode(array("id" => "123", 'ID' => '123',)));
+$curl5->post('localhost/Sied/api/perfilCompetencias/allFromUser',json_encode(array("id" => "$usuario", 'ID' => '123',)));
 
 if ($curl5->error) {
     echo 'Error: ' . $curl5->errorCode . ': ' . $curl5->errorMessage . "\n";
@@ -172,5 +173,6 @@ function validar($opcion) {
 // ---------------------------------------------------------
 // Close and output PDF document
 // This method has several options, check the source code documentation for more information.
-$pdf->Output('Reporte_Colisiones_' . '.pdf', 'I');
+$pdf->Output('reporteBasico' . '.pdf', 'I');
+//print( "header('Content-Type: application/pdf');");
 ?>

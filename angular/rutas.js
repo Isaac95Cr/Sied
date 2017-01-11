@@ -159,6 +159,22 @@ angular.module("app")
                                     }]
                             }
                         })
+                        .when("/reporteIndividual", {
+                            templateUrl: "paginas/reporteIndividual.php",
+                            resolve: {
+                                access: ["sessionService", function (sessionService) {
+                                        return sessionService.perfil("RH");
+                                    }]
+                            }
+                        }) 
+                        .when("/reporteDepatamento", {
+                            templateUrl: "paginas/reporteDepatamento.php",
+                            resolve: {
+                                access: ["sessionService", function (sessionService) {
+                                        return sessionService.perfil("RH");
+                                    }]
+                            }
+                        }) 
                         .when("/cambiarPassword", {
                             templateUrl: "paginas/cambiarPassword.php"
                         })
