@@ -59,7 +59,7 @@ class competencias extends Rest implements interfaceApi {
 
         return $this->responseAPI("success", "get success!", 200, $data);
     }
-    
+
     public function allFromUser() {
         if ($this->get_request_method() != "POST") {
             return $this->responseAPI("error", "Not allowed.", 406);
@@ -67,11 +67,15 @@ class competencias extends Rest implements interfaceApi {
 
         $body = json_decode(file_get_contents("php://input"), true);
         $id = $body['id'];
-        $data = competenciaData::getAllFromUser($id);
 
+        if (array_key_exists("periodo", $body)) {
+            $periodo = $body['periodo'];
+            $data = competenciaData::getAllFromUser($id, $periodo);
+            return $this->responseAPI("success", "get success!", 200, $data);
+        }
+        $data = competenciaData::getAllFromUserActual($id);
         return $this->responseAPI("success", "get success!", 200, $data);
     }
-
 
     public function add() {
 
@@ -101,7 +105,7 @@ class competencias extends Rest implements interfaceApi {
 
         $titulo = $body['titulo'];
         $descripcion = $body['descripcion'];
-        $id= $body['id'];
+        $id = $body['id'];
 
         $data = competenciaData::update($titulo, $descripcion, $id);
         if ($data === true) {
@@ -109,7 +113,7 @@ class competencias extends Rest implements interfaceApi {
         }
         return $this->responseAPI("error", $data, 200);
     }
-    
+
     public function setPeso() {
 
         if ($this->get_request_method() != "PUT") {
@@ -121,7 +125,7 @@ class competencias extends Rest implements interfaceApi {
         foreach ($body as $competencia) {
             $data = competenciaData::updatePeso($competencia['peso'], $competencia['id']);
         }
-    
+
         if ($data === true) {
             return $this->responseAPI("success", "set success", 200);
         }

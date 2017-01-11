@@ -1,6 +1,7 @@
 angular.module("index")
-        .controller("controlDepartamento", ['$scope', 'empdep', 'modalService', function ($scope, empdep, modalService) {
-
+        .controller("controlDepartamento", ['$scope', 'empdep', 'modalService','ShareDataService', function ($scope, empdep, modalService,ShareDataService) {
+                $scope.departamento ={};
+                $scope.depBool = true;
                 $scope.departamentos = [];
                 $scope.departamentoEdit = {
                     id: undefined,
@@ -96,7 +97,21 @@ angular.module("index")
                                 }
                             });
                 };
+                $scope.setDepartamento = function(departamento){
+                    $scope.departamento = departamento;
+                    $scope.depBool = false;
+                };
+                $scope.isSelected = function(id){
+                    return id === $scope.departamento.id;
+                };
+                $scope.reporte = function (dep) {
+                    location.href = 'http://localhost/Sied/reportes/reporteDepartamento.php?dep=' + $scope.departamento.id + '&periodo=' + $scope.periodo;
+                };
 
+                $scope.$on('handleBroadcast', function () {
+                    $scope.periodo = ShareDataService.msg;
+                });
+                
             }]);
 
 

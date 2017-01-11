@@ -62,13 +62,24 @@ class metasData {
         }
     }
 
-    public static function getAllFromUser($id) {
+    public static function getAllFromUserActual($id) {
         $consulta = "SELECT * FROM sied.meta inner join 
 (SELECT id as actual FROM periodo WHERE NOW() BETWEEN periodo.fechainicio AND periodo.fechafinal) 
 as actual on meta.periodo = actual where meta.usuario = ?;";
         try {
             $comando = Database::getInstance()->getDb()->prepare($consulta);
             $comando->execute(array($id));
+            return $comando->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    
+    public static function getAllFromUser($id,$periodo) {
+        $consulta = "SELECT * FROM sied.meta where meta.usuario = ? and meta.periodo = ? ;";
+        try {
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando->execute(array($id,$periodo));
             return $comando->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return false;

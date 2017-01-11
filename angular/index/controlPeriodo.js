@@ -1,5 +1,5 @@
 angular.module('index')
-        .controller('controlPeriodo', ['$scope', 'apiConnector', function ($scope, apiConnector) {
+        .controller('controlPeriodo', ['$scope', 'apiConnector','ShareDataService', function ($scope, apiConnector,ShareDataService) {
 
                 $scope.periodos = [];
                 $scope.periodo = {};
@@ -42,9 +42,12 @@ angular.module('index')
                 $scope.verPeriodo = function (periodo) {
                     $scope.setPeriodo(periodo);
                 };
-//                $scope.isPeriodoActual = function () {
-//                    return $scope.periodo.id === $scope.periodoActual.id;
-//                };
+                $scope.isIdActual = function (id) {
+                    return id === $scope.periodoActual.id;
+                };
+                $scope.isSelected = function (id) {
+                    return id === $scope.periodo.id;
+                };
                 $scope.isPeriodoActual = function () {
                     if($scope.periodo.id !== undefined && $scope.periodoActual.id !== undefined)
                         return $scope.periodo.id === $scope.periodoActual.id;
@@ -96,6 +99,7 @@ angular.module('index')
                             endDate: periodo.ffiper2
                         }
                     };
+                    ShareDataService.prepForBroadcast(periodo.id);
                 };
                 $scope.setPeriodoActual = function (periodo) {
 
