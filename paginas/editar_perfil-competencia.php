@@ -60,13 +60,14 @@
                         </div>
                     </div>
                 </div>
+                 <p style="font-size: 90%" ng-show="perfil.competencias.length == 0" class="label bg-red margin">Este perfil no posee competencias</p>
             </div>
             <!-- /.box-body -->
             <div class="box-footer" >    
                 <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalCompetencia" ng-hide="!bandera">Agregar Competencia </a>
                 <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalDetalle" ng-hide="bandera">Agregar Detalle </a>                    
                 
-                <a class="btn btn-primary btn-lg pull-left"  data-toggle="modal" data-target="#modalPeso">Asignar pesos <span ng-show="pesoBool" class="label label-danger">!</span> </a>
+                <a class="btn btn-primary btn-lg pull-left" ng-show="hayCompetencias"  data-toggle="modal" data-target="#modalPeso">Asignar pesos <span ng-show="pesoBool" class="label label-danger">!</span> </a>
 
 
             </div>

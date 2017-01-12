@@ -113,6 +113,8 @@ angular.module('empdep')
             }])
         .service('empdep', ['departamentoService', 'empresaService', function (departamentoService, empresaService) {
 
+                var fueSeleccionada = false;
+        
                 this.cargarEmp = function () {
                     return empresaService.cargar();
                 };
@@ -154,6 +156,15 @@ angular.module('empdep')
                 };
                 this.buscarDepartamento = function (nombre) {
                     return departamentoService.buscarDepartamento(nombre);
+                };
+                this.setSeleccionada = function (valor) {
+                    fueSeleccionada = valor;
+                };
+                this.isSeleccionada = function () {
+                    return fueSeleccionada;
+                };
+                this.reloadDepartments = function (valor) {
+                    fueSeleccionada = valor;
                 };
             }])
         .factory("factoryDepartamento", function ($http) {

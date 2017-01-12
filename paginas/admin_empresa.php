@@ -123,7 +123,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer" >    
-                <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalDepartamentoAdd">Agregar </a>
+                <a class="btn btn-primary btn-lg pull-right" ng-show="seleccionada" data-toggle="modal" data-target="#modalDepartamentoAdd">Agregar </a>
             </div>
         </div>
         <!-- /.box-footer-->

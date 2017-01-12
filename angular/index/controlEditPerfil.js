@@ -14,6 +14,7 @@ angular.module("index")
 
                 $scope.descripcionCompetenciaEdit = "";
                 $scope.tituloCompetenciaEdit = "";
+                $scope.hayCompetencias = false;  // para saber si se muestra el botón de asignar pesos.
 
                 $scope.selectCompetencia = function (id, titulo, descripcion) {
 
@@ -51,6 +52,9 @@ angular.module("index")
                         if (res.status === 'success') {
                             $scope.perfil = res.data;
                             ShareDataService.prepForBroadcast(pesos());
+                            if($scope.perfil.competencias.length !== 0){
+                                $scope.hayCompetencias = true;
+                            }
                         }
                     });
                 };
@@ -151,4 +155,4 @@ angular.module("index")
                     });
                   
                 };
-            }])
+            }]);

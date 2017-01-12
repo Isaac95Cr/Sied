@@ -81,7 +81,7 @@
 
                 <div class="box-footer" >    
                     <button  class="btn btn-primary btn-lg pull-left" ng-click="resetValues()" data-toggle="modal" data-target="#modalMeta" style="margin-right: 10px;">Agregar Meta</button>
-                    <button ng-show="tiene_Metas" class="btn btn-primary btn-lg pull-left" ng-click="" data-toggle="modal" data-target="#modalPeso">Editar Pesos</button>
+                    <button ng-show="tiene_Metas" class="btn btn-primary btn-lg pull-left" ng-click="" data-toggle="modal" data-target="#modalPeso">Editar Pesos <span ng-show="pesosEquilibrados" class="label label-danger">!</span></button>
                     <a type="button" ng-show="tiene_Metas"  class="btn btn-primary btn-lg pull-right" href="#/auto-evaluar_metas">Autoevaluar</a>
                 </div>
                 <!-- /.box-footer-->
@@ -279,7 +279,7 @@
                     <div class="form-group" ng-class="{'has-error':pesoForm.pesoTotal.$invalid}">
                         <label for="peso" class="col-sm-8 control-label">Total</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" placeholder="0" step=1 id="peso" name="pesoTotal" min="100" max="100" ng-model="sumaTotal" required >
+                            <input type="number" class="form-control" placeholder="0" step=1 id="peso" name="pesoTotal" min="100" max="100" ng-model="sumaTotal" required disabled>
                             <p ng-show="pesoForm.pesoTotal.$invalid" class="help-block">*La suma de los pesos debe ser 100</p>
                         </div>
                     </div>

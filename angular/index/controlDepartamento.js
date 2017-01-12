@@ -10,15 +10,28 @@ angular.module("index")
                 $scope.departamentoAdd = {
                     nombre: undefined
                 };
+                
+                
+                $scope.empresaSeleccionada = "";
+                $scope.seleccionada = false; // para determinar si se muestra el botón de 'Agregar' departamento.
+                
                 $scope.init = function () {
                     $scope.cargar();
                 };
                 
-                $scope.empresaSeleccionada = "";
+                
+                $scope.getSeleccionada = function () {
+                    $scope.seleccionada = empdep.isSeleccionada();
+                };
+                                                                                
+                 $scope.showBtnAgregar = function () {
+                     $scope.banderaBtnAgregar = true;               
+                 };
                 
                 $scope.updateEmpresaSelect = function () {
                     if(empdep.getEmpresa() !== undefined)
                         $scope.empresaSeleccionada = empdep.getEmpresa().nombre;
+                    $scope.getSeleccionada();
                     return $scope.empresaSeleccionada;
                 };
                 

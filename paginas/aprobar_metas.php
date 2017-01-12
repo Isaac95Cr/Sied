@@ -95,7 +95,7 @@
 
 
     <!-- /.modal -->
-    <div class="modal" id="modalComent">
+    <div class="modal" id="modalComent" data-backdrop="static">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #3c8dbc; color:#FFF">
@@ -116,7 +116,6 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left"  data-dismiss="modal">Cancelar</button>
                             <button type="button"  class="btn btn-primary" ng-disabled="formComentar.$invalid" data-dismiss="modal" ng-click="desaprobarMeta()">Guardar</button>
                         </div>
                     </form>

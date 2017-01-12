@@ -137,11 +137,13 @@
                         </div>
                     </div>
                 </div>
+                
+                <p style="font-size: 90%" ng-show="perfil.competencias.length == 0" class="label bg-red margin">Este perfil no posee competencias</p>
 
             </div>
             <!-- /.box-body -->
             <div class="box-footer" >    
-                <a class="btn btn-primary btn-lg pull-right" href="#/editar_perfil-competencia/{{perfil.id}}">Editar </a>
+                <a class="btn btn-primary btn-lg pull-right"  href="#/editar_perfil-competencia/{{perfil.id}}">Editar </a>
             </div>
         </div>
 

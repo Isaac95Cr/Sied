@@ -23,6 +23,7 @@ angular.module("index")
                 $scope.commentRH = "";
 
                 $scope.titleMeta = "";
+                $scope.pesosEquilibrados = false;
 
                 /*
                  * Función que inicializa la lista de metas 
@@ -73,6 +74,7 @@ angular.module("index")
                             if ($scope.metas.length === 0)
                                 $scope.tiene_Metas = false;
                             ShareDataService.prepForBroadcast(pesos());
+                            $scope.pesosEquilibrados = factoryMeta.getPesosCorrectos();
                         }
                     });
                 };
@@ -259,6 +261,7 @@ angular.module("index")
             }])
         .factory("factoryMeta", function (apiConnector) {
             var meta = {};
+            var pesosCorrectos = false;
 
             meta.cargarMetas = function () {
                 return apiConnector.get('api/metas/all');
@@ -313,6 +316,16 @@ angular.module("index")
 
             meta.modificarPeso = function (obj) {
                 return apiConnector.put('api/metas/setPeso', obj);
+            };
+            
+            
+            meta.setPesosCorrectos = function (valor){
+                pesosCorrectos = valor;
+            };
+            
+            
+            meta.getPesosCorrectos = function (){
+                return pesosCorrectos;
             };
 
 

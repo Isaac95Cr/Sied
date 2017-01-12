@@ -9,6 +9,10 @@ angular.module("index")
                 $scope.$on('handleBroadcast', function () {
                     $scope.metas = ShareDataService.msg.metas;
                     $scope.getTotal();
+                    if($scope.sumaTotal !== 100)
+                        factoryMeta.setPesosCorrectos(true);
+                    else
+                        factoryMeta.setPesosCorrectos(false);
                 });
 
 

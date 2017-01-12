@@ -8,6 +8,10 @@
 /**
   Clase encargada de la gestión de metas en la base de datos.
  */
+
+require 'periodoData.php';
+
+
 class metasData {
 
     function __construct() {
@@ -40,12 +44,16 @@ class metasData {
                 . "usuario) VALUES (b?,?,?,?,?,?,?,?,?,?,?,?);";
 
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
-        try {
-            $sentencia->execute(array($is_Evaluable, $peso, $titulo,
-                $descripcion, NULL, NULL,
-                NULL, NULL, NULL, NULL,
-                1, $usuario));
-            return true;
+        $idPeriodoActual = periodoData::getActual()['id'];
+
+       try {
+            if (isset($idPeriodoActual)) {
+                $sentencia->execute(array($is_Evaluable, $peso, $titulo,
+                    $descripcion, NULL, NULL,
+                    NULL, NULL, NULL, NULL,
+                    $idPeriodoActual, $usuario));
+                return true;
+            }
         } catch (PDOException $pdoExcetion) {
             return $pdoExcetion->getMessage();
         }

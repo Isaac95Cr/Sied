@@ -1,5 +1,5 @@
 angular.module("index")
-        .controller("controlEmpresa", ['$scope', 'empdep', 'modalService', function ($scope, empdep, modalService) {
+        .controller("controlEmpresa", ['$scope', 'empdep', 'modalService', function ($scope, empdep, modalService) {               
 
                 $scope.empresas = [];
                 $scope.empresaEdit = {
@@ -22,6 +22,7 @@ angular.module("index")
                 };
                 $scope.selectEmpresa = function (empresa) {
                     empdep.setEmpresa(empresa);
+                    empdep.setSeleccionada(true);
                 };
                 
                 $scope.cargar = function () {
