@@ -167,7 +167,7 @@
                             </ul>
                         </li>
                         <li class="treeview" ng-if="usuario.perfil.RH == 1">
-                            <a href="#">
+                            <a href="">
                                 <i class="fa fa-clipboard"></i> <span>Reportes</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>

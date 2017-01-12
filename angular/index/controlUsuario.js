@@ -1,5 +1,5 @@
 angular.module("index")
-        .controller("controlUsuario", ["$scope", "modalService", "userService", "empdep", "apiConnector", function ($scope, modalService, userService, empdep, apiConnector) {
+        .controller("controlUsuario", ["$scope", "modalService", "userService", "empdep", "apiConnector", "ShareDataService", function ($scope, modalService, userService, empdep, apiConnector, ShareDataService) {
 
                 $scope.userAdd = {};
                 $scope.userEdit = {};
@@ -137,9 +137,13 @@ angular.module("index")
                 $scope.tienePerfil = function (user) {
                     return !(user.perfil.Colaborador == 1 || user.perfil.Jefe == 1 || user.perfil.RH == 1);
                 };
-                $scope.reporte = function (user){
-                    location.href = 'http://localhost/Sied/reportes/reporteBasico.php?usuario='+user.id;
+                $scope.reporte = function (user) {
+                    location.href = 'http://localhost/Sied/reportes/reporteBasico.php?usuario=' + user.id + '&periodo=' + $scope.periodo;
                 };
+
+                $scope.$on('handleBroadcast', function () {
+                    $scope.periodo = ShareDataService.msg;
+                });
                 /*$scope.$on('departamento', function () {
                  $scope.userEdit.empresa = ShareDataService.empresa;
                  $scope.userEdit.departamento = ShareDataService.departamento.selected;

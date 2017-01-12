@@ -40,9 +40,12 @@ class competenciaData {
 
     /* Obtener las competencias de un usuario de acuerdo a su perfil */
 
-    public static function getAllFromUser($idUser) {
-        $consulta = "SELECT competencia.id,competencia.titulo,competencia.descripcion,competencia.peso
-FROM competencia,perfil_competencia,usuario,evaluacion_periodo
+    public static function getAllFromUserActual($idUser) {
+        $consulta = "
+SELECT competencia.id,competencia.titulo,competencia.descripcion,competencia.peso
+FROM competencia,perfil_competencia,usuario,evaluacion_periodo inner join  
+(SELECT id as actual FROM periodo WHERE NOW() BETWEEN periodo.fechainicio AND periodo.fechafinal) 
+as actual on evaluacion_periodo.periodo = actual
 WHERE usuario.id = ? AND evaluacion_periodo.usuario = usuario.id
         AND evaluacion_periodo.perfil_competencia = perfil_competencia.id
         AND competencia.perfil = perfil_competencia.id;";
@@ -50,6 +53,35 @@ WHERE usuario.id = ? AND evaluacion_periodo.usuario = usuario.id
             $json_response = array();
             $comando = Database::getInstance()->getDb()->prepare($consulta);
             $comando->execute(array($idUser));
+            $competencias = $comando->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($competencias as $row) {
+                $newrow = array();
+                $newrow['id'] = $row['id'];
+                $newrow['titulo'] = $row['titulo'];
+                $newrow['descripcion'] = $row['descripcion'];
+                $newrow['peso'] = $row['peso'];
+                $newrow['detalles'] = detalleCompetenciaData::getAllFrom($row['id']);
+                array_push($json_response, $newrow);
+            }
+            return $json_response;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    
+     public static function getAllFromUser($idUser, $periodo) {
+        $consulta = "
+SELECT competencia.id,competencia.titulo,competencia.descripcion,competencia.peso
+FROM competencia,perfil_competencia,usuario,evaluacion_periodo inner join  
+(SELECT id as actual FROM periodo WHERE NOW() BETWEEN periodo.fechainicio AND periodo.fechafinal) 
+as actual on evaluacion_periodo.periodo = ?
+WHERE usuario.id = ? AND evaluacion_periodo.usuario = usuario.id
+        AND evaluacion_periodo.perfil_competencia = perfil_competencia.id
+        AND competencia.perfil = perfil_competencia.id;";
+        try {
+            $json_response = array();
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando->execute(array($periodo,$idUser));
             $competencias = $comando->fetchAll(PDO::FETCH_ASSOC);
             foreach ($competencias as $row) {
                 $newrow = array();

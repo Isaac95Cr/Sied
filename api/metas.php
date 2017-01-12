@@ -55,11 +55,17 @@ class metas extends Rest implements interfaceApi {
         if ($this->get_request_method() == "POST") {
             $body = json_decode(file_get_contents("php://input"), true);
             $id = $body['id'];
-            $data = metasData::getAllFromUser($id);
-            return $this->responseAPI("success", "get $id success!", 200, $data);
+            if (array_key_exists("periodo", $body)) {
+                $periodo = $body['periodo'];
+                $data = metasData::getAllFromUser($id,$periodo);
+                return $this->responseAPI("success", "get success!", 200, $data);
+            } else {
+                $data = metasData::getAllFromUserActual($id);
+                return $this->responseAPI("success", "get success!", 200, $data);
+            }
         } else {
             $data = metasData::getAll();
-            return $this->responseAPI("success", "get $id success!", 200, $data);
+            return $this->responseAPI("success", "get success!", 200, $data);
         }
     }
 
@@ -107,7 +113,6 @@ class metas extends Rest implements interfaceApi {
         return $this->responseAPI("error", "", 200);
     }
 
-    
     // modifica toda la meta.
     public function set() {
 
@@ -123,10 +128,7 @@ class metas extends Rest implements interfaceApi {
         }
         return $this->responseAPI("error", "", 200);
     }
-    
-    
-    
-    
+
     // modifica solo la característica 'evaluable' de la meta.
     public function setEvaluable() {
 
@@ -142,11 +144,6 @@ class metas extends Rest implements interfaceApi {
         }
         return $this->responseAPI("error", "", 200);
     }
-    
-    
-    
-    
-    
 
 // Aprobar/Desaprobar meta de Jefe
     public function aprobarMeta() {

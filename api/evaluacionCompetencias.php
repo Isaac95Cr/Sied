@@ -54,7 +54,12 @@ class evaluacionCompetencias extends Rest implements interfaceApi {
         }
         $body = json_decode(file_get_contents("php://input"), true);
         $id = $body['id'];
-        $data = evaluacionCompetenciaData::getAutoFromUser($id);
+        if (array_key_exists("periodo", $body)) {
+                $periodo = $body['periodo'];
+                $data = evaluacionCompetenciaData::getAutoFromUser($id,$periodo);
+                return $this->responseAPI("success", "get success!", 200, $data);
+            }
+        $data = evaluacionCompetenciaData::getAutoFromUserActual($id);
         return $this->responseAPI("success", "get success!", 200, $data);
     }
 

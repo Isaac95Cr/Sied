@@ -10,8 +10,9 @@
 </section>
 
 <!-- Main content -->
-<section class="content" ng-controller="controlUsuario" ng-init="init()">
-    <div class="col-md-3">
+<section class="content">
+
+    <div class="col-md-3" ng-controller="controlPeriodo" ng-init="init()">
         <div class="box box-primary">
             <div class="box-header with-border ">
                 <h3 class="box-title">Periodos</h3>
@@ -23,21 +24,20 @@
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
 
-                    <tr ng-repeat="perio in periodos" sglclick="verPeriodo({{perio}})" dblclick="">
-                        <td> {{perio.nombre}} </td>
-                        <td style="text-align:center"><a ng-click="" class=""><i class="fa fa-close"></i>  </a> </td>
+                    <tr ng-repeat="perio in periodos" sglclick="setPeriodo({{perio}})" dblclick="" ng-class="{active:isSelected(perio.id)}">
+                        <td> {{perio.nombre}}  <span ng-show="isIdActual(perio.id)" class="label label-danger">Actual</span>
+                        </td>
                     </tr>
                 </table>
 
             </div>
             <!-- /.box-body -->
             <div class="box-footer" >    
-                <a class="btn btn-primary btn-lg pull-right" ng-show="!addBool" ng-click="agregarPeriodo()">Agregar</a>
             </div>
         </div>
         <!-- /.box-footer-->
-      </div>
-    
+    </div>
+
     <div class="col-md-6" ng-controller="controlDepartamento" ng-init="init()">
         <div class="box box-primary">
             <div class="box-header with-border">
@@ -49,13 +49,14 @@
             </div>
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
-                    <tr ng-repeat="departamento in departamentos" sglclick="" dblclick="">
+                    <tr ng-repeat="departamento in departamentos" sglclick="setDepartamento(departamento)" dblclick="" ng-class="{active:isSelected(departamento.id)}">
                         <td> {{departamento.nombre}}</td>
                     </tr>
                 </table>
             </div>
             <!-- /.box-body -->
             <div class="box-footer" >    
+                <button type="button" class="btn btn-primary btn-lg pull-right" ng-disabled="depBool" ng-click="reporte()">Generar Reporte</button>
             </div>
         </div>
     </div>
