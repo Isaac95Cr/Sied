@@ -68,7 +68,7 @@ class departamentoData {
         $usuariosMetas = array();
         try {
             foreach ($listaUsuarios as $usuario) {
-                $listaMetas = metasData::getAllFromUser($usuario['id']);
+                $listaMetas = metasData::getAllFromUserActual($usuario['id']);
                 if (departamentoData::tieneMetasAprobJefe($listaMetas)) {
                     array_push($usuariosMetas, $usuario);
                 }

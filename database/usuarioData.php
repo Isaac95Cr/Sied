@@ -338,11 +338,11 @@ and perfil.id = 0;";
 
     public static function getUsersByDepartament($idDepartamento) {
 
-        $comando = "SELECT id, nombre, apellido1, apellido2 FROM usuario where departamento = ?;";
+        $comando = "SELECT id, nombre, apellido1, apellido2 FROM usuario where departamento = ? AND usuario.estado = ?;";
 
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
-            $sentencia->execute(array($idDepartamento));
+            $sentencia->execute(array($idDepartamento, 1));
             $result = $sentencia->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         } catch (PDOException $pdoExcetion) {

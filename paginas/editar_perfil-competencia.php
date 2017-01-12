@@ -68,7 +68,7 @@
                 <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modalDetalle" ng-show="!bandera">Agregar Detalle </a>                    
                 
                 <a class="btn btn-primary btn-lg pull-left" ng-show="hayCompetencias"  data-toggle="modal" data-target="#modalPeso">Asignar pesos <span ng-show="pesoBool" class="label label-danger">!</span> </a>
-                <a class="btn btn-primary btn-lg pull-left" ng-click="pesoBool = false;" data-toggle="modal" data-target="#modalPeso">Asignar pesos <span ng-show="pesoBool" class="label label-danger">!</span> </a>
+<!--                <a class="btn btn-primary btn-lg pull-left" ng-click="pesoBool = false;" data-toggle="modal" data-target="#modalPeso">Asignar pesos <span ng-show="pesoBool" class="label label-danger">!</span> </a>-->
 
 
             </div>

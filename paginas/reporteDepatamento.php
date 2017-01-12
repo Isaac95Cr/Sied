@@ -25,7 +25,7 @@
                 <table class="table table-hover">
 
                     <tr ng-repeat="perio in periodos" sglclick="setPeriodo({{perio}})" dblclick="" ng-class="{active:isSelected(perio.id)}">
-                        <td> {{perio.nombre}}  <span ng-show="isIdActual(perio.id)" class="label label-danger">Actual</span>
+                        <td> {{perio.nombre}}  <span ng-show="isIdActual(perio.id)" class="label label-success">Actual</span>
                         </td>
                     </tr>
                 </table>
