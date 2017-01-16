@@ -26,6 +26,7 @@
             <table id="solicitudes" class="table table-hover table-bordered table-responsive" datatable="ng">
                 <thead>
                     <tr>
+                        <th ng-show="false">Id</th>
                         <th>Nombre</th>
                         <th>Perfil</th>
                         <th>Estado</th>
@@ -35,6 +36,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="user in solicitudes" sglclick="" dblclick="modalModificar({{user}},true);">
+                        <td ng-show="false"> {{user.id}} </td>
                         <td> {{user.nombre + " " + user.apellido1 + " " + user.apellido2}} </td>
                         <td class="text-center"> 
                             <small class="label bg-blue margin">Sin perfil</small>
@@ -72,6 +74,7 @@
             <table id="usuarios" class="table table-hover table-bordered table-responsive" datatable="ng">
                 <thead>
                     <tr>
+                        <th ng-show="false">Id</th>
                         <th>Nombre</th>
                         <th>Perfil</th>
                         <th>Estado</th>
@@ -81,6 +84,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="user in users" sglclick="" dblclick="modalModificar({{user}});">
+                        <td ng-show="false"> {{user.id}} </td>
                         <td> {{user.nombre + " " + user.apellido1 + " " + user.apellido2}} </td>
                         <td class="text-center"> 
                             <small ng-show="user.perfil.Colaborador == 1" class="label bg-blue margin">Colaborador</small>

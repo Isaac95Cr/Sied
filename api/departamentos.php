@@ -52,55 +52,67 @@ class departamentos extends Rest implements interfaceApi {
 
         $data = departamentoData::getAll();
 
-        if($data == true){
+        if ($data == true) {
             return $this->responseAPI("success", "get success!", 200, $data);
         }
-            return $this->responseAPI("error", "", 200);
+        return $this->responseAPI("error", "", 200);
     }
-    
-    
-    // todos los departamentos y sus usuarios
+
+// todos los departamentos y sus usuarios
     public function allAndUsers() {
 
         $data = departamentoData::getDepartmentsAndUsers();
-        
-        if($data == true){
+
+        if ($data == true) {
             return $this->responseAPI("success", "get success!", 200, $data);
         }
-            return $this->responseAPI("error", "", 200);
+        return $this->responseAPI("error", "", 200);
     }
-    
-    
-    
-    // todos los departamentos y sus usuarios (con metas aprobadas por el Jefe)
+
+// todos los departamentos y sus usuarios (con metas aprobadas por el Jefe)
     public function allAndUsersMetasAprob() {
 
         $data = departamentoData::departmentsUsersMetasAprob();
-        
-        if($data == true){
+
+        if ($data == true) {
             return $this->responseAPI("success", "get success!", 200, $data);
         }
-            return $this->responseAPI("error", "", 200);
-    }    
-    
-    
-    
-    // Obtiene todos los departamentos (junto con los usuarios) de un jefe específico.
+        return $this->responseAPI("error", "", 200);
+    }
+
+    public function allUsersMetas() {
+        if ($this->get_request_method() != "POST") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+        $body = json_decode(file_get_contents("php://input"), true);
+        $id = $body['id'];
+        if (array_key_exists("periodo", $body)) {
+            $periodo = $body['periodo'];
+            $data = departamentoData::departmentUsersMetas($id,$periodo);
+            return $this->responseAPI("success", "get success!", 200, $data);
+        }else{
+            $data = departamentoData::departmentUsersMetasActual($id);
+            return $this->responseAPI("success", "get success!", 200, $data);
+        }
+        return $this->responseAPI("error", "", 200);
+    }
+
+// Obtiene todos los departamentos (junto con los usuarios) de un jefe específico.
     public function getUsersDeJefe() {
-        
+        if ($this->get_request_method() != "POST") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
         $body = json_decode(file_get_contents("php://input"), true);
         $data = departamentoData::getUsersFromJefe($body);
-        
-        if($data == true){
+
+        if ($data == true) {
             return $this->responseAPI("success", "get success!", 200, $data);
         }
-            return $this->responseAPI("error", "", 200);
+        return $this->responseAPI("error", "", 200);
     }
-    
-    
-    
-     // Obtiene todos los departamentos (junto con los usuarios) de un jefe específico, que posean METAS PENDIENTES 
-    // de aprobar.
+
+// Obtiene todos los departamentos (junto con los usuarios) de un jefe específico, que posean METAS PENDIENTES 
+// de aprobar.
 //    public function usersDeJefeMetasPendiente() {
 //        
 //        $body = json_decode(file_get_contents("php://input"), true);
@@ -111,13 +123,13 @@ class departamentos extends Rest implements interfaceApi {
 //        }
 //            return $this->responseAPI("error", "", 200);
 //    }
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
 
     public function add() {
 
@@ -126,31 +138,32 @@ class departamentos extends Rest implements interfaceApi {
         }
 
         $body = json_decode(file_get_contents("php://input"), true);
-        
+
         $nombre = $body['nombre'];
         $empresa = $body['empresa'];
-        $data = departamentoData::insert($nombre,$empresa['id']);
-        if($data === true){
+        $data = departamentoData::insert($nombre, $empresa['id']);
+        if ($data === true) {
             return $this->responseAPI("success", "add success", 200);
         }
         return $this->responseAPI("error", "", 200);
     }
-     public function del() {
+
+    public function del() {
 
         if ($this->get_request_method() != "POST") {
             return $this->responseAPI("error", "Not allowed.", 406);
         }
 
         $body = json_decode(file_get_contents("php://input"), true);
-        
+
         $id = $body['id'];
         $data = departamentoData::delete($id);
-        if($data === true){
+        if ($data === true) {
             return $this->responseAPI("success", "del success", 200);
         }
         return $this->responseAPI("error", "", 200);
     }
-    
+
     public function set() {
 
         if ($this->get_request_method() != "PUT") {
@@ -158,11 +171,11 @@ class departamentos extends Rest implements interfaceApi {
         }
 
         $body = json_decode(file_get_contents("php://input"), true);
-        
+
         $nombre = $body['nombre'];
         $id = $body['id'];
-        
-        $data = departamentoData::update($nombre,$id);
+
+        $data = departamentoData::update($nombre, $id);
         if ($data === true) {
             return $this->responseAPI("success", "set success", 200);
         }
@@ -174,6 +187,3 @@ class departamentos extends Rest implements interfaceApi {
     }
 
 }
-
-
-

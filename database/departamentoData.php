@@ -60,6 +60,48 @@ class departamentoData {
             return $e->getMessage();
         }
     }
+    
+    public static function departmentUsersMetasActual($departamento) {
+        $consulta = "SELECT id, nombre, apellido1, apellido2 FROM usuario where departamento = ? AND usuario.estado = 1;";
+        try {
+            $json_response = array();
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando->execute(array($departamento));
+            $users = $comando->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($users as $row) {
+                $newrow = array();
+                $newrow['id'] = $row['id'];
+                $newrow['nombre'] = $row['nombre'];
+                $newrow['apellido1'] = $row['apellido1'];
+                $newrow['apellido2'] = $row['apellido2'];
+                $newrow['metas'] = metasData::getAllFromUserActual($row['id']);
+                array_push($json_response, $newrow);
+            }
+            return $json_response;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+    
+     public static function departmentUsersMetas($departamento,$periodo) {
+        
+        try {
+            $json_response = array();
+            $users = usuarioData::getAllWhenDep($periodo,$departamento);
+            foreach ($users as $row) {
+                $newrow = array();
+                $newrow['id'] = $row['id'];
+                $newrow['nombre'] = $row['nombre'];
+                $newrow['apellido1'] = $row['apellido1'];
+                $newrow['apellido2'] = $row['apellido2'];
+                $newrow['metas'] = metasData::getAllFromUser($row['id'],$periodo);
+                array_push($json_response, $newrow);
+            }
+            return $json_response;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
 
     
     // Filtrar los usuarios con metas aprobadas por jefe y retornarlos en una lista

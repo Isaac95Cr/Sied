@@ -38,6 +38,7 @@
                                     <table id="example1" class="table table-bordered table-striped" datatable="ng" >
                                         <thead>
                                             <tr>
+                                                <th ng-show="false">Id</th>
                                                 <th>Nombre</th>
                                                 <th>Detalles</th>
                                                 <th>Evaluar</th>
@@ -45,6 +46,7 @@
                                         </thead>
 
                                         <tr ng-show="{{user.id !== userOnline}}" ng-repeat="user in departamento.usuarios">
+                                            <td ng-show="false"> {{user.id}} </td>
                                             <td><p data-toggle="popover" data-trigger="hover" data-html="true" data-content="<b>Jefe: <span class='label label-success'>Aprobado</span> <br> RRHH: <span class='label label-warning'>Pendiente</span></b>" > {{user.nombre + " " + user.apellido1 + " " + " " + user.apellido2}} </p></td>
                                             <td><a class="btn btn-primary btn-block" ng-click="pasarId(user.id)" href="#/detalleCompetenciasJefe">Detalle</a></td>
                                             <td><a class="btn btn-primary btn-block" ng-click="pasarId(user.id)" href="#/evaluar_competencias">Evaluar</a></td>

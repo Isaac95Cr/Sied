@@ -51,10 +51,25 @@ class usuarios extends Rest implements interfaceApi {
     }
 
     public function all() {
+        if ($this->get_request_method() != "POST" && $this->get_request_method() != "GET") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
 
-        $data = usuarioData::getAll();
+        if ($this->get_request_method() === "POST") {
+            $body = json_decode(file_get_contents("php://input"), true);
+            if (array_key_exists("periodo", $body) && array_key_exists("departamento", $body)) {
+                $periodo = $body['periodo'];
+                $departamento = $body['id'];
+                $data = usuarioData::getAllWhenDep($periodo, $departamento);
+            } if (array_key_exists("periodo", $body)) {
+                $periodo = $body['periodo'];
+                $data = usuarioData::getAllWhen($periodo);
+            }
+        } else {
+            $data = usuarioData::getAll();
 
-        return $this->responseAPI("success", "get success!", 200, $data);
+            return $this->responseAPI("success", "get success!", 200, $data);
+        }
     }
 
     public function allSolicitudes() {
@@ -242,46 +257,40 @@ class usuarios extends Rest implements interfaceApi {
             return $this->responseAPI("success", "Cambio de contraseña con exito", 200);
         } return $this->responseAPI("error", "Algo falló", 200);
     }
-    
-    
-     public function comprobarPassword() {
-         
+
+    public function comprobarPassword() {
+
         if ($this->get_request_method() != "POST") {
             return $this->responseAPI("error", "Not allowed.", 406);
         }
-        
+
         $body = json_decode(file_get_contents("php://input"), true);
         $passwordMD5 = md5($body['contrasena']);
 
         $data = usuarioData::comprobarUserPassword($body['id'], $passwordMD5);
 
-        if(isset($data)){
+        if (isset($data)) {
             return $this->responseAPI("success", "get success!", 200, $data);
-        }
-        else{
-             return $this->responseAPI("error", $data, 200);
+        } else {
+            return $this->responseAPI("error", $data, 200);
         }
     }
-    
-    
-    
-    
-       public function cambiarPasswordUser() {
-         
+
+    public function cambiarPasswordUser() {
+
         if ($this->get_request_method() != "PUT") {
             return $this->responseAPI("error", "Not allowed.", 406);
         }
-        
+
         $body = json_decode(file_get_contents("php://input"), true);
         $passwordMD5 = md5($body['contrasena']);
 
         $data = usuarioData::cambiarContrasenaUser($passwordMD5, $body['id']);
 
-        if(isset($data)){
+        if (isset($data)) {
             return $this->responseAPI("success", "get success!", 200, $data);
-        }
-        else{
-             return $this->responseAPI("error", $data, 200);
+        } else {
+            return $this->responseAPI("error", $data, 200);
         }
     }
 

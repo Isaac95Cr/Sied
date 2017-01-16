@@ -17,13 +17,13 @@ angular.module('empdep')
                     });
                 };
                 this.eliminar = function (obj) {
-                   return apiConnector.post("api/empresas/del",obj);
+                    return apiConnector.post("api/empresas/del", obj);
                 };
                 this.modificar = function (obj) {
-                    return apiConnector.put("api/empresas/set",obj);
+                    return apiConnector.put("api/empresas/set", obj);
                 };
                 this.agregar = function (obj) {
-                    return apiConnector.post('api/empresas/add',obj);
+                    return apiConnector.post('api/empresas/add', obj);
                 };
 
                 this.getEmpresas = function () {
@@ -61,8 +61,8 @@ angular.module('empdep')
                         }
                     });
                 };
-                
-                 // llama al método que carga departamentos y los usuarios de cada uno.
+
+                // llama al método que carga departamentos y los usuarios de cada uno.
                 this.cargarConUsuarios = function () {
                     return apiConnector.get("api/departamentos/allAndUsers").then(function (res) {
                         if (res.status === 'error') {
@@ -73,9 +73,9 @@ angular.module('empdep')
                         }
                     });
                 };
-                
-                
-              // llama al método que carga departamentos y los usuarios de cada uno (que posean metas aprobadas por Jefe).
+
+
+                // llama al método que carga departamentos y los usuarios de cada uno (que posean metas aprobadas por Jefe).
                 this.cargarUsuariosMetasAprob = function () {
                     return apiConnector.get("api/departamentos/allAndUsersMetasAprob").then(function (res) {
                         if (res.status === 'error') {
@@ -86,20 +86,24 @@ angular.module('empdep')
                         }
                     });
                 };
-                
-                
+
+
                 this.eliminar = function (obj) {
-                   return apiConnector.post("api/departamentos/del",obj);
+                    return apiConnector.post("api/departamentos/del", obj);
                 };
                 this.modificar = function (obj) {
-                    return apiConnector.put("api/departamentos/set",obj);
+                    return apiConnector.put("api/departamentos/set", obj);
                 };
                 this.agregar = function (obj) {
-                    return apiConnector.post('api/departamentos/add',obj);
+                    return apiConnector.post('api/departamentos/add', obj);
                 };
 
                 this.getDepartamentos = function () {
                     return service.departamentos;
+                };
+
+                this.getDepartamento = function () {
+                    return service.departamento;
                 };
 
                 this.setDepartamento = function (departamento) {
@@ -114,7 +118,8 @@ angular.module('empdep')
         .service('empdep', ['departamentoService', 'empresaService', function (departamentoService, empresaService) {
 
                 var fueSeleccionada = false;
-        
+                var fueSeleccionadaDep = true;
+
                 this.cargarEmp = function () {
                     return empresaService.cargar();
                 };
@@ -134,6 +139,8 @@ angular.module('empdep')
 
                 this.setEmpresa = function (empresa) {
                     empresaService.setEmpresa(empresa);
+                    departamentoService.setDepartamento(undefined);
+                    this.setDepSeleccion(true);
                 };
 
                 this.getEmpresa = function () {
@@ -144,8 +151,13 @@ angular.module('empdep')
                     return departamentoService.getDepartamentos();
                 };
 
+                this.getDepartamento = function () {
+                    return departamentoService.getDepartamento();
+                };
+
                 this.setDepartamento = function (departamento) {
                     departamentoService.setDepartamento(departamento);
+                    this.setDepSeleccion(false);
                 };
 
                 this.getDepartamento = function () {
@@ -165,6 +177,18 @@ angular.module('empdep')
                 };
                 this.reloadDepartments = function (valor) {
                     fueSeleccionada = valor;
+                };
+                this.setDepSeleccion = function (valor) {
+                    fueSeleccionadaDep = valor;
+                };
+                this.isDepSeleccion = function () {
+                    return fueSeleccionadaDep;
+                };
+                this.isEmpSeleccionada = function (id) {
+                    return empresaService.getEmpresa().id === id;
+                };
+                this.isDepSeleccionada = function (id) {
+                    return departamentoService.getDepartamento().id === id;
                 };
             }])
         .factory("factoryDepartamento", function ($http) {

@@ -49,6 +49,7 @@
                 <table id="usuarios" class="table table-hover table-bordered table-responsive" datatable="ng">
                     <thead>
                         <tr>
+                            <th ng-show="false">Id</th>
                             <th>Nombre</th>
                             <th>Estado</th>
                             <th>Departamento</th>
@@ -57,6 +58,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="user in users" sglclick="" dblclick="reporte({{user}});">
+                            <td ng-show="false"> {{user.id}} </td>
                             <td> {{user.nombre + " " + user.apellido1 + " " + user.apellido2}} </td>
                             <td> 
                                 <small ng-show="user.estado == 1" class="label bg-green margin">Activo</small>

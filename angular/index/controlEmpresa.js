@@ -24,6 +24,9 @@ angular.module("index")
                     empdep.setEmpresa(empresa);
                     empdep.setSeleccionada(true);
                 };
+                $scope.isSelected = function (id){
+                    return empdep.isEmpSeleccionada(id);
+                };
                 
                 $scope.cargar = function () {
                     empdep.cargarEmp().then(function () {

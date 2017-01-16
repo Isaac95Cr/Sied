@@ -1,7 +1,5 @@
 angular.module("index")
-        .controller("controlDepartamento", ['$scope', 'empdep', 'modalService','ShareDataService', function ($scope, empdep, modalService,ShareDataService) {
-                $scope.departamento ={};
-                $scope.depBool = true;
+        .controller("controlDepartamento", ['$scope', 'empdep', 'modalService', 'ShareDataService','$http', function ($scope, empdep, modalService, ShareDataService,$http) {
                 $scope.departamentos = [];
                 $scope.departamentoEdit = {
                     id: undefined,
@@ -11,48 +9,46 @@ angular.module("index")
                 $scope.departamentoAdd = {
                     nombre: undefined
                 };
-                
-                
                 $scope.empresaSeleccionada = "";
                 $scope.seleccionada = false; // para determinar si se muestra el botón de 'Agregar' departamento.
-                
+
                 $scope.init = function () {
                     $scope.cargar();
                 };
-                
-                
+
+
                 $scope.getSeleccionada = function () {
                     $scope.seleccionada = empdep.isSeleccionada();
                 };
-                                                                                
-                 $scope.showBtnAgregar = function () {
-                     $scope.banderaBtnAgregar = true;               
-                 };
-                
+
+                $scope.showBtnAgregar = function () {
+                    $scope.banderaBtnAgregar = true;
+                };
+
                 $scope.updateEmpresaSelect = function () {
-                    if(empdep.getEmpresa() !== undefined)
+                    if (empdep.getEmpresa() !== undefined)
                         $scope.empresaSeleccionada = empdep.getEmpresa().nombre;
                     $scope.getSeleccionada();
                     return $scope.empresaSeleccionada;
                 };
-                
+
                 // Para limpiar la modal cuando se le da 'x' de cerrar o Cancelar.
                 $scope.resetForm = function (form) {
                     form.$setPristine();
                     form.$setUntouched();
                 };
-                       
+
 //                $scope.filtro = function (departamento) {
 //                    return departamento.empresa == empdep.getEmpresa().id;
 //                };
 //                
                 $scope.filtro = function (departamento) {
-                    if(empdep.getEmpresa() !== undefined)
+                    if (empdep.getEmpresa() !== undefined)
                         return departamento.empresa == empdep.getEmpresa().id;
                     else
                         return false;
                 };
-                
+
                 $scope.cargar = function () {
                     empdep.cargarDep().then(function () {
                         $scope.departamentos = empdep.getDepartamentos();
@@ -79,7 +75,7 @@ angular.module("index")
                     modalService.modalYesNo("Confirmacion", "<p>" + "¿Esta seguro de realizar la accion?" + "</p>")
                             .result.then(function (selectedItem) {
                                 if (selectedItem === "si")
-                                    $scope.eliminar({id:id});
+                                    $scope.eliminar({id: id});
                             });
                 };
                 $scope.eliminar = function (obj) { // id
@@ -110,21 +106,32 @@ angular.module("index")
                                 }
                             });
                 };
-                $scope.setDepartamento = function(departamento){
-                    $scope.departamento = departamento;
-                    $scope.depBool = false;
+                $scope.setDepartamento = function (departamento) {
+                    //$scope.departamento = departamento;
+                    empdep.setDepartamento(departamento);
                 };
-                $scope.isSelected = function(id){
-                    return id === $scope.departamento.id;
+                $scope.isSelected = function (id) {
+                    return empdep.isDepSeleccionada(id);
                 };
-                $scope.reporte = function (dep) {
-                    location.href = 'http://localhost/Sied/reportes/reporteDepartamento.php?dep=' + $scope.departamento.id + '&periodo=' + $scope.periodo;
+
+                $scope.btn = function () {
+                    return empdep.isDepSeleccion();
+                };
+
+                $scope.reporte = function () {
+                    
+                        //return $http.post('/Sied/api/departamentos/allUsersMetas', {id:1,periodo:1});
+                    
+
+                    location.href = 'http://localhost/Sied/reportes/reporteDepartamento.php?dep='
+                            + empdep.getDepartamento().id + '&periodo=' + $scope.periodo +
+                            '&nombre=' + empdep.getDepartamento().nombre + '&emp=' + empdep.getEmpresa().nombre;
                 };
 
                 $scope.$on('handleBroadcast', function () {
                     $scope.periodo = ShareDataService.msg;
                 });
-                
+
             }]);
 
 
