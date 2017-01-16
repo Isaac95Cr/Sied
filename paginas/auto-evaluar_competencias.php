@@ -37,7 +37,7 @@
                             <div id="collapse{{$index}}" class="panel-collapse collapse">
                                 <div class="box-body table-responsive">
                                     <!-- detalles-->
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered" style="table-layout: fixed; word-wrap: break-word;">
 
                                         <th>Detalle de Competencia</th>
                                         <th>Autoevaluación</th>
@@ -46,7 +46,7 @@
                                             <td>{{elemento.detail}}</td>
                                             <td>
                                                 <div class="form-group">
-                                                    <div class="col-sm-7">
+                                                    <div class="col-sm-5">
                                                         <input type="number" min="0" max="100" ng-value="{{'elemento.autoev'}}" id="{{elemento.idObj}}" name="{{elemento.nameObj}}" class="form-control"  placeholder="0"> 
                                                     </div>
                                                 </div>

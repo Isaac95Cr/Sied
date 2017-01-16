@@ -5,6 +5,7 @@ angular.module("index")
 
                 $scope.metasUser = [];
                 $scope.tiene_Metas = true;
+                $scope.is_Aprobar = true;  // para saber si hay metas por aprobar.
                 $scope.colaborador = "";
                 $scope.comentario = "";  // ng-model del comentario de la modal.
 
@@ -40,8 +41,12 @@ angular.module("index")
                         }
                         if (res.status === 'success') {
                             $scope.metasUser = res.data;
-                            if ($scope.metasUser.length === 0)
+                            if ($scope.metasUser.length === 0){
                                 $scope.tiene_Metas = false;
+                            }else{
+                                $scope.is_Aprobar = 
+                                        $scope.metasUser.some(elem => (elem.aprobacion_j == 1 && elem.aprobacion_rh === null));
+                            }
                         }
                     });
                 };
@@ -67,6 +72,7 @@ angular.module("index")
                             alert(res.message);
                         }
                         if (res.status === 'success') {
+                            $scope.cargar();
                             modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
                             $scope.id = "0";
                             $scope.comentario = "";
@@ -109,6 +115,7 @@ angular.module("index")
                             alert(res.message);
                         }
                         if (res.status === 'success') {
+                            $scope.cargar();
                             modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
                             $scope.id = "0";
                             $scope.comentario = "";

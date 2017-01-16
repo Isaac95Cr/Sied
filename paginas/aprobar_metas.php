@@ -99,8 +99,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #3c8dbc; color:#FFF">
-                    <button type="button" style='opacity: initial; color: #FFF' class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
+<!--                    <button type="button" style='opacity: initial; color: #FFF' class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>-->
                     <h4 class="modal-title">Comentario de la Meta</h4>
                 </div>
                 <div class="modal-body">
@@ -119,8 +119,6 @@
                             <button type="button"  class="btn btn-primary" ng-disabled="formComentar.$invalid" data-dismiss="modal" ng-click="desaprobarMeta()">Guardar</button>
                         </div>
                     </form>
-
-
 
                 </div>
             </div>

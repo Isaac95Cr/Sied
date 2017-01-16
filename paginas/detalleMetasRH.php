@@ -36,7 +36,7 @@
 
                             <div id="collapse{{$index}}" class="panel-collapse collapse">
                                 <div class="box-body table-responsive">
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered" style="table-layout: fixed; word-wrap: break-word;">
                                         <tr>
                                             <td style="font-weight: bold;">Descripción</td>
                                             <td style="font-weight: bold;">Peso</td>

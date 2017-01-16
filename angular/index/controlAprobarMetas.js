@@ -72,6 +72,7 @@ angular.module("index")
                             alert(res.message);
                         }
                         if (res.status === 'success') {
+                            $scope.cargar();
                             modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
                             $scope.id = "0";
                             $scope.comentario = "";
@@ -114,6 +115,7 @@ angular.module("index")
                             alert(res.message);
                         }
                         if (res.status === 'success') {
+                            $scope.cargar();
                             modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
                             $scope.id = "0";
                             $scope.comentario = "";

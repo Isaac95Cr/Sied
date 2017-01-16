@@ -54,7 +54,6 @@
                                                                ng-model="meta.aprobacion_rh" ng-checked="meta.aprobacion_rh == 1" ng-change="comprobarAprobado('a'+$index, meta.id)"
                                                                ng-true-value="'1'" ng-false-value="'0'"   color="green" i-check>
                                                     </div>
-
                                                     <div class="col-sm-3">
                                                         <p>Desaprobada</p>
                                                         <input type="checkbox" id="{{'d'+$index}}" name=""
@@ -78,6 +77,7 @@
 
 
                     <p style="font-size: 90%" ng-show="!tiene_Metas" class="label bg-red margin">El Colaborador no posee metas</p>
+                    <p style="font-size: 90%" ng-show="tiene_Metas && !is_Aprobar" class="label label-primary margin">No hay metas por aprobar</p>
                     </div>
                 </div>
                 <!-- /.box-body -->
@@ -92,12 +92,12 @@
 
 
     <!-- /.modal -->
-    <div class="modal" id="modalComent">
+    <div class="modal" id="modalComent" data-backdrop="static">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #3c8dbc; color:#FFF">
-                    <button type="button" style='opacity: initial; color: #FFF' class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
+<!--                    <button type="button" style='opacity: initial; color: #FFF' class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>-->
                     <h4 class="modal-title">Comentario de la Meta</h4>
                 </div>
                 <div class="modal-body">
@@ -113,7 +113,6 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left"  data-dismiss="modal">Cancelar</button>
                             <button type="button"  class="btn btn-primary" ng-disabled="formComentar.$invalid" data-dismiss="modal" ng-click="desaprobarMeta()">Guardar</button>
                         </div>
                     </form>
