@@ -67,7 +67,6 @@ class usuarios extends Rest implements interfaceApi {
             }
         } else {
             $data = usuarioData::getAll();
-
             return $this->responseAPI("success", "get success!", 200, $data);
         }
     }

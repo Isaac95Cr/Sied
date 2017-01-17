@@ -1,6 +1,7 @@
 <?php
 include '../database/database.php';
 include '../database/periodoData.php';
+include '../database/usuarioData.php';
 $today = date("Y-m-d");
 $today2 = date("Y-m-d H:i:s");
 $data = periodoData::getActual();
@@ -39,6 +40,7 @@ if ($today_time == $fechainicioantes) {
 if ($today_time == $fechainicio) { 
     echo $today_time->format('Y-m-d H:i:s') . " = ".$fechainicio->format('Y-m-d H:i:s');
     echo "hoy es la fecha inicio";
+    usuarioData::setAll();
 }
 if ($today_time == $fiper1antes) { 
     echo $today_time->format('Y-m-d H:i:s') . " = ". $fiper1antes->format('Y-m-d H:i:s');

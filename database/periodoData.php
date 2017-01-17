@@ -37,12 +37,12 @@ class periodoData {
         }
     }
 
-    public static function update($nombre, $id) {
+    public static function update($id,$fechainicio,$fechafinal,$nombre,$fiper1,$ffper1,$fiper2,$ffper2) {
         $comando = "UPDATE periodo SET fechainicio=?, fechafinal=?, nombre=?, fiper1=?, ffper1=?, fiper2=?, ffper2=? WHERE id=?;
 ";
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
-            $sentencia->execute(array($nombre, $id));
+            $sentencia->execute(array($fechainicio,$fechafinal,$nombre,$fiper1,$ffper1,$fiper2,$ffper2,$id));
             return true;
         } catch (PDOException $pdoExcetion) {
             return$pdoExcetion->getMessage();

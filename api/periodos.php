@@ -67,17 +67,17 @@ class periodos extends Rest implements interfaceApi {
         $body = json_decode(file_get_contents("php://input"), true);
         
         $aux = new DateTime($body['date1']['startDate']);
-        $body['date1']['startDate'] = $aux->format("Y-m-d H:i:s");
+        $body['date1']['startDate'] = $aux->format("Y-m-d");
         $aux = new DateTime($body['date1']['endDate']);
-        $body['date1']['endDate'] = $aux->format("Y-m-d H:i:s");
+        $body['date1']['endDate'] = $aux->format("Y-m-d");
         $aux = new DateTime($body['date1']['startDate']);
-        $body['date2']['startDate'] = $aux->format("Y-m-d H:i:s");
+        $body['date2']['startDate'] = $aux->format("Y-m-d");
         $aux = new DateTime($body['date1']['endDate']);
-        $body['date2']['endDate'] = $aux->format("Y-m-d H:i:s");
+        $body['date2']['endDate'] = $aux->format("Y-m-d");
         $aux = new DateTime($body['date1']['startDate']);
-        $body['date3']['startDate'] = $aux->format("Y-m-d H:i:s");
+        $body['date3']['startDate'] = $aux->format("Y-m-d");
         $aux = new DateTime($body['date1']['endDate']);
-        $body['date3']['endDate'] = $aux->format("Y-m-d H:i:s");
+        $body['date3']['endDate'] = $aux->format("Y-m-d");
         
         $data = periodoData::insert(2, $body['date1']['startDate'], $body['date1']['endDate'], $body['nombre'], $body['date2']['startDate'], $body['date2']['endDate'], $body['date3']['startDate'], $body['date3']['endDate']);
         if ($data === true) {
@@ -88,19 +88,44 @@ class periodos extends Rest implements interfaceApi {
 
     public function set() {
 
-        if ($this->get_request_method() != "PUT") {
+        if ($this->get_request_method() != "POST") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+        $body = json_decode(file_get_contents("php://input"), true);
+        $id = $body['id'];
+        $nombre = $body['nombre'];
+        $aux = new DateTime($body['date1']['startDate']);
+        $body['date1']['startDate'] = $aux->format("Y-m-d");
+        $aux = new DateTime($body['date1']['endDate']);
+        $body['date1']['endDate'] = $aux->format("Y-m-d");
+        $aux = new DateTime($body['date1']['startDate']);
+        $body['date2']['startDate'] = $aux->format("Y-m-d");
+        $aux = new DateTime($body['date1']['endDate']);
+        $body['date2']['endDate'] = $aux->format("Y-m-d");
+        $aux = new DateTime($body['date1']['startDate']);
+        $body['date3']['startDate'] = $aux->format("Y-m-d");
+        $aux = new DateTime($body['date1']['endDate']);
+        $body['date3']['endDate'] = $aux->format("Y-m-d");
+        
+        $data = periodoData::update($id, $body['date1']['startDate'], $body['date1']['endDate'],$nombre, $body['date2']['startDate'], $body['date2']['endDate'], $body['date3']['startDate'], $body['date3']['endDate']);
+        if ($data === true) {
+            return $this->responseAPI("success", "add success", 200);
+        }
+        return $this->responseAPI("error", "", 200);
+    }
+    
+    public function del(){
+         if ($this->get_request_method() != "POST") {
             return $this->responseAPI("error", "Not allowed.", 406);
         }
 
         $body = json_decode(file_get_contents("php://input"), true);
 
-        $id = $body['id'];
-
-        $data = notificacionData::update($id);
+        $data = periodoData::delete($body['id']);
         if ($data === true) {
-            return $this->responseAPI("success", "set success", 200);
+            return $this->responseAPI("success", "Periodo eliminado con éxito", 200);
         }
-        return $this->responseAPI("error", $data, 200);
+        return $this->responseAPI("error", "", 200);
     }
 
     public function __destruct() {

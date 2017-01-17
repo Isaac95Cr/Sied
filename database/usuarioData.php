@@ -100,6 +100,7 @@ and perfil.id != 0 and evaluacion_periodo.periodo = ? ;";
             return false;
         }
     }
+    
     public static function getAllWhenDep($periodo,$departamento) {
         $consulta = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,usuario.estado,
 (departamento.nombre) as departamento, (empresa.nombre) as empresa,
@@ -251,6 +252,22 @@ and perfil.id = 0;";
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
             $sentencia->execute(array($id, $periodo, $perfil));
+            return true;
+        } catch (PDOException $pdoExcetion) {
+            return $pdoExcetion->getMessage();
+        }
+    }
+    public static function insertEvaluacion($id) {
+        $comando = "INSERT INTO evaluacion_periodo 
+(perfil_competencia,usuario,periodo) 
+select evaluacion_periodo.perfil_competencia, ? as usuario,
+(SELECT id as periodo FROM periodo WHERE NOW() BETWEEN periodo.fechainicio AND periodo.fechafinal) as periodo
+ from evaluacion_periodo 
+where evaluacion_periodo.usuario = usuario order by id desc limit 1;";
+
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($id));
             return true;
         } catch (PDOException $pdoExcetion) {
             return $pdoExcetion->getMessage();
@@ -482,6 +499,20 @@ and perfil.id = 0;";
             return $pdoExcetion->getMessage();
         }
     }
+    public static function setAll() {
+        try {
+            $response = false;
+            $users = usuarioData::getAll();
+            foreach ($users as $user) {
+                usuarioData::insertEvaluacion($user['id']);
+            }
+            return true;
+            //return $users;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    
     
     
     
