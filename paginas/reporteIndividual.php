@@ -5,7 +5,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="#/"><i class="fa  fa-building-o"></i> Índice</a></li>
-        <li><a href="#/reporteIndividual">ReporteIndividual</a></li>
+        <li><a href="#/reporteIndividual">Reporte Individual</a></li>
     </ol>
 </section>
 
@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="box-body">
-                <table id="usuarios" class="table table-hover table-bordered table-responsive" datatable="ng">
+                <table id="usuarios" class="table table-hover table-bordered table-responsive" datatable="ng" style="border-top: 3px solid #3c8dbc;">
                     <thead>
                         <tr>
                             <th ng-show="false">Id</th>

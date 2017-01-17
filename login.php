@@ -46,7 +46,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-6">
-                            <a href="forgotContrasena.php">¿Olvidó su contraseña?</a><br>
+                            <a href="forgotContrasena.php">¿Olvidó su contraseña?</a><br/><br/>
                             <a href="registro.php" class="text-center">Registrarse</a>
                         </div>
                         <!-- /.col -->

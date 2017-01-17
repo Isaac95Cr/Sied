@@ -36,29 +36,29 @@
                             </div>
                             <div id="collapse{{$index}}" class="panel-collapse collapse">
                                 <div class="box-body">
-                                    <table class="table table-bordered">
-                                        <tr>
+                                    <table class="table table-bordered" style="table-layout: fixed; word-wrap: break-word;">
+                                        <tr style="text-align: center;">
                                             <td style="font-weight: bold;">Descripción</td>
                                             <td style="font-weight: bold;">Peso</td>
                                             <td style="font-weight: bold;">Estado</td>
-                                            <td style="font-weight: bold;">Comentario</td>
+<!--                                            <td style="font-weight: bold;">Comentario</td>-->
                                         </tr>
 
-                                        <tr style="text-align: center;">
+                                        <tr>
                                             <td> {{meta.descripcion}} </td>
-                                            <td> {{meta.peso}} </td>                                       
+                                            <td style="text-align: center;"> {{meta.peso}} </td>                                       
                                             <td class="text-center">
                                                 <div class="form-group">
 
-                                                    <div class="col-sm-3">
-                                                        <p>Aprobada</p>
+                                                    <div class="col-sm-6">
+                                                        <p>Aprobar</p>
                                                         <input type="checkbox" id="{{'a'+$index}}" name="" 
                                                                ng-model="meta.aprobacion_j" ng-checked="meta.aprobacion_j == 1" ng-change="comprobarAprobado('a'+$index, meta.id)"
                                                                ng-true-value="'1'" ng-false-value="'0'"   color="green" i-check>
                                                     </div>
 
-                                                    <div class="col-sm-3">
-                                                        <p>Desaprobada</p>
+                                                    <div class="col-sm-6">
+                                                        <p>Desaprobar</p>
                                                         <input type="checkbox" id="{{'d'+$index}}" name=""
                                                                ng-change="comprobarDesaprobado('d'+$index, meta.id)"
                                                                ng-model="meta.aprobacion_j" ng-checked="meta.aprobacion_j == 0"
@@ -67,11 +67,11 @@
                                                 </div>
                                             </td>
 
-                                            <td class="text-center">
+<!--                                            <td class="text-center">
                                                 <span data-toggle="modal" data-target="#modalVerComent">
                                                     <i class="fa fa-commenting fa-2x" ng-click="getComment(meta.id)"></i>
                                                 </span>
-                                            </td>
+                                            </td>-->
                                         </tr>
                                     </table>
                                 </div>

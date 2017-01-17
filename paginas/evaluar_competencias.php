@@ -38,7 +38,7 @@
                                 <div id="collapse{{$index}}" class="panel-collapse collapse">
                                     <div class="box-body table-responsive">
                                         <!-- detalles-->
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" style="table-layout: fixed; word-wrap: break-word;">
 
                                             <th>Detalle de Competencia</th>
                                             <th>Autoevaluación</th>

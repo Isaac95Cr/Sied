@@ -35,7 +35,7 @@
 
                             <div id="collapse{{$index}}" class="panel-collapse collapse">
                                 <div>
-                                    <table id="example1" class="table table-bordered table-striped" datatable="ng" >
+                                    <table id="example1" class="table table-bordered table-striped" datatable="ng" style="border-top: 3px solid #3c8dbc;">
                                         <thead>
                                             <tr>
                                                 <th ng-show="false">Id</th>

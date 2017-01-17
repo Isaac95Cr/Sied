@@ -41,7 +41,7 @@
                             <div id="collapse{{$index}}" class="panel-collapse collapse">
                                 <div class="box-body table-responsive">
                                     <table class="table table-bordered" style="table-layout: fixed; word-wrap: break-word;">
-                                        <tr>
+                                        <tr style="text-align: center;">
                                             <td style="font-weight: bold;">Descripción</td>
                                             <td style="font-weight: bold;">Peso</td>
                                             <td style="font-weight: bold;">Autoevaluable</td>
@@ -51,12 +51,12 @@
                                         </tr>
                                         <tr>
                                             <td> {{meta.descripcion}}</td>
-                                            <td> {{meta.peso}} </td>
-                                            <td> {{meta.evaluable == 1? 'Sí' : 'No'}} </td>
+                                            <td style="text-align: center;"> {{meta.peso}} </td>
+                                            <td style="text-align: center;"> {{meta.evaluable == 1? 'Sí' : 'No'}} </td>
 
                                             <td class="text-center">
                                                 <span data-toggle="modal" data-target="#modalVerComent">
-                                                    <i class="fa fa-commenting fa-2x" ng-click="getComments(meta.id)"></i>
+                                                    <i class="fa fa-commenting fa-2x" ng-click="getComments(meta.id)" style="cursor: pointer;"></i>
                                                 </span>
                                             </td>
 

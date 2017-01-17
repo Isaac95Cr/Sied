@@ -23,15 +23,15 @@
             </div>
         </div>
         <div class="box-body">
-            <table id="solicitudes" class="table table-hover table-bordered table-responsive" datatable="ng">
+            <table id="solicitudes" class="table table-hover table-bordered table-responsive" datatable="ng" style="border-top: 3px solid #3c8dbc;">
                 <thead>
                     <tr>
                         <th ng-show="false">Id</th>
-                        <th>Nombre</th>
-                        <th>Perfil</th>
-                        <th>Estado</th>
-                        <th>Departamento</th>
-                        <th>Empresa</th>
+                        <th style="text-align: center;">Nombre</th>
+                        <th style="text-align: center;">Perfil</th>
+                        <th style="text-align: center;">Estado</th>
+                        <th style="text-align: center;">Departamento</th>
+                        <th style="text-align: center;">Empresa</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,15 +71,15 @@
             </div>
         </div>
         <div class="box-body">
-            <table id="usuarios" class="table table-hover table-bordered table-responsive" datatable="ng">
+            <table id="usuarios" class="table table-hover table-bordered table-responsive" datatable="ng" style="border-top: 3px solid #3c8dbc;">
                 <thead>
                     <tr>
                         <th ng-show="false">Id</th>
-                        <th>Nombre</th>
-                        <th>Perfil</th>
-                        <th>Estado</th>
-                        <th>Departamento</th>
-                        <th>Empresa</th>
+                        <th style="text-align: center;">Nombre</th>
+                        <th style="text-align: center;">Perfil</th>
+                        <th style="text-align: center;">Estado</th>
+                        <th style="text-align: center;">Departamento</th>
+                        <th style="text-align: center;">Empresa</th>
                     </tr>
                 </thead>
                 <tbody>
