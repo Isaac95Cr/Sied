@@ -2,6 +2,7 @@
 include '../database/database.php';
 include '../database/periodoData.php';
 include '../database/usuarioData.php';
+include '../database/notificacionData.php';
 $today = date("Y-m-d");
 $today2 = date("Y-m-d H:i:s");
 $data = periodoData::getActual();
@@ -36,61 +37,75 @@ if ($today_time == $fechainicioantes) {
     echo $today_time->format('Y-m-d H:i:s') . " = ". $fechainicioantes->format('Y-m-d H:i:s');
     // A todos los usuarios activos  se les genera una notificacion y en caso de ser nesesario se envia un correo
     echo "antes fecha inicio";
+    usuarioData::setAllNotificacion(0);
 }
 if ($today_time == $fechainicio) { 
     echo $today_time->format('Y-m-d H:i:s') . " = ".$fechainicio->format('Y-m-d H:i:s');
     echo "hoy es la fecha inicio";
     usuarioData::setAll();
+    usuarioData::setAllNotificacion(1);
 }
 if ($today_time == $fiper1antes) { 
     echo $today_time->format('Y-m-d H:i:s') . " = ". $fiper1antes->format('Y-m-d H:i:s');
     // A todos los usuarios activos  se les genera una notificacion y en caso de ser nesesario se envia un correo
     echo "antes fecha ingreso de metas";
+    usuarioData::setAllNotificacion(2);
 }
 if ($today_time == $fiper1) { 
     echo $today_time->format('Y-m-d H:i:s') . " = ". $fiper1->format('Y-m-d H:i:s');
     // A todos los usuarios activos  se les genera una notificacion y en caso de ser nesesario se envia un correo
     echo "hoy fecha ingreso de metas";
+    usuarioData::setAllNotificacion(3);
 }
 if ($today_time == $ffper1antes) { 
     echo $today_time->format('Y-m-d H:i:s') . " = ". $ffper1antes->format('Y-m-d H:i:s');
     // A todos los usuarios activos  se les genera una notificacion y en caso de ser nesesario se envia un correo
-    echo "antes fecha ingreso de metas final";
+    echo "antes fecha ingreso de metas final";  
+    usuarioData::setAllNotificacion(4);
 }
 if ($today_time == $ffper1) { 
     echo $today_time->format('Y-m-d H:i:s') . " = ". $ffper1->format('Y-m-d H:i:s');
     // A todos los usuarios activos  se les genera una notificacion y en caso de ser nesesario se envia un correo
     echo "hoy fecha ingreso de metas final";
+    usuarioData::setAllNotificacion(5);
 }
 if ($today_time == $fiper2antes) { 
     echo $today_time->format('Y-m-d H:i:s') . " = ". $fiper2antes->format('Y-m-d H:i:s');
     // A todos los usuarios activos  se les genera una notificacion y en caso de ser nesesario se envia un correo
     echo "antes fecha calificacion de metas final";
+    usuarioData::setAllNotificacion(6);
+  
 }
 if ($today_time == $fiper2) { 
     echo $today_time->format('Y-m-d H:i:s') . " = ". $fiper2->format('Y-m-d H:i:s');
     // A todos los usuarios activos  se les genera una notificacion y en caso de ser nesesario se envia un correo
     echo "hoy fecha calificacion de metas ";
+    usuarioData::setAllNotificacion(7);
+    
 }
 if ($today_time == $ffper2antes) { 
     echo $today_time->format('Y-m-d H:i:s') . " = ". $ffper2antes->format('Y-m-d H:i:s');
     // A todos los usuarios activos  se les genera una notificacion y en caso de ser nesesario se envia un correo
     echo "antes fecha calificacion de metas final";
+    usuarioData::setAllNotificacion(8);
 }
 if ($today_time == $ffper2) { 
     echo $today_time->format('Y-m-d H:i:s') . " = ". $ffper2->format('Y-m-d H:i:s');
     // A todos los usuarios activos  se les genera una notificacion y en caso de ser nesesario se envia un correo
     echo "hoy fecha calificacion de metas final";
+    usuarioData::setAllNotificacion(9);
 }
 
 
 if ($today_time == $fechafinalantes) { 
     echo $today_time->format('Y-m-d H:i:s') . " = ".  $fechafinalantes->format('Y-m-d H:i:s');
     echo "antes de la fecha final";
+    usuarioData::setAllNotificacion(10);
 }
 if ($today_time == $fechafinal) { 
     echo $today_time->format('Y-m-d H:i:s') . " = ". $fechafinal->format('Y-m-d H:i:s');
     echo "hoy es la fecha final";
+    usuarioData::setAllNotificacion(11);
 }
 //if($data['fechainicio'] == date('Y-M-D')){
 //    echo "prueba";

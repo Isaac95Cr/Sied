@@ -69,9 +69,9 @@ class notificaciones extends Rest implements interfaceApi {
         $body = json_decode(file_get_contents("php://input"), true);
 
         $notificacion = $body['notificacion'];
-        $id = $body['id'];
+        $usuario = $body['usuario'];
         
-        $data = notificacionData::insert($notificacion, $id);
+        $data = notificacionData::insert($notificacion, $usuario);
         if ($data === true) {
             return $this->responseAPI("success", "add success", 200);
         }
