@@ -53,15 +53,14 @@ class evaluaciones extends Rest implements interfaceApi {
     
     
     
-     public function getEvaluacionPeriodoUser() {
+     public function getEvaluacionPeriodoUser() { 
         if ($this->get_request_method() != "POST") {
             return $this->responseAPI("error", "Not allowed.", 406);
         }
-
         $body = json_decode(file_get_contents("php://input"), true);
         $data = evaluacionPeriodoData::getEvaluacionJefeRHActual($body);  // se comprueba si ya se enviaron notificaciones antes.
-        if($data['aprobacion_j'] != 1){
-            usuarioData::setNotificacion(13, $body);  // enviar notificacion
+        if($data['aprobacion_j'] !== 1){
+            $data = usuarioData::setNotificacion(13, $body);  // enviar notificacion
             evaluacionPeriodoData::updateAprobacionJefe($body);  // se cambia el aprobacion_j a '1'.
         }
         return $this->responseAPI("success", "get success!", 200, $data);
