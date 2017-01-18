@@ -72,6 +72,7 @@ class evaluacionCompetencias extends Rest implements interfaceApi {
         $body = json_decode(file_get_contents("php://input"), true);
         $data = evaluacionCompetenciaData::insert_Evaluacion($body);
         if ($data === true) {
+            // NOTIFICACION PARA JEFE DE AUTOEVALUACIONES DE COMPET. HECHAS POR COLABORADOR.
             return $this->responseAPI("success", "Autoevaluaciones ingresadas", 200);
         }
         return $this->responseAPI("error", "", 200);
@@ -88,6 +89,7 @@ class evaluacionCompetencias extends Rest implements interfaceApi {
         $data = evaluacionCompetenciaData::updateEvaluacionesDetalles($body['evaluaciones'],$body['id'], $body['idColab']);
 
         if ($data === true) {
+            // NOTIFICACION PARA COLABORADOR DE EVALUACIONES DE COMPET. HECHAS POR JEFE.
             return $this->responseAPI("success", "Evaluaciones ingresadas", 200);
         }
         return $this->responseAPI("error", $data, 200);

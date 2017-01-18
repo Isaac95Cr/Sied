@@ -8,7 +8,7 @@ class evaluacionCompetenciaData {
         try {
 
             $userColab = $evaluacion['idColab'];
-            $is_RegistrosColab = evaluacionCompetenciaData::getAutoFromUser($userColab);  // comprobar si existen registros del user.
+            $is_RegistrosColab = evaluacionCompetenciaData::getAutoFromUserActual($userColab);  // comprobar si existen registros del user.
 
             if (isset($is_RegistrosColab[0])) {   // si existen, entonces actualice...
                 $existeId = $is_RegistrosColab[0]['id'];  // se extrae el id del registro si lo hay, sino es null
@@ -40,13 +40,13 @@ class evaluacionCompetenciaData {
 
     public static function getAutoFromUserActual($idUser) {
         $consulta = "SELECT evaluacion_competencia.id, evaluacion_competencia.auto_evaluacion,
-evaluacion_competencia.evaluacion
-FROM evaluacion_competencia, usuario, evaluacion_periodo
-inner join  
-(SELECT id as actual FROM periodo WHERE NOW() BETWEEN periodo.fechainicio AND periodo.fechafinal) 
-as actual on evaluacion_periodo.periodo = actual
-WHERE usuario.id = ? AND usuario.id = evaluacion_periodo.usuario 
- AND evaluacion_periodo.id = evaluacion_competencia.evaluacion_periodo;";
+                                               evaluacion_competencia.evaluacion
+                            FROM evaluacion_competencia, usuario, evaluacion_periodo
+                            inner join  
+                            (SELECT id as actual FROM periodo WHERE NOW() BETWEEN periodo.fechainicio AND periodo.fechafinal) 
+                            as actual on evaluacion_periodo.periodo = actual
+                            WHERE usuario.id = ? AND usuario.id = evaluacion_periodo.usuario 
+                            AND evaluacion_periodo.id = evaluacion_competencia.evaluacion_periodo;";
         try {
             $json_response = array();
             $comando = Database::getInstance()->getDb()->prepare($consulta);
@@ -67,10 +67,10 @@ WHERE usuario.id = ? AND usuario.id = evaluacion_periodo.usuario
     
     public static function getAutoFromUser($idUser,$idPeriodoActual) {
         $consulta = "SELECT evaluacion_competencia.id, evaluacion_competencia.auto_evaluacion,
-evaluacion_competencia.evaluacion
-FROM evaluacion_competencia, usuario, evaluacion_periodo
-WHERE usuario.id = ? AND usuario.id = evaluacion_periodo.usuario 
- AND evaluacion_periodo.id = evaluacion_competencia.evaluacion_periodo AND evaluacion_periodo.periodo = ?;";
+                                               evaluacion_competencia.evaluacion
+                                FROM evaluacion_competencia, usuario, evaluacion_periodo
+                                WHERE usuario.id = ? AND usuario.id = evaluacion_periodo.usuario 
+                                AND evaluacion_periodo.id = evaluacion_competencia.evaluacion_periodo AND evaluacion_periodo.periodo = ?;";
         try {
             $json_response = array();
             $comando = Database::getInstance()->getDb()->prepare($consulta);
@@ -92,7 +92,7 @@ WHERE usuario.id = ? AND usuario.id = evaluacion_periodo.usuario
     public static function updateEvaluacionesDetalles($evaluaciones, $id, $idColab) {
 
         try {
-            $is_RegistrosColab = evaluacionCompetenciaData::getAutoFromUser($idColab);  // comprobar si existen registros del user.
+            $is_RegistrosColab = evaluacionCompetenciaData::getAutoFromUserActual($idColab);  // comprobar si existen registros del user.
 
             if (isset($is_RegistrosColab[0])) {   // si existen, entonces actualice...
                 $comando = "UPDATE  evaluacion_competencia set evaluacion = ? where id = ? ;";

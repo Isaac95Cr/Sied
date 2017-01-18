@@ -38,14 +38,14 @@
                                 <div id="collapse{{$index}}" class="panel-collapse collapse">
                                     <div class="box-body table-responsive">
                                         <table class="table table-bordered" id="tableAutoEv" style="table-layout: fixed; word-wrap: break-word;">
-                                            <tr>
+                                            <tr style="text-align: center;">
                                                 <td style="font-weight: bold;">Descripción</td>
                                                 <td style="font-weight: bold;">Peso</td>
                                                 <td style="font-weight: bold;">Autoevaluación</td>
                                             </tr>
                                             <tr>
                                                 <td> {{meta.descripcion}} </td>
-                                                <td> {{meta.peso}} </td>
+                                                <td style="text-align: center;"> {{meta.peso}} </td>
                                                 <td>
                                                   <div class="form-group" >
                                                       <div class="col-sm-5">

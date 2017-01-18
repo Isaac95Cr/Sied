@@ -40,15 +40,15 @@
                                         <!-- detalles-->
                                         <table class="table table-bordered" style="table-layout: fixed; word-wrap: break-word;">
 
-                                            <th>Detalle de Competencia</th>
-                                            <th>Autoevaluación</th>
-                                            <th>Evaluación</th>
+                                            <th style="text-align: center;">Detalle de Competencia</th>
+                                            <th style="text-align: center;">Autoevaluación</th>
+                                            <th style="text-align: center;">Evaluación</th>
 
 
                                             <tr ng-repeat="elemento in autoEvaluaciones[$index]">
                                                 <td>{{elemento.descrip}}</td>
 
-                                                <td>
+                                                <td style="text-align: center;">
                                                     <median ng-show="{{elemento.valor != '-'}}">{{elemento.valor}}</median>
                                                     <median ng-show="{{elemento.valor == '-'|| elemento.valor == ''}}" class="label bg-red margin">Pendiente</median>
                                                 </td>
@@ -57,7 +57,7 @@
 
                                                 <td>
                                                     <div class="form-group">
-                                                        <div class="col-sm-5">
+                                                        <div class="col-sm-6">
                                                             <input type="number" min="0" max="100" ng-value="{{elemento.valor2}}" class="form-control" name={{competencia.id}} placeholder="0"> 
                                                         </div>
                                                     </div>

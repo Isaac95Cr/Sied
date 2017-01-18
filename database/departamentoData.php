@@ -142,6 +142,7 @@ class departamentoData {
     public static function getUsersFromJefe($idUser) {
         $consulta = "SELECT departamento.id, departamento.nombre FROM departamento, usuario
                                 WHERE usuario.id = ? AND
+                                               usuario.estado = 1 AND
                                                usuario.id = departamento.jefe";
         try {
             $json_response = array();

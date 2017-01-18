@@ -190,7 +190,7 @@ angular.module("index")
                         }
                         if (res.status === 'success') {
                             modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
-                            $scope.init();
+                            $scope.cargar();
 
                         }
                     });

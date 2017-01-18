@@ -93,6 +93,7 @@ class metas extends Rest implements interfaceApi {
         );
 
         if ($data === true) {
+            // NOTIFICACION PARA JEFE DE QUE COLABORADOR AGREGÓ META.
             return $this->responseAPI("success", "Meta agregada con éxito", 200);
         }
         return $this->responseAPI("error", "", 200);
@@ -158,9 +159,11 @@ class metas extends Rest implements interfaceApi {
         if ($body['comentario'] !== "") {
             $data = metasData::desaprobarMeta($body['id'], $body['comentario']);
             $mensaje = "Meta desaprobada con éxito";
+            // NOTIFICACION PARA COLABORADOR DE DESAPROBACIÓN DE META POR JEFE...
         } else {
             $data = metasData::aprobarMeta($body['id'], $body['comentario']);
             $mensaje = "Meta aprobada con éxito";
+            // NOTIFICACION PARA COLABORADOR DE APROBACIÓN DE META POR JEFE...
         }
 
         if ($data === true) {
@@ -182,9 +185,11 @@ class metas extends Rest implements interfaceApi {
         if ($body['comentario'] !== "") {
             $data = metasData::desaprobarMetaRH($body['id'], $body['comentario']);
             $mensaje = "Meta desaprobada con éxito";
+            // NOTIFICACION PARA COLABORADOR DE DESAPROBACIÓN DE META POR RH..
         } else {
             $data = metasData::aprobarMetaRH($body['id'], $body['comentario']);
             $mensaje = "Meta aprobada con éxito";
+            // NOTIFICACION PARA COLABORADOR DE APROBACIÓN DE META POR RH..
         }
 
         if ($data === true) {
@@ -203,6 +208,7 @@ class metas extends Rest implements interfaceApi {
 
         $data = metasData::updateEvaluacion($body);
         if ($data === true) {
+            // NOTIFICACION PARA COLABORADOR DE EVALUACIONES DE METAS HECHAS POR JEFE.
             return $this->responseAPI("success", "Evaluaciones ingresadas", 200);
         }
         return $this->responseAPI("error", "", 200);
@@ -217,6 +223,7 @@ class metas extends Rest implements interfaceApi {
         $body = json_decode(file_get_contents("php://input"), true);
         $data = metasData::updateAuto($body);
         if ($data === true) {
+            // NOTIFICACION PARA JEFE DE AUTOEVALUACIONES DE METAS HECHAS POR COLABORADOR.
             return $this->responseAPI("success", "Autoevaluaciones ingresadas", 200);
         }
         return $this->responseAPI("error", "", 200);
