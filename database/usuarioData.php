@@ -514,6 +514,20 @@ where evaluacion_periodo.usuario = usuario order by id desc limit 1;";
         }
     }
     
+    public static function setAllNotificacion($notificacion) {
+        try {
+            $response = false;
+            $periodo = periodoData::getActual();
+            $users = usuarioData::getAllWhen($periodo['id']);
+            foreach ($users as $user) {
+                notificacionData::insert($notificacion,$user['id']);
+            }
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    
     
     
     

@@ -29,16 +29,14 @@ class notificacionData {
             return $pdoExcetion->getMessage();
         }
     }
-    public static function insert($notificacion,$id) {
+    public static function insert($notificacion,$usuario) {
         $comando = "INSERT INTO notifi_usuario ( " .
-                "id, nombre," .
-                " apellido1, apellido2," .
-                " correo,estado, contrasena,departamento,perfil)" .
-                " VALUES( ?,?,?,?,?,b?,?,?,? )";
+                "notificacion, usuario)" .
+                " VALUES(?,?)";
 
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
-            $sentencia->execute(array($id, $nombre, $apellido1, $apellido2, $correo, $estado, $contrasena, $departamento, $perfil));
+            $sentencia->execute(array($notificacion,$usuario));
             return true;
         } catch (PDOException $pdoExcetion) {
             return $pdoExcetion->getMessage();
