@@ -547,7 +547,7 @@ where evaluacion_periodo.usuario = usuario order by id desc limit 1;";
 
     public static function setNotificacion($notificacion, $id) {
         try {
-            return $notificacionData::insert($notificacion, $id);
+            return notificacionData::insert($notificacion, $id);
         } catch (PDOException $e) {
             return $e->getMessage();
         }

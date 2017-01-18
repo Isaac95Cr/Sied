@@ -53,8 +53,8 @@ class evaluaciones extends Rest implements interfaceApi {
     
     
     
-     public static function getEvaluacionPeriodoUser() {
-        if ($this->get_request_method() != "PUT") {
+     public function getEvaluacionPeriodoUser() {
+        if ($this->get_request_method() != "POST") {
             return $this->responseAPI("error", "Not allowed.", 406);
         }
 
