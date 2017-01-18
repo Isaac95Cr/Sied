@@ -2,12 +2,12 @@
 
 require 'periodoData.php';
 
-class evaluacionPeriodoData{
-    
-     function __construct() {
+class evaluacionPeriodoData {
+
+    function __construct() {
         
     }
-    
+
 // OBTENER EL ID DE LA EVALUACIÓN PERIODO QUE COINCIDA CON EL PERIODO ACTUAL Y 
 // CON UN USUARIO ESPECÍFICO.
     public static function getEvaluacionPeriodoUser($idUser) {
@@ -25,11 +25,9 @@ class evaluacionPeriodoData{
             return false;
         }
     }
-    
-    
-    
+
     // Obtiene la aprobacion_j y aprobacion_rh de la evaluacion periodo de un usuario.
-        public static function getEvaluacionJefeRHActual($idUser) {
+    public static function getEvaluacionJefeRHActual($idUser) {
         $consulta = "SELECT evaluacion_periodo.id, evaluacion_periodo.aprobacion_j, evaluacion_periodo.aprobacion_rh
                                  FROM sied.evaluacion_periodo inner join
                                 (SELECT id as actual FROM periodo WHERE NOW() BETWEEN periodo.fechainicio AND periodo.fechafinal)
@@ -44,25 +42,18 @@ class evaluacionPeriodoData{
             return false;
         }
     }
-    
-    
-    
-    
-      public static function updateAprobacionJefe($idUser) {
-         $idPeriodoActual = periodoData::getActual()['id'];
-        $consulta = "UPDATE sied.evaluacion_periodo SET aprobacion_j = b1 "
+
+    public static function updateAprobacionJefe($idUser) {
+        $idPeriodoActual = periodoData::getActual()['id'];
+        $consulta = "UPDATE sied.evaluacion_periodo SET aprobacion_j = b? "
                 . "WHERE usuario = ? and periodo = ?;";
         try {
             $comando = Database::getInstance()->getDb()->prepare($consulta);
-            $comando->execute(array($idUser, $idPeriodoActual));
+            $comando->execute(array(1,$idUser, $idPeriodoActual));
             return true;
         } catch (PDOException $e) {
             return false;
         }
     }
-    
-    
-    
-    
-}
 
+}

@@ -164,7 +164,7 @@ class metas extends Rest implements interfaceApi {
         } else {
             $data = metasData::aprobarMeta($body['id'], $body['comentario']);
             $mensaje = "Meta aprobada con éxito";
-            $usuarioNotificado = usuarioData::getUserFromMeta($id);
+            //$usuarioNotificado = usuarioData::getUserFromMeta($body['id']);
             // NOTIFICACION PARA COLABORADOR DE APROBACIÓN DE META POR JEFE...
         }
 
