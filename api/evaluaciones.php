@@ -8,6 +8,8 @@
  */
 
 require '../database/evaluacionPeriodoData.php';
+require '../database/usuarioData.php';
+require '../database/notificacionData.php';
 
 class evaluaciones extends Rest implements interfaceApi {
 
@@ -57,8 +59,11 @@ class evaluaciones extends Rest implements interfaceApi {
         }
 
         $body = json_decode(file_get_contents("php://input"), true);
-        
-        $data = evaluacionPeriodoData::getEvaluacionJefeRHActual($body['idUser']);
+        $data = evaluacionPeriodoData::getEvaluacionJefeRHActual($body);  // se comprueba si ya se enviaron notificaciones antes.
+        if($data['aprobacion_j'] != 1){
+            usuarioData::setNotificacion(13, $body);  // enviar notificacion
+            evaluacionPeriodoData::updateAprobacionJefe($body);  // se cambia el aprobacion_j a '1'.
+        }
         return $this->responseAPI("success", "get success!", 200, $data);
     }
 

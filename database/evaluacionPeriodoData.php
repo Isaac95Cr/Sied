@@ -48,6 +48,19 @@ class evaluacionPeriodoData{
     
     
     
+      public static function updateAprobacionJefe($idUser) {
+         $idPeriodoActual = periodoData::getActual()['id'];
+        $consulta = "UPDATE sied.evaluacion_periodo SET aprobacion_j = b1 "
+                . "WHERE usuario = ? and periodo = ?;";
+        try {
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando->execute(array($idUser, $idPeriodoActual));
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    
     
     
     

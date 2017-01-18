@@ -266,6 +266,11 @@ angular.module("index")
             meta.cargarMetas = function () {
                 return apiConnector.get('api/metas/all');
             };
+            
+            
+            meta.notificarAprobacionJefe = function (obj) {
+                return apiConnector.post('api/evaluaciones/getEvaluacionPeriodoUser', obj);
+            };
 
 
             meta.cargarMetasUser = function (obj) {

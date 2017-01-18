@@ -14,7 +14,7 @@ angular.module("index")
                 $scope.metaActual = "0";  // se utiliza para saber cuál es la meta a la que se está haciendo referencia. 
                 $scope.arrayComentarios = [];  // se van a guardar objetos de la forma: [{id: 1, comentario = 'comment'}]
                 
-
+                $scope.notificarUser = false;  // para saber si se tiene que enviar la notificación o no.
 
 
                 $scope.init = function () {
@@ -29,7 +29,7 @@ angular.module("index")
                         $scope.infoIdUser = $crypto.decrypt(storageSession.loadId());
                     }
 
-                    $scope.cargar();
+                    $scope.cargar();                  
                     $scope.cargarColaborador();
                 };
 
@@ -121,7 +121,7 @@ angular.module("index")
                             modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
                             
                             if($scope.is_TodasRevisadas($scope.metasUser)){
-                                // enviar notificacion
+                                factoryMeta.notificarAprobacionJefe($scope.infoIdUser);
                             }
                             $scope.id = "0";
                             $scope.comentario = "";
