@@ -269,7 +269,12 @@ angular.module("index")
             
             
             meta.notificarAprobacionJefe = function (obj) {
-                return apiConnector.post('api/evaluaciones/getEvaluacionPeriodoUser', obj);
+                return apiConnector.post('api/evaluaciones/notificacionJefe', obj);
+            };
+            
+            
+           meta.notificarAprobacionRH = function (obj) {
+                return apiConnector.post('api/evaluaciones/notificacionRH', obj);
             };
 
 
