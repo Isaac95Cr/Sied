@@ -42,35 +42,6 @@ class evaluacionPeriodoData {
             return false;
         }
     }
-    
-    
-       public static function updateAprobacionJefe($idUser) {
-       $idPeriodoActual = periodoData::getActual()['id'];
-       $consulta = "UPDATE sied.evaluacion_periodo SET aprobacion_j = b? "
-               . "WHERE usuario = ? and periodo = ?;";
-       try {
-           $comando = Database::getInstance()->getDb()->prepare($consulta);
-           $comando->execute(array(1,$idUser, $idPeriodoActual));
-           return true;
-       } catch (PDOException $e) {
-           return false;
-       }
-   }
-   
-   public static function updateAprobacionRH($idUser) {
-       $idPeriodoActual = periodoData::getActual()['id'];
-       $consulta = "UPDATE sied.evaluacion_periodo SET aprobacion_rh = b? "
-               . "WHERE usuario = ? and periodo = ?;";
-       try {
-           $comando = Database::getInstance()->getDb()->prepare($consulta);
-           $comando->execute(array(1,$idUser, $idPeriodoActual));
-           return true;
-       } catch (PDOException $e) {
-           return false;
-       }
-
-}
-
 
     public static function updateAprobacionJefe($idUser) {
         $idPeriodoActual = periodoData::getActual()['id'];

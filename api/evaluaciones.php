@@ -75,7 +75,9 @@ class evaluaciones extends Rest implements interfaceApi {
         }
         return $this->responseAPI("success", "get success!", 200, $data);
     }
-
+ 
+    
+    
     public function __destruct() {
         return true;
     }
