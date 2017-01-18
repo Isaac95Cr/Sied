@@ -57,7 +57,7 @@ and perfil.id != 0;";
             return false;
         }
     }
-    
+
     public static function getAllWhen($periodo) {
         $consulta = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,usuario.estado,
 (departamento.nombre) as departamento, (empresa.nombre) as empresa,
@@ -100,8 +100,8 @@ and perfil.id != 0 and evaluacion_periodo.periodo = ? ;";
             return false;
         }
     }
-    
-    public static function getAllWhenDep($periodo,$departamento) {
+
+    public static function getAllWhenDep($periodo, $departamento) {
         $consulta = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,usuario.estado,
 (departamento.nombre) as departamento, (empresa.nombre) as empresa,
 perfil.colaborador, perfil.jefe,perfil.RH, evaluacion_periodo.perfil_competencia as perfilId,
@@ -118,7 +118,7 @@ and departamento.id = ?;";
             $json_response = array();
             $perfiles = ['colaborador', 'jefe', 'RH'];
             $comando = Database::getInstance()->getDb()->prepare($consulta);
-            $comando->execute(array($periodo,$departamento));
+            $comando->execute(array($periodo, $departamento));
             $users = $comando->fetchAll(PDO::FETCH_ASSOC);
             foreach ($users as $user) {
                 $response['id'] = $user['id'];
@@ -257,6 +257,7 @@ and perfil.id = 0;";
             return $pdoExcetion->getMessage();
         }
     }
+
     public static function insertEvaluacion($id) {
         $comando = "INSERT INTO evaluacion_periodo 
 (perfil_competencia,usuario,periodo) 
@@ -451,10 +452,9 @@ where evaluacion_periodo.usuario = usuario order by id desc limit 1;";
             return $pdoExcetion->getMessage();
         }
     }
-    
-    
+
     // Obtener el password (MD5) de un usuario específico
-        public static function getUserPassword($id) {
+    public static function getUserPassword($id) {
 
         $comando = "SELECT contrasena FROM usuario WHERE id = ?;";
 
@@ -467,28 +467,25 @@ where evaluacion_periodo.usuario = usuario order by id desc limit 1;";
             return $pdoExcetion->getMessage();
         }
     }
-    
-    
-    
-        // Comparar password digitado con el de la base.
-      public static function comprobarUserPassword($id, $contrasena) {
+
+    // Comparar password digitado con el de la base.
+    public static function comprobarUserPassword($id, $contrasena) {
 
         $passUserBD = usuarioData::getUserPassword($id);
-        
+
         try {
-            if($passUserBD['contrasena'] == $contrasena){
+            if ($passUserBD['contrasena'] == $contrasena) {
                 return true;
-            }else{            
-            return false;
+            } else {
+                return false;
             }
         } catch (PDOException $pdoExcetion) {
             return $pdoExcetion->getMessage();
         }
     }
 
-    
     // cambiar password de un usuario en específico
-      public static function cambiarContrasenaUser($contrasena, $id) {
+    public static function cambiarContrasenaUser($contrasena, $id) {
         $comando = "UPDATE usuario SET contrasena = ? WHERE id = ?;";
 
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
@@ -499,6 +496,7 @@ where evaluacion_periodo.usuario = usuario order by id desc limit 1;";
             return $pdoExcetion->getMessage();
         }
     }
+
     public static function setAll() {
         try {
             $response = false;
@@ -513,22 +511,27 @@ where evaluacion_periodo.usuario = usuario order by id desc limit 1;";
             return false;
         }
     }
-    
+
     public static function setAllNotificacion($notificacion) {
         try {
             $response = false;
             $periodo = periodoData::getActual();
             $users = usuarioData::getAllWhen($periodo['id']);
             foreach ($users as $user) {
-                notificacionData::insert($notificacion,$user['id']);
+                notificacionData::insert($notificacion, $user['id']);
             }
             return true;
         } catch (PDOException $e) {
             return false;
         }
     }
-    
-    
-    
-    
+
+    public static function setNotificacion($notificacion, $id) {
+        try {
+            return $notificacionData::insert($notificacion, $id);
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
 }
