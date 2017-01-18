@@ -6,7 +6,6 @@
  * @copyright Copyright (c) 2014, Felipe Lunardi Farias <ffarias.dev@gmail.com>
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-
 require '../database/evaluacionPeriodoData.php';
 require '../database/usuarioData.php';
 require '../database/notificacionData.php';
@@ -50,27 +49,35 @@ class evaluaciones extends Rest implements interfaceApi {
             return $responseApi;
         }
     }
-    
-    
-    
-     public function getEvaluacionPeriodoUser() { 
+
+    public function notificacionJefe() {
         if ($this->get_request_method() != "POST") {
             return $this->responseAPI("error", "Not allowed.", 406);
         }
         $body = json_decode(file_get_contents("php://input"), true);
         $data = evaluacionPeriodoData::getEvaluacionJefeRHActual($body);  // se comprueba si ya se enviaron notificaciones antes.
-        if($data['aprobacion_j'] !== 1){
+        if ($data['aprobacion_j'] !== 1) {
             $data = usuarioData::setNotificacion(13, $body);  // enviar notificacion
             evaluacionPeriodoData::updateAprobacionJefe($body);  // se cambia el aprobacion_j a '1'.
         }
         return $this->responseAPI("success", "get success!", 200, $data);
     }
-
     
+    public function notificacionRH() {
+        if ($this->get_request_method() != "POST") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+        $body = json_decode(file_get_contents("php://input"), true);
+        $data = evaluacionPeriodoData::getEvaluacionJefeRHActual($body);  // se comprueba si ya se enviaron notificaciones antes.
+        if ($data['aprobacion_rh'] !== 1) {
+            $data = usuarioData::setNotificacion(14, $body);  // enviar notificacion
+            evaluacionPeriodoData::updateAprobacionRH($body);  // se cambia el aprobacion_j a '1'.
+        }
+        return $this->responseAPI("success", "get success!", 200, $data);
+    }
+
     public function __destruct() {
         return true;
     }
 
 }
-
-
