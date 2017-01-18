@@ -502,7 +502,8 @@ where evaluacion_periodo.usuario = usuario order by id desc limit 1;";
     public static function setAll() {
         try {
             $response = false;
-            $users = usuarioData::getAll();
+            $periodo = periodoData::getAnterior();
+            $users = usuarioData::getAllWhen($periodo['periodo']);
             foreach ($users as $user) {
                 usuarioData::insertEvaluacion($user['id']);
             }
