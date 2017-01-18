@@ -79,7 +79,7 @@ class periodos extends Rest implements interfaceApi {
         $aux = new DateTime($body['date1']['endDate']);
         $body['date3']['endDate'] = $aux->format("Y-m-d");
         
-        $data = periodoData::insert(2, $body['date1']['startDate'], $body['date1']['endDate'], $body['nombre'], $body['date2']['startDate'], $body['date2']['endDate'], $body['date3']['startDate'], $body['date3']['endDate']);
+        $data = periodoData::insert($body['date1']['startDate'], $body['date1']['endDate'], $body['nombre'], $body['date2']['startDate'], $body['date2']['endDate'], $body['date3']['startDate'], $body['date3']['endDate']);
         if ($data === true) {
             return $this->responseAPI("success", "add success", 200);
         }

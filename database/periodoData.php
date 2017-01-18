@@ -36,12 +36,12 @@ where actual.id > periodo.id order by periodo.id desc limit 1";
         }
     }
 
-    public static function insert($id, $fechainicio, $fechafinal, $nombre, $fiper1, $ffper1, $fiper2, $ffper2) {
-        $comando = "INSERT INTO periodo (id, fechainicio, fechafinal, nombre, fiper1, ffper1, fiper2, ffper2)"
-                . " VALUES (?, ?,?, ?, ?, ?, ?, ?);";
+    public static function insert($fechainicio, $fechafinal, $nombre, $fiper1, $ffper1, $fiper2, $ffper2) {
+        $comando = "INSERT INTO periodo ( fechainicio, fechafinal, nombre, fiper1, ffper1, fiper2, ffper2)"
+                . " VALUES (?, ?,?, ?, ?, ?, ?);";
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {
-            $sentencia->execute(array($id, $fechainicio, $fechafinal, $nombre, $fiper1, $ffper1, $fiper2, $ffper2));
+            $sentencia->execute(array($fechainicio, $fechafinal, $nombre, $fiper1, $ffper1, $fiper2, $ffper2));
             return true;
         } catch (PDOException $pdoExcetion) {
             return $pdoExcetion->getMessage();
