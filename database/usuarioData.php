@@ -514,6 +514,21 @@ where evaluacion_periodo.usuario = usuario order by id desc limit 1;";
         }
     }
     
+    // Obtener un usuario específico. Se le pasa el me
+      public static function getUserFromMeta($id) {
+
+        $comando = "SELECT usuario.id, usuario.correo FROM usuario WHERE usuario.id = ? ;";
+
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($id));
+            $result = $sentencia->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $pdoExcetion) {
+            return $pdoExcetion->getMessage();
+        }
+    }
+    
     
     
     

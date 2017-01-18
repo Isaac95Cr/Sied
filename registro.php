@@ -24,7 +24,7 @@
 
         <div class="register-box" ng-controller="controlRegistro" ng-init="init()">
 
-            <div class="register-box-body">
+            <div class="register-box-body" >
                 <p class="login-box-msg"><b>Registro</b></p>
                 <form name="form" ng-submit="agregarUsuario()" class="form-horizontal" novalidate form-autofill-fix>
                     <div class="form-group has-feedback" ng-class="{ 'has-error' : form.nombre.$invalid && !form.nombre.$pristine }">

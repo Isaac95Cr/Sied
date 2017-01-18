@@ -7,6 +7,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 require '../database/metasData.php';
+require '../database/usuarioData.php';
 
 class metas extends Rest implements interfaceApi {
 
@@ -163,6 +164,7 @@ class metas extends Rest implements interfaceApi {
         } else {
             $data = metasData::aprobarMeta($body['id'], $body['comentario']);
             $mensaje = "Meta aprobada con éxito";
+            $usuarioNotificado = usuarioData::getUserFromMeta($id);
             // NOTIFICACION PARA COLABORADOR DE APROBACIÓN DE META POR JEFE...
         }
 

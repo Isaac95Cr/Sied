@@ -13,6 +13,8 @@ angular.module("index")
 
                 $scope.metaActual = "0";  // se utiliza para saber cuál es la meta a la que se está haciendo referencia. 
                 $scope.arrayComentarios = [];  // se van a guardar objetos de la forma: [{id: 1, comentario = 'comment'}]
+                
+
 
 
                 $scope.init = function () {
@@ -117,10 +119,19 @@ angular.module("index")
                         if (res.status === 'success') {
                             $scope.cargar();
                             modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
+                            
+                            if($scope.is_TodasRevisadas($scope.metasUser)){
+                                // enviar notificacion
+                            }
                             $scope.id = "0";
                             $scope.comentario = "";
                         }
                     });
+                };
+                
+                
+                $scope.is_TodasRevisadas = function (listaMetas) {
+                    return listaMetas.every(elem => (elem.aprobacion_j !== null));
                 };
 
 

@@ -28,6 +28,27 @@ class evaluacionPeriodoData{
     
     
     
+    // Obtiene la aprobacion_j y aprobacion_rh de la evaluacion periodo de un usuario.
+        public static function getEvaluacionJefeRHActual($idUser) {
+        $consulta = "SELECT evaluacion_periodo.id, evaluacion_periodo.aprobacion_j, evaluacion_periodo.aprobacion_rh
+                                 FROM sied.evaluacion_periodo inner join
+                                (SELECT id as actual FROM periodo WHERE NOW() BETWEEN periodo.fechainicio AND periodo.fechafinal)
+                                as actual on evaluacion_periodo.periodo = actual
+                                where usuario = ? ;";
+        try {
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando->execute(array($idUser));
+            $result = $comando->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    
+    
+    
+    
+    
     
     
 }
