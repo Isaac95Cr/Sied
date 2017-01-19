@@ -13,7 +13,7 @@ angular.module("app")
                                     }]
                             }
                         })
-                        .when("/admin_competencias/", {
+                        .when("/admin_competencias", {
                             templateUrl: "paginas/admin_competencias.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {

@@ -62,7 +62,7 @@ class evaluaciones extends Rest implements interfaceApi {
         }
         return $this->responseAPI("success", "get success!", 200, $data);
     }
-    
+
     public function notificacionRH() {
         if ($this->get_request_method() != "POST") {
             return $this->responseAPI("error", "Not allowed.", 406);
@@ -75,12 +75,77 @@ class evaluaciones extends Rest implements interfaceApi {
         }
         return $this->responseAPI("success", "get success!", 200, $data);
     }
- 
+
+    public function notificacionAutoMetas() {
+        if ($this->get_request_method() != "POST") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+        $body = json_decode(file_get_contents("php://input"), true);
+        $data = evaluacionPeriodoData::getEvaluacionJefeRHActual($body);  // se comprueba si ya se enviaron notificaciones antes.
+        if ($data['autoev_metas'] !== 1) {
+            $jefe = usuarioData::getJefe($body);
+            $data = usuarioData::setNotificacion(15, $jefe['jefe']);  // enviar notificacion
+            evaluacionPeriodoData::updateAutoEvaMetas($body);  // se cambia el aprobacion_j a '1'.
+        }
+        return $this->responseAPI("success", "get success!", 200, $data);
+    }
+
+    public function notificacionAutoCompetencias() {
+        if ($this->get_request_method() != "POST") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+        $body = json_decode(file_get_contents("php://input"), true);
+        $data = evaluacionPeriodoData::getEvaluacionJefeRHActual($body);  // se comprueba si ya se enviaron notificaciones antes.
+        if ($data['autoev_compet'] !== 1) {
+            $jefe = usuarioData::getJefe($body);
+            $data = usuarioData::setNotificacion(16, $jefe['jefe']);  // enviar notificacion
+            evaluacionPeriodoData::updateAutoEvaComptetencias($body);  // se cambia el aprobacion_j a '1'.
+        }
+        return $this->responseAPI("success", "get success!", 200, $data);
+    }
     
-    
+    public function notificacionIngreso() {
+        if ($this->get_request_method() != "POST") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+        $body = json_decode(file_get_contents("php://input"), true);
+        $data = evaluacionPeriodoData::getEvaluacionJefeRHActual($body);  // se comprueba si ya se enviaron notificaciones antes.
+        if ($data['ingreso'] !== 1) {
+            $jefe = usuarioData::getJefe($body);
+            $data = usuarioData::setNotificacion(12, $jefe['jefe']);  // enviar notificacion
+            evaluacionPeriodoData::updateAutoEvaComptetencias($body);  // se cambia el aprobacion_j a '1'.
+        }
+        return $this->responseAPI("success", "get success!", 200, $data);
+    }
+
+    public function notificacionEvaMetas() {
+        if ($this->get_request_method() != "POST") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+        $body = json_decode(file_get_contents("php://input"), true);
+        $data = evaluacionPeriodoData::getEvaluacionJefeRHActual($body);  // se comprueba si ya se enviaron notificaciones antes.
+        if ($data['eval_metas'] !== 1) {
+            $data = usuarioData::setNotificacion(17, $body);  // enviar notificacion
+            evaluacionPeriodoData::updateEvaMetas($body);  // se cambia el aprobacion_j a '1'.
+        }
+        return $this->responseAPI("success", "get success!", 200, $data);
+    }
+
+    public function notificacionEvaCompetencias() {
+        if ($this->get_request_method() != "POST") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+        $body = json_decode(file_get_contents("php://input"), true);
+        $data = evaluacionPeriodoData::getEvaluacionJefeRHActual($body);  // se comprueba si ya se enviaron notificaciones antes.
+        if ($data['eval_compet'] !== 1) {
+            $data = usuarioData::setNotificacion(18, $body);  // enviar notificacion
+            evaluacionPeriodoData::updateEvaComptetencias($body);  // se cambia el aprobacion_j a '1'.
+        }
+        return $this->responseAPI("success", "get success!", 200, $data);
+    }
+
     public function __destruct() {
         return true;
     }
 
 }
-
