@@ -202,4 +202,12 @@ angular.module('index')
                         }
                     });
                 };
-            }]);
+            }]).factory("factoryPeriodo", function (apiConnector) {
+            var periodos = {};
+
+            periodos.comprobarPeriodo = function () {
+                return apiConnector.get('api/periodos/getPeriodoActual');
+            };
+            
+            return periodos;
+        });

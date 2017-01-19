@@ -184,8 +184,14 @@ angular.module('empdep')
                 this.isDepSeleccion = function () {
                     return fueSeleccionadaDep;
                 };
+//                this.isEmpSeleccionada = function (id) {
+//                    return empresaService.getEmpresa().id === id;
+//                };
                 this.isEmpSeleccionada = function (id) {
-                    return empresaService.getEmpresa().id === id;
+                    if(empresaService.getEmpresa() !== undefined)
+                        return empresaService.getEmpresa().id === id;
+                    else
+                        return false;
                 };
                 this.isDepSeleccionada = function (id) {
                     return departamentoService.getDepartamento().id === id;

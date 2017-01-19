@@ -127,6 +127,22 @@ class periodos extends Rest implements interfaceApi {
         }
         return $this->responseAPI("error", "", 200);
     }
+    
+    
+    // Retorna el periodo actual
+    public function getPeriodoActual() {
+        
+        if ($this->get_request_method() != "GET") {
+            return $this->responseAPI("error", "Not allowed.", 406);
+        }
+        
+        $data = periodoData::getActual();
+        if (isset($data) && $data !== false) {
+               return $this->responseAPI("success", "get success!", 200, $data);
+         }
+          
+         return $this->responseAPI("error", "Not allowed.", 406);  
+    }
 
     public function __destruct() {
         return true;

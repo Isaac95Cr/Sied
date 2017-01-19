@@ -1,8 +1,10 @@
 angular.module('usuario')
-        .controller('controlUser', ['$scope', '$location', '$window', 'autentificacionService', 'sessionService', function ($scope, $location, $window, autentificacionService, sessionService) {
+        .controller('controlUser', ['$scope', '$location', '$window', 'autentificacionService', 'sessionService', 'factoryPeriodo',
+                            function ($scope, $location, $window, autentificacionService, sessionService, factoryPeriodo) {
                 $scope.user = {};
                 $scope.notificaciones = [];
                 $scope.token = undefined;
+                $scope.hayPeriodo = true;
 
                 $scope.visto = function (x) {
                     return (x.visto === "0");
@@ -18,11 +20,21 @@ angular.module('usuario')
                     autentificacionService.logout({token:sessionService.token()});
                 };
 
+//                $scope.init = function () {
+//                    $scope.usuario = sessionService.getUsuario();
+//                    autentificacionService.getNotificacion({id:$scope.usuario.id}).then(function (res) {
+//                        $scope.notificaciones = res.data;
+//                    });
+//                };
+
                 $scope.init = function () {
                     $scope.usuario = sessionService.getUsuario();
                     autentificacionService.getNotificacion({id:$scope.usuario.id}).then(function (res) {
                         $scope.notificaciones = res.data;
+                    }).then(function (res) {
+                        $scope.existePeriodo();
                     });
+                    
                 };
 
                 $scope.setUser = function () {
@@ -41,6 +53,19 @@ angular.module('usuario')
                             alert(res.message);
                         }
                         if (res.status === 'success') {
+                        }
+                    });
+
+                };
+                
+                
+                 $scope.existePeriodo = function () {
+                    factoryPeriodo.comprobarPeriodo().then(function (res) {
+                        if (res.status === 'error') {
+                            $scope.hayPeriodo = false;
+                        }
+                        if (res.status === 'success') {
+                            $scope.hayPeriodo = true;
                         }
                     });
 

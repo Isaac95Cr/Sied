@@ -128,7 +128,7 @@
                     </div>
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        <li class="treeview" ng-if="usuario.perfil.colaborador == 1 || usuario.perfil.jefe == 1">
+                        <li class="treeview" ng-if="usuario.perfil.colaborador == 1 || usuario.perfil.jefe == 1" ng-hide="!hayPeriodo">
                             <a href="">
                                 <i class="fa fa-flag"></i> <span>Metas</span>
                                 <span class="pull-right-container">
@@ -136,12 +136,12 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li ng-if="usuario.perfil.colaborador == 1"><a href="#/admin_metas"><i class="fa fa-flag-o"></i>Administrar Metas</a></li>
-                                <li ng-if="usuario.perfil.RH == 1"><a href="#/admin_colab_metas_RH"><i class="fa fa-flag-o"></i>Administrar Metas RH</a></li>
-                                <li ng-if="usuario.perfil.jefe == 1"><a href="#/admin_colaboradores_metas"><i class="fa fa-users"></i>Colaboradores</a></li>
+                                <li ng-if="usuario.perfil.colaborador == 1" ng-hide="!hayPeriodo"><a href="#/admin_metas"><i class="fa fa-flag-o"></i>Administrar Metas</a></li>
+                                <li ng-if="usuario.perfil.RH == 1" ng-hide="!hayPeriodo"><a href="#/admin_colab_metas_RH"><i class="fa fa-flag-o"></i>Administrar Metas RH</a></li>
+                                <li ng-if="usuario.perfil.jefe == 1" ng-hide="!hayPeriodo"><a href="#/admin_colaboradores_metas"><i class="fa fa-users"></i>Colaboradores</a></li>
                             </ul>
                         </li>
-                        <li class="treeview"  ng-if="usuario.perfil.colaborador == 1 || usuario.perfil.jefe == 1">
+                        <li class="treeview"  ng-if="usuario.perfil.colaborador == 1 || usuario.perfil.jefe == 1" ng-hide="!hayPeriodo">
                             <a href="">
                                 <i class="fa fa-line-chart"></i> <span>Competencias</span>
                                 <span class="pull-right-container">
@@ -149,8 +149,8 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li ng-if="usuario.perfil.colaborador == 1"><a href="#/admin_competencias"><i class="fa  fa-bar-chart-o"></i>Administrar Competencias</a></li>
-                                <li ng-if="usuario.perfil.jefe == 1"><a href="#/admin_colaboradores_competencias"><i class="fa fa-users"></i>Colaboradores</a></li>
+                                <li ng-if="usuario.perfil.colaborador == 1" ng-hide="!hayPeriodo"><a href="#/admin_competencias"><i class="fa  fa-bar-chart-o"></i>Administrar Competencias</a></li>
+                                <li ng-if="usuario.perfil.jefe == 1" ng-hide="!hayPeriodo"><a href="#/admin_colaboradores_competencias"><i class="fa fa-users"></i>Colaboradores</a></li>
                             </ul>
                         </li>
                         <li class="treeview" ng-if="usuario.perfil.RH == 1">

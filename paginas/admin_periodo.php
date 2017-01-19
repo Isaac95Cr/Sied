@@ -295,7 +295,7 @@
                 <!-- /.box-body -->
             </div>
             <div class="box-footer">
-                <a class="btn btn-primary btn-lg pull-right" ng-show="!setBool && !addBool" ng-click="modificarPeriodo()">Modificar</a>
+                <a class="btn btn-primary btn-lg pull-right" ng-show="!setBool && !addBool && periodos.length != 0" ng-click="modificarPeriodo()">Modificar</a>
                 <a class="btn btn-primary btn-lg pull-left" ng-show="addBool || setBool" ng-click="cancelar()">Cancelar</a>
             </div>
             <!-- /.box-footer-->
