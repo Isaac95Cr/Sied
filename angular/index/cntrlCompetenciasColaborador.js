@@ -77,6 +77,10 @@ angular.module("index")
 
                 return apiConnector.post("api/competencias/all", {id: id});
             };
+            
+           competencia.notificarAutoEvCompet = function (obj) {
+                return apiConnector.post('api/evaluaciones/notificacionAutoCompetencias', obj);
+            };
 
 
             competencia.getPerfilCompetUser = function (obj) {

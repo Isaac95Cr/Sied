@@ -146,6 +146,7 @@ angular.module("index")
                             $scope.meta_titulo = undefined;
                             $scope.meta_descripcion = undefined;
                             $scope.cargar();
+                            factoryMeta.notificarAddMetas($scope.userOnline.id);
                             $scope.resetForm(idForm);
                         }
                     });
@@ -276,6 +277,21 @@ angular.module("index")
            meta.notificarAprobacionRH = function (obj) {
                 return apiConnector.post('api/evaluaciones/notificacionRH', obj);
             };
+            
+            
+           meta.notificarAutoEvMetas = function (obj) {
+                return apiConnector.post('api/evaluaciones/notificacionAutoMetas', obj);
+            };
+            
+            
+            meta.notificarEvalMetas = function (obj) {
+                return apiConnector.post('api/evaluaciones/notificacionEvaMetas', obj);
+            };   
+            
+            
+           meta.notificarAddMetas = function (obj) {
+                return apiConnector.post('api/evaluaciones/notificacionIngreso', obj);
+            };          
 
 
             meta.cargarMetasUser = function (obj) {

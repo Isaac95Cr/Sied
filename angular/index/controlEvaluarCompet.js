@@ -61,6 +61,8 @@ angular.module("index")
 
 
                 };
+                
+
 
 
 
@@ -138,7 +140,13 @@ angular.module("index")
                     if (evaluacionesString !== "" && evaluacionesString !== null && evaluacionesString !== undefined)
                         $scope.arrayEvaluaciones = evaluacionesString.split(',');
 
-                }
+                };
+                
+                
+                
+               $scope.is_TodasEvalCompet = function (listaMetas) {
+                    return listaMetas.every(elem => (elem !== '0'));
+                };
 
 
 
@@ -190,8 +198,10 @@ angular.module("index")
                         }
                         if (res.status === 'success') {
                             modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
-                            $scope.cargar();
-
+                            $scope.listEvaluaciones = stringEvaluaciones.split(',');
+                            if($scope.is_TodasEvalCompet($scope.listEvaluaciones)){
+                                servicioCompetAutoEv.notificarEvalCompet($scope.infoIdUser);
+                            }
                         }
                     });
 
@@ -209,6 +219,10 @@ angular.module("index")
             var stringEvaluaciones = undefined;   // se recibe el string de las evaluaciones
             var IDAutoevaluaciones = undefined;   // aquí se guarda el id de la base de datos correspondiente a las autoevaluaciones 
             // de competencias.
+            
+            autoEv_Competencia.notificarEvalCompetencias = function (obj) {
+                return apiConnector.post('api/evaluaciones/notificacionEvaCompetencias/', obj);
+            };
 
             autoEv_Competencia.cargarAutoEvCompet = function (obj) {
                 return apiConnector.post('api/evaluacionCompetencias/allAutoFromUser', obj);
@@ -272,6 +286,11 @@ angular.module("index")
 
                 this.actualizarEvaluacionesDetalles = function (obj) {
                     return factoryAutoEvCompetencias.updateEvaluacionesDetalles(obj);
+                };
+                
+                
+                this.notificarEvalCompet = function (obj) {
+                    return factoryAutoEvCompetencias.notificarEvalCompetencias(obj);
                 };
 
             }]);

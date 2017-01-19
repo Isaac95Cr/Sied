@@ -145,7 +145,9 @@ angular.module("index")
                         if (res.status === 'success') {
                             modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
                             $scope.cargar();
-
+                            if($scope.is_TodasAutoEvCompet($scope.autoEvaluaciones)){
+                                factoryCompetenciasColab.notificarAutoEvCompet($scope.userOnline);
+                            }
                         }
                     });
 
@@ -172,6 +174,12 @@ angular.module("index")
                             $scope.arrayTemporalAutoEv = [];
                         });
                     }
+                };
+                
+                
+                
+                $scope.is_TodasAutoEvCompet = function (listaMetas) {
+                    return listaMetas.every(elem => (elem !== '-'));
                 };
 
 
@@ -201,6 +209,11 @@ angular.module("index")
                     });
 
                 };
+                
+                
+                
+                
+                
             }]);
 
 

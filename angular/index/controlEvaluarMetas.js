@@ -90,9 +90,19 @@ angular.module("index")
                         if (res.status === 'success') {
                             modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
                             $scope.cargar();
+                            if($scope.is_TodasEvaluadas($scope.metasUser)){
+                                factoryMeta.notificarEvalMetas($scope.infoIdUser);
+                            }
                         }
                     });
                     
                 };
+                
+                
+                $scope.is_TodasEvaluadas = function (listaMetas) {
+                    return listaMetas.every(elem => (elem.evaluacion !== null));
+                };
+                
+                
             }]);
 
