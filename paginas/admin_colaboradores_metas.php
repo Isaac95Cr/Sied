@@ -39,10 +39,10 @@
                                         <thead>
                                             <tr>
                                                 <th ng-show="false">Id</th>
-                                                <th>Nombre</th>
-                                                <th>Detalles</th>
-                                                <th>Aprobar</th>
-                                                <th>Evaluar</th>
+                                                <th style="text-align: center;">Nombre</th>
+                                                <th style="text-align: center;">Detalles</th>
+                                                <th style="text-align: center;">Aprobar</th>
+                                                <th style="text-align: center;">Evaluar</th>
                                             </tr>
                                         </thead>
 

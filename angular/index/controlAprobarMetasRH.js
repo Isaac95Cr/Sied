@@ -117,10 +117,18 @@ angular.module("index")
                         if (res.status === 'success') {
                             $scope.cargar();
                             modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
+                            if($scope.is_TodasRevisadas($scope.metasUser)){
+                                factoryMeta.notificarAprobacionRH($scope.infoIdUser);
+                            }
                             $scope.id = "0";
                             $scope.comentario = "";
                         }
                     });
+                };
+                
+                
+                $scope.is_TodasRevisadas = function (listaMetas) {
+                    return listaMetas.every(elem => (elem.aprobacion_j !== null));
                 };
 
 
