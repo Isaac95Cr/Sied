@@ -20,6 +20,7 @@ $exact_time = new DateTime($today2);
 
 $fechainicio = new DateTime($data["fechainicio"]);
 $dato["fechainicio"] = $fechainicio->format('Y-m-d');
+
 $fechainicioantes = new DateTime($data["fechainicio"] . ' -5 day');
 
 $fiper1 = new DateTime($data["fiper1"]);
