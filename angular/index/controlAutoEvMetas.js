@@ -62,8 +62,16 @@ angular.module("index")
                         if (res.status === 'success') {
                             modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
                             $scope.cargar();
+                            if($scope.is_TodasAutoEvaluadas($scope.metas)){
+                                factoryMeta.notificarAutoEvMetas($scope.userOnline);
+                            }
                         }
                     });
+                };
+                
+                
+                $scope.is_TodasAutoEvaluadas = function (listaMetas) {
+                    return listaMetas.every(elem => (elem.auto_evaluacion !== null));
                 };
 
 

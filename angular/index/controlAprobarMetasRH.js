@@ -128,7 +128,7 @@ angular.module("index")
                 
                 
                 $scope.is_TodasRevisadas = function (listaMetas) {
-                    return listaMetas.every(elem => (elem.aprobacion_j !== null));
+                    return listaMetas.every(elem => (elem.aprobacion_rh !== null));
                 };
 
 
