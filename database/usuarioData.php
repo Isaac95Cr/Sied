@@ -100,6 +100,49 @@ and perfil.id != 0 and evaluacion_periodo.periodo = ? ;";
             return false;
         }
     }
+    
+    public static function getAllActivoWhen($periodo) {
+        $consulta = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,usuario.estado,
+(departamento.nombre) as departamento, (empresa.nombre) as empresa,
+perfil.colaborador, perfil.jefe,perfil.RH, evaluacion_periodo.perfil_competencia as perfilId,
+ perfil_competencia.nombre as nombrePerfil
+from usuario, perfil,empresa,departamento, perfil_competencia, evaluacion_periodo   
+where usuario.departamento = departamento.id and usuario.estado = 1
+and departamento.empresa = empresa.id 
+and usuario.perfil = perfil.id 
+and usuario.id = evaluacion_periodo.usuario
+and evaluacion_periodo.perfil_competencia = perfil_competencia.id 
+and perfil.id != 0 and evaluacion_periodo.periodo = ? ;";
+        try {
+
+            $json_response = array();
+            $perfiles = ['colaborador', 'jefe', 'RH'];
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando->execute(array($periodo));
+            $users = $comando->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($users as $user) {
+                $response['id'] = $user['id'];
+                $response['nombre'] = $user['nombre'];
+                $response['apellido1'] = $user['apellido1'];
+                $response['apellido2'] = $user['apellido2'];
+                $response['correo'] = $user['correo'];
+                $response['estado'] = $user['estado'];
+                $response['departamento'] = $user['departamento'];
+                $response['empresa'] = $user['empresa'];
+                $response['perfil'] = array();
+                $response['perfil']['Colaborador'] = $user['colaborador'];
+                $response['perfil']['Jefe'] = $user['jefe'];
+                $response['perfil']['RH'] = $user['RH'];
+                $response['nombrePerfil'] = $user['nombrePerfil'];
+                $response['perfilId'] = $user['perfilId'];
+                array_push($json_response, $response);
+            }
+            return $json_response;
+            //return $users;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 
     public static function getAllWhenDep($periodo, $departamento) {
         $consulta = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,usuario.estado,
@@ -550,7 +593,20 @@ where evaluacion_periodo.usuario = usuario order by id desc limit 1;";
             }
             return true;
         } catch (PDOException $e) {
-            return false;
+            return  $e->getMessage();
+        }
+    }
+    
+    public static function setAllCorreo($periodo,$metodo) {
+        try {
+            $response = false;
+            $users = usuarioData::getAllActivoWhen($periodo['id']);
+            foreach ($users as $user) {
+                correoData::$metodo($user,$periodo);
+            }
+            return true;
+        } catch (PDOException $e) {
+            return  $e->getMessage();
         }
     }
 

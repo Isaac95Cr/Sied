@@ -253,7 +253,7 @@ class usuarios extends Rest implements interfaceApi {
             $u = usuarioData::getAllFrom($id);
             $token = usuarioData::token($u);
             correoData::setContraseña($u, $token);
-            return $this->responseAPI("success", "Cambio de contraseña con exito", 200);
+            return $this->responseAPI("success", "Envio de correo tuvo exito", 200);
         } return $this->responseAPI("error", "Algo falló", 200);
     }
 

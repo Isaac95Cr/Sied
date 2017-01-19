@@ -17,7 +17,7 @@ angular.module('registro')
                     $scope.bandera = false;
                     autentificacionService.correoContrasena($scope.user)
                             .then(function (response) {
-                        modalService.modalOk("Reset Contraseña", "<p>"+response.data.mensaje+"</p>");
+                        modalService.modalOk("Reset Contraseña", "<p>"+response.message+"</p>");
                     });
                 };
                 $scope.setContrasena = function () {
