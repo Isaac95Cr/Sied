@@ -63,7 +63,7 @@ angular.module("index")
                             modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
                             $scope.cargar();
                             if($scope.is_TodasAutoEvaluadas($scope.metas)){
-                                factoryMeta.notificarAutoEvMetas($scope.userOnline);
+                                factoryMeta.notificarAutoEvMetas($scope.userOnline.id);
                             }
                         }
                     });

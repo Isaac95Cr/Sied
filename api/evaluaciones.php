@@ -113,7 +113,7 @@ class evaluaciones extends Rest implements interfaceApi {
         if ($data['ingreso'] !== 1) {
             $jefe = usuarioData::getJefe($body);
             $data = usuarioData::setNotificacion(12, $jefe['jefe']);  // enviar notificacion
-            evaluacionPeriodoData::updateAutoEvaComptetencias($body);  // se cambia el aprobacion_j a '1'.
+            evaluacionPeriodoData::updateIngreso($body);  // se cambia el aprobacion_j a '1'.
         }
         return $this->responseAPI("success", "get success!", 200, $data);
     }

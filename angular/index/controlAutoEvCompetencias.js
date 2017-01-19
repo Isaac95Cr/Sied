@@ -7,7 +7,7 @@ angular.module("index")
                 $scope.idCompetencias = new Array();
                 $scope.autoEvaluaciones = new Array();
 
-                $scope.stringAutoEvaluaciones = undefined;
+                $scope.stringAutoEvaluaciones = new Array();
                 $scope.arrayAutoEvaluacionesCompet = [];
                 $scope.arrayTemporalAutoEv = new Array();
 
@@ -39,6 +39,24 @@ angular.module("index")
                     });
                 };
 
+
+                $scope.getAutoEv = function(stringAutoEv){
+                    $scope.autoEvaluaciones = [];
+
+                    if (stringAutoEv !== "" && stringAutoEv !== null
+                            && stringAutoEv !== undefined) {
+
+                        $scope.arrayAutoEvaluacionesCompet = stringAutoEv.split(';');
+
+                        angular.forEach($scope.arrayAutoEvaluacionesCompet, function (elemento, key) {
+
+                            // autoEvaluaciones contiene la lista de autoevaluaciones
+                            $scope.arrayTemporalAutoEv = elemento.split(',');
+                            $scope.autoEvaluaciones = $scope.autoEvaluaciones.concat($scope.arrayTemporalAutoEv);
+                            $scope.arrayTemporalAutoEv = [];
+                        });
+                    }
+                };
 
 
 
@@ -144,10 +162,10 @@ angular.module("index")
                         }
                         if (res.status === 'success') {
                             modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
-                            $scope.cargar();
-                            if($scope.is_TodasAutoEvCompet($scope.autoEvaluaciones)){
-                                factoryCompetenciasColab.notificarAutoEvCompet($scope.userOnline);
-                            }
+                            $scope.getAutoEv($scope.string_AutoEv);
+                                if ($scope.is_TodasAutoEvCompet($scope.autoEvaluaciones)) {
+                                    factoryCompetenciasColab.notificarAutoEvCompet($scope.userOnline);
+                                }
                         }
                     });
 
@@ -175,9 +193,9 @@ angular.module("index")
                         });
                     }
                 };
-                
-                
-                
+
+
+
                 $scope.is_TodasAutoEvCompet = function (listaMetas) {
                     return listaMetas.every(elem => (elem !== '-'));
                 };
@@ -191,7 +209,7 @@ angular.module("index")
                     var detalles = new Array();
 
                     angular.forEach($scope.competencias, function (elemento, key) {
-                        if(elemento.detalles.length === 0)
+                        if (elemento.detalles.length === 0)
                             contadorEvaluaciones++;
                         angular.forEach(elemento.detalles, function (elemento2, key2) {
 
@@ -200,7 +218,7 @@ angular.module("index")
                             detalles = detalles.concat([obj]);
                             contadorEvaluaciones++;
                         });
-                        
+
                         $scope.objetoCompuesto.titulo = elemento.titulo;
                         $scope.objetoCompuesto.detalles = detalles;
                         $scope.arrayFinal = $scope.arrayFinal.concat($scope.objetoCompuesto);
@@ -209,11 +227,11 @@ angular.module("index")
                     });
 
                 };
-                
-                
-                
-                
-                
+
+
+
+
+
             }]);
 
 
