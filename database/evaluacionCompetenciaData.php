@@ -1,6 +1,19 @@
 <?php
 
+/**
+ * @author Isaac Corrales Cruz <isakucorrales@gmail.com>
+ * @author Marco Vinicio Cambronero Fonseca <marcovcambronero@gmail.com>
+ */
+
+
 require 'evaluacionPeriodoData.php';
+
+
+/**
+ *  Esta es la clase encargada de la gestión de las evaluaciones de competencia en 
+ *  la base de datos (tabla 'evaluacion_competencia').
+ */
+
 
 class evaluacionCompetenciaData {
 

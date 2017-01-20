@@ -1,6 +1,19 @@
 <?php
 
+
+/**
+ * @author Isaac Corrales Cruz <isakucorrales@gmail.com>
+ * @author Marco Vinicio Cambronero Fonseca <marcovcambronero@gmail.com>
+ */
+
+
 require 'periodoData.php';
+
+
+/**
+ *  Esta es la clase encargada de la gestión de las evaluaciones de periodo en la base de datos.
+ */
+
 
 class evaluacionPeriodoData {
 

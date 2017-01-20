@@ -1,5 +1,20 @@
 <?php
 
+
+/**
+ * @author Isaac Corrales Cruz <isakucorrales@gmail.com>
+ * @author Marco Vinicio Cambronero Fonseca <marcovcambronero@gmail.com>
+ */
+ 
+ 
+
+/**
+ *  Esta es la clase encargada de la gestión de los periodos en la base de datos.
+ */
+
+
+
+
 class periodoData {
 
     public static function getAll() {

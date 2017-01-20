@@ -7,8 +7,10 @@
 require '../services/variable.php';
 
 /**
- *  Descripción de la clase...
+ *  Esta es la clase encargada de la gestión de los usuarios en la base de datos.
  */
+
+
 class usuarioData {
 
     function __construct() {
@@ -17,16 +19,16 @@ class usuarioData {
 
     public static function getAll() {
         $consulta = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,usuario.estado,
-(departamento.nombre) as departamento, (empresa.nombre) as empresa,
-perfil.colaborador, perfil.jefe,perfil.RH, evaluacion_periodo.perfil_competencia as perfilId,
- perfil_competencia.nombre as nombrePerfil
-from usuario, perfil,empresa,departamento, perfil_competencia, evaluacion_periodo  inner join  (SELECT id as actual FROM periodo WHERE NOW() BETWEEN periodo.fechainicio AND periodo.fechafinal) as actual on evaluacion_periodo.periodo = actual 
-where usuario.departamento = departamento.id 
-and departamento.empresa = empresa.id 
-and usuario.perfil = perfil.id 
-and usuario.id = evaluacion_periodo.usuario
-and evaluacion_periodo.perfil_competencia = perfil_competencia.id 
-and perfil.id != 0;";
+                                (departamento.nombre) as departamento, (empresa.nombre) as empresa,
+                                perfil.colaborador, perfil.jefe,perfil.RH, evaluacion_periodo.perfil_competencia as perfilId,
+                                 perfil_competencia.nombre as nombrePerfil
+                                from usuario, perfil,empresa,departamento, perfil_competencia, evaluacion_periodo  inner join  (SELECT id as actual FROM periodo WHERE NOW() BETWEEN periodo.fechainicio AND periodo.fechafinal) as actual on evaluacion_periodo.periodo = actual 
+                                where usuario.departamento = departamento.id 
+                                and departamento.empresa = empresa.id 
+                                and usuario.perfil = perfil.id 
+                                and usuario.id = evaluacion_periodo.usuario
+                                and evaluacion_periodo.perfil_competencia = perfil_competencia.id 
+                                and perfil.id != 0;";
         try {
 
             $json_response = array();
@@ -60,16 +62,16 @@ and perfil.id != 0;";
 
     public static function getAllWhen($periodo) {
         $consulta = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,usuario.estado,
-(departamento.nombre) as departamento, (empresa.nombre) as empresa,
-perfil.colaborador, perfil.jefe,perfil.RH, evaluacion_periodo.perfil_competencia as perfilId,
- perfil_competencia.nombre as nombrePerfil
-from usuario, perfil,empresa,departamento, perfil_competencia, evaluacion_periodo   
-where usuario.departamento = departamento.id 
-and departamento.empresa = empresa.id 
-and usuario.perfil = perfil.id 
-and usuario.id = evaluacion_periodo.usuario
-and evaluacion_periodo.perfil_competencia = perfil_competencia.id 
-and perfil.id != 0 and evaluacion_periodo.periodo = ? ;";
+                                (departamento.nombre) as departamento, (empresa.nombre) as empresa,
+                                perfil.colaborador, perfil.jefe,perfil.RH, evaluacion_periodo.perfil_competencia as perfilId,
+                                 perfil_competencia.nombre as nombrePerfil
+                                from usuario, perfil,empresa,departamento, perfil_competencia, evaluacion_periodo   
+                                where usuario.departamento = departamento.id 
+                                and departamento.empresa = empresa.id 
+                                and usuario.perfil = perfil.id 
+                                and usuario.id = evaluacion_periodo.usuario
+                                and evaluacion_periodo.perfil_competencia = perfil_competencia.id 
+                                and perfil.id != 0 and evaluacion_periodo.periodo = ? ;";
         try {
 
             $json_response = array();
@@ -103,16 +105,16 @@ and perfil.id != 0 and evaluacion_periodo.periodo = ? ;";
     
     public static function getAllActivoWhen($periodo) {
         $consulta = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,usuario.estado,
-(departamento.nombre) as departamento, (empresa.nombre) as empresa,
-perfil.colaborador, perfil.jefe,perfil.RH, evaluacion_periodo.perfil_competencia as perfilId,
- perfil_competencia.nombre as nombrePerfil
-from usuario, perfil,empresa,departamento, perfil_competencia, evaluacion_periodo   
-where usuario.departamento = departamento.id and usuario.estado = 1
-and departamento.empresa = empresa.id 
-and usuario.perfil = perfil.id 
-and usuario.id = evaluacion_periodo.usuario
-and evaluacion_periodo.perfil_competencia = perfil_competencia.id 
-and perfil.id != 0 and evaluacion_periodo.periodo = ? ;";
+                                (departamento.nombre) as departamento, (empresa.nombre) as empresa,
+                                perfil.colaborador, perfil.jefe,perfil.RH, evaluacion_periodo.perfil_competencia as perfilId,
+                                 perfil_competencia.nombre as nombrePerfil
+                                from usuario, perfil,empresa,departamento, perfil_competencia, evaluacion_periodo   
+                                where usuario.departamento = departamento.id and usuario.estado = 1
+                                and departamento.empresa = empresa.id 
+                                and usuario.perfil = perfil.id 
+                                and usuario.id = evaluacion_periodo.usuario
+                                and evaluacion_periodo.perfil_competencia = perfil_competencia.id 
+                                and perfil.id != 0 and evaluacion_periodo.periodo = ? ;";
         try {
 
             $json_response = array();
@@ -146,17 +148,17 @@ and perfil.id != 0 and evaluacion_periodo.periodo = ? ;";
 
     public static function getAllWhenDep($periodo, $departamento) {
         $consulta = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,usuario.estado,
-(departamento.nombre) as departamento, (empresa.nombre) as empresa,
-perfil.colaborador, perfil.jefe,perfil.RH, evaluacion_periodo.perfil_competencia as perfilId,
- perfil_competencia.nombre as nombrePerfil
-from usuario, perfil,empresa,departamento, perfil_competencia, evaluacion_periodo   
-where usuario.departamento = departamento.id 
-and departamento.empresa = empresa.id 
-and usuario.perfil = perfil.id 
-and usuario.id = evaluacion_periodo.usuario
-and evaluacion_periodo.perfil_competencia = perfil_competencia.id 
-and perfil.id != 0 and evaluacion_periodo.periodo = ?
-and departamento.id = ?;";
+                                (departamento.nombre) as departamento, (empresa.nombre) as empresa,
+                                perfil.colaborador, perfil.jefe,perfil.RH, evaluacion_periodo.perfil_competencia as perfilId,
+                                 perfil_competencia.nombre as nombrePerfil
+                                from usuario, perfil,empresa,departamento, perfil_competencia, evaluacion_periodo   
+                                where usuario.departamento = departamento.id 
+                                and departamento.empresa = empresa.id 
+                                and usuario.perfil = perfil.id 
+                                and usuario.id = evaluacion_periodo.usuario
+                                and evaluacion_periodo.perfil_competencia = perfil_competencia.id 
+                                and perfil.id != 0 and evaluacion_periodo.periodo = ?
+                                and departamento.id = ?;";
         try {
             $json_response = array();
             $perfiles = ['colaborador', 'jefe', 'RH'];
@@ -189,12 +191,12 @@ and departamento.id = ?;";
 
     public static function getAllSolicitudes() {
         $consulta = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,usuario.estado,
-(departamento.nombre) as departamento, (empresa.nombre) as empresa,
-perfil.colaborador, perfil.jefe,perfil.RH from usuario, perfil,empresa,departamento where 
-usuario.departamento = departamento.id 
-and departamento.empresa = empresa.id 
-and usuario.perfil = perfil.id
-and perfil.id = 0;";
+                                (departamento.nombre) as departamento, (empresa.nombre) as empresa,
+                                perfil.colaborador, perfil.jefe,perfil.RH from usuario, perfil,empresa,departamento where 
+                                usuario.departamento = departamento.id 
+                                and departamento.empresa = empresa.id 
+                                and usuario.perfil = perfil.id
+                                and perfil.id = 0;";
         try {
             $json_response = array();
             $perfiles = ['colaborador', 'jefe', 'RH'];
@@ -303,11 +305,11 @@ and perfil.id = 0;";
 
     public static function insertEvaluacion($id) {
         $comando = "INSERT INTO evaluacion_periodo 
-(perfil_competencia,usuario,periodo) 
-select evaluacion_periodo.perfil_competencia, ? as usuario,
-(SELECT id as periodo FROM periodo WHERE NOW() BETWEEN periodo.fechainicio AND periodo.fechafinal) as periodo
- from evaluacion_periodo 
-where evaluacion_periodo.usuario = usuario order by id desc limit 1;";
+                                (perfil_competencia,usuario,periodo) 
+                                select evaluacion_periodo.perfil_competencia, ? as usuario,
+                                (SELECT id as periodo FROM periodo WHERE NOW() BETWEEN periodo.fechainicio AND periodo.fechafinal) as periodo
+                                 from evaluacion_periodo 
+                                where evaluacion_periodo.usuario = usuario order by id desc limit 1;";
 
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
         try {

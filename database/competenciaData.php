@@ -1,6 +1,15 @@
 <?php
 
+/**
+ * @author Isaac Corrales Cruz <isakucorrales@gmail.com>
+ * @author Marco Vinicio Cambronero Fonseca <marcovcambronero@gmail.com>
+ */
+
 require 'detalleCompetenciaData.php';
+
+/**
+ *  Esta es la clase encargada de la gestión de las competencias en la base de datos.
+ */
 
 class competenciaData {
 

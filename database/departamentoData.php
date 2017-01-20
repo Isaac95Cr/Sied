@@ -1,7 +1,17 @@
 <?php
 
+/**
+ * @author Isaac Corrales Cruz <isakucorrales@gmail.com>
+ * @author Marco Vinicio Cambronero Fonseca <marcovcambronero@gmail.com>
+ */
+
 require 'usuarioData.php';
 require 'metasData.php';
+
+/**
+ *  Esta es la clase encargada de la gestión de los departamentos en la base de datos.
+ */
+
 
 class departamentoData {
 

@@ -29,7 +29,7 @@
         <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
     </head>
 
-    <body class="hold-transition skin-blue fixed sidebar-mini" ng-app="app">
+    <body class="hold-transition skin-blue fixed sidebar-mini" ng-app="app" ng-cloak>
         <!-- Site wrapper -->
         <div class="wrapper" ng-controller="controlUser" ng-init="init()">
             <!-- header -->
@@ -117,7 +117,7 @@
             <!-- =============================================== -->
 
             <!-- Left side column. contains the sidebar -->
-            <aside class="main-sidebar" >
+            <aside class="main-sidebar">
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
@@ -254,8 +254,7 @@
         <script src="angular/usuario/autentificacionService.js" type="text/javascript"></script>
         <script src="angular/usuario/sessionService.js" type="text/javascript"></script>
         <script src="angular/usuario/userService.js" type="text/javascript"></script>
-        <script src="angular/usuario/usersColaboradoresMetas.js" type="text/javascript"></script>
-        <script src="angular/usuario/usersColaboradoresCompetencias.js" type="text/javascript"></script>
+
 
         <script src="angular/registro/controlLogin.js" type="text/javascript"></script>
         <script src="angular/index/controlDepartamento.js" type="text/javascript"></script>
@@ -282,6 +281,8 @@
         <script src="angular/index/controlDetalleMetasRH.js" type="text/javascript"></script>
         <script src="angular/index/controlAprobarMetasRH.js" type="text/javascript"></script>
         <script src="angular/index/controlCambiarPassword.js" type="text/javascript"></script>
+        <script src="angular/index/usersColaboradoresCompetencias.js" type="text/javascript"></script>
+        <script src="angular/index/usersColaboradoresMetas.js" type="text/javascript"></script>
 
         <script type="text/ng-template" id="myModalContent.html">
             <div class="modal-header">
