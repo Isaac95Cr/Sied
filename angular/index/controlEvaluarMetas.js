@@ -28,7 +28,7 @@ angular.module("index")
 
                 $scope.cargar = function () {
                     var obj = {id: $scope.infoIdUser};
-                    factoryMeta.cargarMetasUser(obj).then(function (res) {
+                    return factoryMeta.cargarMetasUser(obj).then(function (res) {
                         if (res.status === 'error') {
                             alert(res.message);
                         }
@@ -89,10 +89,7 @@ angular.module("index")
                         }
                         if (res.status === 'success') {
                             modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
-                            $scope.cargar();
-                            if($scope.is_TodasEvaluadas($scope.metasUser)){
-                                factoryMeta.notificarEvalMetas($scope.infoIdUser);
-                            }
+                            $scope.notificar();
                         }
                     });
                     
@@ -101,6 +98,14 @@ angular.module("index")
                 
                 $scope.is_TodasEvaluadas = function (listaMetas) {
                     return listaMetas.every(elem => (elem.evaluacion !== null));
+                };
+                
+               $scope.notificar = function(){
+                        $scope.cargar().then(function () {
+                        if ($scope.is_TodasEvaluadas($scope.metasUser)) {
+                            factoryMeta.notificarEvalMetas($scope.infoIdUser);
+                        }
+                     });
                 };
                 
                 

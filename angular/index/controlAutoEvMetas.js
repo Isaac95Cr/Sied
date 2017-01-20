@@ -24,15 +24,15 @@ angular.module("index")
 
                 $scope.cargar = function () {
                     var obj = {id: $scope.userOnline.id};
-                    factoryMeta.cargarMetasUser(obj).then(function (res) {
+                    return factoryMeta.cargarMetasUser(obj).then(function (res) {
                         if (res.status === 'error') {
                             alert(res.message);
                         }
                         if (res.status === 'success') {
                             $scope.metas = res.data;
-                            if ($scope.metas.length !== 0){
+                            if ($scope.metas.length !== 0) {
                                 $scope.tiene_Metas = true;
-                                $scope.isEvaluables = 
+                                $scope.isEvaluables =
                                         $scope.metas.some(elem => (elem.evaluable == 1 && elem.aprobacion_j === '1' && elem.aprobacion_rh === '1'));
                             }
                         }
@@ -61,17 +61,23 @@ angular.module("index")
                         }
                         if (res.status === 'success') {
                             modalService.modalOk("Éxito", "<p>" + res.message + "</p>");
-                            $scope.cargar();
-                            if($scope.is_TodasAutoEvaluadas($scope.metas)){
-                                factoryMeta.notificarAutoEvMetas($scope.userOnline.id);
-                            }
+                            $scope.notificar();
                         }
                     });
                 };
-                
-                
+
+
                 $scope.is_TodasAutoEvaluadas = function (listaMetas) {
                     return listaMetas.every(elem => (elem.auto_evaluacion !== null));
+                };
+
+
+                $scope.notificar = function(){
+                        $scope.cargar().then(function () {
+                        if ($scope.is_TodasAutoEvaluadas($scope.metas)) {
+                            factoryMeta.notificarAutoEvMetas($scope.userOnline.id);
+                        }
+                     });
                 };
 
 
