@@ -10,7 +10,7 @@ class notificacionData {
 
     public static function getAllFrom($id) {
         $consulta = "SELECT notifi_usuario.id,notificacion.titulo,notificacion.descripcion,notificacion.url,notifi_usuario.fecha,notifi_usuario.visto "
-                ."FROM notifi_usuario, notificacion where notifi_usuario.usuario = ? and notifi_usuario.notificacion = notificacion.id";
+                ."FROM notifi_usuario, notificacion where notifi_usuario.usuario = ? and notifi_usuario.notificacion = notificacion.id order by id desc";
         try {
             $comando = Database::getInstance()->getDb()->prepare($consulta);
             $comando->execute(array($id));

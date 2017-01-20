@@ -206,6 +206,7 @@ class usuarios extends Rest implements interfaceApi {
             return $this->responseAPI("error", "Usuario o contraseña incorrectos", 200);
         }
         if (!is_a($user, 'Exception')) {
+            $user['periodo'] = periodoData::existActual();
             $token = usuarioData::token($user);
             return $this->responseAPI("success", "log success", 200, $token);
         } else {

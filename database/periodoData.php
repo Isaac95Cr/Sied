@@ -24,6 +24,21 @@ class periodoData {
         }
     }
     
+    public static function existActual() {
+        $consulta = "SELECT * FROM periodo WHERE NOW() BETWEEN periodo.fechainicio AND periodo.fechafinal;";
+        try {
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando->execute();
+            $result = $comando->fetch(PDO::FETCH_ASSOC);
+        if (!$result) {
+                return false;
+            }
+        } catch (PDOException $pdoExcetion) {
+            return FALSE;
+        }
+        return true;
+    }
+    
     public static function getAnterior() {
         $consulta = "select (periodo.id) as periodo, actual.id as actual from periodo,(SELECT id FROM periodo WHERE NOW() BETWEEN periodo.fechainicio AND periodo.fechafinal)as actual 
 where actual.id > periodo.id order by periodo.id desc limit 1";

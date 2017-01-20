@@ -1,10 +1,11 @@
 angular.module('usuario')
-        .service('sessionService', ['$sessionStorage',"$q", function ($sessionStorage,$q) {
+        .service('sessionService', ['$sessionStorage', "$q", function ($sessionStorage, $q) {
                 var session = {
                     carga: false,
-                    usuario: undefined
+                    usuario: undefined,
+                    periodo: undefined
                 };
-                
+
                 var usuarioOnline = "";
 
                 session.guardar = function (token) {
@@ -15,9 +16,11 @@ angular.module('usuario')
                 session.cargar = function () {
                     var token = $sessionStorage.session;
                     var user;
+                    var periodo;
                     if (token !== "undefined") {
                         user = this.getUserFromToken(token);
                         this.usuario = user.user;
+                        this.periodo = user.periodo;
                         this.carga = true;
                     } else {
                         this.usuario = "undefined";
@@ -38,27 +41,36 @@ angular.module('usuario')
                         session.cargar();
                     return this.usuario;
                 };
-                
-                
+
+
                 session.loadUser = function () {
-                      usuarioOnline = this.getUsuario().id;
+                    usuarioOnline = this.getUsuario().id;
                 };
-                
-                
+
+
                 session.getUserId = function () {
                     return usuarioOnline;
-                }
+                };
 
                 session.permisos = function () {
                     if (!session.carga)
                         session.cargar();
                     return this.usuario.perfil;
                 };
-                
-                session.perfil = function(permiso){
-                    var user = session.permisos();
-                    if(user[permiso] === "0")
-                      return  $q.reject("noAutorizado");    
+                session.existperiodo = function () {
+                    if (!session.carga)
+                        session.cargar();
+                    return this.usuario.periodo;
+
+                };
+
+                session.perfil = function (permiso, bandera) {
+                    var permisos = session.permisos();
+                    if (bandera)
+                        if (!this.existperiodo())
+                            return  $q.reject("noAutorizado");
+                    if (permisos[permiso] === "0")
+                        return  $q.reject("noAutorizado");
                 };
 
                 function urlBase64Decode(str) {

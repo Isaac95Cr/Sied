@@ -9,7 +9,7 @@ angular.module("app")
                             templateUrl: "paginas/admin_metas.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {
-                                        return sessionService.perfil("colaborador");
+                                        return sessionService.perfil("colaborador",true);
                                     }]
                             }
                         })
@@ -17,7 +17,7 @@ angular.module("app")
                             templateUrl: "paginas/admin_competencias.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {
-                                        return sessionService.perfil("colaborador");
+                                        return sessionService.perfil("colaborador",true);
                                     }]
                             }
                         })
@@ -33,7 +33,7 @@ angular.module("app")
                             templateUrl: "paginas/admin_colaboradores_metas.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {
-                                        return sessionService.perfil("jefe");
+                                        return sessionService.perfil("jefe",true);
                                     }]
                             }
                         })
@@ -41,7 +41,7 @@ angular.module("app")
                             templateUrl: "paginas/admin_colaboradores_competencias.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {
-                                        return sessionService.perfil("jefe");
+                                        return sessionService.perfil("jefe",true);
                                     }]
                             }
                         })
@@ -83,7 +83,7 @@ angular.module("app")
                             templateUrl: "paginas/aprobar_metas.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {
-                                        return sessionService.perfil("jefe");
+                                        return sessionService.perfil("jefe",true);
                                     }]
                             }
                         })
@@ -91,7 +91,7 @@ angular.module("app")
                             templateUrl: "paginas/evaluar_metas.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {
-                                        return sessionService.perfil("jefe");
+                                        return sessionService.perfil("jefe",true);
                                     }]
                             }
                         })
@@ -99,7 +99,7 @@ angular.module("app")
                             templateUrl: "paginas/evaluar_competencias.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {
-                                        return sessionService.perfil("jefe");
+                                        return sessionService.perfil("jefe",true);
                                     }]
                             }
                         })
@@ -107,7 +107,7 @@ angular.module("app")
                             templateUrl: "paginas/auto-evaluar_metas.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {
-                                        return sessionService.perfil("colaborador");
+                                        return sessionService.perfil("colaborador",true);
                                     }]
                             }
                         })
@@ -115,7 +115,7 @@ angular.module("app")
                             templateUrl: "paginas/auto-evaluar_competencias.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {
-                                        return sessionService.perfil("colaborador");
+                                        return sessionService.perfil("colaborador",true);
                                     }]
                             }
                         })
@@ -147,7 +147,7 @@ angular.module("app")
                             templateUrl: "paginas/admin_colab_metas_RH.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {
-                                        return sessionService.perfil("RH");
+                                        return sessionService.perfil("RH",true);
                                     }]
                             }
                         })
@@ -155,7 +155,7 @@ angular.module("app")
                             templateUrl: "paginas/aprobar_metas_RH.php",
                             resolve: {
                                 access: ["sessionService", function (sessionService) {
-                                        return sessionService.perfil("RH");
+                                        return sessionService.perfil("RH",true);
                                     }]
                             }
                         })
