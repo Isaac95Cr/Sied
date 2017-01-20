@@ -5,7 +5,6 @@
  * @author Marco Vinicio Cambronero Fonseca <marcovcambronero@gmail.com>
  */
 require '../services/variable.php';
-
 /**
  *  Esta es la clase encargada de la gestión de los usuarios en la base de datos.
  */
@@ -19,16 +18,16 @@ class usuarioData {
 
     public static function getAll() {
         $consulta = "SELECT usuario.id,usuario.nombre,usuario.apellido1,usuario.apellido2,correo,usuario.estado,
-                                (departamento.nombre) as departamento, (empresa.nombre) as empresa,
-                                perfil.colaborador, perfil.jefe,perfil.RH, evaluacion_periodo.perfil_competencia as perfilId,
-                                 perfil_competencia.nombre as nombrePerfil
-                                from usuario, perfil,empresa,departamento, perfil_competencia, evaluacion_periodo  inner join  (SELECT id as actual FROM periodo WHERE NOW() BETWEEN periodo.fechainicio AND periodo.fechafinal) as actual on evaluacion_periodo.periodo = actual 
-                                where usuario.departamento = departamento.id 
-                                and departamento.empresa = empresa.id 
-                                and usuario.perfil = perfil.id 
-                                and usuario.id = evaluacion_periodo.usuario
-                                and evaluacion_periodo.perfil_competencia = perfil_competencia.id 
-                                and perfil.id != 0;";
+(departamento.nombre) as departamento,(departamento.id) as depid, (empresa.nombre) as empresa,
+perfil.colaborador, perfil.jefe,perfil.RH, evaluacion_periodo.perfil_competencia as perfilId,
+ perfil_competencia.nombre as nombrePerfil
+from usuario, perfil,empresa,departamento, perfil_competencia, evaluacion_periodo  inner join  (SELECT id as actual FROM periodo WHERE NOW() BETWEEN periodo.fechainicio AND periodo.fechafinal) as actual on evaluacion_periodo.periodo = actual 
+where usuario.departamento = departamento.id 
+and departamento.empresa = empresa.id 
+and usuario.perfil = perfil.id 
+and usuario.id = evaluacion_periodo.usuario
+and evaluacion_periodo.perfil_competencia = perfil_competencia.id 
+and perfil.id != 0;";
         try {
 
             $json_response = array();
@@ -44,10 +43,14 @@ class usuarioData {
                 $response['correo'] = $user['correo'];
                 $response['estado'] = $user['estado'];
                 $response['departamento'] = $user['departamento'];
+                $response['depid'] = $user['depid'];
                 $response['empresa'] = $user['empresa'];
                 $response['perfil'] = array();
                 $response['perfil']['Colaborador'] = $user['colaborador'];
                 $response['perfil']['Jefe'] = $user['jefe'];
+                if($user['jefe']==1){
+                    $response['aCargo'] = departamentoData::getAllFrom($user['id']);
+                }
                 $response['perfil']['RH'] = $user['RH'];
                 $response['nombrePerfil'] = $user['nombrePerfil'];
                 $response['perfilId'] = $user['perfilId'];

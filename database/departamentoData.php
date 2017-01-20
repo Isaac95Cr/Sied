@@ -1,12 +1,6 @@
 <?php
 
-/**
- * @author Isaac Corrales Cruz <isakucorrales@gmail.com>
- * @author Marco Vinicio Cambronero Fonseca <marcovcambronero@gmail.com>
- */
-
-require 'usuarioData.php';
-require 'metasData.php';
+require_once 'metasData.php';
 
 /**
  *  Esta es la clase encargada de la gestión de los departamentos en la base de datos.
@@ -16,7 +10,7 @@ require 'metasData.php';
 class departamentoData {
 
     public static function getAll() {
-        $consulta = "SELECT * FROM departamento;";
+        $consulta = "SELECT departamento.id,departamento.nombre,departamento.empresa,departamento.jefe,empresa.nombre as empnombre FROM departamento,empresa where departamento.empresa = empresa.id;";
         try {
             $comando = Database::getInstance()->getDb()->prepare($consulta);
             $comando->execute();
@@ -25,6 +19,20 @@ class departamentoData {
             return false;
         }
     }
+    
+    public static function getAllFrom($id) {
+        $consulta = "SELECT departamento.id,departamento.nombre,departamento.empresa,departamento.jefe,"
+                . "empresa.nombre as empnombre FROM departamento,empresa "
+                . "where departamento.empresa = empresa.id and departamento.id and departamento.jefe= ?;";
+        try {
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando->execute(array($id));
+            return $comando->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+    
 
     // Obtener todos los departamentos y sus respectivos usuarios.
     public static function getDepartmentsAndUsers() {
@@ -263,6 +271,17 @@ class departamentoData {
             return$pdoExcetion->getMessage();
         }
     }
+    
+    public static function updateJefe($jefe, $id) {
+        $comando = "UPDATE departamento set jefe = ? where id = ?;";
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        try {
+            $sentencia->execute(array($jefe, $id));
+            return true;
+        } catch (PDOException $pdoExcetion) {
+            return$pdoExcetion->getMessage();
+        }
+    }
 
     public static function delete($id) {
         $comando = "DELETE FROM departamento WHERE id = ?;";
@@ -274,7 +293,5 @@ class departamentoData {
             return $pdoExcetion->getMessage();
         }
     }
-
-}
-
-;
+    
+};
