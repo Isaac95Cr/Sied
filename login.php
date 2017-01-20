@@ -16,7 +16,7 @@
         <link href="plugins/datatables/angular-datatables.min.css" rel="stylesheet" type="text/css"/>
         <link href="plugins/datatables/datatables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
     </head>
-    <body class="hold-transition login-page" ng-app="registro" ng-controller="controlLogin">
+    <body class="hold-transition login-page" ng-app="registro" ng-controller="controlLogin" ng-cloak>
         <div class="login-box">
             <div class="login-logo">
                 <h4><b>Sistema de Evaluación del Desempeño</b></h4>
