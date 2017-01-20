@@ -9,7 +9,7 @@
   Clase encargada de la gestión de metas en la base de datos.
  */
 
-require 'periodoData.php';
+require_once 'periodoData.php';
 
 
 class metasData {

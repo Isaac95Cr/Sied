@@ -189,13 +189,24 @@
                         <div class="form-group" ng-class="{ 'has-error' : formAdd.empresa.$invalid && !formAdd.empresa.$pristine }">
                             <label for="perfil" class="col-sm-4 control-label">Perfil</label>
                             <div class="col-sm-8">
-                                <ui-select  multiple  class="form-control select2" ng-model="userAdd.perfil" close-on-select="false" style="width: 100%;" title="Asigna el perfil" required>
+                                <ui-select  multiple  class="form-control select2" ng-model="userAdd.perfil" on-remove="onRemove($item)" on-select="onSelect($item)" close-on-select="false" style="width: 100%;" title="Asigna el perfil" required>
                                     <ui-select-match placeholder="Seleccione los perfiles">{{$item}}</ui-select-match>
                                     <ui-select-choices repeat="a in opciones  |  filter: $select.search">
                                         {{a}}
                                     </ui-select-choices>
                                 </ui-select>
                             </div> 
+                        </div>
+                        <div ng-show="jefeb" class="form-group"  ng-class="{ 'has-error' : formAdd.aCargo.$invalid && formAdd.aCargo.$dirty }">
+                            <label for="departamento" class="col-sm-4 control-label">Departamento a cargo</label>                     
+                            <div class="col-sm-8">
+                                <ui-select theme="bootstrap"  ng-model="userAdd.aCargo" on-select="" class="form-control select2" title="Departamento a cargo">
+                                    <ui-select-match placeholder="">{{userAdd.aCargo.empnombre +" - "+userAdd.aCargo.nombre}}</ui-select-match>
+                                    <ui-select-choices allow-clear ="true" repeat="departamento in departamentos | filter: $select.search">
+                                        <div ng-bind-html="departamento.empnombre +' - '+departamento.nombre | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="estado" class="col-sm-4 control-label">Estado</label>
@@ -302,7 +313,7 @@
                         <div class="form-group" ng-class="{ 'has-error' : formEdit.empresa.$invalid && !formEdit.empresa.$pristine }">
                             <label for="perfil" class="col-sm-4 control-label">Perfil</label>
                             <div class="col-sm-8">
-                                <ui-select  multiple  class="form-control select2" ng-model="userEdit.perfil" close-on-select="false" style="width: 100%;" title="Asigna el perfil" required>
+                                <ui-select  multiple  class="form-control select2" on-remove="onRemove($item)" on-select="onSelect($item)" ng-model="userEdit.perfil" close-on-select="false" style="width: 100%;" title="Asigna el perfil" required>
                                     <ui-select-match placeholder="Seleccione los perfiles">{{$item}}</ui-select-match>
                                     <ui-select-choices repeat="a in opciones  |  filter: $select.search">
                                         {{a}}
@@ -310,6 +321,20 @@
                                 </ui-select>
                             </div> 
                         </div>
+
+                        <div ng-show="jefeb" class="form-group"  ng-class="{ 'has-error' : formEdit.aCargo.$invalid && formEdit.aCargo.$dirty }">
+                            <label for="departamento" class="col-sm-4 control-label">Departamento a cargo</label>                     
+                            <div class="col-sm-8">
+                                <ui-select theme="bootstrap"  ng-model="userEdit.aCargo" on-select="" class="form-control select2" title="Departamento a cargo">
+                                    <ui-select-match placeholder="">{{userEdit.aCargo.empnombre +" - "+userEdit.aCargo.nombre}}</ui-select-match>
+                                    <ui-select-choices allow-clear ="true" repeat="departamento in departamentos | filter: $select.search">
+                                        <div ng-bind-html="departamento.empnombre +' - '+departamento.nombre | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+
+
                         <div class="form-group">
                             <label for="estado" class="col-sm-4 control-label">Estado</label>
                             <div class="col-sm-3">

@@ -6,9 +6,10 @@
  * @copyright Copyright (c) 2014, Felipe Lunardi Farias <ffarias.dev@gmail.com>
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-require '../database/usuarioData.php';
-require '../database/correosData.php';
-require '../database/periodoData.php';
+require_once '../database/usuarioData.php';
+require_once '../database/correosData.php';
+require_once '../database/periodoData.php';
+require_once '../database/departamentoData.php';
 
 class usuarios extends Rest implements interfaceApi {
 
@@ -108,10 +109,17 @@ class usuarios extends Rest implements interfaceApi {
         $apellido1 = $body['apellido1'];
         $apellido2 = $body['apellido2'];
         $correo = $body['correo'];
-        $contrasena = md5($body['contrasena']);
+        if (array_key_exists("contrasena", $body)) {
+            $contrasena = md5($body['contrasena']);
+        }
         $departamento = $body['departamento']['id'];
-        if (isset($body['perfil'])) {
+        if (array_key_exists("perfil", $body)) {
             $perfil = usuarioData::getPerfil($body['perfil']);
+            if ($body['perfil'][0] == 'Jefe' || $body['perfil'][1] == 'Jefe' || $body['perfil'][2] == 'Jefe') {
+                if (array_key_exists("aCargo", $body)) {
+                    departamentoData::updateJefe($id, $body['aCargo']['id']);
+                }
+            }
         } else {
             $perfil = 0;
         }
@@ -140,13 +148,21 @@ class usuarios extends Rest implements interfaceApi {
         $apellido2 = $body['apellido2'];
         $correo = $body['correo'];
         $departamento = $body['departamento']['id'];
-        $perfil = usuarioData::getPerfil($body['perfil']);
+        if (array_key_exists("perfil", $body)) {
+            $perfil = usuarioData::getPerfil($body['perfil']);
+            if ($body['perfil'][0] == 'Jefe' || $body['perfil'][1] == 'Jefe' || $body['perfil'][2] == 'Jefe') {
+                if (array_key_exists("aCargo", $body)) {
+                    departamentoData::updateJefe($id, $body['aCargo']['id']);
+                }
+            }
+        }
         $perfilCompetencia = $body['perfilcompetencia'];
         if ($body['estado'] != null) {
             $estado = $body['estado'];
         } else {
             $estado = 0;
-        }$periodo = periodoData::getActual();
+        }
+        $periodo = periodoData::getActual();
         $data0 = usuarioData::updateEvaluacion($id, $periodo['id'], $perfilCompetencia['id']);
         $data1 = usuarioData::update($id, $nombre, $apellido1, $apellido2, $correo, $estado, $departamento, $perfil);
         if ($data1 === true && $data0 === true) {

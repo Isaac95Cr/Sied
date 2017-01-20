@@ -14,6 +14,7 @@ angular.module("index")
                 $scope.departamentos = [];
                 $scope.opciones = ["Colaborador", "Jefe", "RH"];
                 $scope.bandera = false;
+                $scope.jefeb = false;
 
                 $scope.init = function () {
                     $scope.cargar();
@@ -38,6 +39,12 @@ angular.module("index")
                             x.push(perfil);
                     }
                     $scope.userEdit.perfil = x;
+                    $scope.jefeb = (user.perfil.Jefe == 1);
+                    if ($scope.jefeb) {
+                        $scope.jefeb = true;
+                    } else {
+                        $scope.jefeb = false;
+                    }
                     $scope.userEdit.empresa = empdep.buscarEmpresa(user.empresa);
                     $scope.selectEmpresa($scope.userEdit.empresa);
                     $scope.userEdit.departamento = empdep.buscarDepartamento(user.departamento);
@@ -144,6 +151,17 @@ angular.module("index")
                 $scope.$on('handleBroadcast', function () {
                     $scope.periodo = ShareDataService.msg;
                 });
+
+                $scope.onSelect = function (item) {
+                    if (item === 'Jefe')
+                        $scope.jefeb = true;
+                };
+
+                $scope.onRemove = function (item) {
+                    if (item === 'Jefe')
+                        $scope.jefeb = false;
+                };
+
                 /*$scope.$on('departamento', function () {
                  $scope.userEdit.empresa = ShareDataService.empresa;
                  $scope.userEdit.departamento = ShareDataService.departamento.selected;
