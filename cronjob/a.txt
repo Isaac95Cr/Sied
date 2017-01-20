@@ -1,2 +1,3 @@
 
-Hora actual: 2017-01-19 14:41:05 <br> 
+Hora actual: 2017-01-20 14:41:04 <br> 
+2017-01-20 00:00:00 = 2017-01-20 00:00:00hoy fecha calificacion de metas final2017-01-20 00:00:00 = 2017-01-20 00:00:00hoy es la fecha final
